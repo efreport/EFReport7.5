@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <link rel="stylesheet" href="../../css/scroll.css">
+    <style>
+        #un a {
+            display: block;
+            color: #333;
+            transition: all .3s;
+            margin: 5px 5px;
+            border-bottom: 1px solid #D5D5D5
+        }
+
+        #un a:hover {
+            background: #CCCCCC
+        }
+
+        .layui-elem-field legend {
+            margin-left: 20px;
+            padding: 0 0;
+            font-size: 15px;
+            font-weight: normal;
+        }
+
+        .cka {
+            background: #CCCCCC
+        }
+
+        img:hover {
+            background-color: #D5D5D5;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        table td {
+            height: 28px;
+            vertical-align: middle;
+        }
+
+        td input {
+            padding: 0;
+            height: 23px;
+            border: 1px solid #ccc;
+        }
+
+        td select {
+            height: 25px;
+            border: 1px solid #ccc;
+        }
+
+        input, select {
+
+        }
+
+        td select:hover {
+            box-shadow: 0px 0px 1px #44B4FF;
+        }
+
+        td input:hover {
+            box-shadow: 0px 0px 1px #44B4FF;
+        }
+
+        div select {
+            height: 25px;
+            border: 1px solid #ccc;
+            margin-bottom: 2px;
+            min-width: 100px;
+        }
+
+        div select:hover {
+            box-shadow: 0px 0px 1px #44B4FF;
+        }
+
+        div input:hover {
+            box-shadow: 0px 0px 1px #44B4FF;
+        }
+
+        #ruleCon div {
+            cursor: pointer;
+            height:20px;
+            line-height:20px;
+            display: flex;
+            align-items: center;
+        }
+
+        #ruleCon input {
+            margin-right: 10px;
+            height:16px;
+            width:16px;
+        }
+
+        .current {
+            background-color: #0094FF;
+            color:#FFFFFF;
+            height:20px;
+            line-height:20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .current input{
+            margin-right: 10px;
+            height:16px;
+            width:16px;
+        }
+
+        #container select{
+            background-color: #F2F3F5;
+            height:30px;
+        }
+
+        #container input{
+            background-color: #F2F3F5;
+            border: 1px solid #F2F3F5;
+        }
+
+        #formulaCon input{
+            background-color: #F2F3F5;
+            border: 1px solid #F2F3F5;
+        }
+
+        #ruleCon{
+            background-color: #F2F3F5;
+            border: 1px solid #F2F3F5;
+        }
+
+        button{
+            background-color: #0094FF;
+            color:#FFFFFF;
+            border: 0px;
+            width:100px;
+            height: 30px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body style="padding: 5px">
+<fieldset class="layui-elem-field">
+    <legend>父格条件</legend>
+    <div class="layui-field-box" style="height:25px;line-height:25px;padding-bottom:0px;display: flex;align-items: center;">
+        <input style="margin-right:10px;" type="checkbox" id="parent">将父格作为过滤条件
+    </div>
+</fieldset>
+<fieldset class="layui-elem-field">
+    <legend>普通条件</legend>
+    <div class="layui-field-box" style="height:40px;line-height:40px;padding-bottom:0px;padding-top:0px;">
+        <input style="margin-right:15px;" type="radio" value="0" name="type" checked>普通
+        <div style="display: inline-block;margin-right: 50px;"></div>
+        <input  style="margin-right:15px;" type="radio" value="1" name="type">公式
+    </div>
+    <div class="layui-field-box" style="padding-bottom:0px;padding-top: 0px;" id="labelDiv">
+        <label style="margin-right:5px">可选列:</label>
+
+        <div style="display: inline-block;margin-right: 92px;"></div>
+        <label style="margin-right:5px">操作符:</label>
+    </div>
+    <!-- 公式DIV -->
+    <div class="layui-field-box" style="padding-top:0px;padding-left:15px;padding-bottom:0px;display:none"
+         id="formulaCon">
+        <input type="text" id="formulaVal" style="height:65px;width:640px;" autocomplete="off">
+    </div>
+    <div class="layui-field-box" style="padding-top:0px;line-height: 28px;" id="container">
+        <select id="fieldName" style="width:146px;margin: 0px;">
+
+        </select>
+        <select id="opt" style="width:146px;margin:0px;">
+            <option value="0" selected>等于</option>
+            <option value="1">不等于</option>
+            <option value="2">大于</option>
+            <option value="3">大于或等于</option>
+            <option value="4">小于</option>
+            <option value="5">小于或等于</option>
+            <option value="6">开头是</option>
+            <option value="7">开头不是</option>
+            <option value="8">结尾是</option>
+            <option value="9">结尾不是</option>
+            <option value="10">包含</option>
+            <option value="11">不包含</option>
+            <option value="12">包含于</option>
+            <option value="13">不包含于</option>
+            <option value="15">包含于数组</option>
+            <option value="16">不包含于数组</option>
+            <option value="14">不为空</option>
+        </select>
+        <!-- 字符串、整型、双精度型、日期、布尔型、公式、参数、单元格、数据列（可选择所有数据集） -->
+        <select id="dataType" style="width:146px;margin:0px;">
+            <option value="1">字符串</option>
+            <option value="2">整型</option>
+            <option value="3">双精度型</option>
+            <option value="4">日期</option>
+            <option value="5">布尔型</option>
+            <option value="6">参数</option>
+            <option value="7">单元格</option>
+        </select>
+        <input type="text" id="val" style="height:28px;width:192px;border:0px;" autocomplete="off">
+        <input type="text" id="dateVal" style="border:0px;height:28px;width:192px;display:none;" autocomplete="off">
+        <input type="checkbox" id="boolVal" lay-skin="primary" title="true" style="display:none;">
+    </div>
+    <div class="layui-field-box" style="padding-bottom:0px;padding-top:0px;display:flex;">
+        <div style="display: flex;width:75%;justify-content: flex-start;align-items: center;">
+            <input style="margin-right:15px;" type="radio" value="1" name="isAnd" checked>与(AND)
+            <div style="display: inline-block;margin-right: 32px;"></div>
+            <input style="margin-right:15px;" type="radio" value="0" name="isAnd">或(OR)
+        </div>
+        <div style="display: flex;width:25%;justify-content:flex-end;align-items:center;">
+
+        </div>
+    </div>
+    <div class="layui-field-box" style="padding-bottom:0px;display:flex;">
+        <div style="width:85%;height:200px;border: 1px solid lightgray;overflow:auto;" id="ruleCon">
+
+        </div>
+        <div style="width: 15%;height:250px;align-items: flex-start;margin-left:35px;">
+
+            <img src="../../images/design/filter_add.png" id="addRule" style="margin-bottom: 10px;">
+            <img src="../../images/design/filter_edit.png" id="editRule" style="margin-bottom: 10px;">
+            <img src="../../images/design/filter_delete.png" id="deleteRule" style="margin-bottom: 10px;">
+            <div style="display: flex;">
+                <div style="margin-right: 10px;">
+                    <img src="../../images/design/filter_up.png" id="upRule" style="margin-bottom: 10px;">
+                </div>
+                <div>
+                    <img src="../../images/design/filter_down.png" id="downRule" style="margin-bottom: 10px;">
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div style="margin-right: 10px;">
+                    <img src="../../images/design/filter.png" id="addKh" style="margin-bottom: 10px;">
+                </div>
+                <div>
+                    <img src="../../images/design/filter_none.png" id="deleteKh" style="margin-bottom: 10px;">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</fieldset>
+</div>
+
+
+</body>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var columns; //当前单元格字段对应ds的所有字段
+    var ruleArr = []; //筛选规则数组
+    var laydate;
+    var dgText = '';
+
+    layui.use('laydate', function () {
+        laydate = layui.laydate;
+       /* laydate.render({
+            elem: '#dateVal', //指定元素
+            type: 'datetime',
+            trigger: 'click', //添加这一行来处理
+            done: function (value, date, endDate) {
+
+            }
+        });*/
+    })
+
+    layui.use('layer', function () {
+        var layer = layui.layer;
+    });
+    //初始化数据集列名和筛选规则
+    function init(data, rules , parent) {
+        $('#parent').prop('checked' , parent);
+        $('#ruleCon').empty();
+        if(data == null){ //非字段单元格
+            return;
+        }
+        columns = data;
+        $.each(columns, function (index, element) {
+            $('#fieldName').append('<option value="' + index + '">' + element + '</option>')
+        })
+        if(rules == ""){ //没有设置规则时
+            return;
+        }
+        rules = JSON.parse(rules);
+        $.each(rules, function (index, element) {
+            var rule = element;
+            ruleArr.push(rule);
+            //添加规则
+            var fieldName = rule.FieldName; //字段名
+            var opt = rule.Opt; //操作符
+            var optText = $("#opt option[value='" + opt + "']").text(); //操作符文本
+            var val = rule.Value;
+            var isAnd = rule.IsAnd;
+            var isAndText = (isAnd == 1 ? 'and ' : 'or ');
+            var showText;
+            var arr = rule.Arr;
+            var length = $('#ruleCon').find('div').length;
+            if (arr == undefined) { //普通规则
+                if (rule.Type == 0) { //普通
+                    if (index == 0) {
+                        showText = "(列名:" + fieldName + ")" + "  " + optText + "  " + val + "  ";
+                    } else {
+                        showText = isAndText + " (列名:" + fieldName + ")" + "  " + optText + "  " + val + "  ";
+                    }
+                } else {
+                    if (index == 0) {
+                        showText = optText + "  " + val + "  ";
+                    } else {
+                        showText = isAndText + "  " + optText + "  " + val + "  ";
+                    }
+                }
+
+                $('#ruleCon').find('div').removeClass('current');
+                $('#ruleCon').append('<div class="current">' + '<input type="checkbox" name="addC">' + showText + '</div>');
+
+            } else {//合并过滤规则
+                dgText = '';
+                //var arrShowText = '';
+                //非第一个规则
+                if (index != 0) {
+                    if (isAnd == '1') {
+                        dgText += 'and (';
+                    } else {
+                        dgText += 'or (';
+                    }
+                }
+                parseArr(arr);
+                dgText += ')';
+
+                $('#ruleCon').find('div').removeClass('current');
+                $('#ruleCon').append('<div class="current">' + '<input type="checkbox" name="addC">' + dgText + '</div>');
+            }
+
+            //初始化最后一个筛选规则的数据
+            if (index == (rules.length - 1)) {
+                var type = rule.Type;
+                var fieldName = rule.FieldName;
+                var opt = rule.Opt;
+                var dataType = rule.DataType;
+                var value = rule.Value;
+                var isAnd = rule.IsAnd;
+                var arr = rule.Arr;
+
+                if (arr != undefined) {
+
+                } else {
+                    if (type == 0) {//普通
+                        $('#container').show();
+                        $('#labelDiv').show();
+                        $('#formulaCon').hide();
+                        $("#fieldName option").each(function () {
+                            var val = $(this).val();
+                            var text = $(this).text();
+                            if (text == fieldName) {
+                                $('#fieldName').val(val).prop('selected', true);
+                            }
+                        });
+                        $('input[name="type"][value="' + type + '"]').prop('checked', true);
+                        changeOption(dataType);
+                        $('#opt').val(opt).prop('selected', true);
+                        if(opt == 14){
+                            $('#dataType').attr('disabled',true);
+                            $('#dateVal').attr('disabled',true);
+                            $('#val').attr('disabled',true);
+                            $('#boolVal').attr('disabled',true);
+                        }else{
+                            $('#dataType').attr('disabled',false);
+                            $('#dateVal').attr('disabled',false);
+                            $('#val').attr('disabled',false);
+                            $('#boolVal').attr('disabled',false);
+                        }
+                        $('#dataType').val(dataType).prop('selected', true);
+                        if (dataType == 4) {
+                            $('#val').hide();
+                            $('#boolVal').hide();
+                            $('#dateVal').show();
+                            $('#dateVal').val(value);
+                        } else if (dataType == 5) {//布尔类型
+                            $('#val').hide();
+                            $('#boolVal').show();
+                            $('#dateVal').hide();
+                            $('#boolVal').prop('checked', value);
+                        } else {
+                            $('#val').show();
+                            $('#boolVal').hide();
+                            $('#dateVal').hide();
+                            $('#val').val(value);
+                        }
+                        $('input[name="isAnd"][value="' + isAnd + '"]').prop('checked', true);
+                    } else { //公式
+                        $('#container').hide();
+                        $('#labelDiv').hide();
+                        $('#formulaCon').show();
+
+                        $('input[name="type"][value="' + type + '"]').prop('checked', true);
+                        $('#formulaVal').val(value);
+                        $('input[name="isAnd"][value="' + isAnd + '"]').prop('checked', true);
+                    }
+                }
+
+            }
+            bindDivClick();
+        })
+    }
+
+
+    //根据规则更新界面
+    function refresh(rules) {
+        $('#ruleCon').empty();
+        $.each(rules, function (index, element) {
+            var rule = element;
+            //添加规则
+            var fieldName = rule.FieldName; //字段名
+            var opt = rule.Opt; //操作符
+            var optText = $("#opt option[value='" + opt + "']").text(); //操作符文本
+            var val = rule.Value;
+            var isAnd = rule.IsAnd;
+            var isAndText = (isAnd == 1 ? 'and ' : 'or ');
+            var showText;
+            var arr = rule.Arr;
+            var length = $('#ruleCon').find('div').length;
+            if (arr == undefined) { //普通规则
+                if (rule.Type == 0) { //普通
+                    if (index == 0) {
+                        showText = "(列名:" + fieldName + ")" + "  " + optText + "  " + val + " ";
+                    } else {
+                        showText = isAndText + " (列名:" + fieldName + ")" + "  " + optText + "  " + val + " ";
+                    }
+                } else {
+                    if (index == 0) {
+                        showText = optText + "  " + val + " ";
+                    } else {
+                        showText = isAndText + "  " + optText + "  " + val + " ";
+                    }
+                }
+
+                $('#ruleCon').find('div').removeClass('current');
+                $('#ruleCon').append('<div class="current">' + '<input type="checkbox" name="addC">' + showText + '</div>');
+
+            } else {//合并过滤规则
+                dgText = '';
+                //var arrShowText = '';
+                //非第一个规则
+                if (index != 0) {
+                    if (isAnd == '1') {
+                        dgText += 'and (';
+                    } else {
+                        dgText += 'or (';
+                    }
+                }else{
+                    dgText += '(';
+                }
+                parseArr(arr);
+                dgText += ')';
+
+                $('#ruleCon').find('div').removeClass('current');
+                $('#ruleCon').append('<div class="current">' + '<input type="checkbox" name="addC">' + dgText + '</div>');
+            }
+
+
+            //初始化最后一个筛选规则的数据
+            if (index == (rules.length - 1)) {
+                var type = rule.Type;
+                var fieldName = rule.FieldName;
+                var opt = rule.Opt;
+                var dataType = rule.DataType;
+                var value = rule.Value;
+                var isAnd = rule.IsAnd;
+                var arr = rule.Arr;
+
+                if (arr != undefined) {
+
+                } else {
+                    if (type == 0) {
+                        $('#container').show();
+                        $('#labelDiv').show();
+                        $('#formulaCon').hide();
+                        $("#fieldName option").each(function () {
+                            var val = $(this).val();
+                            var text = $(this).text();
+                            if (text == fieldName) {
+                                $('#fieldName').val(val).prop('selected', true);
+                            }
+                        });
+                        $('input[name="type"][value="' + type + '"]').prop('checked', true);
+                        $('#opt').val(opt).prop('selected', true);
+                        if(opt == 14){
+                            $('#dataType').attr('disabled',true);
+                            $('#dateVal').attr('disabled',true);
+                            $('#val').attr('disabled',true);
+                            $('#boolVal').attr('disabled',true);
+                        }else{
+                            $('#dataType').attr('disabled',false);
+                            $('#dateVal').attr('disabled',false);
+                            $('#val').attr('disabled',false);
+                            $('#boolVal').attr('disabled',false);
+                        }
+                        $('#dataType').val(dataType).prop('selected', true);
+                        if (dataType == 4) {
+                            $('#val').hide();
+                            $('#boolVal').hide();
+                            $('#dateVal').show();
+                            $('#dateVal').val(value);
+                        } else if (dataType == 5) {//布尔类型
+                            $('#val').hide();
+                            $('#boolVal').show();
+                            $('#dateVal').hide();
+                            $('#boolVal').prop('checked', value);
+                        } else {
+                            $('#val').show();
+                            $('#boolVal').hide();
+                            $('#dateVal').hide();
+                            $('#val').val(value);
+                        }
+                        $('input[name="isAnd"][value="' + isAnd + '"]').prop('checked', true);
+                    } else {
+                        $('#container').hide();
+                        $('#labelDiv').hide();
+                        $('#formulaCon').show();
+
+                        $('input[name="type"][value="' + type + '"]').prop('checked', true);
+                        $('#formulaVal').val(value);
+                        $('input[name="isAnd"][value="' + isAnd + '"]').prop('checked', true);
+                    }
+                }
+
+            }
+            bindDivClick();
+        })
+    }
+
+
+    //解析添加括号数组
+    function parseArr(curArr) {
+        //如果是数组的第一个对象
+        /*  if(arrayIndex == 0){*/
+        $.each(curArr, function (index, element) {
+            if (element.Arr == undefined) { //没有子元素
+                if (index != 0) {
+                    if (element.IsAnd == '1') {
+                        dgText += ' and ';
+                    } else {
+                        dgText += ' or ';
+                    }
+                }
+                if (element.Type == 0) {//普通
+                    var opt = element.Opt; //操作符
+                    var optText = $("#opt option[value='" + opt + "']").text(); //操作符文本
+                    var val = element.Value;
+                    dgText = dgText + '(列名:' + element.FieldName + ') ' + optText + ' ' + val + ' ';
+                } else {//公式
+                    dgText = dgText +  element.Value + ' ';
+                }
+            } else {//有子元素，递归调用
+                if (index != 0) {
+                    if (element.IsAnd == '1') {
+                        dgText += ' and ';
+                    } else {
+                        dgText += ' or ';
+                    }
+                }
+                dgText += '(';
+                parseArr(element.Arr);
+                dgText += ')';
+            }
+        })
+        //return dgText;
+    }
+
+
+    function getRules() {
+       /* if (ruleArr.length == 0) {
+            return "";
+        }*/
+        //是否父格
+        var parent = $('#parent').prop('checked');
+        var data = {
+
+        };
+        data.parent = parent;
+        data.rules = ruleArr;
+        return JSON.stringify(data);
+    }
+
+    //根据值类型来判断所填写的值是否正确
+    function validate(type, val , opt) {
+
+        if(opt == 14){//不为空
+            return 1;
+        }
+
+        if (val == '' && type != 5) { //未填写值
+            layer.alert('请填写正确的值或公式', 1);
+            return 0;
+        } else {
+            if (type == 2 && opt != 15 && opt != 16) { //整型
+                if ($.isNumeric(val)) {
+                    if (val.indexOf('.') != -1) {
+                        layer.alert('请输入正确的整数!', 1);
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                } else {
+                    layer.alert('请输入正确的整数!', 1);
+                    return 0;
+                }
+            }
+            if (type == 3 && opt != 15 && opt != 16) {//双精度型
+                if ($.isNumeric(val)) {
+                    return 1;
+                } else {
+                    layer.alert('请输入正确的数字!', 1);
+                    return 0;
+                }
+            }
+            return 1;
+        }
+    }
+
+    //判断条件是否重复
+    function hasRule(addRule) {
+        var flag = false;
+        //遍历现有规则
+        $.each(ruleArr, function (index, element) {
+            var rule = element;
+            if (rule.Type == 0) { //普通
+                var fieldName = rule.FieldName; //字段名
+                var opt = rule.Opt; //操作符
+                var val = rule.Value;
+                if (addRule.FieldName == fieldName && addRule.Opt == opt && addRule.Value == val) {
+                    flag = true;
+                    return false;
+                }
+            } else {//公式
+                var val = rule.Value;
+                if (addRule.Value == val) {
+                    flag = true;
+                    return false;
+                }
+            }
+
+        })
+        return flag;
+    }
+
+
+    //规则div绑定事件
+    function bindDivClick() {
+        // Type为0表示普通，1表示公式，
+        // FieldName为字段名称
+        // Opt":0表示等于，1表示不等于，2表示大于，3表示大于等于，4表示小于，
+        // 5表示小于等于，6表示开头是，7表示开头不是，8表示结尾是，9表示结尾不是，
+        // 10表示包含，11表示不包含，12表示包含于，13表示不包含于
+        // DataType: // 1表示字符串，2表示整形，3表示浮点，4表示日期，5表示bool，6表示参数，7表示单元格
+        // Value: 表示值
+        // IsAnd: 1表示And，0表示OR
+        // Arr表示一个数组，成员是以上对象，重新组成一个实体，表示带括号
+        // [{"Type": 0, "FieldName": str, "Opt":0, "DataType": 1,"Value": "\"abc\"", "IsAnd": 1},
+        // {"Arr":[{...}, {...}]}]
+        $('#ruleCon').find('div').bind('click', function () {
+            //当前规则的索引值
+            var index = $("#ruleCon div").index(this);
+            //根据索引获取当前规则
+            var rule = ruleArr[index];
+            var type = rule.Type;
+            var fieldName = rule.FieldName;
+            var opt = rule.Opt;
+            var dataType = rule.DataType;
+            var value = rule.Value;
+            var isAnd = rule.IsAnd;
+            var arr = rule.Arr;
+
+            if (arr != undefined) {
+
+            } else {
+                //普通
+                if (type == 0) {
+                    $('#labelDiv').show();
+                    $('#container').show();
+                    $('#formulaCon').hide();
+                } else {//公式
+                    $('#labelDiv').hide();
+                    $('#container').hide();
+                    $('#formulaCon').show();
+                }
+
+                if (type == 0) { //普通
+                    $("#fieldName option").each(function () {
+                        var val = $(this).val();
+                        var text = $(this).text();
+                        if (text == fieldName) {
+                            $('#fieldName').val(val).prop('selected', true);
+                        }
+                    });
+                    $('input[name="type"][value="' + type + '"]').prop('checked', true);
+                    changeOption(dataType);
+                    $('#opt').val(opt).prop('selected', true);
+                    $('#dataType').val(dataType).prop('selected', true);
+                    //时间类型
+                    if (dataType == 4) {
+                        $('#val').hide();
+                        $('#boolVal').hide();
+                        $('#dateVal').show();
+                        $('#dateVal').val(value);
+                    } else if (dataType == 5) {//布尔类型
+                        $('#val').hide();
+                        $('#boolVal').show();
+                        $('#dateVal').hide();
+                        $('#boolVal').prop('checked', value);
+                    } else {
+                        $('#val').show();
+                        $('#boolVal').hide();
+                        $('#dateVal').hide();
+                        $('#val').val(value);
+                    }
+                    $('input[name="isAnd"][value="' + isAnd + '"]').prop('checked', true);
+                } else {//公式
+                    $('input[name="type"][value="' + type + '"]').prop('checked', true);
+                    $('input[name="isAnd"][value="' + isAnd + '"]').prop('checked', true);
+                    $('#formulaVal').val(value);
+                }
+            }
+            $('#ruleCon').find('div').removeClass('current');
+            $(this).addClass('current');
+        })
+    }
+
+    function changeOption(dataType){
+        var options = $('#opt').find('option');
+        $('#opt').find('option').eq(0).prop('selected' , true);
+        if(dataType == '1'){ //字符串
+            $.each(options , function(i,e){
+                var val = $(e).val();
+                if(val=='0'||val=='1'||val=='6'||val=='7'||val=='8'||val=='9'||val=='10'||val=='11'||val=='12'||val=='13'||val=='14'||val=='15'||val=='16'){
+                    $(e).show();
+                }else{
+                    $(e).hide();
+                }
+            });
+        }else if(dataType == '2'||dataType == '3'){//整型或双精度或日期
+            $.each(options , function(i,e){
+                var val = $(e).val();
+                if(val=='0'||val=='1'||val=='2'||val=='3'||val=='4'||val=='5'||val=='14'||val=='15'||val=='16'){
+                    $(e).show();
+                }else{
+                    $(e).hide();
+                }
+            });
+        }else if(dataType == '4'){
+            $.each(options , function(i,e){
+                var val = $(e).val();
+                if(val=='0'||val=='1'||val=='2'||val=='3'||val=='4'||val=='5'||val=='14'){
+                    $(e).show();
+                }else{
+                    $(e).hide();
+                }
+            });
+        }else if(dataType == '5'){//布尔
+            $('#opt').find('option').eq(0).prop('selected',true);
+            $.each(options , function(i,e){
+                var val = $(e).val();
+                if(val=='0'){
+                    $(e).show();
+                }else{
+                    $(e).hide();
+                }
+            });
+        }else{//参数或单元格
+            $.each(options , function(i,e){
+                $(e).show();
+            });
+        }
+    }
+
+    $(document).ready(function () {
+        changeOption('1');
+        $("#addRule").click(function () {
+            // Type为0表示普通，1表示公式，
+            // FieldName为字段名称
+            // Opt":0表示等于，1表示不等于，2表示大于，3表示大于等于，4表示小于，
+            // 5表示小于等于，6表示开头是，7表示开头不是，8表示结尾是，9表示结尾不是，
+            // 10表示包含，11表示不包含，12表示包含于，13表示不包含于
+            // DataType: // 1表示字符串，2表示整形，3表示浮点，4表示日期，5表示bool，6表示参数，7表示单元格
+            // Value: 表示值
+            // IsAnd: 1表示And，0表示OR
+            // Arr表示一个数组，成员是以上对象，重新组成一个实体，表示带括号
+            // [{"Type": 0, "FieldName": str, "Opt":0, "DataType": 1,"Value": "\"abc\"", "IsAnd": 1},
+            // {"Arr":[{...}, {...}]}]
+            var type = $('input[name="type"]:checked').val(); //规则类型
+
+            //普通
+            if (type == 0) {
+                var fieldName = $('#fieldName').find("option:selected").text(); //字段名
+                var opt = $('#opt').find("option:selected").val(); //操作符
+                var optText = $('#opt').find("option:selected").text(); //操作符文本
+                var dataType = $('#dataType').find("option:selected").val(); //数据类型
+                var isAnd = $('input[name="isAnd"]:checked').val();
+                var isAndText = (isAnd == 1 ? 'and' : 'or');
+                var val;
+                //如果是时间类型
+                if (dataType == '4') {
+                    val = $('#dateVal').val();
+                } else if (dataType == '5') { //布尔类型
+                    val = $('#boolVal').prop('checked');
+                } else {
+                    val = $('#val').val();
+                }
+                var res = validate(dataType, val , opt);
+                if (res == 0) {
+                    return false;
+                }
+
+                //添加规则
+                var ruleObj = {};
+                ruleObj.Type = type;
+                ruleObj.FieldName = fieldName;
+                ruleObj.Opt = opt;
+                ruleObj.DataType = dataType;
+                if(opt == 14){//不为空
+                    ruleObj.Value = '';
+                }else{
+                    ruleObj.Value = val;
+                }
+
+                ruleObj.IsAnd = isAnd;
+                if (hasRule(ruleObj)) {
+                    layer.alert('条件已存在!');
+                    return;
+                } else {
+                    ruleArr.push(ruleObj);
+                }
+
+
+                var showText;
+                var length = $('#ruleCon').find('div').length;
+                if (length == 0) {
+                    showText = "(列名:" + fieldName + ")" + "  " + optText + "  " + ruleObj.Value;
+                } else {
+                    showText = isAndText + " (列名:" + fieldName + ")" + "  " + optText + "  " + ruleObj.Value;
+                }
+                $('#ruleCon').find('div').removeClass('current');
+                $('#ruleCon').append('<div class="current">' + '<input type="checkbox" name="addC">' + showText + '</div>');
+            } else {//公式
+                if ($('#formulaVal').val() == '') {
+                    layer.alert('请输入公式', 1);
+                } else {
+                    var isAnd = $('input[name="isAnd"]:checked').val();
+                    var val = $('#formulaVal').val();
+                    var ruleObj = {};
+                    ruleObj.Type = type;
+                    ruleObj.Value = val;
+                    ruleObj.IsAnd = isAnd;
+                    if (hasRule(ruleObj)) {
+                        layer.alert('条件已存在!');
+                        return;
+                    } else {
+                        ruleArr.push(ruleObj);
+                    }
+                    var showText;
+                    var length = $('#ruleCon').find('div').length;
+                    if (length == 0) {
+                        showText = val;
+                    } else {
+                        var isAndText = (isAnd == 1 ? 'and' : 'or');
+                        showText = isAndText + " " + val;
+                    }
+                    $('#ruleCon').find('div').removeClass('current');
+                    $('#ruleCon').append('<div class="current">' + '<input type="checkbox" name="addC">' + showText + '</div>');
+                }
+            }
+            bindDivClick();
+        });
+
+        //修改按钮
+        $('#editRule').click(function () {
+            //当前选中的规则div
+            var curRule = $('.current');
+            //当前div的索引
+            var index = $("#ruleCon div").index(curRule);
+
+            var type = $('input[name="type"]:checked').val(); //规则类型
+            //普通
+            if (type == 0) {
+                var fieldName = $('#fieldName').find("option:selected").text(); //字段名
+                var opt = $('#opt').find("option:selected").val(); //操作符
+                var optText = $('#opt').find("option:selected").text(); //操作符文本
+                var dataType = $('#dataType').find("option:selected").val(); //数据类型
+                var val;
+                //如果是时间类型
+                if (dataType == '4') {
+                    val = $('#dateVal').val();
+                } else if (dataType == '5') { //布尔类型
+                    val = $('#boolVal').prop('checked');
+                } else {
+                    val = $('#val').val();
+                }
+                var res = validate(dataType, val , opt);
+                if (res == 0) {
+                    return false;
+                }
+                var isAnd = $('input[name="isAnd"]:checked').val();
+                var isAndText = (isAnd == 1 ? 'and' : 'or');
+                var showText;
+
+                if (index == 0) {
+                    showText = "(列名:" + fieldName + ")" + "  " + optText + "  " + val;
+                } else {
+                    showText = isAndText + " (列名:" + fieldName + ")" + "  " + optText + "  " + val;
+                }
+                //更改规则文本
+                curRule.text(showText);
+                curRule.prepend('<input type="checkbox" name="addC">');
+                //替换规则
+                var ruleObj = {};
+                ruleObj.Type = type;
+                ruleObj.FieldName = fieldName;
+                ruleObj.Opt = opt;
+                ruleObj.DataType = dataType;
+                if(opt == 14){//不为空
+                    ruleObj.Value = '';
+                }else{
+                    ruleObj.Value = val;
+                }
+                ruleObj.IsAnd = isAnd;
+                ruleArr[index] = ruleObj;
+            } else {//公式
+                if ($('#formulaVal').val() == '') {
+                    layer.alert('请输入公式', 1);
+                } else {
+                    var isAnd = $('input[name="isAnd"]:checked').val();
+                    var val = $('#formulaVal').val();
+                    var ruleObj = {};
+                    ruleObj.Type = type;
+                    ruleObj.Value = val;
+                    ruleObj.IsAnd = isAnd;
+                    ruleArr[index] = ruleObj;
+                    var showText;
+                    var length = $('#ruleCon').find('div').length;
+                    if (index == 0) {
+                        showText = val;
+                    } else {
+                        var isAndText = (isAnd == 1 ? 'and' : 'or');
+                        showText = isAndText + " " + val;
+                    }
+                    //更改规则文本
+                    curRule.text(showText);
+                    curRule.prepend('<input type="checkbox" name="addC">');
+                }
+            }
+        });
+
+        $("#deleteRule").click(function () {
+            //当前选中的规则div
+            var curRule = $('.current');
+            //当前div的索引
+            var index = $("#ruleCon div").index(curRule);
+            //删除唯一的规则,条件控件还原
+            if (ruleArr.length == 1) {
+                $('#fieldName').val('0').prop('selected', true);
+                $('#opt').val('0').prop('selected', true);
+                $('input[name="type"][value="0"]').prop('checked', true);
+                $('#val').val('');
+                $('input[name="isAnd"][value="0"]').prop('checked', true);
+                //删除dom元素
+                curRule.remove();
+                //根据索引删除rule对象
+                ruleArr.splice(index, 1);
+
+            } else {//存在多个规则时
+                if (index == 0) { //如果删除的是第一个规则
+                    //删除dom元素
+                    curRule.remove();
+                    //根据索引删除rule对象
+                    ruleArr.splice(index, 1);
+                    //第二个规则变成第一个规则,把IsAnd变成and
+                    var rule = ruleArr[0];
+                    rule.IsAnd = 1;
+                    //为第一个规则添加选中效果
+                    var firstRuleDiv = $("#ruleCon").children('div').eq(0);
+                    firstRuleDiv.addClass('current');
+                    //第一个规则的IsAnd为0
+                    $('input[name="isAnd"][value="1"]').prop('checked', true);
+                    //修改当前规则的文本
+                    var text = firstRuleDiv.text();
+                    text = text.replace('and ', '');
+                    text = text.replace('or ', '');
+                    firstRuleDiv.text(text);
+                    firstRuleDiv.prepend('<input type="checkbox" name="addC">');
+                    //点击当前div来修改规则控件值
+                    firstRuleDiv.trigger('click');
+                } else { //删除其他规则时
+                    //删除dom元素
+                    curRule.remove();
+                    //根据索引删除rule对象
+                    ruleArr.splice(index, 1);
+                    //找到上一个规则
+                    var rule = ruleArr[index - 1];
+                    rule.IsAnd = 0;
+                    //找到前一个规则
+                    var preRuleDiv = $("#ruleCon").children('div').eq(index - 1);
+                    preRuleDiv.addClass('current');
+                    //点击前一个div来修改规则控件值
+                    preRuleDiv.trigger('click');
+                }
+            }
+        });
+        //上移按钮事件
+        $('#upRule').unbind().bind('click', function () {
+            $(this).attr('disabled', 'disabled');
+            //当前选中的规则div
+            var curRule = $('.current');
+            //当前div的索引
+            var index = $("#ruleCon div").index(curRule);
+            if (index == 0) {
+                layer.alert('无法上移');
+            } else if (index == 1) {//将第二个往上移动时
+                var temp = ruleArr[0]; //第一个规则
+                var cur = ruleArr[1]; //第二个规则
+                cur.IsAnd = 1; //将第二个规则的isAnd改为0
+                temp.IsAnd = 1; //将第一个规则的isAnd改为0
+                //交换第一二个规则
+                ruleArr[0] = cur;
+                ruleArr[1] = temp;
+
+                //第一个规则DIV
+                var upDiv = $('#ruleCon').find('div').eq(index - 1);
+                //第一个规则DIV文本
+                var upDivT = upDiv.text();
+                //第二个规则文本
+                var curText = curRule.text();
+                //去掉IsAnd文本
+                curText = curText.replace('and ', '');
+                curText = curText.replace('or ', '');
+                //修改第一个规则的文本
+                upDiv.text(curText);
+                upDiv.prepend('<input type="checkbox" name="addC">');
+                upDiv.addClass('current');
+                //修改第二个规则的文本
+                curRule.text('and ' + upDivT);
+                curRule.prepend('<input type="checkbox" name="addC">');
+                curRule.removeClass('current');
+            } else {
+                //将上方的规则缓存起来
+                var temp = ruleArr[index - 1];
+                //上方规则变成当前规则
+                ruleArr[index - 1] = ruleArr[index];
+                //当前规则变成上方规则
+                ruleArr[index] = temp;
+                //上方的DIV
+                var upDiv = $('#ruleCon').find('div').eq(index - 1);
+                //上方规则文本
+                var upDivT = upDiv.text();
+                //交换文本
+                upDiv.text(curRule.text());
+                upDiv.prepend('<input type="checkbox" name="addC">');
+                upDiv.addClass('current');
+                //
+                curRule.text(upDivT);
+                curRule.prepend('<input type="checkbox" name="addC">');
+                curRule.removeClass('current');
+            }
+            $(this).attr('disabled', false);
+        })
+        //下移按钮事件
+        $('#downRule').unbind().bind('click', function () {
+            $(this).attr('disabled', 'disabled');
+            //当前选中的规则div
+            var curRule = $('.current');
+            //当前div的索引
+            var index = $("#ruleCon div").index(curRule);
+            //最后一个规则
+            if (index == ruleArr.length - 1) {
+                layer.alert('无法下移');
+            } else if (index == 0) {//如果是第一个规则
+                var cur = ruleArr[0]; //第一个规则
+                var temp = ruleArr[1]; //第二个规则
+                cur.IsAnd = 1; //将第二个规则的isAnd改为0
+                temp.IsAnd = 1; //将第一个规则的isAnd改为0
+                //交换第一二个规则
+                ruleArr[1] = cur;
+                ruleArr[0] = temp;
+
+                //第二个规则DIV
+                var downDiv = $('#ruleCon').find('div').eq(index + 1);
+                //第二个规则DIV文本
+                var downDivT = downDiv.text();
+                //第一个规则文本
+                var curText = curRule.text();
+                //去掉IsAnd文本
+                downDivT = downDivT.replace('and ', '');
+                downDivT = downDivT.replace('or ', '');
+                //修改第一个规则的文本
+                downDiv.text('and ' + curText);
+                downDiv.prepend('<input type="checkbox" name="addC">');
+                downDiv.addClass('current');
+                //修改第二个规则的文本
+                curRule.text(downDivT);
+                curRule.prepend('<input type="checkbox" name="addC">');
+                curRule.removeClass('current');
+
+            } else {
+                //将下方的规则缓存起来
+                var temp = ruleArr[index + 1];
+                //下方规则变成当前规则
+                ruleArr[index + 1] = ruleArr[index];
+                //当前规则变成下方规则
+                ruleArr[index] = temp;
+
+                //上方的DIV
+                var downDiv = $('#ruleCon').find('div').eq(index + 1);
+                //上方规则文本
+                var downDivT = downDiv.text();
+                //交换文本
+                downDiv.text(curRule.text());
+                downDiv.prepend('<input type="checkbox" name="addC">');
+                downDiv.addClass('current');
+
+                //
+                curRule.text(downDivT);
+                curRule.prepend('<input type="checkbox" name="addC">');
+                curRule.removeClass('current');
+            }
+            $(this).attr('disabled', false);
+        })
+
+        //添加括号事件
+        $('#addKh').bind('click', function () {
+            var indexArr = [];
+            var nextFlag = true; //是否相邻
+            //获取所有选中的规则
+            var checks = $('input[type="checkbox"][name="addC"]:checked');
+            if (checks.length <= 1) {
+                layer.alert('请选择多个过滤条件!');
+                return;
+            }
+            //遍历规则
+            $.each(checks, function (index, element) {
+                var parentDiv = $(element).parent();
+                //获取规则索引
+                var index = $("#ruleCon div").index(parentDiv);
+                indexArr.push(index);
+            });
+
+            $.each(indexArr, function (index, element) {
+                //从第二个开始判断
+                if (index > 0) {
+                    if (element - indexArr[index - 1] != 1) {
+                        nextFlag = false;
+                        return;
+                    }
+                }
+            })
+            if (!nextFlag) {
+                layer.alert('请选择相邻的过滤条件');
+            } else { //相邻的过滤条件
+                var newRule = {}; //合并后的筛选规则
+                var newRuleArr = [];
+                var newText = '';
+                var firstIndex; //第一个合并规则的索引
+                //遍历添加括号的规则
+                $.each(indexArr, function (index, element) {
+                    var filterRule = ruleArr[element]; //根据索引找到对应的过滤规则
+                    //第一个规则
+                    if (index == 0) {
+                        firstIndex = element;
+                        //第一个规则的IsAnd作为新规则的IsAnd
+                        newRule.IsAnd = filterRule.IsAnd;
+                        newRuleArr.push(filterRule);
+                        if (filterRule.IsAnd == '1') { //and
+                            newText += 'and (';
+                        } else {//or
+                            newText += 'or (';
+                        }
+                        var showText;
+                        if (filterRule.Type == 0) {//普通
+                            var fieldName = filterRule.FieldName; //字段名
+                            var opt = filterRule.Opt; //操作符
+                            var optText = $("#opt option[value='" + opt + "']").text(); //操作符文本
+                            var val = filterRule.Value;
+                            var isAnd = filterRule.IsAnd;
+                            showText = "(列名:" + fieldName + ")" + "  " + optText + "  " + val;
+                        } else {//公式
+                            showText = val;
+                        }
+                        newText += showText;
+                    } else if (index == indexArr.length - 1) {//最后一个规则
+                        newRuleArr.push(filterRule);
+                        if (filterRule.IsAnd == '1') { //and
+                            newText += ' and ';
+                        } else {//or
+                            newText += ' or ';
+                        }
+                        var showText;
+                        if (filterRule.Type == 0) {//普通
+                            var fieldName = filterRule.FieldName; //字段名
+                            var opt = filterRule.Opt; //操作符
+                            var optText = $("#opt option[value='" + opt + "']").text(); //操作符文本
+                            var val = filterRule.Value;
+                            var isAnd = filterRule.IsAnd;
+                            showText = "(列名:" + fieldName + ")" + "  " + optText + "  " + val;
+                        } else {//公式
+                            showText =  filterRule.Value;
+                        }
+                        newText += showText;
+                        newText += ')';
+                    } else {
+                        newRuleArr.push(filterRule);
+                        if (filterRule.IsAnd == '1') { //and
+                            newText += ' and ';
+                        } else {//or
+                            newText += ' or ';
+                        }
+                        var showText;
+                        if (filterRule.Type == 0) {//普通
+                            var fieldName = filterRule.FieldName; //字段名
+                            var opt = filterRule.Opt; //操作符
+                            var optText = $("#opt option[value='" + opt + "']").text(); //操作符文本
+                            var val = filterRule.Value;
+                            var isAnd = filterRule.IsAnd;
+                            showText = "(列名:" + fieldName + ")" + "  " + optText + "  " + val;
+                        } else {//公式
+                            showText =  filterRule.Value;
+                        }
+                        newText += showText;
+                    }
+                });
+                newRule.Arr = newRuleArr;
+                var oldRuleLength = ruleArr.length; //旧过滤规则数组的长度
+                var newRuleLength = oldRuleLength - indexArr.length; //新过滤规则数组的长度
+                var newRuleArr = [];
+                //遍历旧过滤规则
+                $.each(ruleArr, function (index, element) {
+                    //当前的过滤规则
+                    var rule = ruleArr[index];
+                    //是否包含在合并数组中
+                    if ($.inArray(index, indexArr) != -1) {
+                        //合并的第一个规则
+                        if (index == indexArr[0]) {
+                            newRuleArr.push(newRule);
+                        }
+                    } else {
+                        newRuleArr.push(rule);
+                    }
+                });
+                //更新规则数组
+                ruleArr = newRuleArr;
+                refresh(ruleArr);
+            }
+        })
+
+
+        $('#deleteKh').bind('click', function () {
+            //当前选择的筛选规则div
+            var curDiv = $('.current');
+            //规则索引
+            var index = $("#ruleCon div").index(curDiv);
+            //当前规则
+            var curRule = ruleArr[index];
+            var newArr = [];
+            if (curRule.Arr == undefined) {
+                layer.alert('无效的操作');
+            } else {
+                var isAnd = curRule.IsAnd;
+                //合并的规则
+                var arr = curRule.Arr;
+                //将拆分的过滤规则按照当前索引添加到规则数据中
+                //当前规则的长度
+                var oldArrLength = ruleArr.length;
+                //新规则的长度
+                var newArrLength = oldArrLength + arr.length - 1;
+                //临时数组
+                var temp = [];
+                $.each(ruleArr, function (i, e) {
+                    temp.push(e);
+                })
+                var rest = temp.splice(index + 1, ruleArr.length);
+                //删除当前规则
+                ruleArr.splice(index, 1);
+                //在原来的位置上添加数据
+                for (var i = 0; i < arr.length; i++) {
+                    ruleArr.splice(index + i, 1, arr[i]);
+                }
+                for (var i = 0; i < rest.length; i++) {
+                    ruleArr.push(rest[i]);
+                }
+                refresh(ruleArr);
+            }
+        })
+
+        //值类型绑定选中事件
+        $('#dataType').bind('change', function () {
+            var type = $(this).val();
+            changeOption(type);
+            if (type == 4) { //如果是日期类型
+                $('#dateVal').show();
+                $('#val').hide();
+                $('#boolVal').hide();
+            } else if (type == 5) {//布尔类型
+                $('#val').hide();
+                $('#dateVal').hide();
+                $('#boolVal').show();
+            } else {
+                $('#val').show();
+                $('#dateVal').hide();
+                $('#boolVal').hide();
+            }
+        });
+
+        //值类型绑定选中事件
+        $('#opt').bind('change', function () {
+            var type = $(this).val();
+            if (type == 14) { //不为空
+                $('#dataType').attr('disabled',true);
+                $('#dateVal').attr('disabled',true);
+                $('#val').attr('disabled',true);
+                $('#boolVal').attr('disabled',true);
+            } else {
+                $('#dataType').attr('disabled',false);
+                $('#dateVal').attr('disabled',false);
+                $('#val').attr('disabled',false);
+                $('#boolVal').attr('disabled',false);
+            }
+        });
+
+
+        $('input[name="type"]').bind('change', function () {
+            if ($(this).val() == 0) {//普通
+                $('#labelDiv').show();
+                $('#container').show();
+                $('#formulaCon').hide();
+            } else {//公式
+                $('#labelDiv').hide();
+                $('#container').hide();
+                $('#formulaCon').show();
+            }
+        })
+
+    });
+</script>
+</html>

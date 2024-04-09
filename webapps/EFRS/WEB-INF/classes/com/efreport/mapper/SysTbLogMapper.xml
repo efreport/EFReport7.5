@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysTbLogMapper">
+
+    <!-- 新增 -->
+    <insert id="saveTbLog" parameterType="com.efreport.entity.SysTbLog">
+      INSERT INTO SYS_TB_LOG(USER_ID,USER_NAME,COMPANY_ID,COMPANY_NAME,TEMPLATE_ID,TEMPLATE_NAME,TB_TIME,CONN_NAME,TB_SQL,STATE)
+          VALUES(#{userId} ,#{userName},#{companyId},#{companyName},#{templateId},#{templateName},#{tbTime},#{connName},#{tbSql},#{state})
+    </insert>
+    <!-- 获取所有日志记录 -->
+
+    <select id="countByParam" resultType="int" parameterType="map">
+        SELECT count(*) FROM SYS_TB_LOG WHERE 1=1
+        AND COMPANY_ID = #{companyId}
+        <if test="userName != null">
+            and user_name like concat('%' , #{userName} , '%')
+        </if>
+        <if test="templateName != null">
+            and template_name like concat('%' , #{templateName} , '%')
+        </if>
+        <if test="time != null">
+            and tb_time like concat('%' , #{time} , '%')
+        </if>
+    </select>
+
+    <!-- 列表 -->
+    <select id="listByParam" parameterType="map" resultType="com.efreport.entity.SysTbLog">
+
+        SELECT
+        a.id,
+        a.user_id as userId,
+        a.user_name as userName,
+        a.company_id as companyId,
+        a.company_name as companyName,
+        a.template_id as templateId,
+        a.template_name as templateName,
+        a.tb_time as tbTime,
+        a.conn_name as connName,
+        a.tb_sql as tbSql,
+        a.state as state
+        FROM
+        SYS_TB_LOG a
+        WHERE 1=1 AND a.COMPANY_ID = #{companyId}
+        <if test="userName != null">
+            and user_name like concat('%' , #{userName} , '%')
+        </if>
+        <if test="templateName != null">
+            and template_name like concat('%' , #{templateName} , '%')
+        </if>
+        <if test="time != null">
+            and tb_time like concat('%' , #{time} , '%')
+        </if>
+        order by a.id desc
+        limit #{startNum} , #{limit}
+    </select>
+
+
+</mapper>

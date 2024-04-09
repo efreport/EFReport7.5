@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8"/>
+    <link rel="stylesheet" href="../../lib/layui-v2.7.6/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../js/zTree/css/zTreeStyle.css" type="text/css">
+    <style>
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+            background: #d5d5d5;
+        }
+
+        #menuTree::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        #menuTree::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+            background: #d5d5d5;
+        }
+
+        /**
+        自定义模板图标
+        */
+        #menuTree li span.button.template_ico_docu {
+            margin-right: 2px;
+            background: url(/images/design/tree/template.png) no-repeat scroll 0 0 transparent;
+            vertical-align: top;
+            background-size: 100% 100%;
+        }
+
+        #menuTree li a.curSelectedNode {
+            height: 21px;
+        }
+
+        #menuTree li span.button.add {
+            width:18px;
+            height:18px;
+            background-image: url("../images/design/ds/addDs.png");
+            background-size:100% 100%;
+            vertical-align: middle;
+            *vertical-align: middle
+        }
+
+        #menuTree li span.button.edit {
+            width:18px;
+            height:18px;
+            background-image: url("../images/design/ds/editDs.png");
+            background-size:100% 100%;
+            vertical-align: middle;
+            *vertical-align: middle
+        }
+
+        #menuTree li span.button.remove {
+            width:18px;
+            height:18px;
+            background-image: url("../images/design/ds/deleteDs.png");
+            background-size:100% 100%;
+            vertical-align: middle;
+            *vertical-align: middle
+        }
+
+        /**ztree字体**/
+        #menuTree li a {
+            padding: 1px 3px 0 0;
+            margin: 0;
+            cursor: pointer;
+            height: 17px;
+            color: #4E5969;
+            background-color: transparent;
+            text-decoration: none;
+            vertical-align: top;
+            display: inline-block;
+        }
+        #menuTree li span{
+            vertical-align: top;
+        }
+
+        #menuTree li span.button {
+            width: 16px !important;
+            height: 16px !important;
+        }
+    </style>
+</head>
+<body style="height: 100%;">
+<div>
+    <ul id="menuTree" class="ztree"
+        style="height: 100%;overflow: auto;white-space: normal;touch-action: pan-x;padding:20px;"></ul>
+    
+    <!-- <div style="text-align: center;margin-top:20px;">
+        <button class="layui-btn layui-btn-normal" id="confirm">确定</button>
+        <button class="layui-btn layui-btn-primary" id="reset">重置</button>
+    </div> -->
+
+</div>
+</body>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../js/zTree/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript">
+
+    // 手机端
+    var base = window.sessionStorage.getItem("ef_server_base_url");
+    let token = window.sessionStorage.getItem("cur_token");
+    let page_index = -1;
+
+    var url= base + "/designSys/getTemplateTree";
+    url = base + "/template/getMobileTemplateNewTreeByUser?clientType=10&token=" + token;
+
+    var setting = {
+        edit: {
+            enable: true,
+            showRemoveBtn: false,
+            showRenameBtn: false,
+            inner:false
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        callback: {
+            beforeDrag: beforeDrag,
+            beforeDrop: beforeDrop,
+            onDrop:onDrop
+        }
+    };
+
+    function setPageIndex (index) {
+        page_index = index;
+    }
+
+    var layer;
+
+    layui.use(['layer','element'], function () {
+        layer = layui.layer;
+    });
+
+    function beforeDrag(treeId, treeNodes) {
+        for (var i=0,l=treeNodes.length; i<l; i++) {
+            if (treeNodes[i].drag === "false") {
+                return false;
+            }
+        }
+        return true;
+    }
+    function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+        if(treeNodes[0].isParent){ //禁止拖拽目录
+            return false;
+        }
+        if(targetNode.pId != treeNodes[0].pId){ //禁止跨级拖拽
+            return false;
+        }
+        if(moveType === 'inner'){ //不允许移动到结点上
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    function filter(node) {
+        // return (node.pId == null && node.pkg == '0');
+        return (node.pId == null && element.type == 'temp');
+    }
+
+    function onDrop(event, treeId, treeNodes, targetNode, moveType) {
+        if(moveType == 'inner'){
+            return false;
+        }else{
+            var parent = targetNode.getParentNode(); //获取父节点
+            if(parent != null){
+                var allChild = parent.children;
+                $.each(allChild , function(index , ele){ //重新排序
+                    ele.template_order = index + 1;
+                })
+            }else{ //根节点下的报表
+                var treeObj = $.fn.zTree.getZTreeObj(treeId);
+                var nodes = treeObj.getNodesByFilter(filter); // 查找节点集合
+                $.each(nodes , function(index , ele){ //重新排序
+                    ele.template_order = index + 1;
+                    ele.pId = 0;
+                })
+            }
+
+
+        }
+    }
+
+    function getTree(url){
+        $.ajax({
+            url: url,
+            type: 'get',
+            contentType: "application/json;charset=UTF-8",
+            success: function (data) {
+                data = data.menuInfo[0].child;
+                treeObj = $.fn.zTree.init($("#menuTree"), setting, data);
+                treeObj.expandAll(true);
+            }
+        });
+    }
+
+    function pageInit() {
+        getTree(url);
+    }
+
+    function getPageData() {
+        var nodes = treeObj.getNodes();
+        var data = treeObj.transformToArray(treeObj.getNodes()); //转换数据
+        let paramData = [];
+        $.each(data , function(index , element){
+            let obj = {
+                id: 0,
+                userId: 0,
+                tempid: 0,
+                templateOrder: 0
+            };
+            if(element.type == 'temp'){
+                obj.tempid = element.id;
+                obj.templateOrder = element.template_order;
+                paramData.push(obj);
+            }
+        })
+        return paramData;
+    }
+
+    $(document).ready(function(){
+        getTree(url);
+        $('#confirm').bind('click',function(){
+            var nodes = treeObj.getNodes();
+            var data = treeObj.transformToArray(treeObj.getNodes()); //转换数据
+            var datas = [];
+            let paramData = [];
+            $.each(data , function(index , element){
+                var template = {
+                    id:'',
+                    template_order:''
+                }
+                let obj = {
+                    id: 0,
+                    userId: 0,
+                    tempid: 0,
+                    templateOrder: 0
+                };
+                if(element.type == 'temp'){
+                    template.id = element.id;
+                    template.template_order = element.template_order;
+                    datas.push(template);
+
+                    obj.tempid = element.id;
+                    obj.templateOrder = element.template_order;
+                    paramData.push(obj);
+                }
+            })
+            $.ajax({
+                url:base + "/mobiletemporder/savetemporder?token="+token,
+                type:'post',
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify(paramData),
+                success:function(res){
+                    if(res.state == 'success'){
+                        layer.msg('修改成功');
+                        layer.close(page_index);
+                    }else{
+                        layer.msg('修改顺序失败');
+                    }
+                },
+                error:function(){}
+            })
+
+        })
+        $('#reset').bind('click',function(){
+
+            window.location.reload();
+
+        })
+    })
+
+
+</script>
+</html>

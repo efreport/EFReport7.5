@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>页面设置</title>
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <link href="../../css/scroll.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../js/layui.js"></script>
+    <script type="text/javascript" src="../../js/design/constants.js"></script>
+    <style>
+        html{
+            overflow: hidden;
+        }
+        .layui-elem-field {
+            border-left: 0px !important;
+            border-right: 0px !important;
+            border-bottom: 0px !important;
+        }
+
+        .layui-elem-field legend {
+            margin-left: 20px;
+            padding: 0 0;
+            font-size: 16px !important;
+            font-weight: 500 !important;
+            font-family: PingFang SC-Medium, PingFang SC;
+            color: #1D2129;
+        }
+        
+        select{
+            width: 346px;
+            height: 32px;
+            background: #f2f3f5;
+            border: 1px solid #f2f3f5;
+            border-radius: 2px 2px 2px 2px;
+        }
+        select:hover {
+            border:1px solid #44B4FF;
+            background-color:#fff;
+        }
+
+        input:hover {
+            border: 1px solid #44B4FF;
+            background-color: #fff;
+        }
+
+        .inpute {
+            width: 160px;
+            height: 32px;
+            line-height: 32px;
+            background: #f2f3f5;
+            border: 1px solid #f2f3f5;
+            border-radius: 2px 2px 2px 2px;
+        }
+        .span_title_s {
+            font-size: 14px; 
+            height: 25px;    
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #4E5969;
+            padding-left: 10px;
+        }
+        .clsori {
+            width: 14px;
+            height: 14px;
+            margin-top: -3px;
+        }
+        .clsori:checked {
+            width: 14px;
+            height: 14px;
+            background: #FFFFFF;
+            border-radius: 7px 7px 7px 7px;
+            opacity: 1;
+            border: 10px solid #0094FF;
+        }
+        .layui-form-checked[lay-skin=primary] i {
+            border-color: #1E9FFF !important;
+            background-color: #1E9FFF !important;
+        }
+
+        /* 修改radio选中状态的颜色信息 */
+        .layui-form-radio:hover *, .layui-form-radioed, .layui-form-radioed > i {
+            color: #0094FF !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="layui-tab layui-tab-card">
+        <ul class="layui-tab-title">
+            <li class="layui-this" >页面</li>
+            <li >其他</li>
+        </ul>
+        <div class="layui-tab-content" style="height: 388px;">
+            <div class="layui-tab-item layui-show">
+                    <div style="position:relative; width: 95%; height: auto; margin: auto;">
+                        <fieldset class="layui-elem-field">
+                            <legend>纸张</legend>
+                            <div style="height: 15px;"></div>
+                            <div style="position:relative; width: 100%; height: auto;">
+                                <div style="width: 50%; height: auto; float: left;">
+                                    <div class="layui-form-item">
+                                        纸张类型
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <select id="paperType"></select>
+                                    </div>
+                                </div>
+                                <div style="width: 24.5%; height: auto; float: left;">
+                                    <div class="layui-form-item">
+                                        宽(毫米)
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <input type="text" disabled="disabled" id="paperWidth" class="inpute">
+                                    </div>
+                                </div>
+                                <div style="width: 24.5%; height: auto; float: left;">
+                                    <div class="layui-form-item">
+                                        高(毫米)
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <input type="text" disabled="disabled" id="paperHeight" class="inpute">
+                                    </div>
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                        </fieldset>
+                    </div>
+               
+                    <div style="position:relative; width: 95%; height: auto; margin: auto;">
+                        <fieldset class="layui-elem-field">
+                            <legend>页边距(毫米)</legend>
+                            <div style="height: 15px;"></div>
+                            <div style="position:relative; width: 100%; height: auto;">
+                                
+                                <div style="width: 25%; height: auto; float: left;">
+                                    <div class="layui-form-item">
+                                        左边距
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <input type="text" id="leftMargin" class="inpute">
+                                    </div>
+                                </div>
+
+                                <div style="width: 25%; height: auto; float: left;">
+                                    <div class="layui-form-item">
+                                        上边距
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <input type="text" id="topMargin" class="inpute">
+                                    </div>
+                                </div>
+
+                                <div style="width: 24.5%; height: auto; float: left;">
+                                    <div class="layui-form-item">
+                                        右边距
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <input type="text" id="rightMargin" class="inpute">
+                                    </div>
+                                </div>
+                                <div style="width: 24.5%; height: auto; float: left;">
+                                    <div class="layui-form-item">
+                                        下边距
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <input type="text" id="bottomMargin" class="inpute">
+                                    </div>
+                                </div>
+
+                                <div style="clear:both;"></div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div style="position:relative; width: 95%; height: auto; margin: auto;">
+                        <div style="width: 50%; height: auto; float: left;">
+                            <fieldset class="layui-elem-field">
+                                <legend>方向</legend>
+                                <div style="height: 15px;"></div>
+                                <form class="layui-form" action="">
+                                <div style="position:relative;">
+                                    <div style="width: 50%;float:left;">
+                                        <div class="layui-form-item">
+                                            <input type="radio" name="ori" lay-filter="radioOri" value="0" title="纵向">
+                                        </div>
+                                    </div>
+                                    <div style="width: 49%;float:left;">
+                                        <div class="layui-form-item">
+                                            <input type="radio" name="ori" lay-filter="radioOri" value="1" title="横向">
+                                        </div>
+                                    </div>
+                                    <div style="clear:both;"></div>
+                                </div>
+                                </form>
+                            </fieldset>
+                        </div>
+                        <div style="width: 49%; height: auto; float: left;">
+                            <fieldset class="layui-elem-field">
+                                <legend>居中方式</legend>
+                                <div style="height: 15px;"></div>
+                                <div style="position:relative;">
+                                    <form class="layui-form" action="">
+                                    <div style="width: 50%;float:left;">
+                                        <div class="layui-form-item">
+                                            <input type="checkbox" lay-skin="primary" title="水平居中" id="centerH" value="0">
+                                        </div>
+                                    </div>
+                                    <div style="width: 49%;float:left;">
+                                        <div class="layui-form-item">
+                                            <input type="checkbox" lay-skin="primary" title="垂直居中" id="centerV" value="1">
+                                        </div>
+                                    </div>
+                                    </form>
+                                    <div style="clear:both;"></div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </div>
+            </div>
+    
+    
+            <div class="layui-tab-item">
+                <div style="position:relative; width: 95%; height: auto; margin: auto;">
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item">
+                            <input type="checkbox" lay-skin="primary" title="打印表格线" id="printCellLine">
+                        </div>
+                        <div class="layui-form-item">
+                            <input type="checkbox" lay-skin="primary" title="打印隐藏单元格" id="printHidedData">
+                        </div>
+                    </form>
+                </div>               
+            </div>
+        </div>
+    </div>    
+</body>
+<script type="text/javascript">
+    var form;
+    layui.use(['layer', 'element', 'form'], function () {
+        var layer = layui.layer, element = layui.element;
+        form = layui.form;
+        var ctype = CellConstant.PaperType;
+        for (var i in ctype) {
+            $("#paperType").append('<option value=' + i + '>' + ctype[i] + '</option>');
+        }
+        $("#paperType").change(function () {
+            if (30 == $(this).val()) {
+                $("#paperWidth").attr('disabled',false);
+                $("#paperHeight").attr('disabled',false);
+            } else {
+                var page = getAct();
+                $("#paperWidth").attr('disabled','disabled');
+                $("#paperHeight").attr('disabled','disabled');
+                $("#paperWidth").val(page.h);
+                $("#paperHeight").val(page.v);
+            }
+        });
+        $("input:radio[name=ori]").change(function(){
+            var val=$(this).val();
+            var h=$("#paperWidth").val();
+            var v=$("#paperHeight").val();
+            $("#paperWidth").val(v);
+            $("#paperHeight").val(h);
+        });
+
+
+        form.on("radio(radioOri)", function(data){
+            // 元素name
+            let elename = data.elem.name;
+            // 元素值
+            let eleval = data.value;
+            // let v = parseInt(eleval);
+            
+            var h=$("#paperWidth").val();
+            var v=$("#paperHeight").val();
+            $("#paperWidth").val(v);
+            $("#paperHeight").val(h);
+
+        });
+
+
+    });
+    function getAct() {
+        var text = $("#paperType").find("option:selected").text();
+        if (text != '') {
+            var star = text.indexOf('[');
+            var end = text.lastIndexOf('x');
+            var end1 = text.lastIndexOf('mm');
+            var h = text.substring(star + 1, end);
+            var v = text.substring(end + 1, end1);
+            var page = {
+                h: h,
+                v: v
+            };
+            return page;
+        }
+    }
+
+
+    function  isNoNegativeNumber(num) {
+        var g = /^[1-9]*[1-9][0-9]*$/;
+        if (g.test(num)) {
+            return true;
+        } else {
+            if (num == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    function init(json) {
+        if (json != '' && json != undefined) {
+            var obj = JSON.parse(json);
+            var type = obj.paperType;
+            $("#paperType").val(type);
+            if (type == 30) {
+                $("#paperWidth").attr('disabled',false);
+                $("#paperHeight").attr('disabled',false);
+            }
+            $("#paperWidth").val(obj.paperWidth);
+            $("#paperHeight").val(obj.paperHeight);
+            $("#leftMargin").val(obj.leftMargin);
+            $("#rightMargin").val(obj.rightMargin);
+            $("#topMargin").val(obj.topMargin);
+            $("#bottomMargin").val(obj.bottomMargin);
+
+            if (obj.centerH === true) {
+                $("#centerH").prop('checked', 'checked');
+            }
+
+            if (obj.centerV === true)
+            {
+                $("#centerV").prop('checked', 'checked');
+            }
+             
+            if (obj.printHidedData === true) {
+                $("#printHidedData").prop('checked', 'checked');
+            }
+            if (obj.printCellLine === true) {
+                $("#printCellLine").prop('checked', 'checked');
+            }
+
+            // $('#isCenter').prop('checked','checked');
+            $("input:radio[name=ori][value=" + obj.ori + "]").prop("checked", true);
+            
+        } else {
+            $("#paperType").val(0).trigger('change');
+        }
+        form.render();
+    }
+    function getPage() {
+        var page = {
+            paperType: parseInt($("#paperType").val()),
+            paperWidth: parseInt($("#paperWidth").val()),
+            paperHeight: parseInt($("#paperHeight").val()),
+            ori: parseInt($("input[name='ori']:checked").val()),
+            leftMargin: parseInt($("#leftMargin").val()),
+            rightMargin: parseInt($("#rightMargin").val()),
+            topMargin: parseInt($("#topMargin").val()),
+            bottomMargin: parseInt($("#bottomMargin").val()),
+            centerH: $("#centerH").prop('checked'),
+            centerV: $("#centerV").prop('checked'),
+            printHidedData: $("#printHidedData").prop('checked'),
+            printCellLine: $("#printCellLine").prop('checked')
+        };
+        return page;
+    }
+
+    $(document).ready(function(){
+
+        $("#paperWidth").bind('change' , function(){
+            if(!isNoNegativeNumber($(this).val())){
+                $(this).val(0);
+            }
+        })
+
+        $("#paperHeight").bind('change' , function(){
+            if(!isNoNegativeNumber($(this).val())){
+                $(this).val(0);
+            }
+        })
+
+        $("#leftMargin").bind('change' , function(){
+            if(!isNoNegativeNumber($(this).val())){
+                $(this).val(0);
+            }
+        })
+
+        $("#rightMargin").bind('change' , function(){
+            if(!isNoNegativeNumber($(this).val())){
+                $(this).val(0);
+            }
+        })
+
+        $("#topMargin").bind('change' , function(){
+            if(!isNoNegativeNumber($(this).val())){
+                $(this).val(0);
+            }
+        })
+
+        $("#bottomMargin").bind('change' , function(){
+            if(!isNoNegativeNumber($(this).val())){
+                $(this).val(0);
+            }
+        })
+
+    })
+</script>
+</html>

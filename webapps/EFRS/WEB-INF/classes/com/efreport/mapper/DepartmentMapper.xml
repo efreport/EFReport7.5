@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.DepartmentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.efreport.entity.Department">
+        <id column="id" property="id"/>
+        <result column="department_name" property="departmentName"/>
+        <result column="pid" property="pId"/>
+        <result column="company_id" property="companyId"/>
+    </resultMap>
+
+    <select id="listDepartments" parameterType="int" resultType="com.efreport.entity.Department">
+        SELECT
+          id,
+          department_name as departmentName,
+          pid,
+          company_id as companyId
+        FROM
+          ef_sys_department
+        WHERE
+          company_id = #{companyId}
+    </select>
+
+    <insert id="save" parameterType="com.efreport.entity.Department" useGeneratedKeys="true" keyProperty="id">
+        insert into ef_sys_department (department_name, pid , company_id) values (#{departmentName}, #{pId} , #{companyId})
+    </insert>
+
+    <select id="countDepartment" parameterType="map" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        EF_SYS_DEPARTMENT
+        WHERE
+        department_name = #{departmentName}
+        and
+        pid = #{pId}
+        and company_id = #{companyId}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+    </select>
+
+    <insert id="saveAll">
+
+
+    </insert>
+
+    <select id="countSonDepartment" parameterType="int" resultType="int">
+        SELECT
+          COUNT(*)
+        FROM
+          EF_SYS_DEPARTMENT
+        WHERE
+          pid = #{id}
+    </select>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM EF_SYS_DEPARTMENT WHERE id = #{id}
+    </delete>
+
+    <update id="modify" parameterType="map">
+       UPDATE
+       EF_SYS_DEPARTMENT
+       SET
+       DEPARTMENT_NAME = #{departmentName}
+       where
+       ID = #{id}
+    </update>
+
+
+</mapper>

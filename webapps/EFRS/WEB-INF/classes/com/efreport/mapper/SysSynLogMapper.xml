@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysSynLogMapper">
+
+    <resultMap id="sysSynLogMap" type="com.efreport.entity.SysSynLog">
+        <id column="ID" property="id"></id>
+        <result column="TASKID" property="taskId"></result>
+        <result column="TASKNAME" property="taskName"></result>
+        <result column="EXECUTETIME" property="executeTime"></result>
+        <result column="RESULT" property="result"></result>
+        <result column="OPERATIONTYPE" property="operationType"></result>
+        <result column="ERRORMESSAGE" property="errorMessage"></result>
+    </resultMap>
+
+    <!-- 新增 -->
+    <insert id="saveSynLog" parameterType="com.efreport.entity.SysSynLog">
+  <![CDATA[
+
+  INSERT INTO SYS_SYN_LOG(TASKID,TASKNAME,EXECUTETIME,RESULT,OPERATIONTYPE,ERRORMESSAGE)
+          VALUES(#{taskId}, #{taskName} ,#{executeTime},#{result},#{operationType},#{errorMessage})
+
+        ]]>
+  </insert>
+
+    <select id="listSynLogs" resultMap="sysSynLogMap">
+        <![CDATA[
+
+  SELECT * FROM  SYS_SYN_LOG WHERE 1=1
+
+        ]]>
+    </select>
+
+    <select id="countSynLogs" resultType="int" parameterType="int">
+        <![CDATA[
+
+        SELECT count(*) FROM  SYS_SYN_LOG WHERE 1=1 AND TASKID IN (SELECT ID FROM SYS_SYN_TASK WHERE COMPANYID = #{companyId})
+
+         ]]>
+    </select>
+
+    <select id="countSynLogs2" resultType="int" parameterType="map">
+        SELECT count(*) FROM  SYS_SYN_LOG WHERE 1=1 AND TASKID IN (SELECT ID FROM SYS_SYN_TASK WHERE COMPANYID = #{companyId})
+        <if test="taskName != null">
+            and TASKNAME like  concat('%' , #{taskName} , '%')
+        </if>
+        <if test="operationType != null">
+            and OPERATIONTYPE like  concat('%' , #{operationType} , '%')
+        </if>
+        <if test="result != null">
+            and RESULT like  concat('%' , #{result} , '%')
+        </if>
+        <if test="start != null and start != ''">
+            AND EXECUTETIME <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND EXECUTETIME <![CDATA[ <= ]]> #{end}
+        </if>
+    </select>
+
+    <!-- 列表 -->
+    <select id="listLogsByParam" parameterType="map" resultMap="sysSynLogMap">
+        select
+          *
+        from
+         SYS_SYN_LOG
+        where 1=1
+        and TASKID IN (SELECT ID FROM SYS_SYN_TASK WHERE COMPANYID = #{companyId})
+        <if test="name != null">
+            and NAME_ like  concat('%' , #{name} , '%')
+        </if>
+        <if test="taskName != null">
+            and TASKNAME like  concat('%' , #{taskName} , '%')
+        </if>
+        <if test="operationType != null">
+            and OPERATIONTYPE like  concat('%' , #{operationType} , '%')
+        </if>
+        <if test="result != null">
+            and RESULT like  concat('%' , #{result} , '%')
+        </if>
+        <if test="start != null and start != ''">
+            AND EXECUTETIME <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND EXECUTETIME <![CDATA[ <= ]]> #{end}
+        </if>
+
+        order by id desc
+        limit #{startNum} , #{limit}
+    </select>
+
+
+
+</mapper>

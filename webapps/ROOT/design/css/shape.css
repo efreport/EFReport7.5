@@ -1,0 +1,29 @@
+#lay_expend2 {
+    padding-left:10%;
+    padding-right:10%;
+    width:80%
+}
+
+
+#lay_expend2 li{
+    width:45%;
+    min-width:20px;
+    color: #86909C;
+}
+
+.layui-tab-brief > .layui-tab-more li.layui-this:after, .layui-tab-brief > .layui-tab-title .layui-this:after {
+    border: none;
+    border-radius: 0;
+    border-bottom: 0px solid #1D2129;
+}
+
+#lay_expend2 .layui-this{
+    color:#1D2129;
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+#column5 td {
+    height: 35px;
+    vertical-align: middle;
+}

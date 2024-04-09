@@ -1,0 +1,489 @@
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form,
+fieldset, input, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+fieldset, img {
+    border: 0;
+}
+
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+caption, th {
+    text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+q:before, q:after {
+    content: '';
+}
+
+abbr, acronym {
+    border: 0;
+}
+
+@charset "utf-8";
+* {
+    margin: 0px;
+    padding: 0px;
+
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 15px;
+    /*字体*/
+}
+
+li {
+    list-style: none;
+}
+
+input, img {
+    border: none;
+}
+
+.ef-btn-def {
+    -webkit-appearance: none;
+    -webkit-user-select: none;
+    align-items: flex-start;
+    background-color: #009688;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0px;
+    border-image-outset: 0px;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border: 0px none rgb(255, 255, 255);
+    box-sizing: border-box;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', Tahoma, Arial, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-letiant-caps: normal;
+    font-weight: normal;
+    height: 21px;
+    letter-spacing: normal;
+    line-height: 21px;
+    margin: 4px 0 4px 1px;
+    outline-color: rgb(255, 255, 255);
+    outline-style: none;
+    outline-width: 0px;
+    text-align: center;
+    text-indent: 0px;
+    text-shadow: none;
+    text-transform: none;
+    transition-delay: 0s;
+    transition-duration: 0.3s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-spacing: 0px;
+    writing-mode: horizontal-tb;
+}
+
+.ef-btn-def:hover {
+    background-color: #009aa8;
+}
+
+.select2-selection--multiple {
+    height: 30px; /* 解决下拉多选框换行问题  */
+}
+
+.searchTd {
+    background-color: rgba(135, 206, 235, 101);
+}
+
+.el-input .el-input__inner {
+    height: 30px;
+}
+
+.el-input__icon {
+    line-height: 30px;
+}
+
+.el-button {
+    height: 30px;
+}
+
+#singeSelDiv {
+    cursor: pointer;
+}
+
+#singeSelDiv div:hover {
+    background-color: lightgray;
+}
+
+.ty-bar-container {
+    border-bottom: 1px solid #e0e2e4;
+    height: 40px;
+    text-align: left;
+    background: #f5f6f7;
+    display: flex;
+    padding-left: 20px;
+}
+
+.ty-bar-btn {
+    padding: 11px 2px;
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;
+    width: 80px;
+}
+
+.ty-bar-btn .first {
+    padding-left: 20px;
+    background-image: url(../../image/submit/1.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .last {
+    padding-left: 16px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/2.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .next {
+    padding-left: 16px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/3.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .end {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/4.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .print {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/5.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .export {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/6.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .sub-export {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/7.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .normal-export {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/8.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .search {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/9.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .return {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/10.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .validateP {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/11.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .submitP {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/12.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .clearP {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/13.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .rowOper {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/14.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .deleteP {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/15.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .formulaP {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/16.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .detailP {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/17.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .printP {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/18.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .sqlP {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/19.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .excelP {
+    padding-left: 19px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/20.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn .offline {
+    padding-left: 19px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/21.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-btn button {
+    border: 0 none;
+    background: transparent;
+    padding-right: 3px;
+    cursor: pointer;
+    margin: 0;
+    overflow: hidden !important;
+    width: auto;
+    *width: 100%;
+    -moz-outline: 0 none;
+    outline: 0 none;
+    line-height: 18px;
+    height: 18px;
+    background-repeat: no-repeat !important;
+}
+
+.ty-bar-btn-query {
+    background-color: #57A3F3;
+    padding: 5px 0px;
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;
+    width: 80px;
+}
+
+.ty-bar-btn-query button {
+    border: 0 none;
+    background: transparent;
+    padding-right: 3px;
+    cursor: pointer;
+    margin: 0;
+    overflow: hidden !important;
+    width: auto;
+    *width: 100%;
+    -moz-outline: 0 none;
+    outline: 0 none;
+    line-height: 18px;
+    height: 18px;
+    background-repeat: no-repeat !important;
+}
+
+.ty-bar-btn-query .queryP {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/submit/22.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.ty-bar-container .jm-sheet-toolbar-divider {
+    margin: 12px 3px 0;
+}
+
+.jm-sheet-toolbar-divider {
+    display: inline-block;
+    border-right: 1px solid #e0e2e4;
+    width: 0;
+    vertical-align: middle;
+    height: 18px;
+    margin: 1px 3px 0;
+}
+
+.ty-bar-container .ty-bar-input {
+    padding: 7px 6px 2px 6px;
+}
+
+.ty-bar-input {
+    position: relative;
+    padding: 0 6px 2px 6px;
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.btn-input {
+    padding: 4px;
+    text-align: center;
+    display: inline-block;
+}
+
+.btn-input > input {
+    font-size: 12px;
+    width: 42px;
+    height: 16px;
+    text-align: center;
+    height: 18px;
+    line-height: 18px;
+    border: 1px solid #b5b8c8;
+    vertical-align: middle;
+    padding: 1px 3px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+.ty-bar-input .btn-text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.ty-bar-btn .dropdown-list {
+    top: calc(100% + 2px);
+    left: 0;
+    width: 100px;
+    position: absolute;
+    z-index: 200;
+    background: #fff;
+    box-shadow: 1px 2px 5px 2px rgba(51, 51, 51, 0.15);
+}
+
+.ty-bar-btn > div:hover {
+    background-color: #eeeeee;
+}
+
+.ty-bar-btn .dropdown-list {
+    top: calc(100% + 2px);
+    left: 0;
+    width: 170px;
+    position: absolute;
+    z-index: 200;
+    background: #fff;
+    box-shadow: 1px 2px 5px 2px rgba(51, 51, 51, 0.15);
+}
+
+.dropdown-item {
+    user-select: none;
+    background: 0;
+    border: 1px solid transparent;
+    outline: none;
+    height: 26px;
+    color: rgba(0, 0, 0, 0.9);
+    line-height: 26px;
+    list-style: none;
+    padding: 2px 10px;
+    cursor: default;
+    text-align: left;
+    width: 148px;
+}
+
+.dropdown-item:hover,
+.dropdown-item.active {
+    background: rgba(0, 0, 0, 0.05);
+}

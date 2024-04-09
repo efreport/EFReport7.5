@@ -1,0 +1,752 @@
+.right .layui-tab {
+    margin: 0px;
+}
+
+#normal {
+    height: 100%;
+}
+
+/**
+* 数据，高级，控件，样式 css
+**/
+#lay_expend {
+    padding-left: 10%;
+    padding-right: 10%;
+    width: 80%;
+    height: 5%;
+}
+
+#lay_expend li {
+    width: 25%;
+    min-width: 20px;
+    color: #86909C;
+}
+
+.layui-tab-brief > .layui-tab-more li.layui-this:after, .layui-tab-brief > .layui-tab-title .layui-this:after {
+    border: none;
+    border-radius: 0;
+    border-bottom: 0px solid #1D2129;
+}
+
+#lay_expend .layui-this {
+    color: #1D2129;
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+#lay_expend1 .layui-tab-content {
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+
+/**
+* 格式，对齐，边框属性
+*/
+.layui-tab-title li {
+    padding: 2px;
+    width: 30%;
+}
+
+
+/**
+ 单元格数据框样式
+**/
+#dataProp td {
+    height: 35px;
+    vertical-align: middle;
+    color: #4E5969;
+}
+
+#dataProp select {
+    width: 95%;
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: #F2F3F5;
+}
+
+#dataProp select:hover {
+    box-shadow: 0px 0px 1px #44B4FF;
+    background-color: #FFFFFF;
+    border-color: #44B4FF;
+}
+
+#dataProp select:focus {
+    box-shadow: 0px 0px 1px #44B4FF;
+    background-color: #FFFFFF;
+    border-color: #44B4FF;
+}
+
+#dataProp input[type="text"]:hover {
+    box-shadow: 0px 0px 1px #44B4FF;
+    background-color: #FFFFFF;
+    border-color:#44B4FF;
+}
+
+#dataProp input[type="text"]:focus {
+    box-shadow: 0px 0px 1px #44B4FF;
+    background-color: #FFFFFF;
+    border-color:#44B4FF;
+}
+
+#dataProp input[type="text"] {
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#dataProp .propText {
+    width: 50%;
+    color: #4E5969;
+    text-align: left;
+    display:table-cell;
+    vertical-align:middle
+}
+
+#dataProp .propText input {
+    margin-right:10px;
+}
+
+/**
+高级
+*/
+#dataSuper{
+    padding-top:5px;
+}
+
+#dataSuper td {
+    height: 35px;
+    vertical-align: middle;
+    color:#4E5969;
+}
+
+#dataSuper select:hover {
+    box-shadow: 0px 0px 1px #0094FF;
+    background-color: #FFFFFF;
+    border-color: #0094FF;
+
+}
+
+#dataSuper select:focus {
+    box-shadow: 0px 0px 1px #0094FF;
+    background-color: #FFFFFF;
+    border-color: #0094FF;
+
+}
+
+#dataProp select:hover {
+    box-shadow: 0px 0px 1px #0094FF;
+    background-color: #FFFFFF;
+    border-color: #0094FF;
+}
+
+#dataSuper select {
+    width: 95%;
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: #F2F3F5;
+}
+
+#dataSuper input[type="text"] {
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#dataSuper input[type="text"]:hover {
+    background-color: #FFFFFF;
+    border-color: #0094FF;
+}
+
+#dataSuper input[type="text"]:focus {
+    background-color: #FFFFFF;
+    border-color: #0094FF;
+}
+
+#dataSuper input:hover {
+    box-shadow: 0px 0px 1px #0094FF;
+}
+
+#dataSuper input[type="checkbox"]:hover{
+    border:2px solid #0094FF;
+    background-color: #0094ff;
+    box-shadow: 0px 0px 4px #0094ff;
+}
+
+
+
+/**
+扩展按钮样式
+*/
+#dataSuper .chooseBtn {
+    background-color: #0094FF;
+    color: #FFFFFF;
+    line-height: 35px;
+    height: 35px;
+    width: 32%;
+    padding: 0px;
+    border: 0;
+    border-radius: 4px 4px 4px 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#dataSuper .noChooseBtn {
+    background-color: #F2F3F5;
+    color: #86909C;
+    line-height: 35px;
+    height: 35px;
+    width: 32%;
+    padding: 0px;
+    border: 0;
+    border-radius: 4px 4px 4px 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#dataSuper .propText {
+    width: 50%;
+    color: #4E5969;
+    text-align: left;
+}
+
+#styleCon{
+
+}
+
+#styleCon td {
+    height: 35px;
+    vertical-align: middle;
+}
+
+#styleCon select:hover {
+    box-shadow: 0px 0px 1px #0094FF;
+    background-color: #FFFFFF;
+    border-color: #0094FF;
+}
+
+#styleCon select:focus {
+    background-color: #FFFFFF;
+    border-color: #0094FF;
+}
+
+#styleCon select {
+    width: 95%;
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: #F2F3F5;
+}
+
+#styleCon input[type="text"] {
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#styleCon input[type="text"]:hover {
+   background-color: #FFFFFF;
+    border-color: #0094FF;
+}
+
+#styleCon input[type="text"]:focus{
+    background-color: #FFFFFF;
+    border-color: #0094FF;
+}
+
+
+#styleCon input:hover {
+    box-shadow: 0px 0px 1px #0094FF;
+}
+
+
+
+#styleCon input[type="checkbox"]:hover{
+    border:2px solid #0094FF;
+    background-color: #0094ff;
+    box-shadow: 0px 0px 4px #0094ff;
+}
+
+#lay_expend1 {
+    padding-left: 5%;
+    padding-right: 5%;
+    height: 35px;
+    line-height: 22px;
+    border: none;
+}
+
+#lay_expend1 li {
+    width: 32%;
+    min-width: 20px;
+    height: 35px;
+    line-height: 35px;
+    background-color: #F2F3F5;
+}
+
+#lay_expend1 .layui-this {
+    background-color: #0094FF;
+    color: #FFFFFF;
+    border-radius: 4px 4px 4px 4px;
+}
+
+#lay_expend1 .layui-this:after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: "";
+    width: 100%;
+    height: 22px;
+    border-width: 0px;
+    border-style: solid;
+    border-bottom-color: #fff;
+    border-radius: 2px 2px 0 0;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+#lay_expend1 .layui-tab-content {
+   padding:20px;
+}
+
+.right img:hover {
+    background-color: #B7E1FF;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+#tz2_tb img {
+    width: 20px;
+    height: 20px;
+    /* background-color: white; */
+    border: solid #D5D5D5 1px;
+}
+
+#tz2_xx td {
+    height: 35px;
+    vertical-align: middle;
+    color:#4E5969;
+}
+
+#lines div:hover {
+    background-color: #B7E1FF;
+}
+
+.fx {
+    background-color: #B7E1FF;
+}
+
+#tz4 select {
+    width: 90%;
+    height: 30px;
+    border: 1px solid #ccc;
+}
+
+#tz4 td {
+    height: 35px;
+    vertical-align: middle;
+}
+
+#tz4 input[type="text"] {
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 90%;
+}
+
+#tz4 input[type="text"]:hover {
+   border-color: #44B4FF;
+    background-color: #FFFFFF;
+}
+#tz4 input[type="text"]:focus{
+    border-color: #44B4FF;
+    background-color: #FFFFFF;
+}
+
+#tz4 input:hover {
+    box-shadow: 0px 0px 1px #44B4FF;
+}
+
+#tz4 input[type="checkbox"]:hover{
+    border:2px solid #0094FF;
+    background-color: #0094ff;
+    box-shadow: 0px 0px 4px #0094ff;
+}
+
+#tz4 select:hover {
+    border:1px solid #0094FF;
+    background-color: #ffffff;
+}
+
+
+.hcon {
+    width: 100%;
+}
+
+.link-top {
+    width: 100%;
+    height: 1px;
+    border-top: solid #ACC0D8 1px;
+    margin: 5px 0;
+}
+
+/**
+悬浮元素属性
+**/
+#shape{
+
+}
+
+#shape .layui-tab-content{
+    padding:25px;
+}
+
+#params .layui-tab-content{
+    padding:25px;
+}
+
+#shapePro td {
+    height: 35px;
+    vertical-align: middle;
+    color: #86909C;
+}
+
+#shapePro select:hover {
+    box-shadow: 0px 0px 1px #44B4FF;
+}
+
+#shapePro select {
+    width: 95%;
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: #F2F3F5;
+}
+
+/*#shapePro input[type="text"] {
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}*/
+
+
+#sHeight{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#sHeight:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+#paramHeight{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#paramHeight:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+#shapeName{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#shapeName:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+
+#xPost{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#xPost:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+#paramX{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#paramX:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+#yPost{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#yPost:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+#paramY{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#paramY:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+#sWidth{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#sWidth:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+
+#paramWidth{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#paramWidth:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+#sText{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#sText:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+#paramText{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#paramText:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+
+#sName{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#sName:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+
+#intervalScrollV{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#intervalScrollV:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+
+#stepScrollV{
+    height: 28px;
+    border: 1px solid #ccc;
+    width: 95%;
+    background-color: #F2F3F5;
+}
+
+#stepScrollV:hover{
+    border: 1px solid #44B4FF;
+    background-color: #FFFFFF;
+}
+
+
+#shapePro input[type="checkbox"]:hover {
+    border: 2px solid #0094FF;
+    background-color: #0094ff;
+}
+
+.borderImage{
+    width:24px;
+    height:24px;
+}
+
+.borderTables tr td{
+    color:#4E5969;
+}
+
+#tz2_tb td {
+    height: 35px;
+    vertical-align: middle;
+    color: #4E5969;
+}
+
+.horiImg{
+    width:30px;
+    height:30px;
+}
+
+/**
+ 控件单元格样式
+**/
+#tz4 td {
+    height: 35px;
+    vertical-align: middle;
+    color: #4E5969;
+}
+
+#tz4 input{
+    background-color: #F2F3F5;
+}
+
+#tz4 select{
+    width:92.5%;
+    background-color: #F2F3F5;
+}
+
+input[type="checkbox"]{
+    width:22px;
+    height:22px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#fg:hover{
+    border:2px solid #0094FF;
+    background-color: #0094ff;
+}
+
+input[type="checkbox"]:hover{
+    border:2px solid #0094FF;
+    background-color: #0094ff;
+    box-shadow: 0px 0px 4px #0094ff;
+    display: block;
+}
+
+.checkbox-tr{
+    width: 100%;
+    display: flex;
+}
+
+.checkbox-td{
+    width: 50%;
+    color: #4E5969;
+    display: inline-flex;
+    align-items: center;
+}
+
+#propCon::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#propCon::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #d5d5d5;
+}
+
+.fmt_div {
+    width: 98%;
+    height: 50%;
+    white-space: normal;
+    overflow: auto;
+    background-color: #F2F3F5;
+}
+
+#fmt_val li{
+    height:20px;
+    line-height: 20px;
+    padding:3px;
+    cursor: pointer;
+}
+
+#fmt_val li:hover{
+    background-color: #44B4FF;
+}
+
+.fmt_hover{
+    background-color: #0094FF;
+    color:#FFFFFF;
+}
+
+.filterBtn{
+    height:26px;
+    line-height:26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:60px;
+    background-color:#0094FF;
+    color:#FFFFFF;
+    border-radius: 5px;
+    border: 0;
+    cursor: pointer;
+}
+
+select::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+select::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #d5d5d5;
+}
+
+#control{
+    width: 93%;
+    margin-right:5px;
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: #F2F3F5;
+}
+
+#control:hover{
+    background-color: #FFFFFF;
+    border: 1px solid #0094FF;
+}

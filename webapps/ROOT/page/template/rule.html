@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../design/js/css/layui.css">
+    <style type="text/css">
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div style="height:10%;display: flex;align-items: center;justify-content:flex-start;padding-left:20px;">
+    <div style="cursor:pointer;height:35px;width:70px;display: flex;background-color: #0094FF;border-radius: 4px;margin-right: 10px;"
+         id="add">
+        <div style="width:35px;display: flex;justify-content: flex-end;align-items: center;padding-right:2px;">
+            <img src="../../images/design/pages/add.png" title="添加" class="add" style="width:20px;height:20px;">
+        </div>
+        <div style="display:flex;align-items:center;color:white;width:35px;padding-left: 5px;">
+            新增
+        </div>
+    </div>
+</div>
+<table id="ruleTable" lay-filter="ruleFilter"></table>
+<script type="text/html" id="currentTableBar">
+    <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs data-count-edit" lay-event="delete">删除</a>
+</script>
+</body>
+
+
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../design/js/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../design/js/xm-select.js"></script>
+<script type="text/javascript">
+    let select;
+    let select1;
+    let index = 0;
+    let templateId;
+    let base;
+    let token;
+
+    function init(tok, id) {
+        templateId = id;
+        token = tok;
+        base = window.sessionStorage.getItem("ef_server_base_url");
+        layui.use(['form', 'table', 'element'], function () {
+            table = layui.table;
+            layer = layui.layer;
+            let url = base + "/template/listRules?token=" + token + '&templateId=' + templateId;
+            table.render({
+                elem: '#ruleTable',
+                url: url,
+                cols: [[
+                    {field: 'id', width: 140, title: '发送者', align: 'center', hide: true},
+                    {
+                        field: 'senderType', width: 100, title: '发送者类型', align: 'center',
+                        templet: function (res) {
+                            if (res.senderType == '0') {
+                                return '用户';
+                            } else {
+                                return '角色';
+                            }
+                        }
+                    },
+                    {field: 'senderName', width: 140, title: '发送者', align: 'center'},
+                    {field: 'senderId', width: 0, title: '发送者', hide: true},
+                    {
+                        field: 'receiverType', width: 100, title: '接收者类型', align: 'center',
+                        templet: function (res) {
+                            if (res.receiverType == '0') {
+                                return '用户';
+                            } else {
+                                return '角色';
+                            }
+                        }
+                    },
+                    {field: 'receiverName', width: 290, title: '接收者', align: 'center'},
+                    {field: 'receiverId', width: 0, title: '发送者', hide: true},
+                    {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "left"}
+                ]],
+                limits: [10, 15, 20, 25, 50, 100],
+                limit: 15,
+                page: false,
+                skin: 'line',
+                height: '400px',
+                done: function (res) {
+
+                }
+            });
+        })
+        table.on('tool(ruleFilter)', function (obj) {
+            if (obj.event === 'delete') {
+                jQuery.ajax({
+                    url: base + "/template/delRule?token=" + token + '&id=' + obj.data.id,
+                    type: "POST",
+                    success: function (resp) {
+                        if (resp.state === "success") {
+                            layer.msg('删除成功');
+                            table.reload('ruleTable', {});
+                        } else {
+                            layer.msg('删除失败');
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            } else {
+                let ruleId = obj.data.id;
+                layer.open({
+                    type: 2,
+                    area: ['700px', '500px'],
+                    content: ['editRule.html', 'no'], //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    closeBtn: 0,
+                    resize: false,
+                    title: ['修改规则', 'height:30px;line-height:30px'],
+                    btn: ['确定', '关闭'],
+                    btnAlign: 'c',
+                    end: function () {
+
+                    },
+                    yes: function (index, layero) {
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        let res = iframeWin.getRules();
+                        console.log(res);
+                        let senderVal = res.senderVal;
+                        let receiverVal = res.receiverVal;
+                        if (senderVal.length == 0) {
+                            layer.msg('请设置发送者')
+                        } else if (receiverVal.length == 0) {
+                            layer.msg('请设置接收者')
+                        } else {
+                            let senderId;
+                            let senderName;
+                            let receiverId = '';
+                            let receiverName = '';
+                            $.each(senderVal, function (i, e) {
+                                senderId = e.value;
+                                senderName = e.name;
+                            })
+
+
+                            $.each(receiverVal, function (i, e) {
+                                if (i == receiverVal.length - 1) {
+                                    receiverId += e.value + '';
+                                    receiverName += e.name + '';
+                                } else {
+                                    receiverId += e.value + ',';
+                                    receiverName += e.name + ',';
+                                }
+                            })
+
+
+                            let senderType = res.senderType;
+                            let receiverType = res.receiverType;
+                            let rule = {
+                                id: ruleId,
+                                templateId: templateId,
+                                senderType: senderType,
+                                senderId: senderId,
+                                senderName: senderName,
+                                receiverType: receiverType,
+                                receiverId: receiverId,
+                                receiverName: receiverName
+                            }
+                            console.log(rule);
+                            jQuery.ajax({
+                                url: base + "/template/updateRules?token=" + token,
+                                type: "POST",
+                                data: {'rule': JSON.stringify(rule)},
+                                success: function (resp) {
+                                    if (resp.state === "success") {
+                                        layer.closeAll();
+                                        table.reload('ruleTable', {});
+                                        layer.msg('修改成功');
+                                    } else {
+                                        layer.msg('添加失败');
+                                    }
+                                },
+                                error: function () {
+
+                                }
+                            });
+                        }
+                    },
+                    success: function (layero, index) {
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        iframeWin.init1(token, templateId, obj.data);
+                    },
+                    btn2: function () {
+
+                    }
+                });
+            }
+        });
+        $('#add').unbind().bind('click', function () {
+            layer.open({
+                type: 2,
+                area: ['700px', '500px'],
+                content: ['editRule.html', 'no'], //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                closeBtn: 0,
+                resize: false,
+                title: ['新增规则', 'height:30px;line-height:30px'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+
+                },
+                yes: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let res = iframeWin.getRules();
+                    console.log(res);
+                    let senderVal = res.senderVal;
+                    let receiverVal = res.receiverVal;
+                    if (senderVal.length == 0) {
+                        layer.msg('请设置发送者')
+                    } else if (receiverVal.length == 0) {
+                        layer.msg('请设置接收者')
+                    } else {
+                        let senderId;
+                        let senderName;
+                        let receiverId = '';
+                        let receiverName = '';
+                        $.each(senderVal, function (i, e) {
+                            senderId = e.value;
+                            senderName = e.name;
+                        })
+
+
+                        $.each(receiverVal, function (i, e) {
+                            if (i == receiverVal.length - 1) {
+                                receiverId += e.value + '';
+                                receiverName += e.name + '';
+                            } else {
+                                receiverId += e.value + ',';
+                                receiverName += e.name + ',';
+                            }
+                        })
+
+                        let senderType = res.senderType;
+                        let receiverType = res.receiverType;
+                        let rule = {
+                            templateId: templateId,
+                            senderType: senderType,
+                            senderId: senderId,
+                            senderName: senderName,
+                            receiverType: receiverType,
+                            receiverId: receiverId,
+                            receiverName: receiverName
+                        }
+                        jQuery.ajax({
+                            url: base + "/template/saveRules?token=" + token,
+                            type: "POST",
+                            data: {'rule': JSON.stringify(rule)},
+                            success: function (resp) {
+                                if (resp.state === "success") {
+                                    layer.closeAll();
+                                    table.reload('ruleTable', {});
+                                    layer.msg('添加成功');
+                                } else {
+                                    layer.msg('添加失败');
+                                }
+                            },
+                            error: function () {
+
+                            }
+                        });
+                    }
+                },
+                success: function (layero, index) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.init(token, templateId);
+                },
+                btn2: function () {
+
+                }
+            });
+        })
+
+
+    }
+
+    $(document).ready(function () {
+
+    })
+
+</script>
+</html>

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.UserMapper">
+
+    <!-- 根据用户名和公司ID获取用户信息 -->
+    <select id="loadByAccount" parameterType="map" resultType="com.efreport.entity.User">
+        SELECT
+            a.id,
+            a.NAME,
+            a.account,
+            a.PASSWORD,
+            a.islocked,
+            a.company_id AS companyId,
+            c.company_name AS companyName,
+            a.department_id AS departmentId,
+            b.department_name AS departmentName,
+            a.email,
+            a.wechat,
+            a.talkding,
+            a.home,
+            a.user_type AS userType,
+            a.isFrozen,
+            a.wrongnum
+        FROM
+            ef_sys_user a
+            LEFT JOIN ef_sys_department b ON a.department_id = b.id
+            LEFT JOIN ef_sys_company c ON b.company_id = c.id
+        WHERE
+	        a.account = #{account} and a.company_id = #{companyId}
+    </select>
+
+
+    <!-- 根据用户ID查询用户 -->
+    <select id="loadById" parameterType="map" resultType="com.efreport.entity.User">
+        select
+            a.id,
+            a.name,
+            a.account,
+            a.password,
+            a.islocked,
+            a.company_id AS companyId,
+            c.company_name as companyName,
+            a.department_id as departmentId,
+            b.department_name as departmentName,
+            a.email,
+            a.wechat,
+            a.talkding,
+            a.home,
+            a.user_type as userType,
+            a.isFrozen,
+            a.wrongnum,
+            a.LAST_MODIFY_TIME as lastModifyTime,
+            a.FROZEN_TIME as frozenTime
+        from
+            ef_sys_user a
+            LEFT JOIN ef_sys_department b ON a.department_id = b.id
+            LEFT JOIN ef_sys_company c ON b.company_id = c.id
+        WHERE
+	        a.id = #{id}
+    </select>
+
+    <!-- 根据钉钉ID查询用户 -->
+    <select id="loadByDingId" parameterType="java.lang.String" resultType="com.efreport.entity.User">
+          select
+            a.id,
+            a.name,
+            a.account,
+            a.password,
+            a.islocked,
+            a.company_id AS companyId,
+            b.company_name as companyName,
+            a.department_id as departmentId,
+            c.department_name as departmentName,
+            a.email,
+            a.wechat,
+            a.talkding,
+            a.home,
+            a.user_type as userType,
+            a.isFrozen,
+            a.wrongnum
+          from
+            ef_sys_user a
+            LEFT JOIN ef_sys_department b ON a.department_id = b.id
+            LEFT JOIN ef_sys_company c ON b.company_id = c.id
+          WHERE
+	        a.talkding = #{talkding}
+    </select>
+
+    <!-- 新建用户 -->
+    <insert id="save" parameterType="com.efreport.entity.User" useGeneratedKeys="true" keyProperty="id">
+        insert into ef_sys_user (name, account, password, islocked,company_id , department_id, email, wechat, talkding , isfrozen , wrongnum , user_type,LAST_MODIFY_TIME )
+        values(#{name}, #{account}, #{password}, #{isLocked}, #{companyId},#{departmentId}, #{email}, #{wechat}, #{talkding} , #{isFrozen} , #{wrongNum} , #{userType}, #{lastModifyTime})
+    </insert>
+
+    <!-- 更新用户 -->
+    <update id="update" parameterType="com.efreport.entity.User">
+        UPDATE
+          EF_SYS_USER
+        SET
+          name = #{name},
+          account = #{account},
+          password = #{password},
+            <if test=" lastModifyTime != null ">
+                LAST_MODIFY_TIME = #{lastModifyTime},
+            </if>
+          islocked = #{isLocked},
+          department_id = #{departmentId},
+          email = #{email},
+          wechat = #{wechat},
+          talkding = #{talkding},
+          user_type = #{userType}
+        WHERE
+          id = #{id}
+    </update>
+
+    <!-- 根据用户ID更新密码输错次数 -->
+    <update id="updateWrongNumById" parameterType="java.util.Map">
+        update ef_sys_user set wrongnum=#{wrongNum} where id=#{id}
+    </update>
+
+    <!-- 根据用户ID更新用户冻结状态 -->
+    <update id="updateFrozenByName" parameterType="java.util.Map">
+        update ef_sys_user set isFrozen=true , wrongnum=#{wrongNum}, frozen_time=#{frozenTime} where id=#{id}
+    </update>
+
+    <!-- 根据公司ID和用户名获取公司的用户数 -->
+    <select id="count" parameterType="map" resultType="int">
+        select
+        count(*)
+        from
+        ef_sys_user
+        where
+        company_id = #{companyId}
+        <if test=" name != null ">
+            and name like CONCAT('%' , LOWER(#{name}) , '%')
+        </if>
+    </select>
+
+    <!-- 根据用户ID修改密码 -->
+    <update id="changePwd" parameterType="com.efreport.entity.User">
+        UPDATE
+          EF_SYS_USER
+        SET
+          password = #{password},
+          LAST_MODIFY_TIME = #{lastModifyTime}
+        WHERE
+          id = #{id}
+    </update>
+
+
+    <!-- 根据用户ID更新用户修改时间 -->
+    <update id="updateLastModifyTimeById" parameterType="java.util.Map">
+        UPDATE
+          EF_SYS_USER
+        SET
+          LAST_MODIFY_TIME =  #{lastModifyTime}
+        WHERE
+          id = #{id}
+    </update>
+
+    <!-- 根据用户ID修改用户报表显示首页 -->
+    <update id="changeHome" parameterType="map">
+        UPDATE
+          EF_SYS_USER
+        SET
+          home = #{home}
+        WHERE
+          id = #{id}
+    </update>
+
+    <!-- 根据用户ID更改用户的锁定状态 -->
+    <update id="changeLockStatus" parameterType="map">
+        UPDATE
+          EF_SYS_USER
+        SET
+          islocked = #{status}
+        WHERE
+          id = #{id}
+    </update>
+
+    <!-- 根据用户ID更改用户的冻结状态（一般解冻才用） -->
+    <update id="changeFrozenStatus" parameterType="map">
+        UPDATE
+        EF_SYS_USER
+        SET
+        isfrozen = #{status},
+        wrongnum = 0,
+        frozen_time = ''
+        WHERE
+        id = #{id}
+    </update>
+
+
+    <!-- 根据公司ID分页查询公司用户 -->
+    <select id="queryByPage" parameterType="java.util.Map" resultType="com.efreport.entity.User">
+        SELECT
+        a.id,
+        a.name,
+        a.account,
+        a.islocked,
+        a.department_id as departmentId,
+        a.company_id as companyId,
+        a.email,
+        a.wechat,
+        a.talkding ,
+        a.user_type as userType,
+        a.isfrozen as isFrozen,
+        b.department_name as departmentName
+        FROM
+        EF_SYS_USER a LEFT JOIN
+        EF_SYS_DEPARTMENT b
+        ON
+        a.department_id = b.id
+        WHERE a.company_id = #{companyId}
+        <if test=" name != null ">
+            and (a.name like CONCAT('%' , #{name} , '%') or a.account like CONCAT('%' , #{name} , '%'))
+        </if>
+        ORDER BY
+        id DESC
+        limit #{start} , #{limit}
+    </select>
+
+
+    <!-- 根据公司ID分页查询公司用户 -->
+    <select id="queryAll" parameterType="int" resultType="com.efreport.entity.User">
+        SELECT
+        a.id,
+        a.name,
+        a.account,
+        a.islocked,
+        a.department_id as departmentId,
+        a.company_id as companyId,
+        a.email,
+        a.wechat,
+        a.talkding ,
+        a.user_type as userType,
+        a.isfrozen as isFrozen
+        FROM
+        EF_SYS_USER a
+        where
+        a.company_id = #{companyId}
+        ORDER BY
+        id DESC
+    </select>
+
+
+    <!-- 检查账号是否重复 -->
+    <select id="hasUser" parameterType="com.efreport.entity.User" resultType="Integer">
+        SELECT
+        COUNT(1)
+        FROM
+        EF_SYS_USER
+        WHERE
+        account = #{account}
+        AND
+        company_id = #{companyId}
+        <if test="id != 0">
+            AND id != #{id}
+        </if>
+    </select>
+
+    <!-- 查询当前系统的有效用户数 -->
+    <select id="getValidUserCount" resultType="Integer">
+        SELECT
+          count(1)
+        FROM
+          EF_SYS_USER
+        WHERE
+          id != 1
+          AND islocked = 0
+    </select>
+
+
+    <!-- 获取该公司的所有设计器用户 -->
+    <select id="getDesignUsersByCompanyId" parameterType="int" resultType="com.efreport.entity.User">
+        SELECT
+          id,
+          name
+        FROM
+          EF_SYS_USER
+        WHERE
+          company_id = #{companyId} and user_type = 4
+    </select>
+
+    <select id="hasDesignUser" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM EF_SYS_USER
+        WHERE USER_TYPE = 2
+        AND COMPANY_ID = #{companyId}
+    </select>
+
+    <delete id="deleteByUserId" parameterType="int">
+        DELETE FROM EF_SYS_USER
+        WHERE id = #{userId}
+    </delete>
+
+    <select id="getDesignAdminUserByCompanyId" parameterType="int" resultType="com.efreport.entity.User">
+
+        SELECT * FROM EF_SYS_USER
+        WHERE COMPANY_ID = #{companyId} and user_type = 2
+
+    </select>
+
+    <select id="getDesignUserByCompanyId" parameterType="int" resultType="com.efreport.entity.User">
+        SELECT * FROM EF_SYS_USER
+        WHERE COMPANY_ID = #{companyId} and user_type = 4
+    </select>
+
+    <!-- 根据角色ID或用户ID查询用户email、微信、钉钉信息 -->
+    <select id="loadUserContact" resultType="com.efreport.entity.User">
+        SELECT *
+        FROM EF_SYS_USER u
+        WHERE 1 = 1
+        <if test="roles != null">
+            AND EXISTS (SELECT 1 FROM SYS_USER_ROLE_REL urr WHERE urr.role_id IN
+            <foreach collection="roles" index="i" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+            AND urr.user_id = u.id)
+        </if>
+        <if test="users != null">
+            AND u.id IN
+            <foreach collection="users" index="i" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+
+    <!-- 将未冻结用户的wrongNum清0,登录成功时触发 -->
+    <update id="clearUserWrongNumber" parameterType="int">
+        UPDATE EF_SYS_USER
+        SET  WRONGNUM = 0
+        WHERE ISFROZEN = FALSE and id = #{userId}
+    </update>
+
+
+    <!-- 将所有未冻结用户的wrongNum清0 -->
+    <update id="clearNumber">
+        UPDATE EF_SYS_USER
+        SET  WRONGNUM = 0
+        WHERE ISFROZEN = FALSE
+    </update>
+
+    <!-- 将所有冻结用户解冻 -->
+    <update id="clearFozenNumber">
+        UPDATE EF_SYS_USER
+        SET  WRONGNUM = 0,
+        ISFROZEN = false,
+        frozen_time = ''
+        WHERE ISFROZEN = true
+    </update>
+
+
+    <!-- 查询当前公司的有效管理员用户数 hk -->
+    <select id="getCompanyValidUserCount" parameterType="int" resultType="Integer">
+        SELECT
+          count(1)
+        FROM
+          EF_SYS_USER
+        WHERE
+          COMPANY_ID = #{companyId}
+          AND islocked = 0 and USER_TYPE = 1
+    </select>
+
+
+    <!-- 查询当前公司除了自己以外其他的设计器用户 -->
+    <select id="listOtherDesignUser" parameterType="com.efreport.entity.User" resultType="com.efreport.entity.User">
+        SELECT
+        id,
+        name,
+        user_type as userType
+        FROM
+        EF_SYS_USER
+        WHERE
+        COMPANY_ID = #{companyId}
+        AND islocked = 0 and USER_TYPE in (2,4) AND id != #{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysUsertempdirMapper">
+
+    <resultMap id="sysUsertempdirMap" type="com.efreport.entity.SysUserTempDir">
+        <id column="ID" property="id"></id>
+        <result column="USER_ID" property="userId"></result>
+        <result column="TEMPDIR_Id" property="tempdirId"></result>
+        <result column="TEMPID" property="tempId"></result>
+    </resultMap>
+
+    <select id="getById" parameterType="Integer" resultMap="sysUsertempdirMap">
+      SELECT * FROM EF_SYS_USERTempDIr WHERE id=#{id}
+    </select>
+
+    <!-- 查询所有纪录 -->
+    <select id="getAllList" resultMap="sysUsertempdirMap">
+      SELECT * FROM EF_SYS_USERTempDIr WHERE 1=1
+    </select>
+
+    <select id="getListByUserId" parameterType="Integer" resultMap="sysUsertempdirMap">
+      select tempdir.* from EF_SYS_USERTempDIr tempdir
+        left join EF_PC_TEMP_ORDER  odr on odr.tempid=tempdir.tempid
+        where tempdir.USER_ID = #{userId}
+        order by odr.template_order asc
+    </select>
+
+
+    <select id="getListByUserIdAndName" parameterType="map" resultMap="sysUsertempdirMap">
+      SELECT * FROM EF_SYS_USERTempDIr WHERE 1=1 and USER_ID = #{userId} and TEMPID in (
+        select id from SYS_TEMPLATE where name like #{name} and CLIENT_TYPE in ('11','01')
+      )
+    </select>
+
+    <select id="getListByTempdirId" parameterType="Integer" resultMap="sysUsertempdirMap">
+      SELECT * FROM EF_SYS_USERTempDIr WHERE 1=1 and TEMPDIR_Id = #{tempdirId}
+    </select>
+
+
+
+    <insert id="addSysUserTempDir" parameterType="com.efreport.entity.SysUserTempDir">
+        insert into EF_SYS_USERTempDIr(USER_ID,TEMPDIR_Id,TEMPID) values(#{userId},#{tempdirId},#{tempId})
+    </insert>
+
+
+    <delete id="deleteById" parameterType="Integer">
+        delete from EF_SYS_USERTempDIr where id=#{id}
+    </delete>
+
+    <delete id="deleteByUserId" parameterType="Integer">
+        delete from EF_SYS_USERTempDIr where USER_ID=#{userId}
+    </delete>
+
+    <delete id="deleteByTempdirId" parameterType="Integer">
+        delete from EF_SYS_USERTempDIr where TEMPDIR_Id=#{tempdirId}
+    </delete>
+
+    <delete id="deleteByUserIdAndTempId" parameterType="com.efreport.entity.SysUserTempDir">
+        delete from EF_SYS_USERTempDIr where USER_ID=#{userId} and TEMPID=#{tempId}
+    </delete>
+</mapper>

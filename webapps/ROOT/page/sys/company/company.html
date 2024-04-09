@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>公司管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../css/public.css" media="all">
+<style>
+    html, body {
+            border: 0px;
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            background-color: #fcfcfc !important;
+        }
+    .layui-btn:not(.layui-btn-lg ):not(.layui-btn-sm):not(.layui-btn-xs) {height:34px;line-height:34px;padding:0 8px;}
+
+    .layuimini-container {
+        background-color: #fcfcfc !important;
+    }
+</style>
+</head>
+<body>
+<div class="layuimini-container layuimini-page-anim" style="height: auto;">
+    <div class="layuimini-main">
+        <div>
+            <div class="layui-btn-group">
+                <button class="layui-btn layui-btn-primary" id="btn-expand">全部展开</button>
+                <span style="padding-left: 5px;"></span>
+                <button class="layui-btn layui-btn-normal" id="btn-fold">全部折叠</button>
+                <span style="padding-left: 5px;"></span>
+                <button class="layui-btn layui-btn-normal" id="btn-refresh"><i class="layui-icon">&#xe666;</i></button>
+            </div>
+            <table id="munu-table" class="layui-table" lay-filter="munu-table"></table>
+        </div>
+    </div>
+</div>
+<!-- 操作列 -->
+<script type="text/html" id="auth-state">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="add">新增</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script src="../../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script src="../../../js/lay-config.js" charset="utf-8"></script>
+<script src="../../../js/common.js" charset="utf-8"></script>
+<script>
+    layui.use(['table', 'treetable'], function () {
+        var $ = layui.jquery;
+        var table = layui.table;
+        var treetable = layui.treetable;
+        let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+        let token = window.sessionStorage.getItem("cur_token");
+        let efurl = server_base_url + "/company/list2?token=" + token;
+
+        var loadingTreeTable = function (tableData) {
+            let companyid = window.sessionStorage.getItem("cur_companyid");
+            let cur_start_pid = -1;
+            for (let i = 0; i < tableData.data2.length; i++) {
+                if (tableData.data2[i].id === parseInt(companyid)) {
+                    cur_start_pid = tableData.data2[i].pId;
+                }
+            }
+            // 渲染表格
+            layer.load(2);
+            treetable.render({
+                data: tableData.data2,
+                treeColIndex: 1,
+                treeSpid: cur_start_pid,
+                treeIdName: 'id',
+                treePidName: 'pId',
+                elem: '#munu-table',
+                page: false,
+                cols: [[
+                    {field: 'id', width: 100, title: 'ID', sort: true},
+                    {field: 'companyName', minWidth: 200, title: '公司名称'},
+                    {templet: '#auth-state', width: 200, align: 'center', title: '操作'}
+                ]],
+                done: function () {
+                    layer.closeAll('loading');
+                }
+            });
+        }
+
+        var initTreeTable = function () {
+            $.ajax({
+                url: efurl,
+                type: 'post',
+                success: function (res) {
+                    loadingTreeTable(res);
+                },
+                error: function () {
+                }
+            });
+        }
+        // 调用初始化表格方法
+        initTreeTable();
+
+        // 刷新
+        $('#btn-refresh').click(function () {
+            initTreeTable();
+        });
+
+        $('#btn-expand').click(function () {
+            treetable.expandAll('#munu-table');
+        });
+
+        $('#btn-fold').click(function () {
+            treetable.foldAll('#munu-table');
+        });
+        $('#btn-add').click(function () {
+            let index = layer.open({
+                type: 2,
+                area: ['350px', '180px'],
+                closeBtn: 0,
+                resize: false,
+                title: ['新增公司', 'height:30px;line-height:30px'],
+                content: ['editcompany.html', 'no'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+                },
+                yes: function (index, layero) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    var jsonStr = iframeWin.getPage();
+                    var obj = JSON.parse(jsonStr);
+                    let paramData = {
+                        token: window.sessionStorage.getItem("cur_token"),
+                        name: obj.companyName,
+                        pId: obj.pId
+                    };
+                    $.ajax({
+                        url: server_base_url + '/company/save',
+                        data: paramData,
+                        type: 'post',
+                        success: function (res) {
+                            if (res.state === "success") {
+                                layer.msg(res.message);
+                                layer.close(index);
+                                initTreeTable();
+                            } else {
+                                layer.msg(res.message);
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
+                },
+                success: function (layero, index) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    let obj = {
+                        id: 0,
+                        pId: 0,
+                        companyName: ""
+                    };
+                    iframeWin.setForm(JSON.stringify(obj));
+                }
+            });
+        });
+
+        //监听工具条
+        table.on('tool(munu-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'del') {
+                deletecompany(data.id);
+            } else if (layEvent === 'edit') {
+                editcompany(data);
+            } else if (layEvent === 'add') {
+                addcompany(data.id);
+            }
+        });
+
+        var addcompany = function (companyid) {
+            let index = layer.open({
+                type: 2,
+                area: ['350px', '180px'],
+                closeBtn: 0,
+                resize: false,
+                title: ['新增公司', 'height:30px;line-height:30px'],
+                content: ['editcompany.html', 'no'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+                    $("tr").each(function(idx, ele){
+                        $(ele).removeClass("layui-table-click");
+                    });
+                },
+                yes: function (index, layero) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    var jsonStr = iframeWin.getPage();
+                    var obj = JSON.parse(jsonStr);
+                    if (obj.companyName.trim() === "") {
+                        layer.msg("请输入公司名称");
+                        return false;
+                    }
+
+                    let paramData = {
+                        token: window.sessionStorage.getItem("cur_token"),
+                        name: obj.companyName,
+                        pId: obj.pId
+                    };
+                    $.ajax({
+                        url: server_base_url + '/company/save',
+                        data: paramData,
+                        type: 'post',
+                        success: function (res) {
+                            if (res.state === "success") {
+                                layer.msg(res.message);
+                                layer.close(index);
+                                initTreeTable();
+                            } else {
+                                layer.msg(res.message);
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
+                },
+                success: function (layero, index) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    let obj = {
+                        id: 0,
+                        pId: companyid,
+                        companyName: ""
+                    };
+                    iframeWin.setForm(JSON.stringify(obj));
+                }
+            });
+        }
+        var editcompany = function (rowdata) {
+            let index = layer.open({
+                type: 2,
+                area: ['350px', '180px'],
+                closeBtn: 0,
+                resize: false,
+                title: ['编辑公司', 'height:30px;line-height:30px'],
+                content: ['editcompany.html', 'no'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+                    $("tr").each(function(idx, ele){
+                        $(ele).removeClass("layui-table-click");
+                    });
+                },
+                yes: function (index, layero) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    var jsonStr = iframeWin.getPage();
+                    var obj = JSON.parse(jsonStr);
+                    if (obj.companyName.trim() === "") {
+                        layer.msg("请输入公司名称");
+                        return false;
+                    }
+                    let paramData = {
+                        token: window.sessionStorage.getItem("cur_token"),
+                        id: obj.id,
+                        name: obj.companyName,
+                        pId: obj.pId
+                    };
+                    $.ajax({
+                        url: server_base_url + '/company/modify',
+                        data: paramData,
+                        type: 'post',
+                        success: function (res) {
+                            if (res.state === "success") {
+                                layer.msg(res.message);
+                                layer.close(index);
+                                initTreeTable();
+                            } else {
+                                layer.msg(res.message);
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
+                },
+                success: function (layero, index) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    let obj = {
+                        id: rowdata.id,
+                        pId: rowdata.pId,
+                        companyName: rowdata.companyName
+                    };
+                    iframeWin.setForm(JSON.stringify(obj));
+                }
+            });
+        }
+        var deletecompany = function (companyid) {
+            layer.confirm("确认删除这行数据？", {
+                btn: ["是", "否"]
+            }, function(index) {
+                let paramData = {
+                    token: window.sessionStorage.getItem("cur_token"),
+                    id: companyid
+                };
+                $.ajax({
+                    url: server_base_url + '/company/delete',
+                    data: paramData,
+                    type: 'post',
+                    success: function (res) {
+                        if (res.state === "success") {
+                            layer.msg(res.message);
+                            layer.close(index);
+                            initTreeTable();
+                        } else {
+                            layer.msg(res.message);
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }, function() {
+                $("tr").each(function(idx, ele){
+                    $(ele).removeClass("layui-table-click");
+                });
+            })
+        }
+    });
+</script>
+</body>
+</html>
+<script>
+    $(function(){
+
+        function init_table_height() {
+            // 获取body的高度
+            let body_height = $("body").height();
+            let table_height = body_height - 51 - 41 - 30;
+            $(".layui-table-body").css("height", ""+table_height+"px");
+            $(".layui-table-main").css("height", ""+table_height+"px");
+        }
+        init_table_height();
+
+        $(window).resize(function () {
+            // 获取body的高度
+            let body_height = $("body").height();
+            let table_height = body_height - 51 - 41 - 30;
+            $(".layui-table-body").css("height", ""+table_height+"px");
+            $(".layui-table-main").css("height", ""+table_height+"px");
+        });
+    });
+</script>
+<style>
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 1px;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+        background: #d5d5d5;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+        border-radius: 10px;
+        background: #ffffff;
+    }
+</style>

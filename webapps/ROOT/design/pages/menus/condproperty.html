@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../css/spectrum.css">
+    <link rel="stylesheet" type="text/css" href="../../css/scroll.css">
+    <style>
+
+        html {
+            width: 100%;
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #un a {
+            display: block;
+            color: #333;
+            padding-left: 10px;
+            border-bottom: 1px solid #D5D5D5;
+            height: 34px;
+            line-height: 34px;
+
+        }
+
+        .cka:hover {
+            background: #0094FF;
+            color: #fff;
+        }
+
+        .ncka:hover {
+            background: #e6e6e6;
+        }
+
+        #propertype p {
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        p:hover {
+            background: #0094FF;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .layui-elem-field legend {
+            margin-left: 20px;
+            padding: 0 0;
+            font-size: small;
+            font-weight: normal;
+        }
+
+        .cka {
+            background: #0094FF !important;
+            color: #fff !important;
+        }
+
+        img:hover {
+            background-color: #D5D5D5;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        select {
+            height: 30px;
+            border: 1px solid #ccc;
+        }
+
+        select:hover {
+            border: 1px solid #44B4FF;
+            background-color: #FFFFFF;
+        }
+
+        input:hover {
+            border: 1px solid #44B4FF;
+            background-color: #FFFFFF;
+        }
+
+        textarea {
+            width: 100%;
+            height: 98%;
+            resize: none;
+            border: 1px solid #D5D5D5;
+            background-color: #f2f3f5;
+        }
+
+        textarea:hover {
+            background-color: #FFFFFF;
+            border: 1px solid #0094FF;
+        }
+
+        .toptoolhover {
+            background-color: #D5D5D5;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        #btn_add {
+            width: 120px;
+            height: 32px;
+            background-image: url("../../images/new/btnadd.png");
+            background-repeat: no-repeat;
+            border: 0px !important;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #btn_del {
+            width: 120px;
+            height: 32px;
+            background-image: url("../../images/new/btndel.png");
+            background-repeat: no-repeat;
+            border: 0px !important;
+            margin-left: 10px
+        }
+
+        #btn_add:hover {
+            cursor: pointer;
+        }
+
+        #btn_del:hover {
+            cursor: pointer;
+        }
+
+        .myinput {
+            padding: 0px;
+            padding-left: 5px;
+            border: 1px solid #f2f3f5;
+            width: 100%;
+            height: 32px;
+            line-height: 32px;
+            border-radius: 2px;
+            background-color: #f2f3f5;
+        }
+
+        .myinput:hover {
+            border: 1px solid #44B4FF;
+            background-color: #ffffff;
+        }
+
+        .div_name_label {
+            width: 70px;
+            height: 35px;
+            line-height: 35px;
+            float: left;
+            vertical-align: middle;
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #1D2129;
+        }
+
+        .divCard {
+            position: relative;
+            width: 163px;
+            height: 180px;
+            background: #F7F8FA;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+            border-radius: 4px 4px 4px 4px;
+            opacity: 1;
+            margin-top: 5px;
+            margin-left: 18.5px;
+            float: left;
+        }
+
+        .divCard .divCardTitle {
+            position: relative;
+            width: 123px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 0px 0px 0px 0px;
+            opacity: 1;
+            margin: auto;
+        }
+
+        .divCard .divCardTitle .title {
+            height: 26px;
+            line-height: 26px !important;
+            vertical-align: middle;
+            font-size: 16px;
+            font-family: PingFang SC-Medium, PingFang SC;
+            font-weight: 500;
+            color: #000000;
+            border-bottom: 2px solid #0094FF;
+
+        }
+
+        .divCard .divCardColor {
+            position: relative;
+            width: 123px;
+            height: 27px;
+            line-height: 27px;
+            background: #F2F3F5;
+            border-radius: 4px;
+            opacity: 1;
+            border: 1px solid #86909C;
+            margin: auto;
+            margin-top: 10px;
+        }
+
+        .divCard .divCardColor:hover {
+            cursor: pointer;
+        }
+
+        .divCard .divCardSelect {
+            position: relative;
+            width: 123px;
+            height: 27px;
+            line-height: 27px;
+            background: #F2F3F5;
+            border-radius: 4px 4px 4px 4px;
+            opacity: 1;
+            border: 1px solid #86909C;
+            margin: auto;
+            margin-top: 10px;
+        }
+
+        .divCard .divCardSelect select {
+            width: 98%;
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            border: 0px;
+            background: #F2F3F5;
+            color: #86909C;
+        }
+
+        .divCard .divCardSelect input {
+            width: 98%;
+            height: 26px;
+            line-height: 26px;
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            border: 0px;
+            background: #F2F3F5;
+            color: #86909C;
+        }
+
+        .divCard .divCardColor .divShowColor {
+            width: 18px;
+            height: 18px;
+            margin-left: 6px;
+            margin-top: 4px;
+            background-color: #000000;
+            float: left;
+        }
+
+        .divCard .divCardColor .divShowContent {
+            width: 65px;
+            height: 18px;
+            margin-left: 6px;
+            margin-top: 4px;
+            line-height: 24px;
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #86909C;
+            float: left;
+        }
+
+        .divCard .divCardFontImgs {
+            width: 123px;
+            height: 28px;
+            line-height: 28px;
+            margin: auto;
+        }
+
+        .divCard .divCardFontImgs img {
+            margin-left: 15px;
+        }
+
+        option:hover {
+            cursor: pointer;
+            background-color: #0094FF;
+        }
+
+        .layui-form-select dl dd.layui-this {
+            background-color: #0094FF !important;
+        }
+
+        .layui-form-select dl dd:hover {
+            color: #ffffff;
+            background-color: #0094FF !important;
+        }
+    </style>
+</head>
+<body>
+<div style="width:100%;height:100%;display: flex;align-items: center;justify-content: center;overflow: hidden;">
+    <div style="width: 25%;height:100%;display: flex;flex-direction: column;justify-content: center;align-items: center;">
+        <div style="width: 100%; height:10%;display: flex;justify-content: center;align-items: center;">
+            <button id="btn_add"></button>
+            <button id="btn_del"></button>
+        </div>
+        <div style="display:flex;justify-content:center;align-items:center;width:98%; height:90%;padding:0px;border: 1px solid #D5D5D5;">
+            <div style="width: 100%;height: 100%; overflow: hidden;">
+                <div id="un"
+                     style="white-space: nowrap;overflow: auto;height: 100%;width:100%;background-color: #f2f3f5;"></div>
+            </div>
+        </div>
+    </div>
+    <div style="width: 1%"></div>
+    <div id="right" style="; width: 74%;height:100%;border: 1px solid #fcfcfc;">
+
+    </div>
+</div>
+
+
+<div id="temp" style="display: none; width: 100%; height: 100%;">
+    <div style="width: 100%; height: 10%;display: flex;align-items: center;justify-content: center;">
+        <div class="div_name_label" style="width:10%;">
+            条件名称
+        </div>
+        <div style="width:90%;">
+            <input type="text" name="Name" style="width:250px;" class="myinput">
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+
+    <div style="width: 100%;height: 90%;display: flex;flex-direction: column;justify-content: center;align-items: center;">
+        <div style="width: 99%;height: 6%;display: flex;align-items: center;justify-content: flex-start;">
+            <div style="display:flex;align-items:center;justify-content:flex-start;height:100%;width:20%;font-size: 16px; color: #1D2129;font-weight: 500;">
+                属性
+            </div>
+            <div style="height:100%;width:80%;display: flex;align-items: center;justify-content: flex-end;">
+                <img src="../../images/new/btnadd002.png" name="addProp">
+            </div>
+        </div>
+        <div class="props"
+             style="width:99%;height:70%;display: flex;flex-direction: column;justify-content: center;align-items: center;">
+            <div name="prodiv"
+                 style="overflow: auto;width:100%;height:95%;white-space: normal;border: 1px solid #D5D5D5; background-color: #f2f3f5;">
+            </div>
+        </div>
+        <div style="width:99%;height:6%;display: flex;justify-content: center;align-items: center;">
+            <div style="display:flex;align-items:center;justify-content:flex-start;height:100%;width:20%;font-size: 16px; color: #1D2129;font-weight: 500;">
+                公式
+            </div>
+            <div style="height:100%;width:80%;display: flex;align-items: center;justify-content: flex-end;">
+                <img src="../../images/new/btn_add_expr.png" name="expr">
+            </div>
+        </div>
+        <div class="express"
+             style="height:20%;width:99%;display: flex;flex-direction: column;justify-content: center;align-items: center;">
+            <div style="height:100%;width:100%;">
+                <textarea name="CondStr" placeholder="输入条件表达式，例：A1>100"></textarea>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="temp_old" style="display: none;height: 100%">
+    条件名称<input type="text" name="Name">
+    <div style="width: 100%;height: 100%">
+        <fieldset class="layui-elem-field layui-field-title" style="height: 65%;padding:5px 0;margin:0">
+            <legend>属性<img src="../../images/design/addsel.png" style="margin-left: 15px" name="addProp"></legend>
+            <div name="prodiv"
+                 style="overflow: auto;height: 91%;white-space: normal;border: 1px solid #D5D5D5;padding: 5px">
+            </div>
+        </fieldset>
+        <fieldset class="layui-elem-field layui-field-title" style="height: 30%;margin:0">
+            <legend>公式</legend>
+            <div style="height: 71%">
+                <button class="layui-btn layui-btn-primary layui-btn-xs" style="width: 100px;margin:3px 0" name="expr">
+                    插入函数
+                </button>
+                <textarea name="CondStr" placeholder="输入条件表达式，例：A1>100"
+                          style="width: 746px;height: 99%;resize: none;border:1px solid #D5D5D5"></textarea>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+<!--属性类型-->
+<div id="propertype" tabindex="1"
+     style="z-index:1000;display: none;position: absolute;width:86px;height:180px;text-align: center;background: white">
+    <p val="4">背景</p>
+    <p val="3">字体</p>
+    <p val="5">边框</p>
+    <p val="1">行高</p>
+    <p val="2">列宽</p>
+    <p val="6">调整文本</p>
+</div>
+
+<div style="display: none;">
+    <div name="prodType_4" CondPropertyType="4" class="divCard">
+        <div class="divCardTitle">
+            <div class="title" style="width: 32px;float: left;">
+                背景
+            </div>
+            <div style="width: 90px;float: left; text-align: right;">
+                <img src="../../images/new/btnclose.png" name="remove"/>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="divCardColor" name="BKColor" val="#ff000000">
+            <div class="divShowColor"></div>
+            <div class="divShowContent">
+                #ff000000
+            </div>
+        </div>
+        <div class="divCardSelect">
+            <form class="layui-form" action="">
+                <select name="BKColorType">
+                    <option value="0">当前格子</option>
+                    <option value="1">当前列</option>
+                    <option value="2">当前行</option>
+                </select>
+            </form>
+        </div>
+    </div>
+
+    <div name="prodType_3" CondPropertyType="3" class="divCard">
+        <div class="divCardTitle">
+            <div class="title" style="width: 32px;float: left;">
+                字体
+            </div>
+            <div style="width: 90px;float: left; text-align: right;">
+                <img src="../../images/new/btnclose.png" name="remove"/>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="divCardColor" name="Color">
+            <div class="divShowColor"></div>
+            <div class="divShowContent">
+                #000000
+            </div>
+        </div>
+        <form class="layui-form" action="">
+            <div class="divCardSelect">
+                <select name="Name">
+                </select>
+            </div>
+            <div class="divCardSelect">
+                <select name="Size">
+                </select>
+            </div>
+        </form>
+        <div class="divCardFontImgs">
+            <img src="../../images/new/addstrong.png" name="bold" title="加粗">
+            <img src="../../images/new/additalic.png" name="italic" title="斜体">
+            <img src="../../images/new/addunderline.png" name="underline" title="下划线">
+        </div>
+    </div>
+
+    <div name="prodType_5" CondPropertyType="5" class="divCard">
+        <div class="divCardTitle">
+            <div class="title" style="width: 32px;float: left;">
+                边框
+            </div>
+            <div style="width: 90px;float: left; text-align: right;">
+                <img src="../../images/new/btnclose.png" name="remove"/>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="divCardColor" name="FrameColor">
+            <div class="divShowColor"></div>
+            <div class="divShowContent">
+                #000000
+            </div>
+        </div>
+        <div class="divCardSelect">
+            <form class="layui-form" action="">
+                <select name="FrameWidth">
+                    <option value="0">0.5磅像素</option>
+                    <option value="1">1.2磅像素</option>
+                    <option value="2">1.8磅像素</option>
+                </select>
+            </form>
+        </div>
+    </div>
+
+    <div name="prodType_1" CondPropertyType="1" class="divCard">
+        <div class="divCardTitle">
+            <div class="title" style="width: 32px;float: left;">
+                行高
+            </div>
+            <div style="width: 90px;float: left; text-align: right;">
+                <img src="../../images/new/btnclose.png" name="remove"/>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="divCardSelect">
+            <input type="text" name="NewRowHeight" maxlength="4" autocomplete="off">
+        </div>
+    </div>
+
+    <div name="prodType_2" CondPropertyType="2" class="divCard">
+        <div class="divCardTitle">
+            <div class="title" style="width: 32px;float: left;">
+                列宽
+            </div>
+            <div style="width: 90px;float: left; text-align: right;">
+                <img src="../../images/new/btnclose.png" name="remove"/>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="divCardSelect">
+            <input type="text" name="NewColWidth" maxlength="4" autocomplete="off">
+        </div>
+    </div>
+
+
+    <div name="prodType_6" CondPropertyType="6" class="divCard">
+        <div class="divCardTitle">
+            <div class="title" style="width: 64px;float: left;">
+                调整文本
+            </div>
+            <div style="width: 58px;float: left; text-align: right;">
+                <img src="../../images/new/btnclose.png" name="remove"/>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="divCardSelect">
+            <input type="text" name="FirstStr" placeholder="前缀" autocomplete="off">
+        </div>
+        <div class="divCardSelect">
+            <input type="text" name="SecondStr" placeholder="后缀" autocomplete="off">
+        </div>
+        <div class="divCardSelect">
+            <input type="text" name="CellStr" placeholder="文本" autocomplete="off">
+        </div>
+        <div class="divCardFontImgs">
+            <img src="../../images/new/expr01.png" onclick="express(this)" title="公式">
+        </div>
+    </div>
+
+</div>
+
+
+<div style="display: none">
+
+
+</div>
+<input type="hidden" id="expr" onclick="expr()">
+
+</body>
+
+<script type="text/javascript" src="../../js/ip.js"></script>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/layui.js"></script>
+<script type="text/javascript" src="../../js/spectrum.js"></script>
+<script src="../../js/design/canvasCommon.js"></script>
+<script src="../../js/def/global.js"></script>
+<script type="text/javascript">
+    var base = ip;
+    var ct = 0;
+    var form;
+    layui.use(['layer', 'form'], function () {
+        var layer = layui.layer;
+        form = layui.form;
+        for (var i = 1; i < 100; i++) {
+            var opt = '<option value="' + i + '">' + i + '</option>';
+            $("select[name='Size']").append(opt);
+        }
+    });
+
+    function express(obj) {
+        window.parent.fullCond();
+        var image = $(obj);
+        var input = image.parent().prev().children(":eq(0)");
+        var index = layer.open({
+            type: 2,
+            area: ['700px', '600px'],
+            closeBtn: 0,
+            maxmin: true,
+            resize: false,
+            title: ['公式编辑', 'height:30px;line-height:30px'],
+            content: ['../design/expr.html', 'no'],
+            btn: ['确定', '关闭'],
+            btnAlign: 'c',
+            end: function () {
+                window.parent.restoreCond();
+            },
+            yes: function (index, layero) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                var expr = iframeWin.getExpr();
+                input.val('=' + expr);
+                layer.close(index);
+            },
+            success: function (layero, index) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                var val = input.val();
+                var valArr = val.split('');
+                if (valArr[0] == '=') {
+                    val = val.replace('=', '');
+                }
+                iframeWin.setExpr(val);
+
+            }
+        });
+
+    }
+
+    function boundProtype() {
+        $("#propertype p").click(function () {
+            var t = $(this).attr('val');
+            $("div[name='pro']").each(function () {
+                if ($(this).hasClass('show-now')) {
+                    var obj = $(this);
+                    var diget = $("div[name='prodType_" + t + "']").clone();
+                    diget.attr('name', 'none');
+                    diget.children(":eq(0)").children(":eq(1)").children("img[name='remove']").click(function () {
+                        diget.remove();
+                    });
+                    // diget.children("img[name='remove']").click(function () {
+                    //     diget.remove();
+                    // });
+                    var img = null;
+                    if (t == 4) {
+                        img = 'BKColor';
+                        diget.find('div[name=' + img + ']').spectrum(colorOpt);
+                    } else if (t == 3) {
+                        img = 'Color';
+                        diget.find('div[name=' + img + ']').spectrum(colorOpt1);
+                    } else if (t == 5) {
+                        img = 'FrameColor';
+                        diget.find('div[name=' + img + ']').spectrum(colorOpt1);
+                    }
+                    if (img != null) {
+                        // diget.find('img[name=' + img + ']').spectrum(colorOpt);
+
+                    }
+                    obj.find('div[name="prodiv"]').append(diget);
+
+                    // 先解绑，然后再绑定 (因为如果不解绑事件会多次触发-huangkun)
+                    $('img[name="bold"]').unbind("click");
+                    $('img[name="italic"]').unbind("click");
+                    $('img[name="underline"]').unbind("click");
+
+                    $('img[name="bold"]').click(function () {
+                        if ($(this).hasClass('toptoolhover')) {
+                            $(this).removeClass('toptoolhover');
+                        } else {
+                            $(this).addClass('toptoolhover');
+                        }
+                    });
+
+                    $('img[name="italic"]').click(function () {
+                        if ($(this).hasClass('toptoolhover')) {
+                            $(this).removeClass('toptoolhover');
+                        } else {
+                            $(this).addClass('toptoolhover');
+                        }
+                    });
+
+                    $('img[name="underline"]').click(function () {
+                        if ($(this).hasClass('toptoolhover')) {
+                            $(this).removeClass('toptoolhover');
+                        } else {
+                            $(this).addClass('toptoolhover');
+                        }
+                    });
+
+                    $("#propertype").blur();
+                    form.render();
+                }
+            });
+        });
+    }
+
+    function boundAddPro(obj) {
+        obj.click(function () {
+            var top = $(this).offset().top;
+            var left = $(this).offset().left;
+            // $("#propertype").css({"top":top+$(this).width(), left:left});
+            $("#propertype").css({"top": top + $(this).height(), left: left});
+            $("#propertype").show().focus();
+            $("#propertype").blur(function () {
+                $(this).hide();
+            });
+        });
+    }
+
+    function removeShow() {
+        $("#right").children().each(function () {
+            $(this).removeClass('show-now');
+        });
+    }
+
+    function getExpr() {
+        var v;
+        $("div[name='pro']").each(function () {
+            if ($(this).hasClass('show-now')) {
+                v = $(this).find('textarea').val();
+            }
+        });
+        return v;
+    }
+
+    function setExpr(v) {
+        $("div[name='pro']").each(function () {
+            if ($(this).hasClass('show-now')) {
+                $(this).find('textarea').val(v);
+            }
+        });
+    }
+
+    function boundRight(prodata) {
+        removeShow();
+        var temp = $("#temp").clone();
+        temp.removeAttr('id');
+        temp.css('display', 'flex');
+        temp.css('flex-direction', 'column');
+        temp.attr('data', prodata.data);
+        temp.attr('name', 'pro');
+        temp.find('input[name="Name"]').val(prodata.Name);
+        temp.find('input[name="Name"]').change(function () {
+            var v = $(this).val(), b = true;
+            if (v.trim() == '') {
+                layer.msg("名称不能为空");
+                let cka_text = $('.cka').text();
+                $(this).val(cka_text);
+                return false;
+            }
+            $("a").each(function () {
+                if (!$(this).hasClass('cka')) {
+                    var val = $(this).text();
+                    if (val == v) {
+                        layer.msg("名称已存在");
+                        b = false;
+                    }
+                }
+            });
+
+            let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+            if (!myReg.test(v)) {
+                layer.msg("名称只支持字母数字“_”和中文");
+                b = false;
+            }
+            if (!b) {
+                let cka_text = $('.cka').text();
+                $(this).val(cka_text);
+
+                return false;
+            }
+            $('.cka').text(v);
+        });
+
+        temp.find('input[name="Name"]').blur(function () {
+            var v = $(this).val(), b = true;
+            if (v.trim() == '') {
+                layer.msg("名称不能为空");
+                let cka_text = $('.cka').text();
+                $(this).val(cka_text);
+                return false;
+            }
+            $("a").each(function () {
+                if (!$(this).hasClass('cka')) {
+                    var val = $(this).text();
+                    if (val == v) {
+                        layer.msg("名称已存在");
+                        b = false;
+                    }
+                }
+            });
+
+            let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+            if (!myReg.test(v)) {
+                layer.msg("名称只支持字母数字“_”和中文");
+                b = false;
+            }
+            if (!b) {
+                let cka_text = $('.cka').text();
+                $(this).val(cka_text);
+                return false;
+            }
+            $('.cka').text(v);
+        });
+        temp.find('textarea[name="CondStr"]').val(prodata.CondStr);
+        $("#right div[name='pro']:last-child").hide();
+        temp.find('img[name="expr"]').click(function () {
+            MyExpr();
+        });
+        temp.find('button[name="expr"]').click(function () {
+            $("#expr").trigger('click');
+        });
+        var obj = temp.find('img[name="addProp"]');
+        boundAddPro(obj);
+        var item = prodata.Items;
+        if (item) {
+            for (var i = 0; i < item.length; i++) {
+                var prodType = item[i].CondPropertyType;
+                var diget = $("div[name='prodType_" + prodType + "']").clone();
+                diget.attr('name', 'none');
+                diget.children(":eq(0)").children(":eq(1)").children("img[name='remove']").click(function () {
+                    $(this).parent().parent().parent().remove();
+                });
+
+                if (4 == prodType) {
+                    diget.find('select[name="BKColorType"]').val(item[i].BKColorType);
+                    let bkColor = item[i].BKColor; //rgba
+                    let alpha = bkColor.substring(7,9);
+                    let trueColor = bkColor.substring(1,7);
+                    let col = '#' + alpha + trueColor; //argb
+                    newChangeColor(diget.find('div[name="BKColor"]'), col);
+                    diget.find('div[name="BKColor"]').spectrum(colorOpt);
+                    diget.find('div[name="BKColor"]').spectrum("set", col); //设置颜色值
+                } else if (3 == prodType) {
+                    var font = item[i].NewFont;
+                    diget.find('select[name="Size"]').val(font.Size);
+                    diget.find('select[name="Name"]').val(font.Name);
+                    changeColor(diget.find('div[name="Color"]'), font.Color);
+                    diget.find('div[name="Color"]').spectrum(colorOpt1);
+                    if (font.Bold == 1) {
+                        diget.find('img[name="bold"]').addClass('toptoolhover');
+                    }
+                    if (font.Italic == 1) {
+                        diget.find('img[name="italic"]').addClass('toptoolhover');
+                    }
+                    if (font.Underline == 1) {
+                        diget.find('img[name="underline"]').addClass('toptoolhover');
+                    }
+
+                } else if (5 == prodType) {
+                    diget.find('select[name="FrameWidth"]').val(item[i].FrameWidth);
+                    //newChangeColor(diget.find('div[name="FrameColor"]'), item[i].FrameColor);
+                    changeColor(diget.find('div[name="FrameColor"]'), item[i].FrameColor);
+                    diget.find('div[name="FrameColor"]').spectrum(colorOpt1);
+                } else if (1 == prodType) {
+                    diget.find('input[name="NewRowHeight"]').val(item[i].NewRowHeightStr);
+                } else if (2 == prodType) {
+                    diget.find('input[name="NewColWidth"]').val(item[i].NewColWidthStr);
+                } else if (6 == prodType) {
+                    diget.find('input[name="FirstStr"]').val(item[i].FirstStr);
+                    diget.find('input[name="SecondStr"]').val(item[i].SecondStr);
+                    diget.find('input[name="CellStr"]').val(item[i].CellStr);
+                }
+                temp.find('div[name="prodiv"]').append(diget);
+            }
+        }
+        $("#right").append(temp);
+
+        form.render();
+    }
+
+    function changeColor(obj, color) {
+        var url = base + "/images/design/42_1.png";
+        obj.attr("val", color);
+        obj.children(":eq(0)").css("background-color", color);
+        obj.children(":eq(1)").html(color); //argb
+       // obj.css("border-bottom", "4px solid " + color + "");
+    }
+
+    function newChangeColor(obj, color) { //color argb
+        let trueColor = color.substring(3,9);
+        let alpha = color.substring(1,3);
+        let col = '#'  + trueColor + alpha;
+        obj.attr('val', color); //argb
+        obj.children(":eq(0)").css("background-color", col);
+        obj.children(":eq(1)").html(color); //argb
+    }
+
+    function expr() {
+        window.parent.fullCond();
+        layer.open({
+            type: 2,
+            area: ['700px', '600px'],
+            closeBtn: 0,
+            resize: false,
+            title: false,
+            content: ['../design/expr.html', 'no'],
+            btn: ['确定', '关闭'],
+            btnAlign: 'c',
+            end: function () {
+                window.parent.restoreCond();
+            },
+            yes: function (index, layero) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                var expr = iframeWin.getExpr();
+                setExpr('=' + expr);
+                layer.close(index);
+            },
+            success: function (layero, index) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                var v = getExpr();
+                var vArr = v.split('');
+                if (vArr[0] == '=') {
+                    v = v.replace('=', '');
+                }
+                iframeWin.setExpr(v);
+            }
+        });
+    }
+
+    function MyExpr() {
+        window.parent.fullCond();
+        layer.open({
+            type: 2,
+            area: ['700px', '600px'],
+            closeBtn: 0,
+            resize: false,
+            title: false,
+            content: ['../design/expr.html', 'no'],
+            btn: ['确定', '关闭'],
+            btnAlign: 'c',
+            end: function () {
+                window.parent.restoreCond();
+            },
+            yes: function (index, layero) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                var expr = iframeWin.getExpr();
+                setExpr('=' + expr);
+                layer.close(index);
+            },
+            success: function (layero, index) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                var v = getExpr();
+                var vArr = v.split('');
+                if (vArr[0] == '=') {
+                    v = v.replace('=', '');
+                }
+                iframeWin.setExpr(v);
+            }
+        });
+    }
+
+    function boundEvent() {  //条件属性界面事件
+        $("#btn_del").click(function () {
+            var a = $('.cka');
+            var data = a.attr('data');
+            $("div[name='pro']").each(function () {
+                if (data == $(this).attr('data')) {
+                    a.remove();
+                    $(this).remove();
+                    $("#un a:last-child").trigger('click');
+                }
+            });
+        });
+        $("#btn_add").click(function () { // + 按钮事件
+            ct++;
+            var proname = '属性' + ct;
+            var data = "pro_" + ct;
+            $("#un").append("<a href='javascript:;' data=" + data + ">" + proname + "</a>");
+            var prodata = {
+                data: data,
+                Name: proname,
+                CondStr: ''
+            };
+            boundRight(prodata);
+            boundCk($("#un a:last-child"));
+            $("#un a:last-child").trigger('click');
+        });
+    }
+
+    function boundCk(a) {
+
+        // 先解绑，后再绑定
+        $('img[name="bold"]').unbind("click");
+        $('img[name="italic"]').unbind("click");
+        $('img[name="underline"]').unbind("click");
+
+        $('img[name="bold"]').click(function () {
+            if ($(this).hasClass('toptoolhover')) {
+                $(this).removeClass('toptoolhover');
+            } else {
+                $(this).addClass('toptoolhover');
+            }
+        });
+
+        $('img[name="italic"]').click(function () {
+            if ($(this).hasClass('toptoolhover')) {
+                $(this).removeClass('toptoolhover');
+            } else {
+                $(this).addClass('toptoolhover');
+            }
+        });
+
+        $('img[name="underline"]').click(function () {
+            if ($(this).hasClass('toptoolhover')) {
+                $(this).removeClass('toptoolhover');
+            } else {
+                $(this).addClass('toptoolhover');
+            }
+        });
+        a.click(function () {
+            var b = true;
+            var v = $(".show-now").find('input[name="Name"]').val();
+            if (v != undefined && v.trim() == '') {
+                layer.msg("名称不能为空");
+                return false;
+            }
+            $("a").each(function () {
+                if (!$(this).hasClass('cka')) {
+                    var val = $(this).text();
+                    if (val == v) {
+                        b = false;
+                        layer.msg("名称已存在");
+                    }
+                }
+            });
+
+            let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+            if (!myReg.test(v)) {
+                layer.msg("名称只支持字母数字“_”和中文");
+                b = false;
+                return false;
+            }
+
+            if (!b) {
+                return false;
+            }
+            $("a").each(function () {
+                $(this).removeClass("cka");
+                $(this).addClass("ncka");
+            });
+            $(this).addClass("cka");
+            $(this).removeClass("ncka");
+            var data = $(this).attr('data');
+            $("div[name='pro']").each(function () {
+                if (data == $(this).attr('data')) {
+                    $(this).show();
+                    $(this).addClass('show-now');
+                } else {
+                    $(this).hide();
+                    $(this).removeClass('show-now');
+                }
+            });
+        });
+    }
+
+    function getPage() {
+        var b = true;
+        var v = $(".show-now").find('input[name="Name"]').val();
+        if (v != undefined && v.trim() == '') {
+            layer.msg("名称不能为空");
+            return false;
+        }
+        $("a").each(function () {
+            if (!$(this).hasClass('cka')) {
+                var val = $(this).text();
+                if (val == v) {
+                    b = false;
+                    layer.msg("名称已存在");
+                }
+            }
+        });
+
+        let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+        if (!myReg.test(v)) {
+            layer.msg("名称只支持字母数字“_”和中文");
+            b = false;
+            return false;
+        }
+
+        if (!b) {
+            return false;
+        }
+
+        let nameArys = [];
+
+        var res = [];
+        $("div[name='pro']").each(function () {
+            var usarr = {};
+            usarr.CondStr = $(this).find('textarea[name="CondStr"]').val();
+            usarr.Name = $(this).find('input[name="Name"]').val();
+
+            if (!myReg.test(usarr.Name)) {
+                layer.msg("名称只支持字母数字“_”和中文");
+                return false;
+            }
+            // 将名称放入数组，后面进行去重操作，已判断名称是否重名
+            nameArys.push(usarr.Name);
+
+            var items = [];
+            $(this).find('div[name="prodiv"]').children().each(function () {
+                var type = $(this).attr('CondPropertyType');
+                var item = {};
+                if (4 == type) {
+                    item.CondPropertyType = 4;
+                    let color = $(this).find('div[name="BKColor"]').attr('val'); //argb
+                    let alpha1 = color.substring(3,9);
+                    let trueColor1 = color.substring(1,3);
+                    let col1 = '#' + alpha1 + trueColor1;
+                    item.BKColor =  col1; //rgba
+                    //item.BKColor = '#ff56ff56';
+                    item.BKColorType = parseInt($(this).find('select[name="BKColorType"]').val());
+                } else if (3 == type) {
+                    var bold = 0;
+                    if ($(this).find('img[name="bold"]').hasClass('toptoolhover')) {
+                        bold = 1
+                    }
+
+                    var italic = 0;
+                    if ($(this).find('img[name="italic"]').hasClass('toptoolhover')) {
+                        italic = 1
+                    }
+
+                    var underline = 0;
+                    if ($(this).find('img[name="underline"]').hasClass('toptoolhover')) {
+                        underline = 1
+                    }
+
+                    item.CondPropertyType = 3;
+                    let color = $(this).find('div[name="Color"]').attr('val');
+                    if(color == undefined){
+                        color = '#000000';
+                    }
+                    item.NewFont = {
+                        Color: color
+                        , Name: $(this).find('select[name="Name"]').val()
+                        , Size: parseInt($(this).find('select[name="Size"]').val())
+                        , Bold: bold
+                        , Italic: italic
+                        , Underline: underline
+                    };
+                } else if (5 == type) {
+                    item.CondPropertyType = 5;
+                    item.FrameColor = $(this).find('div[name="FrameColor"]').attr('val');
+                    if(item.FrameColor == undefined){
+                        item.FrameColor = '#000000';
+                    }
+                    item.FrameWidth = parseInt($(this).find('select[name="FrameWidth"]').val());
+                } else if (1 == type) {
+                    item.CondPropertyType = 1;
+                    // item.NewRowHeight = parseInt($(this).find('input[name="NewRowHeight"]').val());
+                    item.NewRowHeightStr = $(this).find('input[name="NewRowHeight"]').val();
+                } else if (2 == type) {
+                    item.CondPropertyType = 2;
+                    // item.NewColWidth = parseInt($(this).find('input[name="NewColWidth"]').val());
+                    item.NewColWidthStr = $(this).find('input[name="NewColWidth"]').val();
+                } else if (6 == type) {
+                    item.CondPropertyType = 6;
+                    item.FirstStr = $(this).find('input[name="FirstStr"]').val();
+                    item.SecondStr = $(this).find('input[name="SecondStr"]').val();
+                    item.CellStr = $(this).find('input[name="CellStr"]').val();
+                }
+                items.push(item);
+            });
+
+            usarr.Items = items;
+            res.push(usarr);
+        });
+
+        if (nameArys.length > 0) {
+            // 去重前长度
+            let aLen = nameArys.length;
+            // 去除重复项
+            let new_nameArys = Array.from(new Set(nameArys));
+            let bLen = new_nameArys.length;
+            // 去重后长度
+            if (aLen > bLen) {
+                efalert(layer, "名称不能重复", 2);
+                return false;
+            }
+        }
+
+        var r = {
+            CondPropertys: res
+        };
+        // debugger;
+        return r;
+    }
+
+    var index;
+
+    function initFont(arr, fontMapVK) {
+        //index=idx;
+        if (arr.length > 0) {
+            var opt = '';
+            for (var i = 0; i < arr.length; i++) {
+                opt += '<option value="' + arr[i] + '">' + (fontMapVK[arr[i]] == undefined ? arr[i] : fontMapVK[arr[i]]) + '</option>';
+            }
+            $("select[name='Name']").append(opt);
+        }
+        form.render();
+    }
+
+    function init(json) {
+        boundEvent();
+        boundProtype();
+        if (json != '' && json != undefined) {
+            var obj = JSON.parse(json);
+            var arr = obj.CondPropertys;
+            for (var i = 0; i < arr.length; i++) { //初始化左侧属性栏 whj
+                ct++;
+                $("#un").append("<a href='javascript:;' data=pro_" + i + " id='pro_" + i + "'>" + arr[i].Name + "</a>");
+                arr[i].data = "pro_" + i;
+                boundRight(arr[i]);
+                boundCk($("#pro_" + i)); //为每个属性绑定事件 whj
+            }
+            $("#un a:last-child").trigger('click');
+        }
+        form.render();
+    }
+
+    var colorOpt = {
+        allowEmpty: true,
+        color: "#ECC",
+        showInput: true,
+        containerClassName: "full-spectrum",
+        showInitial: true,
+        showPalette: true,
+        showSelectionPalette: true,
+        showAlpha: true,
+        maxPaletteSize: 10,
+        preferredFormat: "hex8",
+        localStorageKey: "spectrum.demo",
+        change: function (color) {
+            var hexColor = "transparent";
+            if (color) {
+                hexColor = color.toHex8String();
+                newChangeColor($(this), hexColor);
+            }
+        },
+        palette: colors
+    };
+
+
+    var colorOpt1 = {
+        allowEmpty: true,
+        color: "#ECC",
+        showInput: true,
+        containerClassName: "full-spectrum",
+        showInitial: true,
+        showPalette: true,
+        showSelectionPalette: true,
+        showAlpha: true,
+        maxPaletteSize: 10,
+        preferredFormat: "hex",
+        localStorageKey: "spectrum.demo",
+        change: function (color) {
+            var hexColor = "transparent";
+            if (color) {
+                hexColor = color.toHexString();
+                changeColor($(this), hexColor);
+            }
+        },
+        palette: colors
+    };
+
+</script>
+</html>

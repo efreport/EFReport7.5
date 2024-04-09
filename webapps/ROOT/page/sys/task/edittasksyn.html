@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>盈帆数据报表-编辑同步任务</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../../lib/layui-v2.7.6/css/layui.css" media="all">
+    <style>
+
+        .layui-elem-field {
+            border-left: 0px !important;
+            border-right: 0px !important;
+            border-bottom: 0px !important;
+        }
+
+        .layui-elem-field legend {
+            margin-left: 20px;
+            padding: 0 0;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+       
+
+        select {
+            height: 38px;
+            width: 400px;
+        }
+
+        .myBtnCls {
+            background-color: #0094FF !important;
+        }
+
+        /* .layui-form-select .layui-input {
+            background-color: #f2f3f5 !important;
+        } */
+        .layui-form-select dl dd.layui-this {
+            background-color: #0094FF !important;
+        }
+        .layui-form-select dl dd:hover {
+            background-color: #0094FF !important;
+        }
+
+        .layui-form-label {
+            width: 130px !important;
+        }
+        .layui-input-block {
+            margin-left: 130px !important;
+        }
+        img:hover {
+            cursor: pointer;
+        }
+
+        .icon {display:inline-block;width:33px;height:22px; margin-top: 5px;}
+        .icon-4 {background:url(../../../imgs/icon-login.png) no-repeat 0 -43px;position:absolute;right:-10px;cursor:pointer;}
+        .icon-5 {background:url(../../../imgs/icon-login.png) no-repeat -55px -43px;}
+
+    </style>
+</head>
+<body>
+<div style="width: 100%;">
+    <form class="layui-form">
+    <input type="hidden" id="id" name="id" />
+    <fieldset class="layui-elem-field">
+        <legend>定时任务</legend>
+        <div class="layui-form-item">
+            <label class="layui-form-label">定时任务名</label>
+
+            <div class="layui-input-block">
+                <input type="text" name="taskName" lay-verify="required" autocomplete="off" class="layui-input"
+                       style="width:607px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">定时任务描述</label>
+
+            <div class="layui-input-block">
+                <input type="text" name="taskDes" lay-verify="required" autocomplete="off" class="layui-input" style="width:607px;">
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="layui-elem-field">
+        <legend>源数据</legend>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 130px;">数据链接</label>
+
+            <div class="layui-input-inline" style="width: 607px;">
+                <select name="sourceName" lay-verify="required" lay-filter="sourceName">
+                    <option value="0">--</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据链接URL</label>
+
+            <div class="layui-input-block" >
+                <input type="text" name="sourceUrl" lay-verify="required" autocomplete="off" class="layui-input"
+                       readonly style="width: 607px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">用户名</label>
+
+                <div class="layui-input-inline">
+                    <input type="text" name="sourceUser" lay-verify="" class="layui-input" style="width: 205px;" readonly>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">密码</label>
+
+                <div class="layui-input-inline">
+                    <input type="password" name="sourcePass" lay-verify="" autocomplete="new-password"
+                           class="layui-input" style="width:205px;" readonly>
+                    <span class="bind-password1 icon icon-4" style="top:0px;left: 215px;position: absolute;"></span>
+                    <!-- <img src="/imgs/view.png"
+                         style="top:10px;left: 215px;position: absolute;width:18px;height:18px;" name="showpsw1"> -->
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">查询语句</label>
+
+            <div class="layui-input-block" style="vertical-align: top;">
+                <textarea name="sourceSql"  style="display: inline-block;width:607px" rows="10"></textarea>
+                <img src="img/replace.png" attr="viewSourceds" title="预览"
+                     style="margin:5px;border:1px solid gainsboro;vertical-align: top;width:18px;height:18px;">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="layui-elem-field">
+        <legend>目标数据</legend>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据链接</label>
+
+            <div class="layui-input-inline" style="width: 607px;">
+                <select name="targetName" lay-verify="required" lay-filter="targetName">
+                    <option value="0">--</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据链接URL</label>
+
+            <div class="layui-input-block">
+                <input type="text" name="targetUrl" lay-verify="required" autocomplete="off" class="layui-input"
+                       readonly style="width: 607px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">用户名</label>
+
+                <div class="layui-input-inline">
+                    <input type="text" name="targetUser" lay-verify="" class="layui-input" style="width: 205px;" readonly>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">密码</label>
+
+                <div class="layui-input-inline">
+                    <input type="password" name="targetPass" lay-verify="" autocomplete="new-password"
+                           class="layui-input" style="width: 205px;" readonly>
+                    <span class="bind-password2 icon icon-4" style="top:0px;left: 215px;position: absolute;"></span>
+                    <!-- <img src="/imgs/view.png"
+                         style="top:10px;left: 215px;position: absolute;width:18px;height:18px;" name="showpsw2"> -->
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block" lay-filter="connType1" style="color: red;width:640px;">
+               示例:insert into target(A,B,C) values (@{param1},@{param2},@{param3}),其中@{param1}对应的源SQL中的第一个字段,@{param2}对应的源SQL中的第二个字段。以此类推
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">同步语句</label>
+            <div class="layui-input-block" lay-filter="connType1">
+                <textarea name="targetSql" rows="10" style="width: 85%;"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">查询语句</label>
+            <div class="layui-input-block" lay-filter="connType1">
+                <textarea name="targetQuery"  style="display: inline-block;width:85%" rows="10"></textarea>
+                <img src="img/replace.png" attr="viewTargetds" title="预览"
+                     style="margin:5px;border:1px solid gainsboro;vertical-align: top;width:18px;height:18px;">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="layui-elem-field">
+        <legend>定时信息</legend>
+        <div class="layui-form-item" style="display: none;">
+            <div class="layui-inline">
+                <label class="layui-form-label">表达式</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="taskSchedule" lay-verify="" class="layui-input" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">执行频率</label>
+
+            <div class="layui-input-inline" lay-filter="connType1" style="width: 120px;">
+                <select name="frequency" lay-verify="required" lay-filter="frequency" style="width:100px;">
+                    <option value="day" selected>每天</option>
+                    <option value="week">每周</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" id="dayOption">
+            <label class="layui-form-label">小时</label>
+            <div class="layui-input-inline" style="width: 120px;">
+                <select name="hour" lay-verify="required" style="width:100px;">
+                    <option value="0" selected>0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                </select>
+            </div>
+
+            <label class="layui-form-label" style="width: 80px !important;">分</label>
+            <div class="layui-input-inline" style="width: 120px;">
+                <select name="minute" lay-verify="required" style="width:100px;">
+                    <option value="0" selected>0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <option value="46">46</option>
+                    <option value="47">47</option>
+                    <option value="48">48</option>
+                    <option value="49">49</option>
+                    <option value="50">50</option>
+                    <option value="51">51</option>
+                    <option value="52">52</option>
+                    <option value="53">53</option>
+                    <option value="54">54</option>
+                    <option value="55">55</option>
+                    <option value="56">56</option>
+                    <option value="57">57</option>
+                    <option value="58">58</option>
+                    <option value="59">59</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item" id="weekOption" style="display: none;">
+
+            <label class="layui-form-label">日</label>
+
+            <div class="layui-input-inline" style="width: 120px;">
+                <select name="weekDay" lay-verify="required" style="width:100px;">
+                    <option value="2" selected>周一</option>
+                    <option value="3">周二</option>
+                    <option value="4">周三</option>
+                    <option value="5">周四</option>
+                    <option value="6">周五</option>
+                    <option value="7">周六</option>
+                    <option value="1">周日</option>
+                </select>
+            </div>
+            <label class="layui-form-label" style="width: 80px !important;">小时</label>
+            <div class="layui-input-inline" style="width: 120px;">
+                <select name="weekHour" lay-verify="required" style="width:100px;">
+                    <option value="0" selected>0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                </select>
+            </div>
+
+            <label class="layui-form-label" style="width: 80px !important;">分</label>
+            <div class="layui-input-inline" style="width: 120px;margin-left: 7px;">
+                <select name="weekMinute" lay-verify="required" style="width:100px;">
+                    <option value="0" selected>0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <option value="46">46</option>
+                    <option value="47">47</option>
+                    <option value="48">48</option>
+                    <option value="49">49</option>
+                    <option value="50">50</option>
+                    <option value="51">51</option>
+                    <option value="52">52</option>
+                    <option value="53">53</option>
+                    <option value="54">54</option>
+                    <option value="55">55</option>
+                    <option value="56">56</option>
+                    <option value="57">57</option>
+                    <option value="58">58</option>
+                    <option value="59">59</option>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    </form>
+</div>
+
+<div class="layui-form-item" style="text-align: center;">
+    <button class="layui-btn myBtnCls" id="save">
+        保存
+    </button>
+
+    <button class="layui-btn myBtnCls" id="execute">
+        立即执行
+    </button>
+</div>
+
+
+</body>
+<script src="../../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script src="../../../js/common.js" charset="utf-8"></script>
+<script>
+    var base = "";
+    var token = "";
+    var id;
+    var conns;
+    var connsMap = {};
+    var layer;
+    var form;
+
+    layui.use(['layer', 'element', 'form'], function () {
+        layer = layui.layer, element = layui.element;
+        form = layui.form;
+
+
+        form.on("select(sourceName)", function(data) {
+            // console.log("select--sourceName--data-->", data);
+            let val = data.value;
+            if (val == 0) {
+                $('input[name="sourceUrl"]').val('');
+                $('input[name="sourceUser"]').val('');
+                $('input[name="sourcePass"]').val('');
+            } else {
+                var key = val;
+                var con = connsMap[key];
+                $('input[name="sourceUrl"]').val(con.url);
+                $('input[name="sourceUser"]').val(con.username);
+                $('input[name="sourcePass"]').val(con.password);
+            }
+
+
+        });
+
+        form.on("select(targetName)", function(data) {
+            // console.log("select--targetName--data-->", data);
+            let val = data.value;
+            if (val == 0) {
+                $('input[name="targetUrl"]').val('');
+                $('input[name="targetUser"]').val('');
+                $('input[name="targetPass"]').val('');
+            } else {
+                var key = val;
+                var con = connsMap[key];
+                $('input[name="targetUrl"]').val(con.url);
+                $('input[name="targetUser"]').val(con.username);
+                $('input[name="targetPass"]').val(con.password);
+            }
+        });
+
+
+        form.on("select(frequency)", function(data) {
+            // console.log("select--frequency--data-->", data);
+            let val = data.value;
+            if (val == 'week') {
+                $('#weekOption').show();
+                $('#dayOption').hide();
+            } else {
+                $('#weekOption').hide();
+                $('#dayOption').show();
+            }
+        });
+
+    });
+
+    $(function(){
+        let cid = GetQueryValue("id");
+        id = cid;
+        $("#id").val(cid);
+        // console.log("传递过来的参数id值为：id---->", id);
+        let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+        base = server_base_url;
+        let tokn = window.sessionStorage.getItem("cur_token");
+        token = tokn;
+        loadData(cid);
+    });
+    function loadData(id) {
+        if (id > 0) {
+            
+            $.ajax({
+                url: base + '/task/getSynTaskById?token=' + token + '&id=' + id,
+                type: 'get',
+                success: function (res) {
+                    if (res.state == 'success') {
+                        var syn = res.data;
+                        conns = res.conns;
+                        for (var i = 0; i < conns.length; i++) {
+                            var conn = conns[i];
+                            connsMap[conn.name] = conn; //初始化数据链接MAP
+                            $('select[name="sourceName"]').append('<option value="' + conn.name + '">' + conn.name + '</option>');
+                            $('select[name="targetName"]').append('<option value="' + conn.name + '">' + conn.name + '</option>');
+                        }
+
+                        $('input[name="taskName"]').val(syn.taskName);
+                        $('input[name="taskDes"]').val(syn.taskDes);
+
+                        $('select[name="sourceName"]').val(syn.sourceName).prop('selected' , true);
+                        $('input[name="sourceUrl"]').val(syn.sourceUrl);
+                        $('input[name="sourceUser"]').val(syn.sourceUser);
+                        $('input[name="sourcePass"]').val(syn.sourcePass);
+                        $('textarea[name="sourceSql"]').val(syn.sourceSql);
+
+                        $('select[name="targetName"]').val(syn.targetName).prop('selected' , true);
+                        $('input[name="targetUrl"]').val(syn.targetUrl);
+                        $('input[name="targetUser"]').val(syn.targetUser);
+                        $('input[name="targetPass"]').val(syn.targetPass);
+                        $('textarea[name="targetSql"]').val(syn.targetSql);
+                        $('textarea[name="targetQuery"]').val(syn.targetQuery);
+
+                        var schedule = syn.taskSchedule;
+                        var schedules = schedule.split(' ');
+                        // console.log(schedules);
+                        if(schedules[4] == '*'){//按天执行
+                            $('select[name="frequency"]').val('day').prop('selected' , true);
+                            $('#dayOption').show();
+                            $('#weekOption').hide();
+                            $('select[name="hour"]').val(schedules[2]).prop('selected' , true);
+                            $('select[name="minute"]').val(schedules[1]).prop('selected' , true);
+                        }else{
+                            $('select[name="frequency"]').val('week').prop('selected' , true);
+                            $('#dayOption').hide();
+                            $('#weekOption').show();
+                            $('select[name="weekDay"]').val(schedules[6]).prop('selected' , true);
+                            $('select[name="weekHour"]').val(schedules[2]).prop('selected' , true);
+                            $('select[name="weekMinute"]').val(schedules[1]).prop('selected' , true);
+                        }
+
+                        form.render();
+
+                    }
+                },
+                error: function () {
+                }
+            })
+
+        } else {
+            $.ajax({
+                url: base + '/task/getSynTaskById?token='+ token +'&id=' + id,
+                type: 'get',
+                success: function (res) {
+                    if (res.state == 'success') {
+                        var syn = res.data;
+                        conns = res.conns;
+                        for (var i = 0; i < conns.length; i++) {
+                            var conn = conns[i];
+                            connsMap[conn.name] = conn; //初始化数据链接MAP
+                            $('select[name="sourceName"]').append('<option value="' + conn.name + '">' + conn.name + '</option>');
+                            $('select[name="targetName"]').append('<option value="' + conn.name + '">' + conn.name + '</option>');
+                        }
+
+                        form.render();
+                    }
+                },
+                error: function () {
+                }
+            })
+        }
+        
+    }
+
+    $(function() {
+        $('select[name="sourceName"]').bind('change', function () {
+            if ($(this).val() == 0) {
+                $('input[name="sourceUrl"]').val('');
+                $('input[name="sourceUser"]').val('');
+                $('input[name="sourcePass"]').val('');
+            } else {
+                var key = $(this).val();
+                var con = connsMap[key];
+                $('input[name="sourceUrl"]').val(con.url);
+                $('input[name="sourceUser"]').val(con.username);
+                $('input[name="sourcePass"]').val(con.password);
+            }
+        });
+
+        $('select[name="targetName"]').bind('change', function () {
+            if ($(this).val() == 0) {
+                $('input[name="targetUrl"]').val('');
+                $('input[name="targetUser"]').val('');
+                $('input[name="targetPass"]').val('');
+            } else {
+                var key = $(this).val();
+                var con = connsMap[key];
+                $('input[name="targetUrl"]').val(con.url);
+                $('input[name="targetUser"]').val(con.username);
+                $('input[name="targetPass"]').val(con.password);
+            }
+        });
+
+        $('select[name="frequency"]').bind('change', function () {
+            if ($(this).val() == 'week') {
+                $('#weekOption').show();
+                $('#dayOption').hide();
+            } else {
+                $('#weekOption').hide();
+                $('#dayOption').show();
+            }
+        });
+
+        $("img[attr='viewSourceds']").click(function () {
+            var sql = $("textarea[name='sourceSql']").val();
+            var validateSql = sql.toLowerCase();
+            if(validateSql.indexOf("delete ")!=-1||validateSql.indexOf("update ")!=-1||validateSql.indexOf("select into ")!=-1||validateSql.indexOf("insert ")!=-1){
+                efalert(layer , '不能执行delete,update,insert以及select into操作!' , 2);
+                return;
+            }
+            var index = layer.open({
+                type: 2,
+                area: ['750px', '500px'],
+                closeBtn: 0,
+                shadeClose: true,
+                title: false,
+                scrollbar: false,
+                content: ['dataview.html', 'no'],
+                btn: ['关闭'],
+                btnAlign: 'c',
+                success: function (layero, index) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.setDsInfo($("select[name='sourceName']").val(), sql, '');
+                }
+            });
+        });
+
+        $("img[attr='viewTargetds']").click(function () {
+            var sql = $("textarea[name='targetQuery']").val();
+            var validateSql = sql.toLowerCase();
+            if(validateSql.indexOf("delete ")!=-1||validateSql.indexOf("update ")!=-1||validateSql.indexOf("select into ")!=-1||validateSql.indexOf("insert ")!=-1){
+                efalert(layer , '不能执行delete,update,insert以及select into操作!' , 2);
+                return;
+            }
+            var index = layer.open({
+                type: 2,
+                area: ['750px', '500px'],
+                closeBtn: 0,
+                shadeClose: true,
+                title: false,
+                scrollbar: false,
+                content: ['dataview.html', 'no'],
+                btn: ['关闭'],
+                btnAlign: 'c',
+                success: function (layero, index) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.setDsInfo($("select[name='targetName']").val(), sql, '');
+                }
+            });
+        });
+
+        $("img[name='showpsw1']").click(function(){
+            var psw=$("input[name='sourcePass']");
+            var type=psw.attr("type");
+            psw.attr("type",type=='text'?"password":"text");
+        });
+
+        $(".bind-password1").click(function(){
+            var psw=$("input[name='sourcePass']");
+            var type=psw.attr("type");
+            psw.attr("type",type=='text'?"password":"text");
+
+            if ($(this).hasClass('icon-5')) {
+                $(this).removeClass('icon-5');
+            } else {
+                $(this).addClass('icon-5');
+            }
+        });
+
+        $("img[name='showpsw2']").click(function(){
+            var psw=$("input[name='targetPass']");
+            var type=psw.attr("type");
+            psw.attr("type",type=='text'?"password":"text");
+        });
+
+        $(".bind-password2").click(function(){
+            var psw=$("input[name='targetPass']");
+            var type=psw.attr("type");
+            psw.attr("type",type=='text'?"password":"text");
+            if ($(this).hasClass('icon-5')) {
+                $(this).removeClass('icon-5');
+            } else {
+                $(this).addClass('icon-5');
+            }
+        });
+
+        $('#save').bind('click', function () {
+            var taskName = $('input[name="taskName"]').val().trim();
+            var taskDes = $('input[name="taskDes"]').val();
+            var sourceName = $("select[name='sourceName']").val();
+            var sourceUrl = $('input[name="sourceUrl"]').val();
+            var sourceUser = $('input[name="sourceUser"]').val();
+            var sourcePass = $('input[name="sourcePass"]').val();
+            var sourceSql = $('textarea[name="sourceSql"]').val();
+
+            var targetName = $("select[name='targetName']").val();
+            var targetUrl = $('input[name="targetUrl"]').val();
+            var targetUser = $('input[name="targetUser"]').val();
+            var targetPass = $('input[name="targetPass"]').val();
+            var targetSql = $('textarea[name="targetSql"]').val();
+            var targetQuery = $('textarea[name="targetQuery"]').val();
+
+            var frequency = $("select[name='frequency']").val(); //定时频率
+
+            var taskSchedule;
+
+            if (frequency == 'day') {//按天执行
+                var hour = $("select[name='hour']").val(); //小时
+                var minute = $("select[name='minute']").val();//分钟
+                taskSchedule = '0 ' + minute + ' ' + hour + ' * * ?';
+            } else {//按周执行
+                var day = $("select[name='weekDay']").val(); //小时
+                var hour = $("select[name='weekHour']").val(); //小时
+                var minute = $("select[name='weekMinute']").val();//分钟
+                taskSchedule = '0 ' + minute + ' ' + hour + ' ? ' + ' * ' + day;
+            }
+
+            var validateSql = sourceSql.toLowerCase();
+            if(validateSql.indexOf("delete ")!=-1||validateSql.indexOf("update ")!=-1||validateSql.indexOf("select into ")!=-1||validateSql.indexOf("insert ")!=-1){
+                efalert(layer , '源SQL不能执行delete,update,insert以及select into操作!' , 2);
+                return;
+            }
+
+            var validateSql1 = targetSql.toLowerCase();
+            if(validateSql1.indexOf("delete")!=-1){
+                efalert(layer , '目标SQL不能执行delete操作!' , 2);
+                return;
+            }
+
+            var validateSql2 = targetQuery.toLowerCase();
+            if(validateSql2.indexOf("delete ")!=-1||validateSql2.indexOf("update ")!=-1||validateSql2.indexOf("select into ")!=-1||validateSql2.indexOf("insert ")!=-1){
+                efalert(layer , '目标查询SQL不能执行delete,update,insert以及select into操作!' , 2);
+                return;
+            }
+
+
+
+
+            if (taskName == '') {
+                efalert(layer, '请输入定时任务名', 2);
+                return;
+            }
+
+            let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+            if (!myReg.test(taskName)) {
+                efalert(layer, '定时任务名只支持字母数字“_”和中文', 2);
+                return;
+            }
+
+            if (sourceName == '') {
+                efalert(layer, '请输入源数据信息', 2);
+                return;
+            }
+
+            if (sourceSql == '') {
+                efalert(layer, '请输入源数据查询语句', 2);
+                return;
+            }
+
+            if (targetName == '') {
+                efalert(layer, '请输入目标数据信息', 2);
+                return;
+            }
+
+            if (targetSql == '') {
+                efalert(layer, '请输入目标数据语句', 2);
+                return;
+            }
+            var dat = {
+                id:id,
+                taskName: taskName,
+                taskDes: taskDes,
+                sourceName: sourceName,
+                sourceUrl: sourceUrl,
+                sourceUser: sourceUser,
+                sourcePass: sourcePass,
+                sourceSql: sourceSql,
+                targetName: targetName,
+                targetUrl: targetUrl,
+                targetUser: targetUser,
+                targetPass: targetPass,
+                targetSql: targetSql,
+                targetQuery: targetQuery,
+                taskSchedule: taskSchedule
+            }
+
+            $.ajax({
+                url: base + '/task/saveSynTask?token=' + token,
+                type: 'post',
+                data: dat,
+                success: function (res) {
+                    if (res.state == 'success') {
+                        layer.alert('保存成功', { shift: 5}, function(index) {
+                            window.parent.falshTable();//刷新父页面(表格)
+                            parent.layer.closeAll();//关闭弹出层
+                        })
+                    } else {
+                        efalert(layer, '保存失败,失败原因:' + res.message , 2)
+                    }
+                },
+                error: function () {
+                }
+            })
+
+
+        });
+
+
+        $('#execute').bind('click', function () {
+
+            let c_id = $("#id").val();
+            if (c_id === "" || c_id === "0") {
+                efalert(layer , '请保存后再执行！' , 2);
+                return;
+            }
+
+            var taskName = $('input[name="taskName"]').val().trim();
+            var taskDes = $('input[name="taskDes"]').val();
+            var sourceName = $("select[name='sourceName']").val();
+            var sourceUrl = $('input[name="sourceUrl"]').val();
+            var sourceUser = $('input[name="sourceUser"]').val();
+            var sourcePass = $('input[name="sourcePass"]').val();
+            var sourceSql = $('textarea[name="sourceSql"]').val();
+
+            var targetName = $("select[name='targetName']").val();
+            var targetUrl = $('input[name="targetUrl"]').val();
+            var targetUser = $('input[name="targetUser"]').val();
+            var targetPass = $('input[name="targetPass"]').val();
+            var targetSql = $('textarea[name="targetSql"]').val();
+            var targetQuery = $('textarea[name="targetQuery"]').val();
+
+            var frequency = $("select[name='frequency']").val(); //定时频率
+
+            var taskSchedule;
+
+            if (frequency == 'day') {//按天执行
+                var hour = $("select[name='hour']").val(); //小时
+                var minute = $("select[name='minute']").val();//分钟
+                taskSchedule = '0 ' + minute + ' ' + hour + ' * * ?';
+            } else {//按周执行
+                var day = $("select[name='weekDay']").val(); //小时
+                var hour = $("select[name='weekHour']").val(); //小时
+                var minute = $("select[name='weekMinute']").val();//分钟
+                taskSchedule = '0 ' + minute + ' ' + hour + ' ? ' + ' * ' + day;
+            }
+
+            var validateSql = sourceSql.toLowerCase();
+            if(validateSql.indexOf("delete ")!=-1||validateSql.indexOf("update ")!=-1||validateSql.indexOf("select into ")!=-1||validateSql.indexOf("insert ")!=-1){
+                efalert(layer , '源SQL不能执行delete,update,insert以及select into操作!' , 2);
+                return;
+            }
+
+            var validateSql1 = targetSql.toLowerCase();
+            if(validateSql1.indexOf("delete")!=-1){
+                efalert(layer , '目标SQL不能执行delete操作!' , 2);
+                return;
+            }
+
+            var validateSql2 = targetQuery.toLowerCase();
+            if(validateSql2.indexOf("delete ")!=-1||validateSql2.indexOf("update ")!=-1||validateSql2.indexOf("select into ")!=-1||validateSql2.indexOf("insert ")!=-1){
+                efalert(layer , '目标查询SQL不能执行delete,update,insert以及select into操作!' , 2);
+                return;
+            }
+
+            if (taskName == '') {
+                efalert(layer, '请输入定时任务名', 2);
+                return;
+            }
+
+            let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+            if (!myReg.test(taskName)) {
+                efalert(layer, '定时任务名只支持字母数字“_”和中文', 2);
+                return;
+            }
+
+            if (sourceName == '') {
+                efalert(layer, '请输入源数据信息', 2);
+                return;
+            }
+
+            if (sourceSql == '') {
+                efalert(layer, '请输入源数据查询语句', 2);
+                return;
+            }
+
+            if (targetName == '') {
+                efalert(layer, '请输入目标数据信息', 2);
+                return;
+            }
+
+            if (targetSql == '') {
+                efalert(layer, '请输入目标数据语句', 2);
+                return;
+            }
+            var dat = {
+                id:id,
+                taskName: taskName,
+                taskDes: taskDes,
+                sourceName: sourceName,
+                sourceUrl: sourceUrl,
+                sourceUser: sourceUser,
+                sourcePass: sourcePass,
+                sourceSql: sourceSql,
+                targetName: targetName,
+                targetUrl: targetUrl,
+                targetUser: targetUser,
+                targetPass: targetPass,
+                targetSql: targetSql,
+                targetQuery: targetQuery,
+                taskSchedule: taskSchedule
+            }
+
+            $.ajax({
+                url: base + '/task/executeQuery?token=' + token,
+                type: 'post',
+                data: dat,
+                success: function (res) {
+                    if (res.state == 'success') {
+                        efalert(layer, res.message, 1)
+                    } else {
+                        efalert(layer, res.message, 2)
+                    }
+                },
+                error: function () {
+                }
+            })
+
+
+        });
+
+
+
+
+    });
+    $(function(){
+        $("input[name='taskSchedule']").click(function(){
+            // 点击规则文本框时执行
+            let contentval = $(this).val();
+            let index = layer.open({
+                type: 2,
+                area: ['470px', '460px'],
+                closeBtn: 0,
+                resize: false,
+                title: ['时间规则表达式', 'height:30px;line-height:30px'],
+                content: ['/page/components/cron/demo.html', 'no'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+                },
+                yes: function (index, layero) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    var contentval = iframeWin.getPage(); // 获取规则表达式
+                    $("input[name='taskSchedule']").val(contentval);
+                    layer.close(index);
+                },
+                success: function (layero, index) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.setVal(contentval);
+                }
+            });
+        });
+    });
+</script>
+</html>
+<style>
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 1px;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+        background: #d5d5d5;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+        border-radius: 10px;
+        background: #ffffff;
+    }
+</style>

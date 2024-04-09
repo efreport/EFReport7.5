@@ -1,0 +1,14 @@
+/**
+自定义模板图标
+*/
+.ztree li span.button.template_ico_docu {
+    margin-right: 2px;
+    background: url(../images/design/tree/template.png) no-repeat scroll 0 0 transparent;
+    vertical-align: top;
+    background-size: 100% 100%;
+}
+
+.ztree li a.curSelectedNode {
+    height: 21px;
+}
+

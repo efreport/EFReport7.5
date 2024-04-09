@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+    <title>盈帆报表</title>
+    <link rel="stylesheet" href="css/report/mobileTool.css" type="text/css">
+    <link rel="stylesheet" href="css/report/mobileSheet.css" type="text/css">
+    <link rel="stylesheet" href="css/report/table.css" type="text/css">
+    <link rel="stylesheet" href="css/report/content.css" type="text/css">
+    <link rel="stylesheet" href="css/report/param.css" type="text/css">
+    <link rel="stylesheet" href="css/report/submit.css" type="text/css">
+    <link rel="stylesheet" href="js/css/layui.css" type="text/css">
+
+    <link rel="stylesheet" href="css/submit/param.css" type="text/css">
+    <link rel="stylesheet" href="css/submit/tool.css" type="text/css">
+
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/layui.js"></script>
+    <script type="text/javascript" src="js/xm-select.js"></script>
+    <script type="text/javascript" src="js/report/mobileSheet.js"></script>
+    <script type="text/javascript" src="js/report/mobileNormalTable.js"></script>
+    <script type="text/javascript" src="js/report/mobileMerge.js"></script>
+    <script type="text/javascript" src="js/report/mobileContent.js"></script>
+    <script type="text/javascript" src="js/report/mobileTool.js"></script>
+    <script type="text/javascript" src="js/report/mobileWcpTable.js"></script>
+
+    <script src="js/plg/jdate.js"></script>
+    <script src="js/plg/scripts/picker.min.js"></script>
+    <script type="text/javascript" src="js/plg/scripts/paramMobile.js"></script>
+
+    <script type="text/javascript" src="js/report/mobileWcpForm.js"></script>
+    <script type="text/javascript" src="js/report/mobileForm.js"></script>
+    <script type="text/javascript" src="js/report/mobileFold.js"></script>
+    <!-- <script type="text/javascript" src="js/report/normalSubmit.js"></script> -->
+    <script type="text/javascript" src="js/report/mobileNormalSubmit.js"></script>
+    <script type="text/javascript" src="js/report/mobileLink.js"></script>
+    <script type="text/javascript" src="js/report/mobileRefresh.js"></script>
+    <script type="text/javascript" src="js/submit/mobileInit.js"></script>
+    <script type="text/javascript" src="js/submit/mobileRCanvas.js"></script>
+    <script type="text/javascript" src="js/submit/mobileRDesign.js"></script>
+    <script type="text/javascript" src="js/submit/util.js"></script>
+
+    <script type="text/javascript" src="wasm/qtloader.js"></script>
+</head>
+<body style="padding:0px;margin:0px;">
+<!-- 普通模式预览DIV -->
+<div id="report">
+    <div id="tool" class="tool" style="height: 0px !important;">
+        <!-- 普通预览工具栏 display: inline-flex; -->
+        <div id="toolNormal" class="normal" style="display: none;">
+            <div class="normal-btn">
+                <div class="">
+                    <button class="first" id="first" onclick="first()">首页</button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="normal-btn">
+                <div class="">
+                    <button class="prev" id="prev" onclick="prev()">上一页</button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="normal-input">
+                <div class="btn-input">
+                    <input class="" type="text" id="curr" onchange="cur()">
+                </div>
+                <div class="btn-text">
+                    <span class="" style="margin-left: 8px;">/</span>
+                    <span id="total">1</span>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="normal-btn">
+                <div class="">
+                    <button class="next" id="next" onclick="next()">下一页</button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="normal-btn">
+                <div class="">
+                    <button class="end" id="last" onclick="last()">末页</button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="normal-btn" style="overflow: visible;">
+                <div class="" style="position: relative;">
+                    <button class="export" id="export">导出</button>
+                    <div class="dropdown-list export-list" style="display: none;margin-top:-3px;">
+                        <div class="dropdown-item" id="PDF">PDF</div>
+                        <div class="dropdown-item" id="EXCEL">EXCEL(分页)</div>
+                        <div class="dropdown-item" id="EXCEL1">EXCEL(不分页)</div>
+                        <div class="dropdown-item" id="EXCEL2">EXCEL(分页转SHEET)</div>
+                        <div class="dropdown-item" id="WORD">WORD</div>
+                    </div>
+                    <div class="" style="clear: both;"></div>
+                </div>
+            </div>
+            <div class="divider  export-divider"></div>
+            <div class="normal-btn">
+                <div class="">
+                    <button class="search" id="searchKey" onclick="searchKeyword();">查找</button>
+                </div>
+            </div>
+            <div class="divider search-divider"></div>
+            <div class="ty-bar-btn backButton" style="display: none;">
+                <div class="">
+                    <button class="return" id="return" onclick="back()">返回</button>
+                </div>
+            </div>
+        </div>
+        <!-- 普通预览填报工具栏 -->
+        <div class="submit" style="display: none;">
+            <div class="submit-btn">
+                <div class="">
+                    <button class="validateP" id="validateP" onclick="submit(1);">数据校验</button>
+                </div>
+            </div>
+            <div class="divider validate-divider"></div>
+            <div class="submit-btn">
+                <div class="">
+                    <button class="submitP" id="submitP" onclick="submit(2);">提交</button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="submit-btn" style="overflow: visible;">
+                <div class="" style="position: relative;">
+                    <button class="sub-export" id="normal-submit-export">导出</button>
+                    <div class="dropdown-list sub-export-list" style="display: none;margin-top:-3px;">
+                        <div class="dropdown-item" id="sub-PDF">PDF</div>
+                        <div class="dropdown-item" id="sub-EXCEL">EXCEL(分页)</div>
+                        <div class="dropdown-item" id="sub-EXCEL1">EXCEL(不分页)</div>
+                        <div class="dropdown-item" id="sub-EXCEL2">EXCEL(分页转SHEET)</div>
+                        <div class="dropdown-item" id="sub-WORD">WORD</div>
+                    </div>
+                    <div class="" style="clear: both;"></div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="submit-btn">
+                <div class="">
+                    <button class="search" id="sub-searchKey" onclick="searchKeyword();">查找</button>
+                </div>
+            </div>
+            <div class="divider search-divider"></div>
+        </div>
+    </div>
+    <div id="param" class="param" style="position: absolute; top: -10000px; height: 0px !important;">
+
+    </div>
+    <div id="content" class="content">
+
+    </div>
+    <div id="sheet" class="sheet">
+
+    </div>
+</div>
+<!-- 表格插件预览DIV -->
+<div id="submit" style="width: 100%;height:100%;display: none;" >
+    <!-- 表格插件填报工具栏 -->
+    <div id="buttonDiv"
+         style="width:100%;background: #f5f6f7;padding-left:20px;height:40px;align-items: center;position: absolute;top: 0px;left: 0px;display:none;">
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="validateP" id="validateP" onclick="submitR(1);">数据校验</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider validate-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="clearP" id="clearP" onclick="clearText();">清除错误信息</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider clear-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="submitP" id="submitP" onclick="submitR(2);">提交</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn row-btn" style="overflow: visible; z-index: 0;">
+            <div class="" style="position: relative;">
+                <button class="rowOper" id="rowOper">增加行</button>
+                <div class="dropdown-list row-list" style="display: none;width:100px;margin-top:-3px;">
+                    <div class="dropdown-item" id="add" style="width:80px;">增加行</div>
+                    <div class="dropdown-item" id="clone" style="width:80px;">克隆行</div>
+                </div>
+                <div class="" style="clear: both;"></div>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="deleteP" onclick="deleteRowR()" id="delete">删除行</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="formulaP" onclick="switchR()" id="switch">切换</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="detailP" onclick="detail()" id="detail">详情</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="sqlP" onclick="sql()" id="sql">查看SQL</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider sql-divider"></div>
+        <div class="ty-bar-btn export-button" style="overflow: visible; z-index: 0;">
+            <div class="" style="position: relative;">
+                <button class="export" id="exportR">导出</button>
+                <div class="dropdown-list export-list" style="display: none;width:100px;margin-top:-3px;">
+                    <div class="dropdown-item" id="PDF">PDF</div>
+                    <div class="dropdown-item" id="EXCEL">EXCEL(分页)</div>
+                    <div class="dropdown-item" id="EXCEL1">EXCEL(不分页)</div>
+                    <div class="dropdown-item" id="EXCEL2">EXCEL(分页转SHEET)</div>
+                    <div class="dropdown-item" id="WORD">WORD</div>
+                </div>
+                <div class="" style="clear: both;"></div>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn" style="width:90px;">
+            <div class="">
+                <button class="excelP" id="importE">导入Excel</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn offline-btn" style="overflow: visible; z-index: 1999;display:none;">
+            <div class="" style="position: relative;">
+                <button class="offline" id="offline">离线填报</button>
+                <div class="dropdown-list offline-list" style="display: none;width:100px;margin-top:-3px;">
+                    <div class="dropdown-item" id="importU" style="width:80px;">导入</div>
+                    <div class="dropdown-item" id="exportU" style="width:80px;">导出</div>
+                </div>
+                <div class="" style="clear: both;"></div>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider offline-divider" style="display:none;"></div>
+    </div>
+    <!-- 表格插件普通预览工具栏 -->
+    <!-- <div id="normal-buttonDiv"
+         style="width:100%;background: #f5f6f7;padding-left:20px;height:40px;display:inline-flex;align-items: center;position: absolute;top: 0px;left: 0px;">
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="formulaP" onclick="switchR()" id="normal-switch">切换</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="detailP" onclick="detail()" id="normal-detail">详情</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn export-btn" style="overflow: visible;">
+            <div class="" style="position: relative;">
+                <button class="normal-export" id="normal-export">导出</button>
+                <div class="dropdown-list normal-export-list" style="display: none;margin-top:-3px;">
+                    <div class="dropdown-item" id="normal-PDF">PDF</div>
+                    <div class="dropdown-item" id="normal-EXCEL">EXCEL(分页)</div>
+                    <div class="dropdown-item" id="normal-EXCEL1">EXCEL(不分页)</div>
+                    <div class="dropdown-item" id="normal-EXCEL2">EXCEL(分页转SHEET)</div>
+                    <div class="dropdown-item" id="normal-WORD">WORD</div>
+                </div>
+                <div class="" style="clear: both;"></div>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider export-divider"></div>
+    </div> -->
+
+
+    <div id="normal-buttonDiv"
+         style="width:100%;background: #f5f6f7;padding-left:20px;height:40px;display:none;align-items: center;position: absolute;top: 0px;left: 0px;">
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="formulaP" onclick="switchR()" id="normal-switch">切换</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="detailP" onclick="detail()" id="normal-detail">详情</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn export-btn" style="overflow: visible;">
+            <div class="" style="position: relative;">
+                <button class="normal-export" id="normal-export">导出</button>
+                <div class="dropdown-list normal-export-list" style="display: none;margin-top:-3px;">
+                    <div class="dropdown-item" id="normal-PDF">PDF</div>
+                    <div class="dropdown-item" id="normal-EXCEL">EXCEL(分页)</div>
+                    <div class="dropdown-item" id="normal-EXCEL1">EXCEL(不分页)</div>
+                    <div class="dropdown-item" id="normal-EXCEL2">EXCEL(分页转SHEET)</div>
+                    <div class="dropdown-item" id="normal-WORD">WORD</div>
+                </div>
+                <div class="" style="clear: both;"></div>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider export-divider"></div>
+    </div>
+
+
+
+    <div id="p_div_param1" class="param">
+
+    </div>
+    <div class="x-canvas-container" style="width:800px;height:500px;position:absolute; top: 0px;left: 1px;">
+        <canvas id="canvas" style="width:100%;height:100%;" class="canvas"></canvas>
+    </div>
+</div>
+
+<div id="loadgif" class="shadow">
+    　　<img alt="加载中..." src="image/loading.gif" width="100px" height="100px"
+           style="position: absolute;top: 50%;left: 50%;margin-top: -20px;margin-left: -50px;"/>
+</div>
+<input type="text" style="width:1px;height:1px;display:none;" id="editInput" autocomplete="off"></input>
+<textarea style="margin-left:-10px;width:1px;height:1px;" id="copyArea"></textarea>
+<input type="text" style="width:1px;height:1px;" id="dateInput" readonly></input>
+<input type="text" style="width:1px;height:1px;" id="timeInput" readonly></input>
+<div id='singeSelDiv' style="display: none;"></div>
+
+
+<div id="bgDiv"></div>
+<input type="hidden" id="page_temp_id" value="" />
+<input type="hidden" id="page_token" value="" />
+<input type="hidden" id="page_base" value="" />
+
+<div id="float_card_menu" style="height: auto;right: 20px;display: none;" class="card">
+
+    <div id="div_btn_data_validate" class="card_menu_ele card_menu_ele_font">
+        效验
+    </div>
+    <div id="div_btn_data_submit" class="card_menu_ele card_menu_ele_font">
+        提交
+    </div>
+    <div id="div_menu_prov" class="card_menu_ele">
+        <image src="image/mobile/menu_prov.png" class="card_menu_img"></image>
+    </div>
+
+    <div id="div_menu_current" class="card_menu_ele card_menu_txt">
+        1/1
+    </div>
+    <div id="div_menu_next" class="card_menu_ele">
+        <image src="image/mobile/menu_next.png" class="card_menu_img"></image>
+    </div>
+
+    <div id="div_to_search" class="card_menu_ele" style="display: none;">
+        <image src="image/mobile/menu_more.png" class="card_menu_img"></image>
+    </div>
+
+    <div id="div_to_refresh" class="card_menu_ele">
+        <image src="image/mobile/menu_refresh.png" class="card_menu_img"></image>
+    </div>
+</div>
+
+<div id="float_card" data-tar="add" class="card">
+    <image id="cardImage" src="image/mobile/menu_addchar.png" style="border-radius: 50%;"></image>
+</div>
+
+<!-- <div id="div_btn_data_validate" class="btnCard">
+    数据效验
+</div>
+<div id="div_btn_data_submit" class="btnCard">
+    提交
+</div> -->
+
+
+<div id="div_btn_data_validate_table" class="btnCard">
+    数据效验
+</div>
+<div id="div_btn_data_submit_table" class="btnCard">
+    提交
+</div>
+
+<div id="float_page_select_card" class="pageCard">
+    <div class="divPage">1</div>
+    <div class="divPage">2</div>
+    <div class="divPage">3</div>
+</div>
+
+
+
+
+<!-- <div class="hf-wrapper">
+    <div class="img">
+        <image src="image/mobile/menu_addchar.png"></image>
+    </div>
+</div> -->
+
+</body>
+<script>
+    let pageType; // 当前页面模板类型
+    let pageTotal; // 当前页面模板 总页数
+    let pageCurPageNo = 1; // 当前页面模板  当前页码
+    let bodyWidth;
+
+    let sheetsPageInfos = [];
+
+
+    $(function() {
+        initFloatMenu(); 
+
+        $(document).on('click', function(e) {
+            // closest 方法的参数 中间可以是多个 元素， 元素之间用逗号隔开
+            let param_cls = '.card,.pageCard,.myDivSearchForm,.card_menu_ele,.card_menu_img,.searchBtn,.confirm,.cancel,.div_cls,.tabpicker,.myRptInput,.jdate-container,.picker-mask';
+            if (0 == $((e.target || e.srcElement)).closest(param_cls).length) {
+                $("#float_card").attr("data-tar", "add");
+                $("#cardImage").attr("src","image/mobile/menu_addchar.png");
+                $("#float_card_menu").hide();
+                $(".pageCard").hide();
+                $("#div_search_form").hide();
+                $("#bgDiv").hide();
+                $(".tabpicker").hide();
+                $(".div_cls").hide();
+                $(".jdate-container").hide();
+            }
+        });
+
+    });
+
+    $(window).resize(function () {
+        initFloatMenu();
+    });
+
+    function initFloatMenu() {
+       
+        // 37.5 作为最基础的基数，当大于这个数后，基数也随之增大
+        let minWidth = 37.5;
+        let interval = 5;
+        let width = $("body").width();
+        bodyWidth = width;
+        let height = $("body").height();
+        $("#float_card").css("width", 0.1 * width + "px");
+        $("#float_card").css("height", 0.1 * width + "px");
+        $("#float_card").css("bottom", 0.15 * width + "px");
+
+        $("#cardImage").css("width", 0.1 * width + "px");
+        $("#cardImage").css("height", 0.1 * width + "px");
+
+        let realWidth = 0.1 * width;
+
+        $(".card_menu_ele").css("width", realWidth + "px");
+        $(".card_menu_ele").css("height", realWidth + "px");
+        $(".card_menu_ele_font").css("line-height", realWidth + "px");
+        $(".card_menu_ele").css("margin-bottom", interval * (realWidth/minWidth > 1 ? realWidth/minWidth : 1 ) + "px");
+
+        $("#float_card_menu").css("bottom", 0.15 * width + realWidth + interval * (realWidth/minWidth > 1 ? realWidth/minWidth : 1 ) + "px" );
+
+        $(".pageCard").css("bottom", 0.15 * width + realWidth * 4 + interval * (realWidth/minWidth > 1 ? realWidth/minWidth : 1 ) * 4 + "px" );
+
+        
+        $(".card_menu_img").css("width", realWidth/2 + "px");
+        $(".card_menu_img").css("height", realWidth/2 + "px");
+
+        $(".card_menu_img").css("margin-left", realWidth/4 + "px");
+        $(".card_menu_img").css("margin-top", realWidth/4 + "px");
+        
+
+        $(".card_menu_txt").css("line-height", realWidth + "px");
+        $(".card_menu_txt").css("font-size", 14 * (realWidth/minWidth) + "px");
+        $(".card_menu_ele_font").css("font-size", 14 * (realWidth/minWidth) + "px");
+
+
+        $("#float_card").unbind();
+        $("#float_card").click(function(){
+            let tar = $(this).attr("data-tar");
+            if (tar === "add") {
+                $(this).attr("data-tar", "del");
+                $("#cardImage").attr("src","image/mobile/menu_delchar.png");
+                $("#float_card_menu").show();
+            } else {
+                $(this).attr("data-tar", "add");
+                $("#cardImage").attr("src","image/mobile/menu_addchar.png");
+                $("#float_card_menu").hide();
+                $(".pageCard").hide();
+            }
+        });
+
+      
+       
+
+
+        // 上一页
+        $("#div_menu_prov").click(function(){
+            if (sheetInfos.length > 1) {
+                if (sheetsPageInfos.length < 1) {
+                    for (let kIx = 0; kIx < sheetInfos.length; kIx++) {
+                        let curPageIdx = 1;  // 当前sheet的页码
+                        let curPageTotalsize = sheetInfos[kIx].PageCount;  // 当前sheet页的总页数
+                        let pageIndex = sheetInfos[kIx].Index; // 当前sheet页的索引
+                        let pObj = {curPageIdx: curPageIdx, curPageTotalsize: curPageTotalsize, pageIndex: pageIndex};
+                        sheetsPageInfos.push(pObj);
+                    }
+                }
+
+                if (sheetsPageInfos.length > 0) {
+
+                    for (let pIdx = 0; pIdx < sheetsPageInfos.length; pIdx++) {
+                        if ((sheetsPageInfos[pIdx].pageIndex - 1) === sheetIdx) {
+                            pageCurPageNo = sheetsPageInfos[pIdx].curPageIdx;
+                            pageTotal = sheetsPageInfos[pIdx].curPageTotalsize;
+
+
+                            if (pageType === 2) {
+                                if (pageCurPageNo > 1) {
+                                    pageCurPageNo --;
+                                    prev();
+                                } else if (pageCurPageNo <=1) {
+                                    pageCurPageNo = 1;
+                                    first();
+                                }
+                                sheetsPageInfos[pIdx].curPageIdx = pageCurPageNo;
+                                $("#div_menu_current").html(pageCurPageNo+"/"+pageTotal);
+                            }
+
+
+                        }
+                        
+                    }
+                    
+
+
+                }
+
+               
+
+
+            } else {
+                // first();
+                if (pageType === 2) {
+                    if (pageCurPageNo > 1) {
+                        pageCurPageNo --;
+                        prev();
+                    } else if (pageCurPageNo <=1) {
+                        pageCurPageNo = 1;
+                        first();
+                    }
+                    $("#div_menu_current").html(pageCurPageNo+"/"+pageTotal);
+                }
+            }
+
+
+            
+            
+        });
+        // 当前页
+        $("#div_menu_current").click(function(){
+
+            if (pageType === 2) {
+                let element = $(".pageCard");
+                if(element.is(':hidden')){
+                    //如果 element 是隐藏的则显示 element 元素，否则隐藏
+                    element.show();　// 用的是 JQuery 提供的语法
+                }else{
+                    element.hide(); // 用的是 JQuery 提供的语法
+                }
+                // cur();
+            }
+        });
+
+        // 下一页
+        $("#div_menu_next").click(function(){
+            if (sheetInfos.length > 1) {
+                if (sheetsPageInfos.length < 1) {
+                    for (let kIx = 0; kIx < sheetInfos.length; kIx++) {
+                        let curPageIdx = 1;  // 当前sheet的页码
+                        let curPageTotalsize = sheetInfos[kIx].PageCount;  // 当前sheet页的总页数
+                        let pageIndex = sheetInfos[kIx].Index; // 当前sheet页的索引
+                        let pObj = {curPageIdx: curPageIdx, curPageTotalsize: curPageTotalsize, pageIndex: pageIndex};
+                        sheetsPageInfos.push(pObj);
+                    }
+                }
+
+                if (sheetsPageInfos.length > 0) {
+
+                    for (let pIdx = 0; pIdx < sheetsPageInfos.length; pIdx++) {
+                        if ((sheetsPageInfos[pIdx].pageIndex - 1) === sheetIdx) {
+                            pageCurPageNo = sheetsPageInfos[pIdx].curPageIdx;
+                            pageTotal = sheetsPageInfos[pIdx].curPageTotalsize;
+
+                            if (pageType === 2) {
+                                if (pageCurPageNo < pageTotal) {
+                                    pageCurPageNo ++;
+                                    next();
+                                } else if(pageCurPageNo >= pageTotal){
+                                    pageCurPageNo = pageTotal;
+                                    last();
+                                }
+                                sheetsPageInfos[pIdx].curPageIdx = pageCurPageNo;
+                                $("#div_menu_current").html(pageCurPageNo+"/"+pageTotal);
+                                
+                            }
+
+
+                        }
+                        
+                    }
+
+                }
+
+               
+
+
+            } else {
+                // last()
+                if (pageType === 2) {
+                    if (pageCurPageNo < pageTotal) {
+                        pageCurPageNo ++;
+                        next();
+                    } else if(pageCurPageNo >= pageTotal){
+                        pageCurPageNo = pageTotal;
+                        last();
+                    }
+                    $("#div_menu_current").html(pageCurPageNo+"/"+pageTotal);
+                }
+            }
+        });
+
+        // 去查询
+        $("#div_to_search").click(function(){
+            $("#btn_setting_search").click();
+            // 当点击  查询图标时，隐藏还原右侧工具栏效果到初始状态（移动端，带有参数的模板，点击参数按钮后，把右边的菜单自动变回原来初始状态）
+            // start
+            $("#float_card").attr("data-tar", "add");
+            $("#cardImage").attr("src","image/mobile/menu_addchar.png");
+            $("#float_card_menu").hide();
+            $(".pageCard").hide();
+            // end
+        });
+
+        // 刷新
+        $("#div_to_refresh").click(function(){
+            window.location.reload();
+        });
+
+        $("#div_btn_data_validate").click(function(){
+            submit(1);  // 普通预览填报工具栏
+        });
+
+
+        $("#div_btn_data_submit").click(function(){
+            submit(2);  // 普通预览填报工具栏
+        });
+
+        $("#div_btn_data_validate_table").click(function(){
+            submitR(1);
+        });
+
+        $("#div_btn_data_submit_table").click(function(){
+            submitR(2);
+        });
+
+    }
+</script>
+<style type="text/css">
+
+#float_card {
+    min-width: 37.5px;
+    min-height: 37.5px;
+}
+.pageCard {
+    display: none;
+    position: fixed;
+    max-width: 60%;
+    /* left: 20%; */
+    z-index: 999;
+    overflow-x: auto;
+}
+.divPage {
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+    text-align: center;
+    vertical-align: center;
+    float: left;
+    border: 1px solid #d5d5d5;
+    background-color: #d5d5d5;
+    opacity: 0.5;
+}
+
+.btnCard {
+    position: fixed;
+    width: 60px;
+    text-align: center;
+    z-index: 99;
+    left: 10px;
+    border-radius: 5px;
+    padding: 2px 6px;
+    font-size: #333;
+    border: 1px solid #0094FF;
+    background-color: #d5d5d5;
+    opacity:0.5;
+}
+
+#div_btn_data_validate {
+    display: none;
+    bottom: 120px;
+}
+
+#div_btn_data_submit {
+    display: none;
+    bottom: 80px;
+}
+
+
+#div_btn_data_validate_table {
+    display: none;
+    bottom: 120px;
+}
+
+#div_btn_data_submit_table {
+    display: none;
+    bottom: 80px;
+}
+
+.card {
+    position: fixed;
+    z-index: 999;
+    /* bottom: 15%; */
+    right: 20px;
+    /* background-color: #007bff; */
+    border-radius: 50%;
+}
+
+.card_menu_ele {
+    min-width: 37.5px; min-height: 37.5px; width:37.5px;height: 37.5px;margin-bottom: 5px;background-color: #f2f3f5;border-radius: 50%;
+    color: #0094FF;
+    font-weight:bold;
+    /* opacity:0.2; */
+}
+
+.card_menu_ele_font {
+    line-height: 37.5px;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+
+.card_menu_txt {
+    position: relative; text-align: center; color: #0094FF; vertical-align: middle;
+}
+
+.card_menu_img {
+    border-radius: 50%;
+}
+
+.card .img{
+  position:relative;
+  width:100%;
+  height:100%;
+}
+
+
+.card .hf-wrapper{
+  display:flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.card .hf-wrapper .img{
+  position:relative;
+  width:100%;
+  height:100%;
+}
+
+.card .hf-wrapper .img image{
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+  position: absolute;  
+}
+
+
+.card .hf-wrapper .img div{
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  position: absolute;  
+}
+
+
+</style>
+<style type="text/css">
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+        border: none;
+        overflow: hidden;
+        /* position: absolute; */
+        /* background: #FCFCFC; */
+    }
+    #div_search_form {
+        position: absolute;
+        display: none;
+        width: 80%;
+        height: 70%;
+        top: 10%;
+        left: 10%;
+        z-index: 99;
+        background-color: #fcfcfc;
+        overflow-y: auto;
+    }
+</style>
+<style>
+    .content{
+        height: auto;
+    }
+    .div_cls {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 273px;
+            z-index: 101;
+            border: 1px solid #d5d5d5;
+            border-radius: 5px;
+            background-color: white;
+            /* overflow: auto; */
+        }
+
+
+        .div_cls .div_search {
+            width: 90%;height: 23px;line-height:40px;text-align:right;
+            margin: auto;
+            vertical-align: middle;
+            padding: 8.5px 0px;
+        }
+
+        .div_cls .div_search .searchDiv {
+            width: 50%;
+            height: 30px;
+            float:left;   
+        }
+
+        .div_cls .div_search .searchDiv .clsBtn {
+            border: 0px;
+            background-color: #ffffff;
+        }
+
+        .div_cls_checkbox {
+            position: relative;
+            width: 100%;
+            height: 233px;
+            overflow: auto;
+        }
+
+        .div_cls_checkbox .div_cls_ele {
+            width: 40%;height: 40px;line-height:40px;text-align:center;margin: auto;
+        }
+        .div_cls_checkbox .div_cls_ele span {
+            margin-left: 10px;
+        }
+
+        #div_params_ztree {
+            display: none;
+            position: absolute;
+            width: 70%;
+            height: 400px;
+            top: 100px;
+            left: 15%;
+            z-index: 101;
+            border: 1px solid #d5d5d5;
+            border-radius: 5px;
+            background-color: white;
+            overflow: auto;
+        }
+
+        #div_params_ztree .div_search {
+            width: 90%;
+            height: 23px;
+            line-height: 40px;
+            text-align: right;
+            margin: auto;
+            vertical-align: middle;
+            padding: 8.5px 0px;
+        }
+
+        
+
+        #div_params_ztree_content {
+            position: relative;
+            width: 100%;
+            height: 360px;
+            overflow: auto;
+        }
+
+        .ztree li span.button {
+            width: 16px !important;
+            height: 16px !important;
+        }
+        .ztree li span.button.chk {
+            width: 13px !important;
+            height: 13px !important;
+        }
+
+        .tabpicker {
+            display: none;
+            position:fixed;
+            bottom:0;
+            left:0;
+            width:100%;
+            height: 273px;
+            box-shadow:0 -1px 3px 0 rgba(0,0,0,.2);
+            background:#fff;
+            z-index:101;
+        }
+        .tabpicker .header {
+            position: relative;
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .tabpicker .header .one {
+            float: left;width: 20%;height: 30px;text-align: center;
+            color: #666;
+        }
+
+        .tabpicker .header .two {
+            float: left;width: 60%;height: 30px;text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .tabpicker .header .three {
+            float: left;width: 20%;height: 30px;text-align: center;
+            color: red;
+        }
+
+        .tabpicker .content {
+            position: relative;
+            width: 100%;
+            height: 243px;
+            overflow: auto;
+        }
+
+        .tabpicker .content .left {
+            position: relative;
+            width: 30%;
+            height: auto;
+            float: left;
+            max-height: 233px;
+            overflow: auto;
+        }
+        .tabpicker .content .left .tabEle {
+            /* width: 100%; */
+            height: 40px;
+            line-height: 40px;
+            border: 1px solid #DCE4EE;
+            text-align: center;
+        }
+
+        .tabpicker .content .left .tabSelect {
+            /* border-right: 1px solid #0094FF !important; */
+            color: #0094FF;
+        }
+
+        .tabpicker .content .right {
+            width: 68%;
+            height: auto;
+            float: left;
+            
+        }
+
+        .tabpicker .content .right .bodyEle {
+            position: relative;
+            display: none;
+            /* width: 100%; */
+            height: auto;
+            max-height: 233px;
+            background-color: #FCFCFC;
+            overflow: auto;
+            /* border-left: 1px solid #DCE4EE; */
+        }
+
+        .tabpicker .content .right .bodyEle .bodyEleContent {
+            /* width: 100%;  */
+            height: auto; line-height: 40px; text-align: center;
+        }
+
+        .tabpicker .content .right .bodySelect {
+            display: block;
+        }
+
+        #bgDiv {
+            position: absolute;
+            display: none;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.6);
+            opacity: 1;
+            z-index: 77;
+            left: 0px;
+            top: 0px;
+            opacity: 0.8;
+        }
+
+        .myinput {
+            width: 160px;
+            height: 32px;
+            line-height: 32px;
+            border: 1px solid #DCE4EE;
+            border-radius: 3px;
+            text-indent: 5px;
+            margin-left: 10px;
+            border:0px;
+            background-color:#DCE4EE;
+        }
+
+        form .div_search_item {
+            height: auto;
+            line-height: 32px;
+            margin: 4px 0px; 
+        }
+
+        form .div_search_item .spanLabel {
+            display: block;
+            width: 80px;
+            height: auto;
+            min-height: 32px;
+            line-height: 32px;
+            float: left;
+            text-align: right;
+        }
+
+        form .div_search_item .spancontent {
+            display: block;
+            width: 160px;
+            height: auto;
+            min-height: 32px;
+            line-height: 32px;
+            float: left;
+            text-align: left;
+            margin-left: 10px;
+        }
+
+        .ztmc div {
+            text-align: center;
+            height: 32px;
+            line-height: 32px;
+            margin: 4px 0px;
+        }
+
+        .ztmc div span {
+            display: block;
+            width: 120px;
+            height: 32px;
+            line-height: 32px;
+            vertical-align: middle;
+            float: left;
+            text-align: right;
+        }
+        .searchBtn {
+            padding: 9px;
+            font-size: 14px;
+            background-color: #0094FF;
+            border: 1px solid #0094FF;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .searchBtn2 {
+            padding: 9px;
+            font-size: 14px;
+            background-color: #ffffff;
+            border: 1px solid #0094FF;
+            border-radius: 5px;
+            color: #0094FF;
+            margin-left: 10px;
+        }
+
+        .searchBtn3 {
+            width: 50%;
+            padding: 9px;
+            font-size: 14px;
+            background-color: #0094FF;
+            border: 1px solid #0094FF;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background: #d5d5d5;
+        }
+
+
+        .picker .picker-panel .picker-choose .confirm {
+            color:#007bff !important;
+        }
+
+        .picker .picker-panel .picker-choose {
+            color: #666 !important;
+        }
+        .container {
+            padding: 0px !important;
+        }
+
+        .tabpicker .content .right .bodyEle .bodyEleLeft {
+            width: 40%;
+            height: auto;
+            max-height: 233px;
+            background-color: #FCFCFC;
+            float: left;
+            overflow: auto;
+        }
+
+        .tabpicker .content .right .bodyEle .bodyEleLeft .tabEle {
+            /* width: 98%; */
+            height: 40px;
+            line-height: 40px;
+            border: 1px solid #DCE4EE !important;
+            text-align: center;
+        }
+
+        .tabpicker .content .right .bodyEle .bodyEleLeft .tabSelect {
+            /* border-right: 1px solid #0094FF !important; */
+            color: #0094FF;
+        }
+
+        .tabpicker .content .right .bodyEle .bodyEleRight {
+            width: 59%;
+            height: auto;
+            max-height: 233px;
+            background-color: #FCFCFC;
+            float: left;
+            overflow: auto;
+        }
+
+        .tabpicker .content .right .bodyEle .bodyEleRight .rightBodyEle {
+            position: relative;
+            display: none;
+            width: 100%;
+            height: auto;
+            max-height: 233px;
+            background-color: #FFFFFF;
+            overflow: auto;
+        }
+
+        .tabpicker .content .right .bodyEle .bodyEleRight .rightBodyEle .bodyEleRightContent {
+             height: auto; line-height: 40px; text-align: center;
+              /* border: 1px solid #DCE4EE !important; */
+        }
+
+        .content {
+            top: 0px !important;
+        }
+    
+
+</style>
+<script type="text/javascript">
+    let id; //模板ID
+    let pathId; //路径ID
+    let serverId; //服务器ID
+    let reportJson = {}; //当前页面报表内容
+    let colorList = []; //颜色列表
+    let fontList = []; //字体列表
+    let sheetInfos = []; //sheet页列表
+    let wcp = 0; //是否自适应
+    let kr = 0; //是否保持横纵比
+    let globalRatio = [1,1];
+    let isAfs = 0; //字体是否自适应
+    let curSheet; //当前选择的sheet页
+    let form;
+    let laydate;
+    let carousel;
+    let isForm;
+    let upload;
+    let isToolShow; //是否显示工具栏
+    let isParamShow; //是否显示模板参数
+    let isUploadCel; //是否填报模板
+    let uploadInfoMap = {}; //填报信息
+    let uploadInfos = []; //按顺序填充填报名
+    let submitColor = '#0094FF'; //填报控件颜色风格
+    let token;
+    let templateName = '';
+    let base;
+    /*//填报模板数据
+    let uploadInfoMap = {}; //保存填报元信息
+    let uploadInfos = []; //按顺序填充填报名*/
+    let isShowValidate = false; //是否显示数据校验按钮
+    //是否有填报的权限
+    let isUploadFlag;
+    let dParam; //第三方传过来的参数
+
+    let isCanvasLoaded = 0; //设计器插件是否已经加载
+    let allowPluginFullScreen = false; //双击全屏
+    let bKColorPluginFullScreen = '#FFFFFF';
+
+    let isAlert = 'true';
+    let isInputShow = false; //是否显示编辑框
+    let keysNone = [8, 9, 13, 16, 17, 18, 19, 20, 27, 33, 32, 34, 35, 36, 37, 38, 39, 40, 45, 91, 92, 93, 110, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 144];
+    let sysname;
+
+    let reportObjJson;
+
+    let sheetIdx = 0;
+
+
+    //引入layui并且渲染
+    layui.use('form', function () {
+        form = layui.form;
+    });
+
+    layui.use('laydate', function () {
+        laydate = layui.laydate;
+    });
+
+    layui.use('carousel', function () {
+        carousel = layui.carousel;
+    });
+
+    layui.use('upload', function () {
+        upload = layui.upload;
+    });
+    //普通模式预览工具栏
+    layui.use('dropdown', function () {
+        var dropdown = layui.dropdown
+        dropdown.render({
+            elem: '#export', //可绑定在任意元素中，此处以上述按钮为例
+            trigger: 'hover',
+            data: [
+                {
+                    title: 'PDF',
+                    id: 1
+                },
+                {type: '-'},
+                {
+                    title: 'EXCEL(分页)',
+                    id: 2
+                },
+                {
+                    title: 'EXCEL(不分页)',
+                    id: 3
+                },
+                {
+                    title: 'EXCEL(分页转SHEET)',
+                    id: 4
+                },
+                {type: '-'},
+                {
+                    title: 'WORD',
+                    id: 5
+                }
+            ],
+            id: 'demo1',
+            //菜单被点击的事件
+            click: function (obj) {
+                if (obj.id == 1) {//PDF
+                   showSheetNames(1);
+                } else if (obj.id == 2) { //excel分页
+                    showSheetNames(2);
+                } else if (obj.id == 3) { //excel不分页
+                    showSheetNames(3);
+                } else if (obj.id == 4) {//分页转sheet
+                    showSheetNames(4);
+                } else {//word
+                    showSheetNames(5);
+                }
+            }
+        });
+    });
+
+
+    layui.use('dropdown', function () {
+        var dropdown = layui.dropdown
+        dropdown.render({
+            elem: '#export', //可绑定在任意元素中，此处以上述按钮为例
+            trigger: 'hover',
+            data: [
+                {
+                    title: 'PDF',
+                    id: 1
+                },
+                {type: '-'},
+                {
+                    title: 'EXCEL(分页)',
+                    id: 2
+                },
+                {
+                    title: 'EXCEL(不分页)',
+                    id: 3
+                },
+                {
+                    title: 'EXCEL(分页转SHEET)',
+                    id: 4
+                },
+                {type: '-'},
+                {
+                    title: 'WORD',
+                    id: 5
+                }
+            ],
+            id: 'demo1',
+            //菜单被点击的事件
+            click: function (obj) {
+                if (obj.id == 1) {//PDF
+                    showSheetNames(1);
+                } else if (obj.id == 2) { //excel分页
+                    showSheetNames(2);
+                } else if (obj.id == 3) { //excel不分页
+                    showSheetNames(3);
+                } else if (obj.id == 4) {//分页转sheet
+                    showSheetNames(4);
+                } else {//word
+                    showSheetNames(5);
+                }
+            }
+        });
+    });
+
+    //表格插件普通预览导出工具栏
+    layui.use('dropdown', function () {
+        var dropdown = layui.dropdown
+        //普通预览导出下拉框
+        dropdown.render({
+            elem: '#offline', //可绑定在任意元素中，此处以上述按钮为例
+            trigger: 'hover',
+            data: [
+                {
+                    title: '导入',
+                    id: 1
+                },
+                {
+                    title: '导出',
+                    id: 2
+                }
+            ],
+            id: 'demo1',
+            //菜单被点击的事件
+            click: function (obj) {
+                if (obj.id == 1) {
+                    $('#importU').trigger('click');
+                } else if (obj.id == 2) { //excel分页
+                    exportUrt();
+                }
+            }
+        });
+
+
+        //普通填报导出工具栏
+        dropdown.render({
+            elem: '#normal-submit-export',
+            trigger: 'hover',
+            data: [
+                {
+                    title: 'PDF',
+                    id: 1
+                },
+                {type: '-'},
+                {
+                    title: 'EXCEL(分页)',
+                    id: 2
+                },
+                {
+                    title: 'EXCEL(不分页)',
+                    id: 3
+                },
+                {
+                    title: 'EXCEL(分页转SHEET)',
+                    id: 4
+                },
+                {type: '-'},
+                {
+                    title: 'WORD',
+                    id: 5
+                }
+            ],
+            id: 'demo1',
+            //菜单被点击的事件
+            click: function (obj) {
+                if (obj.id == 1) {
+                    showSheetNames(1);
+                } else if (obj.id == 2) { //excel分页
+                    showSheetNames(2);
+                } else if (obj.id == 3) { //excel不分页
+                    showSheetNames(3);
+                } else if (obj.id == 4) {//
+                    showSheetNames(4);
+                } else {
+                    showSheetNames(5);
+                }
+            }
+        });
+
+
+        //表格插件填报导出工具栏
+        dropdown.render({
+            elem: '#exportR',
+            trigger: 'hover',
+            data: [
+                {
+                    title: 'PDF',
+                    id: 1
+                },
+                {type: '-'},
+                {
+                    title: 'EXCEL(分页)',
+                    id: 2
+                },
+                {
+                    title: 'EXCEL(不分页)',
+                    id: 3
+                },
+                {
+                    title: 'EXCEL(分页转SHEET)',
+                    id: 4
+                },
+                {type: '-'},
+                {
+                    title: 'WORD',
+                    id: 5
+                }
+            ],
+            id: 'demo1',
+            //菜单被点击的事件
+            click: function (obj) {
+                if (obj.id == 1) {
+                    showSheetNamer(1);
+                } else if (obj.id == 2) { //excel分页
+                    showSheetNamer(2);
+                } else if (obj.id == 3) { //excel不分页
+                    showSheetNamer(3);
+                } else if (obj.id == 4) {//
+                    showSheetNamer(4);
+                } else {
+                    showSheetNamer(5);
+                }
+            }
+        });
+        //表格插件普通预览导出工具栏
+        dropdown.render({
+            elem: '#normal-export',
+            trigger: 'hover',
+            data: [
+                {
+                    title: 'PDF',
+                    id: 1
+                },
+                {type: '-'},
+                {
+                    title: 'EXCEL(分页)',
+                    id: 2
+                },
+                {
+                    title: 'EXCEL(不分页)',
+                    id: 3
+                },
+                {
+                    title: 'EXCEL(分页转SHEET)',
+                    id: 4
+                },
+                {type: '-'},
+                {
+                    title: 'WORD',
+                    id: 5
+                }
+            ],
+            id: 'demo1',
+            //菜单被点击的事件
+            click: function (obj) {
+                if (obj.id == 1) {
+                    showSheetNamer(1);
+                } else if (obj.id == 2) { //excel分页
+                    showSheetNamer(2);
+                } else if (obj.id == 3) { //excel不分页
+                    showSheetNamer(3);
+                } else if (obj.id == 4) {//
+                    showSheetNamer(4);
+                } else {
+                    showSheetNamer(5);
+                }
+            }
+        });
+        //增加行工具栏
+        dropdown.render({
+            elem: '#rowOper',
+            trigger: 'hover',
+            data: [
+                {
+                    title: '增加行',
+                    id: 1
+                },
+                {
+                    title: '复制行',
+                    id: 2
+                }
+            ],
+            id: 'demo1',
+            //菜单被点击的事件
+            click: function (obj) {
+                if (obj.id == 1) {
+                    addRowR();
+                } else if (obj.id == 2) { //excel分页
+                    cloneRowR();
+                }
+            }
+        });
+    });
+
+
+    //导入excel事件
+    $('#importE').bind('click', function () {
+        //当前选中框是否在数据区域内
+        var flag = Module._isInDataArea();
+        if (flag) {
+            layer.open({
+                type: 2,
+                area: ['500px', '280px'],
+                closeBtn: 0,
+                maxmin: true,
+                resize: false,
+                title: ['导入Excel', 'height:30px;line-height:30px'],
+                content: base + '/excel.html',
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+
+                },
+                yes: function (index, layero) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    //获取页面内容
+                    var content = iframeWin.getContent();
+                    if (content.excel == '') {
+                        layer.alert('请选择excel');
+                    } else if (!Module._cellIndexToHCell(ParamOperator.encodeStr(content.cell))) {
+                        layer.alert('请输入正确的单元格');
+                    } else {
+                        var rowNum = content.rowNum;
+                        var reg = /^[1-9]\d*$/; //由 1-9开头 的正则表达式
+                        //先判断是否为整数 在判断 是否在 1-300 整数范围之内
+                        if (reg.test(rowNum)) {
+                            if (parseInt(rowNum) > 0 && parseInt(rowNum) <= 300) {
+
+                            } else {
+                                layer.alert('请输入正确的行数');
+                            }
+                        }
+                    }
+                    var cellPos = Module._cellChar2Pos(ParamOperator.encodeStr(content.cell));
+                    var cellJson = ParamOperator.decodeStrAndFree(cellPos);
+                    cellJson = JSON.parse(cellJson);
+                    //导入Excel
+                    Module._importExcelDataFromStream(ParamOperator.encodeStr(content.excel), cellJson.x, cellJson.y, parseInt(rowNum), content.isReplace);
+                    layer.closeAll();
+                },
+                success: function (layero, index) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.init(base,token);
+                }
+            });
+        } else {
+            layer.alert('当前选中框不在数据区域内');
+        }
+
+    })
+
+
+    layui.use('upload', function () {
+        var upload = layui.upload;
+        upload.render({
+            elem: '#importU'
+            , url: base + '/designSys/getJsonData?token=' + token
+            , accept: 'file'
+            , exts: 'urt'
+            , done: function (res) {
+            }
+            , before: function (obj) {
+                var files = obj.pushFile();
+                obj.preview(function (index, file, result) { //得到文件base64编码，比如图片
+                    var ts = result.indexOf('base64,') + 7;
+                    var tt = result.substr(ts, result.length);
+                    var str = new Base64().decode(tt);
+                    var t = Module._loadURTFromJson(ParamOperator.encodeStr(str));
+                });
+            }
+        });
+
+    });
+
+
+    function exportUrt() {
+        //导出内容
+        var sval = Module._saveURTToJson();
+        var text = ParamOperator.decodeStrAndFree(sval);
+
+        var blob = new Blob([text], {type: 'text/plain'});
+        var formdata = new FormData();
+        formdata.append('file', blob);
+        $.ajax({
+            url: base + '/designSys/saveUrt?token=' + token,
+            type: 'post',
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            data: formdata,
+            success: function (data) {
+                if (data.state == 'success') {
+                    //打开下载urt页面
+                    var expTempFunc = base + '/designSys/exportUrt?name=' + data.name + '&fileName=' + templateName + '&id=' + id + '&token=' + token;
+                    window.open(expTempFunc);
+                } else {
+                    layer.alert("导出失败,失败原因:" + data.message);
+                }
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }
+
+
+    $(document).ready(function () {
+
+        let urlInfo = window.location.href;  //获取当前页面的url
+        let len = urlInfo.split("?");//获取url的长度
+        base = len[0];
+        base = base.substr(0, base.length - 18);
+        let param = len[1];//取出参数字符串 这里会获得类似“id=1”这样的字符串
+        let params = param.split("&");//对获得的参数字符串按照“=”进行分割
+        for (let i = 0; i < params.length; i++) {
+            let par = params[i];
+            let kav = par.split("=");
+            let key = kav[0];
+            if (key == "id") {
+                id = kav[1]
+            }
+            if (key == "token") {
+                token = par.substr(6 , par.length - 6);
+            }
+
+            if (key == "templateName") {
+                templateName = kav[1];
+            }
+            if (key == "sysname") {
+                sysname = kav[1];
+                if (sysname !== "") {
+                    $("title").html(sysname);
+        		}
+            }
+             if(key == 'params'){
+                 dParam = par.substr(7 , par.length); //第三方传递过来的参数
+             }
+        }
+
+        $("#page_base").val(base);
+        $("#page_temp_id").val(id)
+        $("#page_token").val(token);
+
+        //不存在模板名
+        let url;
+        if (templateName == '') {
+            url = base + "/report/query?isLoaded=1&templateId=" + id + "&sheetName=&params="+ (dParam === undefined ? "" : encodeURIComponent(dParam)) +"&token=" + token;
+        } else {
+            url = base + "/report/query?isLoaded=1&templateId=" + id + "&sheetName=&params="+ (dParam === undefined ? "" : encodeURIComponent(dParam)) +"&templateName=" + templateName + "&token=" + token;
+        }
+        $("#loadgif").show();
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (res) {
+                //生成了error.json
+                if (res.type == 0) {
+                    $('#content').append("<div style='color:red;font-size: 16px;'>" + res.message + "</div>")
+                }
+
+                // -------huangkun -------- start
+                pageType = res.type;
+                if (pageType == 2) {
+                    reportObjJson = JSON.parse(res.message);
+                    pageTotal = reportObjJson.totalPageCount1;
+                    $("#div_menu_current").html(pageCurPageNo + "/" + pageTotal);
+                    // 如果当前页不止一个sheet页
+                    if (reportObjJson.SheetCount > 1) {
+                        pageTotal = reportObjJson.SheetInfos[sheetIdx].PageCount;
+                        $("#div_menu_current").html(pageCurPageNo + "/" + pageTotal);
+                    }
+ 
+                    // 下面代码用于 添加页码==start
+                    $(".pageCard").html("");
+                    for (let i =0; i< pageTotal; i++) {
+                        let newEle = '<div class="divPage">'+(i+1)+'</div>';
+                        $(".pageCard").append(newEle);
+                    }
+                    if(bodyWidth*0.6>32*pageTotal) {
+                        let rW = 32*pageTotal;
+                        let rWp = 32*pageTotal/bodyWidth;
+                        let rWppavg = (1 - rWp) / 2;
+                        $(".pageCard").css("left", (rWppavg * 100) + "%");
+                        $(".pageCard").css("width", 32*pageTotal + "px");
+                    } else {
+
+                        $(".pageCard").css("width", bodyWidth*0.6 + "px");
+                    }
+
+                    $(".divPage").unbind();
+                    $(".divPage").click(function(){
+                        if (sheetInfos.length > 1) {
+                            if (sheetsPageInfos.length < 1) {
+                                for (let kIx = 0; kIx < sheetInfos.length; kIx++) {
+                                    let curPageIdx = 1;  // 当前sheet的页码
+                                    let curPageTotalsize = sheetInfos[kIx].PageCount;  // 当前sheet页的总页数
+                                    let pageIndex = sheetInfos[kIx].Index; // 当前sheet页的索引
+                                    let pObj = {curPageIdx: curPageIdx, curPageTotalsize: curPageTotalsize, pageIndex: pageIndex};
+                                    sheetsPageInfos.push(pObj);
+                                }
+                            }
+                            if (sheetsPageInfos.length > 0) {
+
+                                for (let pIdx = 0; pIdx < sheetsPageInfos.length; pIdx++) {
+                                    if ((sheetsPageInfos[pIdx].pageIndex - 1) === sheetIdx) {
+                                        // pageCurPageNo = sheetsPageInfos[pIdx].curPageIdx;
+                                        pageTotal = sheetsPageInfos[pIdx].curPageTotalsize;
+                                        let htmlVal = $(this).html();
+                                        $("#curr").val(htmlVal);
+                                        pageCurPageNo = parseInt(htmlVal);
+                                        sheetsPageInfos[pIdx].curPageIdx = pageCurPageNo;
+                                        $("#div_menu_current").html(htmlVal+"/"+pageTotal);
+                                        $("#float_page_select_card").hide();
+                                    }
+                                }
+                            }
+                        } else {
+                            let htmlVal = $(this).html();
+                            $("#curr").val(htmlVal);
+                            pageCurPageNo = parseInt(htmlVal);
+                            $("#div_menu_current").html(htmlVal+"/"+pageTotal);
+                            $("#float_page_select_card").hide();
+                        }
+                        cur();
+                    });
+                    // 上面代码用于 添加页码==end
+
+                }
+
+                // -------huangkun -------- end
+
+                if (res.state == 'success' && res.type == 2) {
+                    //隐藏普通报表预览DIV
+                    $("#report").show();
+                    //显示表格插件预览DIV
+                    $("#submit").hide();
+
+                    reportJson = JSON.parse(res.message);
+                    if(reportJson.AllowPluginFullScreen != undefined){//模板属性，是否允许插件双击全屏
+                        allowPluginFullScreen = reportJson.AllowPluginFullScreen;
+                    }
+                    if(reportJson.BKColorPluginFullScreen != undefined){
+                        bKColorPluginFullScreen = reportJson.BKColorPluginFullScreen;
+                    }
+                    colorList = reportJson.ColorList; //初始化颜色列表
+                    fontList = reportJson.FontList; //初始化字体列表
+                    sheetInfos = reportJson.SheetInfos; //初始化sheet数组
+                    pathId = reportJson.pathId; //初始化路径ID
+                    serverId = reportJson.serverId; //初始化服务器ID
+                    wcp = reportJson.WebCellPercent;
+                    kr = reportJson.KeepHVRatio;
+                    isAfs = (reportJson.AutoFontSize == undefined); //文本自否自适应
+                    isToolShow = reportJson.ShowToolBar; //是否显示工具栏
+                    isParamShow = reportJson.ShowParamToolBar; //是否显示模板参数栏
+                    isUploadCel = res.isUploadCel; //是否填报模板
+
+                    initRefresh(reportJson);
+
+                    let formH = reportJson.Pages[0].FormH; //获取页面JSON
+                    isForm = (formH != undefined); //判断是否是Form状态
+                    //有背景图片时，设置背景图片
+                    if (reportJson.hasOwnProperty("WebBKImage")) {
+                        let bgImg = reportJson.WebBKImage.split("/");
+                        $('.content').css({
+                            "background-image": "url('" + (base + '/export' + "/" + bgImg[bgImg.length - 2]) + "/" + bgImg[bgImg.length - 1] + "')",
+                            "background-repeat": "no-repeat",
+                            "background-position": "0 0",
+                            "background-size": "100% 100%"
+                        });
+                    } else {//无背景图片时，设置背景颜色
+                        if (reportJson.hasOwnProperty("WebBKColor")) { //whj
+                            $('body').css("background-color", reportJson.WebBKColor);
+                            $('.x-data-block').css("background-color", reportJson.WebBKColor);
+                        }
+                    }
+                    //不显示工具栏
+                    if (!isToolShow) {
+                        $('#tool').css('display', 'none');
+                        $('#content').css('top', 0);
+                    } else { //显示工具栏
+                        if (isUploadCel) { //如果是填报模板
+                            // $('#tool').find('.normal').hide();  // 20230311  huangkun
+                            // $('#tool').find('.submit').css('display', 'inline-flex'); // 20230311 huangkun
+                            // $('#tool').show(); // 20230311 huangkun
+
+                            // $('#content').css('top', '40px');
+                        }
+                    }
+
+                    //初始化SHEET页
+                    initSheets(sheetInfos);
+                    //初始化报表区域
+                    if (!isForm) {
+                        if (isUploadCel) { //填报模板
+                            initUploadInfo(reportJson);
+                            initSubmitReport('_tb_0', sheetInfos[0]);
+                            setSubmitContentHeight();
+                        } else {
+                            if (wcp == 0) { //初始化常规报表
+                                if (isToolShow) {
+                                    // $('#tool').show();
+                                    // $('#content').css('top', '40px');
+                                }
+                                initNormalReport('_tb_0', sheetInfos[0]);
+                                setContentHeight(reportJson.IsShowCenterReport);
+
+                            } else { //初始化自适应报表
+                                if (isToolShow) {
+                                    // $('#tool').show();
+                                    // $('#content').css('top', '40px');
+                                }
+                                initWcpReport('_tb_0', sheetInfos[0]);
+                                if(kr == 1){ //保持横纵比
+                                    setWcpContentHeight();
+                                }
+                            }
+                        }
+                    } else {
+                        if (wcp == 0) { //非自适应Form
+                            initForm('_tb_0', sheetInfos[0]);
+                        } else { //自适应Form
+                            initWcpForm();
+                        }
+                    }
+                    //执行js
+                    executeFunction(reportJson.ModelJS);
+                }
+
+                //生成模板参数xml文件
+                if (res.state == "success" && res.type == 1) {
+                    if(res.isSpreadRpt){ //表格插件预览
+                        $('#report').hide();
+                        // $('#submit').show();
+                    }else{//普通预览
+                        $('#submit').hide();
+                        $('#report').show();
+                    }
+                    //初始化模板参数
+                    // initParams(res.message , res.isSpreadRpt , res.data);
+
+                    initParams(res.message , res.isSpreadRpt ,  res.data);
+                }
+                //表格插件预览
+                if (res.type == 3) {
+                    reportJson = JSON.parse(res.message);
+                    if(reportJson.AllowPluginFullScreen != undefined){//模板属性，是否允许插件双击全屏
+                        allowPluginFullScreen = reportJson.AllowPluginFullScreen;
+                    }
+                    if(reportJson.BKColorPluginFullScreen != undefined){
+                        bKColorPluginFullScreen = reportJson.BKColorPluginFullScreen;
+                    }
+                    isUploadFlag = res.isUploadDataAllowed;
+                    pathId = res.pathId; //初始化路径ID
+                    initSubmitUploadInfo(reportJson);
+                    //隐藏普通报表预览DIV
+                    $("#report").hide();
+                    //显示表格插件预览DIV
+                    // $("#submit").show();
+
+                    //是否显示工具栏
+                    let ShowToolBar = reportJson.ShowToolBar;
+                    let ShowParamToolBar = reportJson.ShowParamToolBar;
+                    //初始化设计器
+                    if(uploadInfos.length == 0){ //非填报模板
+                        $('#buttonDiv').hide();
+                        //不显示工具栏
+                        if(!ShowToolBar){
+                            $('#normal-buttonDiv').hide();
+                            if(!ShowParamToolBar){ //不显示参数工具栏
+                                $('#param1').hide();
+                                $('.x-canvas-container').css('top',0);
+                                $('.x-canvas-container').css({
+                                    width: $('body').width(),
+                                    height: $('body').height()
+                                })
+                            }else{ // 显示参数工具栏
+                                $('#param1').show();
+                                // top值一直是0，手机端预览不在提供固定模式的工具栏，提供悬浮模式的，所以这里距离上边距一直都是0，所以下面代码现在注释掉
+                                // $('.x-canvas-container').css('top',$('#param1').height() + 12);
+                                // $('.x-canvas-container').css({
+                                //     width: $('body').width(),
+                                //     height: $('body').height()  - $('#param1').height() - 12
+                                // })
+                                $('.x-canvas-container').css({
+                                    width: $('body').width(),
+                                    height: $('body').height()
+                                })
+                            }
+                        }else{ //显示工具栏
+                            // $('#normal-buttonDiv').show();  // huangkun 230228  先注释看效果。
+                            if(!ShowParamToolBar){ //不显示参数工具栏
+                                $('#param1').hide();
+                                $('.x-canvas-container').css('top',0);
+                                // top值一直是0，手机端预览不在提供固定模式的工具栏，提供悬浮模式的，所以这里距离上边距一直都是0，所以下面代码现在注释掉
+                                // $('.x-canvas-container').css({
+                                //     width: $('body').width(),
+                                //     height: $('body').height()  - $('#normal-buttonDiv').height()
+                                // })
+                                $('.x-canvas-container').css({
+                                    width: $('body').width(),
+                                    height: $('body').height()
+                                })
+                            }else{ // 显示参数工具栏
+                                $('#param1').show();
+                                $('#param1').css('top' , $('#normal-buttonDiv').height());
+                                let paramHeight;
+                                if($('#param1').height() == 0){
+                                    paramHeight = 0;
+                                    $('#param1').css('padding',0);
+                                }else{
+                                    paramHeight = $('#param1').height() + 12;
+                                }
+
+                                // top值一直是0，手机端预览不在提供固定模式的工具栏，提供悬浮模式的，所以这里距离上边距一直都是0，所以下面代码现在注释掉
+                                // $('.x-canvas-container').css('top',paramHeight + $('#normal-buttonDiv').height()); 
+                                // $('.x-canvas-container').css({
+                                //     width: $('body').width(),
+                                //     height: $('body').height()  - paramHeight - $('#normal-buttonDiv').height()
+                                // })
+
+                                $('.x-canvas-container').css({
+                                    width: $('body').width(),
+                                    height: $('body').height()
+                                });
+                            }
+                        }
+                    }else{ //填报模板
+                        $('#normal-buttonDiv').hide();
+                        //不显示工具栏
+                        if(!ShowToolBar){
+                            $('#buttonDiv').hide();
+                            if(!ShowParamToolBar){ //不显示参数工具栏
+                                $('.x-canvas-container').css('top',0);
+                                $('#param1').hide();
+                                $('.x-canvas-container').css({
+                                    width: $('body').width(),
+                                    height: $('body').height()
+                                })
+                            }else{ // 显示参数工具栏
+                                $('#param1').show();
+                                $('.x-canvas-container').css({
+                                    width: $('body').width(),
+                                    height: $('body').height()
+                                })
+                            }
+                        }else{ //显示工具栏
+                            $('#buttonDiv').show();
+                            if(!ShowParamToolBar){ //不显示参数工具栏
+                                $('#param1').hide();
+                                $('.x-canvas-container').css({
+                                    width: $('body').width(),
+                                    height: $('body').height()
+                                })
+                            }else{ // 显示参数工具栏
+                                $('#param1').show();
+                                let paramHeight;
+                                if($('#param1').height() == 0){
+                                    paramHeight = 0;
+                                    $('#param1').css('padding',0);
+                                }else{
+                                    paramHeight = $('#param1').height() + 12;
+                                }
+
+                                $('.x-canvas-container').css({
+                                    width: $('body').width(),
+                                    height: $('body').height()
+                                })
+                            }
+                        }
+                    }
+                    $('.x-canvas-container').show();
+                    if (isCanvasLoaded == 0) {//canvas未绑定过
+                        Design.init(base + "/wasm/WebDesigner_7.4");
+                        $("#editInput").bind('keydown', keyDownF);
+                        $("#loadgif").hide();
+                        isCanvasLoaded = 1;
+                    } else {
+                        Module._setTabDisplay(false);
+                        var dataStr = ParamOperator.encodeStr(JSON.stringify(reportJson));
+                        Module._loadReportModelFromJsonStream(dataStr)
+                        $("#loadgif").hide();
+                    }
+
+                    $(window).resize(function () {
+                        resizeCanvas();
+                    });
+                    //执行js
+                    executeFunction(reportJson.ModelJS);
+                }
+
+                $("#loadgif").hide();
+
+                
+
+            },
+            error: function () {
+
+            }
+        })
+
+
+    })
+
+
+</script>
+</html>

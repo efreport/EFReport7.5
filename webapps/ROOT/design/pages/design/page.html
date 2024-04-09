@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/layui/css/layui.css">
+    <style>
+        .layui-tab-title li {
+            line-height: 20px;
+            padding: 0 5px
+        }
+
+        .layui-tab-title .layui-this:after {
+            height: 20px;
+        }
+
+        .layui-elem-field legend {
+            margin-left: 20px;
+            padding: 0 0;
+            font-size: small;
+            font-weight: normal;
+        }
+        input[type="text"]{
+            padding: 0;
+            height: 23px;
+            border:1px solid #ccc;
+        }
+        input{
+            margin:0 5px;
+        }
+        select{
+            height: 25px;
+            border:1px solid #ccc;
+        }
+        select:hover {
+            box-shadow:0px 0px 1px #44B4FF;
+        }
+        input:hover{
+            box-shadow:0px 0px 1px #44B4FF;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-tab layui-tab-card" style="margin: 5px;height: 250px">
+    <ul class="layui-tab-title" style="height: 20px">
+        <li class="layui-this" style="">页面</li>
+        <li style="">其他</li>
+    </ul>
+    <div class="layui-tab-content" style="height: 100px;">
+        <div class="layui-tab-item layui-show">
+            <div style="display: inline-block;width: 70%;">
+                <fieldset class="layui-elem-field">
+                    <legend>纸张</legend>
+                    <div class="layui-field-box">
+                        <div><label style="width: 60px;margin-right: 5px">纸张类型:</label><select id="paperType" style="width: 70%"></select></div>
+                        <div style="margin: 5px 0">
+                            <label style="width: 60px;margin-right: 5px">宽(毫米):</label><input type="text" disabled="disabled" id="paperWidth" style="width: 20%">
+                                <label style="width: 60px;margin-right: 5px">高(毫米):</label><input type="text" disabled="disabled" id="paperHeight" style="width: 20%">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div style="display: inline-block;width: 25%">
+                <fieldset class="layui-elem-field">
+                    <legend>方向</legend>
+                    <div class="layui-field-box">
+                        <div style="height: 28px;vertical-align: middle">
+                            <input type="radio" name="ori" value="0"><label style="height: 25px">纵向</label>
+                        </div>
+                        <input type="radio" name="ori" value="1"><span style="height: 25px">横向</span><br/>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div style="display: inline-block;width: 70%;">
+                <fieldset class="layui-elem-field">
+                    <legend>页边距(毫米)</legend>
+                    <div class="layui-field-box">
+                        <div>
+                            左边距:<input type="text" id="leftMargin" style="width: 20%">
+                            上边距:<input type="text" id="topMargin" style="width: 20%">
+                        </div>
+                        <div style="margin: 5px 0">
+                            右边距:<input type="text" id="rightMargin" style="width: 20%">
+                            下边距:<input type="text" id="bottomMargin" style="width: 20%">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div style="display: inline-block;width: 25%">
+                <fieldset class="layui-elem-field">
+                    <legend>居中方式</legend>
+                    <div class="layui-field-box">
+                        <input type="checkbox" id="centerH" value="0">水平居中<br/>
+                        <input type="checkbox" id="centerV" value="1">垂直居中<br/>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+
+        <div class="layui-tab-item">
+            <input type="checkbox" id="printCellLine">打印表格线<br/>
+            <input type="checkbox" id="printHidedData">打印隐藏单元格
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/design/comm.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/design/constants.js"></script>
+<script type="text/javascript">
+    layui.use(['layer', 'element'], function () {
+        var layer = layui.layer, element = layui.element;
+        var ctype = CellConstant.PaperType;
+        for (var i in ctype) {
+            $("#paperType").append('<option value=' + i + '>' + ctype[i] + '</option>');
+        }
+        $("#paperType").change(function () {
+            if (30 == $(this).val()) {
+                $("#paperWidth").attr('disabled',false);
+                $("#paperHeight").attr('disabled',false);
+            } else {
+                var page = getAct();
+                $("#paperWidth").attr('disabled','disabled');
+                $("#paperHeight").attr('disabled','disabled');
+                $("#paperWidth").val(page.h);
+                $("#paperHeight").val(page.v);
+            }
+        });
+        $("input:radio[name=ori]").change(function(){
+            var val=$(this).val();
+            var h=$("#paperWidth").val();
+            var v=$("#paperHeight").val();
+            $("#paperWidth").val(v);
+            $("#paperHeight").val(h);
+        });
+    });
+    function getAct() {
+        var text = $("#paperType").find("option:selected").text();
+        if (text != '') {
+            var star = text.indexOf('[');
+            var end = text.lastIndexOf('x');
+            var end1 = text.lastIndexOf('mm');
+            var h = text.substring(star + 1, end);
+            var v = text.substring(end + 1, end1);
+            var page = {
+                h: h,
+                v: v
+            };
+            return page;
+        }
+    }
+
+
+    function  isNoNegativeNumber(num) {
+        var g = /^[1-9]*[1-9][0-9]*$/;
+        if (g.test(num)) {
+            return true;
+        } else {
+            if (num == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    function init(json) {
+        if (json != '' && json != undefined) {
+            var obj = JSON.parse(json);
+            var type = obj.paperType;
+            $("#paperType").val(type);
+            if (type == 30) {
+                $("#paperWidth").attr('disabled',false);
+                $("#paperHeight").attr('disabled',false);
+        }
+            $("#paperWidth").val(obj.paperWidth);
+            $("#paperHeight").val(obj.paperHeight);
+            $("#leftMargin").val(obj.leftMargin);
+            $("#rightMargin").val(obj.rightMargin);
+            $("#topMargin").val(obj.topMargin);
+            $("#bottomMargin").val(obj.bottomMargin);
+            $("#centerH").prop('checked', obj.centerH);
+            $("#centerV").prop('checked', obj.centerV);
+
+            $("#printHidedData").prop('checked', obj.printHidedData);
+            $("#printCellLine").prop('checked', obj.printCellLine);
+
+            $("input:radio[name=ori][value=" + obj.ori + "]").attr("checked", true);
+        } else {
+            $("#paperType").val(0).trigger('change');
+        }
+    }
+    function getPage() {
+        var page = {
+            paperType: parseInt($("#paperType").val()),
+            paperWidth: parseInt($("#paperWidth").val()),
+            paperHeight: parseInt($("#paperHeight").val()),
+            ori: parseInt($("input[name='ori']:checked").val()),
+            leftMargin: parseInt($("#leftMargin").val()),
+            rightMargin: parseInt($("#rightMargin").val()),
+            topMargin: parseInt($("#topMargin").val()),
+            bottomMargin: parseInt($("#bottomMargin").val()),
+            centerH: $("#centerH").prop('checked'),
+            centerV: $("#centerV").prop('checked'),
+            printHidedData: $("#printHidedData").prop('checked'),
+            printCellLine: $("#printCellLine").prop('checked')
+        };
+        return page;
+    }
+
+    $(document).ready(function(){
+
+        $("#paperWidth").bind('change' , function(){
+            if(!isNoNegativeNumber($(this).val())){
+                $(this).val(0);
+            }
+        })
+
+        $("#paperHeight").bind('change' , function(){
+            if(!isNoNegativeNumber($(this).val())){
+                $(this).val(0);
+            }
+        })
+
+        $("#leftMargin").bind('change' , function(){
+            if(!isNoNegativeNumber($(this).val())){
+                $(this).val(0);
+            }
+        })
+
+        $("#rightMargin").bind('change' , function(){
+            if(!isNoNegativeNumber($(this).val())){
+                $(this).val(0);
+            }
+        })
+
+        $("#topMargin").bind('change' , function(){
+            if(!isNoNegativeNumber($(this).val())){
+                $(this).val(0);
+            }
+        })
+
+        $("#bottomMargin").bind('change' , function(){
+            if(!isNoNegativeNumber($(this).val())){
+                $(this).val(0);
+            }
+        })
+
+    })
+</script>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <link rel="stylesheet" href="../../js/zTree/css/zTreeStyle.css" type="text/css">
+    <style type="text/css">
+        .ztree li span.button.template_ico_docu {
+            margin-right: 2px;
+            background: url(../../images/design/tree/template.png) no-repeat scroll 0 0 transparent;
+            vertical-align: top;
+            background-size: 100% 100%;
+        }
+
+        .ztree li span.button.noline_open {
+            background-image: url(../../images/design/tree/open.png);
+            background-size: 100% 100%;
+        }
+
+        .ztree li span.button.noline_close {
+            background-image: url(../../images/design/tree/close.png);
+            background-size: 100% 100%;
+        }
+
+        .searchImg{
+            position: absolute;
+            right:10%;
+            top:4%;
+        }
+
+        .ztree{
+            border: 0px;
+        }
+
+        #chart::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        #chart::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+            background: #d5d5d5;
+        }
+
+    </style>
+</head>
+<body>
+<div style="position:absolute;margin-left: 5px;margin-top:5px;width: 25%;height: 95%;overflow: auto;">
+    <div class="search" style="white-space: nowrap;overflow: auto;height: 13%;">
+        <input type="text" id="tempName" placeholder="插件名称" autocomplete="off" class="layui-input">
+        <img src="../../images/design/searchTemplate.png" class="searchImg">
+    </div>
+    <ul id="chart" class="ztree" style="white-space: nowrap;overflow: auto;height: 80%;border: 0px solid #D5D5D5"></ul>
+</div>
+<div style="position:absolute;width: 70%;left:26%;height: 95%;margin-top:5px;text-align: center">
+    <img src="" id="ct" width="400px" height="300px" style="display: none;">
+</div>
+</body>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/layui.js" charset="utf-8"></script>
+<script type="text/javascript"
+        src="../../js/zTree/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript"
+        src="../../js/zTree/js/jquery.ztree.exhide.min.js"></script>
+<script type="text/javascript">
+    var type = 0;
+    var treeObj;
+    var layer, element;
+    var base = window.sessionStorage.getItem("ef_server_base_url");
+    var token = window.sessionStorage.getItem("cur_token");
+    layui.use(['layer', 'element'], function () {
+        layer = layui.layer;
+        element = layui.element;
+        layer.config({
+            skin: 'openMax'
+        });
+    });
+
+
+    function showParent(treeNode, nodes, showList) { //递归显示所有父节点
+        showList.push(treeNode.id);
+        var parentNode = treeNode.getParentNode();
+        if (parentNode == null) { //如果是根节点
+            return;
+        } else {
+            if ($.inArray(parentNode.id, showList) != -1) {  //如果父节点已经显示
+                treeObj.showNode(treeNode);//显示当前节点
+            } else {
+                showList.push(parentNode.id); //将父节点添加到显示结点列表
+                treeObj.showNode(parentNode); //显示父节点
+                treeObj.hideNodes(parentNode.children);//隐藏父节点的所有子节点
+                treeObj.showNode(treeNode);//显示当前节点
+                showParent(parentNode, null, showList); //遍历父亲结点
+            }
+
+        }
+    }
+
+    $(document).ready(function () {
+        $.ajax({
+            url: base + "/plugin/getPluginsTree?token=" + token,
+            type: "post",
+            dataType: "json",
+            success: function (res) {
+                console.log(res);
+                var setting = {
+                    view: {
+                        showIcon: showIconForTree,
+                        showLine: false
+                    },
+                    data:{
+                        simpleData: {
+                            enable: true,
+                            idKey: "id",
+                            pIdKey: "pId",
+                            rootPId: null
+                        }
+                    },
+                    callback: {
+                        onClick: function (event, id, node) { //whj 点击左侧模板菜单时，加载模板
+                            if (node.isPlugin) { //如果是插件
+                                type = node.id; //插件名
+                                $.ajax({
+                                    url: base + "/plugin/generateDefaultPluginPng?token=" + token,
+                                    type: "post",
+                                    dataType: "json",
+                                    data: {
+                                        "width": $('#ct').width(),
+                                        "height": $('#ct').height(),
+                                        "type": type,
+                                        "flag": "default"
+                                    },
+                                    success: function (res) {
+                                        var url = "data:image/png;base64," + res.imageCode;
+                                        $('#ct').attr("src", url);
+                                        $('#ct').show()
+                                    },
+                                    error: function () {
+
+                                    }
+                                })
+                            }
+
+                        }
+                    }
+                };
+                treeObj = $.fn.zTree.init($("#chart"), setting, res);
+            }
+        })
+
+        function showIconForTree(treeId, treeNode) {
+            return !treeNode.isParent;
+        }
+
+
+        $("#tempName").keyup(function (e) {
+            var code = e.keyCode;
+            if (code == 13) {
+                var tempName = $("#tempName").val();
+                if (treeObj) {
+                    if (tempName == "") { //清空搜索框时
+                        var allNode = treeObj.getNodes();
+                        treeObj.showNodes(allNode);
+                        treeObj.expandAll(false);
+                    } else {
+                        var nodes = treeObj.getNodesByParamFuzzy("name", tempName, null); //在树中模糊查询
+                        if (nodes.length == 0) {
+                            $("#tempName").blur();
+                            layer.msg('插件不存在!', {
+                                time: 1000, //1s后自动关闭
+                                icon: 2
+                            });
+                        } else {
+                            var allNode = treeObj.getNodes();
+                            treeObj.hideNodes(allNode);
+                            var showList = new Array();
+                            var nodeList = new Array(); //当所有搜索的结点都不是末级结点时，需要重新显示所有数结点
+                            $.each(nodes, function (index, element) {
+                                if (element.isPlugin == true) { //是末级结点
+                                    treeObj.showNode(element);
+                                    showParent(element, nodes, showList);
+                                } else {
+                                    nodeList.push(element);
+                                }
+                            });
+                            if (nodeList.length == nodes.length) {
+                                efalert(layer, "插件不存在!");
+                                var allNode = treeObj.getNodes();
+                                treeObj.showNodes(allNode);
+                                treeObj.expandAll(false);
+                            } else {
+                                treeObj.expandAll(true);
+                            }
+                        }
+                    }
+                }
+            }
+
+        });
+
+
+       /* $('#tempName').change(function (e) {
+            if ($(this).val() == '') {
+                var allNode = treeObj.getNodesByParam("isHidden", true);
+                treeObj.showNodes(allNode);
+                treeObj.expandAll(false);
+            }
+
+        });
+        $("#tempName").keyup(function (e) {
+            var code = e.charCode || e.keyCode;
+            if (code == 13) {
+                $("#search").trigger('click');
+            }
+        });*/
+    });
+
+
+    function setChart(type) {
+        var url = '/images/design/chart/' + type + '.jpg';
+        $("#ct").attr('src', url);
+        $("#ct").show();
+    }
+
+    function getType() {
+        return type;
+    }
+</script>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <link href="../../css/scroll.css" rel="stylesheet">
+
+    <style>
+
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .container {
+            height: 90%;
+            display: flex;
+        }
+
+        .container .left {
+            width: 50%;
+            height: 100%;
+            padding:0 10px;
+        }
+
+        .add {
+            width: 25px;
+            height: 25px;
+        }
+
+        .delete {
+            width: 25px;
+            height: 25px;
+        }
+
+        .container .middle {
+            width: 1%;
+        }
+
+        .container .right {
+            width: 49%;
+            padding:0 10px;
+        }
+
+        .hoverDiv {
+            background: #0094FF;
+            color: #FFFFFF;
+        }
+
+        .unHoverDiv{
+            background-color: #F2F3F5;
+            color:#86909C;
+        }
+
+        .hoverDiv a {
+            color: #FFFFFF;
+        }
+
+    </style>
+</head>
+<body>
+<div style="width:100%;height:100%;overflow: hidden;">
+    <div style="padding-left:10px;height:10%;min-height:45px;display: flex;align-items: center;justify-content: flex-start;">
+        <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #0094FF;border-radius: 4px;margin-right: 10px;"
+             id="add">
+            <div style="width:50px;display: flex;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                <img src="../../images/design/pages/add.png" title="添加" class="add">
+            </div>
+            <div style="display:flex;align-items:center;color:white;width:50px;padding-left: 5px;">
+                新增
+            </div>
+        </div>
+        <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #FFFFFF;border-radius: 4px;border: 1px solid #F53F3F;"
+             id="del">
+            <div style="display:flex;width:50px;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                <img src="../../images/design/pages/delete.png" class="delete" title="删除">
+            </div>
+            <div style="display:flex;align-items:center;color:#F53F3F;width:50px;padding-left: 5px;">
+                删除
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="left">
+            <div style="height:5%;width:180px;display: flex;align-items: center;font-size: 14px;font-weight: bolder;">
+                单元格选择
+            </div>
+            <div style="width: 100%;height: 44%;overflow: hidden;margin-top:5px">
+                <div id="un"
+                     style="white-space: nowrap;overflow-y: auto;overflow-x:hidden;height: 98%;width:98%;border: 0px solid #D5D5D5;background-color: #F2F3F5;"></div>
+            </div>
+            <div style="height:5%;width:180px;display: flex;align-items: center;font-size: 14px;font-weight: bolder;">
+                悬浮元素选择
+            </div>
+            <div style="width: 100%;height: 44%;overflow: hidden;margin-top:5px">
+                <div id="uns"
+                     style="white-space: nowrap;overflow: auto;height: 98%;width:98%;border: 0px solid #D5D5D5;background-color: #F2F3F5;"></div>
+            </div>
+        </div>
+        <div class="middle">
+
+        </div>
+        <div class="right">
+            <div style="height:5%;width:180px;display: flex;align-items: center;font-size: 14px;font-weight: bolder;">
+                模板参数
+            </div>
+            <div style="height:10%;width:100%;display: flex;align-items: center;font-size: 14px;font-weight: bolder;">
+                <select id="param" style="width:100%;height:80%;background-color: #F2F3F5;color:#86909C;border:0px;">
+                    <option value="">关键字</option>
+                    <option value="CATEGORY">分类</option>
+                    <option value="SERIES">系列</option>
+                    <option value="VALUE">值</option>
+                    <option value="@{Param1}">参数</option>
+                    <option value="CONTROLVALUE">控件值</option>
+                    <option value="X-AXIS">X轴</option>
+                    <option value="Y-AXIS">Y轴</option>
+                </select>
+            </div>
+            <div style="height:2%;"></div>
+            <div style="height:83%;padding:0;">
+                <textarea id="us" style="width: 100%;height: 99%;resize: none;border:none;background-color: #F2F3F5;color:#86909C;"></textarea>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script src="../../js/design/canvasCommon.js"></script>
+<script type="text/javascript" src="../../js/layui.js"></script>
+<script type="text/javascript" src="../../js/design/constants.js"></script>
+<script type="text/javascript">
+    var mainSheetName;
+    layui.use(['layer', 'element'], function () {
+        var layer = layui.layer;
+        var element = layui.element;
+    });
+
+    function checkExpress(express) {
+
+        var array = express.split('');
+        var flag;
+
+        if (/^[A-Z]+$/.test(array[0])) //判断第一位是否是大写字母
+        {
+            if (/^[A-Z]+$/.test(array[1])) {//判断第二位是否是大写字母
+
+                var num = express.substring(2);
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+
+            } else { //第二位是数字
+
+                var num = express.substring(1);
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+            }
+        } else {
+            flag = false;
+        }
+        return flag;
+    }
+
+
+    (function ($) {
+        $.fn.extend({
+            insertAtCaret: function (myValue) {
+                var $t = $(this)[0];
+                if (document.selection) {
+                    this.focus();
+                    sel = document.selection.createRange();
+                    sel.text = myValue;
+                    this.focus();
+                } else if ($t.selectionStart || $t.selectionStart == '0') {
+                    var startPos = $t.selectionStart;
+                    var endPos = $t.selectionEnd;
+                    var scrollTop = $t.scrollTop;
+                    $t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);
+                    this.focus();
+                    $t.selectionStart = startPos + myValue.length;
+                    $t.selectionEnd = startPos + myValue.length;
+                    $t.scrollTop = scrollTop;
+                } else {
+                    this.value += myValue;
+                    this.focus();
+                }
+            }
+        })
+    })(jQuery);
+
+    function boundEvent() {
+        $("#param").change(function () {
+            $("#us").insertAtCaret($(this).val());
+            $("#us").focus();
+            $(this).val('');
+        });
+    }
+
+    function getPage() {
+        var usarr = [];
+        $("input:checkbox:checked").each(function () {
+            usarr.push($(this).val());
+        });
+        var data = {
+            regions: usarr
+            , params: $("#us").val()
+        };
+        return data;
+    }
+
+    //获取区域联动数据
+    function getPage1() {
+        let usarr = [];
+        let shapearr = [];
+        let res = 0;
+        let cellArr = [];
+
+        let divs = $('#un').find('div');
+        $.each(divs , function(i,e){
+            let val = $(e).find('input').eq(0).val(); //单元格
+            let expr = $(e).find('input').eq(1).val(); //联动表达式
+
+            if (val == '') { //空值
+                res = 1;
+                return false;
+            }
+            if (!checkExpress(val)) {
+                res = 2;
+                return false;
+            }
+            if ($.inArray(val, usarr) != -1) {
+                res = 3;
+                return false;
+            }
+            usarr.push($(this).val());
+            let obj = {
+
+            };
+            obj.value = val;
+            if(expr != ''){
+                obj.ExprStr = expr;
+            }
+            cellArr.push(obj);
+        })
+        //所有选中的悬浮元素
+        let shapesDiv = $('#uns').children('div');
+        $.each(shapesDiv , function(i,e){
+            let shapeDiv = $(e);
+            let checkDiv = shapeDiv.children('div').eq(0);
+            let nameDiv = shapeDiv.children('div').eq(1);
+            let exprDiv = shapeDiv.children('div').eq(2);
+            //选中的悬浮元素
+            if(checkDiv.find("input[type='checkbox']").prop('checked')){
+                let shapeObj = {};
+                let shapeName = nameDiv.find('input').val(); //悬浮元素名称
+                let expr = exprDiv.find('input').val(); //悬浮元素表达式
+                shapeObj.Name = shapeName;
+                if(expr != ''){
+                    shapeObj.ExprStr = expr;
+                }
+                shapearr.push(shapeObj);
+            }
+        })
+        if (res == 0) {
+            let data = {
+                MainSheetName: mainSheetName,
+                Regions: cellArr
+                , Params: $("#us").val()
+                , Shapes: shapearr
+            };
+            console.log(data);
+            return data;
+        } else {
+            return res;
+        }
+    }
+
+
+    function init(json, allShape , sheetName) {
+        mainSheetName = sheetName;
+        boundEvent();
+        let allShapeJson = JSON.parse(allShape);
+        //悬浮元素
+        let allShapes = allShapeJson['allShapeNames'];
+        //添加悬浮元素
+        for (let i = 0; i < allShapes.length; i++) {
+            let ck = '<div style="display: flex;align-items: center;justify-content: center;height:30px;"><div style="width:10%;display: flex;align-items: center;justify-content: center;"><input type="checkbox" style="width:20px;height:20px;margin-right: 10px;"></div><div style="width:40%;border-right: 1px solid #ffffff;"><input class="unHoverDiv" type="text" value="' + allShapes[i] + '" style="width:50%;border:0px;" disabled></div><div style="width:50%;"><input type="text" placeholder="条件公式"  style="height:30px;width:100%;border: 0px;background-color: transparent;color:#86909C;"></div></div>';
+            $("#uns").append(ck);
+        }
+        if (json != '' && json != undefined) {
+            let obj = JSON.parse(json);
+            let regions = obj.Regions;
+            let shape = obj.Shapes;
+            let params = obj.Params;
+            $("#us").val(params);
+            //初始化单元格状态
+            for (let i = 0; i < regions.length; i++) {
+                if(i == regions.length - 1){
+                    $('#un').append('<div style="height:30px;border-bottom: 1px solid #D5D5D5;"><input type="text" class="unHoverDiv" style="height:30px;width:50%;border:0;border-right: 1px solid #ffffff;" value="'+ regions[i].value +'"><input type="text" class="unHoverDiv" style="height:30px;width:50%;border: 0px;" value="'+ (regions[i].ExprStr == undefined?"":regions[i].ExprStr) +'"></div>');
+                }else{
+                    $('#un').append('<div style="height:30px;border-bottom: 1px solid #D5D5D5;"><input type="text" class="hoverDiv" style="height:30px;width:50%;border:0;border-right: 1px solid #ffffff;" value="'+ regions[i].value +'"><input type="text" class="hoverDiv" style="height:30px;width:50%;border: 0px;" value="'+ (regions[i].ExprStr == undefined?"":regions[i].ExprStr) +'"></div>');
+                }
+            }
+            $('#un').find('input').bind('focus', function () {
+                $('#un').find('input').removeClass('hoverDiv');
+                $('#un').find('input').addClass('unHoverDiv');
+                $(this).removeClass('unHoverDiv');
+                $(this).siblings('input').removeClass('unHoverDiv');
+                $(this).addClass('hoverDiv');
+                $(this).siblings('input').addClass('hoverDiv');
+            });
+            //初始化悬浮元素状态
+            for (let i = 0; i < shape.length; i++) {
+                let shapeName = shape[i].Name;
+                let exprStr = shape[i].ExprStr;
+                let divs = $('#uns').children('div');
+                $.each(divs , function(i,e){
+                    let div = $(e);
+                    let checkDiv = div.children('div').eq(0);
+                    let nameDiv = div.children('div').eq(1);
+                    let exprDiv = div.children('div').eq(2);
+                    if(nameDiv.find('input').val() == shapeName){ //选中
+                        checkDiv.find("input[type='checkbox']").prop('checked' , 'checked');
+                        if(exprStr != undefined){
+                            exprDiv.find('input').val(exprStr);
+                        }
+                    }
+                })
+            }
+
+        }
+    }
+
+    $(document).ready(function () {
+        $('#add').bind('click', function () {
+            $('#un').find('input').removeClass('hoverDiv');
+            $('#un').find('input').addClass('unHoverDiv');
+            $('#un').append('<div style="height:30px;border-bottom: 1px solid #D5D5D5;"><input type="text" class="hoverDiv" style="height:30px;width:50%;border:0;border-right: 1px solid #ffffff;"><input type="text" class="hoverDiv" style="height:30px;width:50%;border: 0px;"></div>');
+            $('#un').find('input').bind('focus', function () {
+                $('#un').find('input').removeClass('hoverDiv');
+                $('#un').find('input').addClass('unHoverDiv');
+                $(this).removeClass('unHoverDiv');
+                $(this).siblings('input').removeClass('unHoverDiv');
+                $(this).addClass('hoverDiv');
+                $(this).siblings('input').addClass('hoverDiv');
+            });
+        })
+        //删除关联单元格
+        $('#del').bind('click', function () {
+            let div = $('#un').find('.hoverDiv').parent();
+            //如果前面还有元素，给前面元素添加选中样式
+            if(div.prev().length > 0){
+                div.prev().find('input').removeClass('unHoverDiv');
+                div.prev().find('input').addClass('hoverDiv');
+            }else{ //前面没有的话，给后面的元素添加选中样式
+                div.next().find('input').removeClass('unHoverDiv');
+                div.next().find('input').addClass('hoverDiv');
+            }
+            div.remove();
+        })
+
+    })
+</script>
+</html>

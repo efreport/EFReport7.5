@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <link href="../../css/spectrum.css" rel="stylesheet">
+    <link href="../../css/scroll.css" rel="stylesheet">
+
+    <style>
+        #un a {
+            display: block;
+            color: #333;
+            padding-left: 10px;
+            /* margin: 5px 5px;*/
+            border-bottom: 1px solid #D5D5D5;
+            height: 34px;
+            line-height: 34px;
+            /* border-radius: 4px;*/
+            /* text-indent: 8px;*/
+        }
+
+        .ncka:hover {
+            background: #e6e6e6;
+        }
+
+        .cka {
+            color: #ffffff !important;
+            background: #0094FF
+        }
+
+        #un2 a {
+            display: block;
+            color: #333;
+            padding-left: 10px;
+            /*margin: 5px 5px;*/
+            border-bottom: 1px solid #D5D5D5;
+            height: 34px;
+            line-height: 34px;
+            /*border-radius: 4px;*/
+
+        }
+
+        .cka:hover {
+            color: #ffffff;
+            background: #0094FF
+        }
+
+
+        .cka2 {
+            color: #ffffff !important;
+            background: #0094FF;
+        }
+
+        .trck {
+            /* color: #ffffff; */
+            background: #0094FF !important;
+        }
+
+        .cktd {
+            background: #F7F7F7;
+        }
+
+        .layui-tab-card {
+            border-width: 0px !important;
+            border-style: none !important;
+            box-shadow: none !important;
+        }
+
+
+        .layui-tab {
+            margin: 0px;
+        }
+
+        .layui-field-box {
+            display: flex;
+            align-content: center;
+        }
+
+        .layui-table tbody td {
+            padding: 0;
+        }
+
+        .layui-table, .layui-table-view {
+            margin: auto;
+        }
+
+        img:hover {
+            /* background-color: #D5D5D5;
+            border-radius: 2px; */
+            cursor: pointer;
+        }
+
+        .layui-this {
+            color: #0094FF !important;
+            border-bottom: 2px solid #0094FF !important;
+        }
+
+
+        .btn_line {
+            width: 60px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 4px;
+            background-color: #ffffff;
+            border: 1px solid #0094FF;
+        }
+
+        .btn_line:hover {
+            cursor: pointer;
+        }
+
+        .btn_line img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn_black {
+            border: 0px !important;
+            background-color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .btn_mybtn {
+            width: 88px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #0094FF !important;
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: #0094FF !important;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+        }
+
+        .btn_mybtn:hover {
+            cursor: pointer;
+        }
+
+        .layui-input, .layui-select, .layui-textarea {
+            height: 28px !important;
+            background-color: #f2f3f5 !important;
+        }
+
+
+        .layui-input, .layui-select, .layui-textarea {
+            height: 28px !important;
+            background-color: #f2f3f5 !important;
+        }
+
+        .layui-form-checked[lay-skin=primary] i {
+            border-color: #1E9FFF !important;
+            background-color: #1E9FFF !important;
+        }
+
+        .layui-form-select dl dd.layui-this {
+            background-color: #1E9FFF !important;
+            color: #ffffff !important;
+        }
+
+        .layui-form-select dl dd:hover {
+            color: #ffffff;
+            background-color: #0094FF !important;
+        }
+
+        .cellInput {
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            background-color: #f2f3f5;
+            border: 1px solid #f2f3f5;
+            border-radius: 3px;
+        }
+
+        .clstr {
+            height: 36px;
+            line-height: 36px;
+            background-color: #f2f3f5;
+        }
+
+        .clstr td {
+            height: 36px;
+            line-height: 36px;
+            background-color: #f2f3f5;
+            border: 1px solid #E5E6EB;
+        }
+
+        .trck td {
+            background: #0094FF !important;
+        }
+
+        .clstr td select {
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #86909C;
+            background-color: #f2f3f5;
+            border: 0px;
+        }
+
+        .trck td select {
+            color: #ffffff !important;
+            background: #0094FF !important;
+        }
+
+        .clstr td input {
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #86909C;
+            background-color: #f2f3f5;
+            border: 0px;
+        }
+
+        .trck td input {
+            color: #ffffff !important;
+            background: #0094FF !important;
+        }
+
+        .layui-form-selectup dl {
+            bottom: 0px !important;
+            top: 0px !important;
+        }
+
+        table .clstr .layui-form-select dl {
+            position: static !important;
+        }
+
+        #ConnNameDiv input {
+            border: 1px solid #ccc;
+            margin-top: 20px;
+            height: 28px;
+            line-height: 28px;
+            background-color: #F2F3F5;
+        }
+
+        #ConnNameDiv input:hover {
+            border: 1px solid #44B4FF;
+            background-color: #fff;
+        }
+
+        input:hover {
+            border: 1px solid #44B4FF;
+            background-color: #fff;
+        }
+
+        select:hover {
+            border: 1px solid #44B4FF;
+            background-color: #fff;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="layui-tab layui-tab-card" style="margin: 5px;">
+    <ul class="layui-tab-title">
+        <li class="layui-this">数据填报</li>
+        <li>数据校验</li>
+    </ul>
+    <div class="layui-tab-content" style="height: 530px;">
+        <div class="layui-tab-item layui-show">
+            <div style="position:relative;width: 840px;height: 30px; margin: auto;">
+                <div style="width: 385px;height: 30px;">
+                    <a href="javascript:void(0);" title="添加">
+                        <button title="添加" class="btn_line" id="add">
+                            <img src="../../images/design/pages/new.png"/>
+                        </button>
+                    </a>
+
+                    <a href="javascript:void(0);" title="删除">
+                        <button title="删除" class="btn_line" id="del">
+                            <img src="../../images/design/pages/delete.png"/>
+                        </button>
+                    </a>
+
+                    <a href="javascript:void(0);" title="重命名">
+                        <button title="重命名" class="btn_line" id="rename">
+                            <img src="../../images/design/ds/editDs.png">
+                        </button>
+                    </a>
+
+                    <a href="javascript:void(0);" title="复制">
+                        <button title="复制" class="btn_line" id="copy">
+                            <img src="../../images/design/rightMenu/copy.png">
+                        </button>
+                    </a>
+
+                    <a href="javascript:void(0);" title="刷新" style="display: none;">
+                        <button title="刷新" class="btn_line" id="fresh" style="display: none;">
+                            <img src="../../images/design/ds/refreshDs.png">
+                        </button>
+                    </a>
+
+                    <a href="javascript:void(0);" title="预览">
+                        <button title="预览" class="btn_line tipItem" id="view">
+                            <img src="../../images/design/tool/view.png">
+                        </button>
+                    </a>
+
+
+                </div>
+            </div>
+            <div style="height:15px;"></div>
+            <div style="position:relative;width: 840px;margin: auto;">
+                <div style="position:relative;width: 230px;height: 470px;border: 1px solid #D5D5D5;float: left;">
+                    <div id="un"
+                         style="white-space: nowrap;background-color: #f2f3f5; overflow: auto;height: 100%"></div>
+                </div>
+                <div style="position:relative;width: 600px;height: 470px; float: left; margin-left: 8px;">
+
+                    <form class="layui-form">
+                        <div id="div_null_show" style="position:relative;width: 600px;height: 60px;">
+                            <div style="width: 235px;height: 60px;float: left;">
+                                <div style="height: 30px;line-height: 30px;font-size:14px;color:#1D2129;font-weight:400;">
+                                    数据连接
+                                </div>
+                                <div style="height: 30px;line-height: 30px;">
+
+                                    <div style="width: 200px;height:28px;">
+                                        <form class="layui-form">
+                                            <select disabled="disabled">
+                                                <option>请选择</option>
+                                            </select>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 235px;height: 60px;float: left;">
+                                <div style="height: 30px;line-height: 30px;font-size:14px;color:#1D2129;font-weight:400;">
+                                    表名
+                                </div>
+                                <div style="height: 30px;line-height: 30px;">
+                                    <input disabled="disabled" type="text"
+                                           style="background-color: #f2f3f5; border: 1px solid #f2f3f5; border-radius: 2px; width:201px;height:24px;"
+                                           autocomplete="off"/>
+                                    <img src="../../images/design/open.png" disabled="disabled"
+                                         style="margin-left:5px;margin-right:5px;">
+
+                                </div>
+                            </div>
+                            <div style="width: 100px;height: 60px; margin-left:20px; float: left;">
+                                <div style="height: 30px;line-height: 30px;font-size:14px;color:#1D2129;font-weight:400;">
+
+                                </div>
+                               <!-- <div style="height: 30px;line-height: 30px;">
+                                    <input type="checkbox" disabled="disabled" lay-skin="primary" title="默认增加行">
+                                </div>-->
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </form>
+
+
+                    <form class="layui-form">
+                        <div style="position:relative;width: 600px;height: 60px;display: none;" class="dsDiv">
+                            <div style="width: 235px;height: 60px;float: left;">
+                                <div style="height: 30px;line-height: 30px;font-size:14px;color:#1D2129;font-weight:400;">
+                                    数据连接
+                                </div>
+                                <div style="height: 30px;line-height: 30px;">
+                                    <div style="width: 200px;height:28px;">
+                                        <select name="ds"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 235px;height: 60px;float: left;">
+                                <div style="height: 30px;line-height: 30px;font-size:14px;color:#1D2129;font-weight:400;">
+                                    表名
+                                </div>
+                                <div style="height: 30px;line-height: 30px;">
+                                    <input type="text"
+                                           style="background-color: #f2f3f5; border: 1px solid #f2f3f5; border-radius: 2px; width:201px;height:24px;"
+                                           name="tableName" autocomplete="off"/>
+                                    <img src="../../images/design/open.png" style="margin-left:5px;margin-right:5px;"
+                                         name="showTable">
+                                </div>
+                            </div>
+                            <div style="width: 100px;height: 60px; margin-left: 20px; float: left;">
+                                <div style="height: 30px;line-height: 30px;font-size:14px;color:#1D2129;font-weight:400;">
+
+                                </div>
+                              <!--  <div style="height: 30px;line-height: 30px;">
+                                    <input type="checkbox" name="defaultRow" lay-skin="primary" title="默认增加行">
+                                </div>-->
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </form>
+                    <div style="height: 10px;"></div>
+                    <div style="position: relative; width: 600px; height:402px;">
+                        <div id="tbs"
+                             style="position:relative;width: 468px;height: 402px; background-color: #f2f3f5; border: 0px solid #D5D5D5;float: left; overflow-y: scroll;overflow-x: hidden;">
+                        </div>
+                        <div style="position:relative;width: 128px;height: 100%; float: left; overflow: auto;text-align: center">
+                            <button class="btn_black" style="display:none;">
+                                <img src="../../images/new/btn_auto_add.png"/>
+                            </button>
+                            <button class="btn_black" style="display:none;">
+                                <img src="../../images/new/btn_add_filed.png"/>
+                            </button>
+                            <button class="btn_black" style="display:none;">
+                                <img src="../../images/new/btn_del_filed.png"/>
+                            </button>
+
+                            <button class="btn_mybtn" id="auto">
+                                自动添加
+                            </button>
+                            <button class="btn_mybtn" id="addf">
+                                添加字段
+                            </button>
+                            <button class="btn_mybtn" id="delf">
+                                删除字段
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+
+            <div style="position:relative;width: 840px;height: 30px; margin: auto;">
+                <div style="width: 385px;height: 30px;">
+                    <a href="javascript:void(0);" title="添加">
+                        <button title="添加" class="btn_line" id="add2">
+                            <img src="../../images/design/pages/new.png"/>
+                        </button>
+                    </a>
+                    <a href="javascript:void(0);" title="删除">
+                        <button title="删除" class="btn_line" id="del2">
+                            <img src="../../images/design/pages/delete.png"/>
+                        </button>
+                    </a>
+
+                    <a href="javascript:void(0);" title="重命名">
+                        <button title="重命名" class="btn_line" id="rename2">
+                            <img src="../../images/design/ds/editDs.png">
+                        </button>
+                    </a>
+
+                    <a href="javascript:void(0);" title="复制">
+                        <button title="复制" class="btn_line" id="copy2">
+                            <img src="../../images/design/rightMenu/copy.png">
+                        </button>
+                    </a>
+
+                </div>
+            </div>
+            <div style="height:15px;"></div>
+
+            <div style="position:relative;width: 840px;margin: auto;">
+                <div style="position:relative;width: 230px;height: 470px;border: 1px solid #D5D5D5;float: left;">
+                    <div id="un2"
+                         style="white-space: nowrap;background-color: #f2f3f5; overflow: auto;height: 100%"></div>
+                </div>
+                <div style="position:relative;width: 600px;height: 470px; float: left; margin-left: 8px;">
+                    <div style="position: relative; width: 600px; height:472px;overflow: hidden;">
+                        <div id="tbs2"
+                             style="position:relative;width: 468px;height: 100%; background-color: #f2f3f5; border: 0px solid #D5D5D5;float: left; overflow-y: scroll;overflow-x: hidden;">
+                        </div>
+                        <div style="position:relative;width: 128px;height: 100%; float: left; overflow: auto;text-align: center">
+                            <button class="btn_black" style="display: none;">
+                                <img src="../../images/new/btn_add_validate.png"/>
+                            </button>
+                            <button class="btn_black" style="display: none;">
+                                <img src="../../images/new/btn_del_validate.png"/>
+                            </button>
+
+                            <button class="btn_mybtn" id="addf2">
+                                添加效验
+                            </button>
+
+                            <button class="btn_mybtn" id="delf2">
+                                删除效验
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--动态新增table-->
+<table id="tb" class="layui-table" style="width: 100%;display: none;text-align: center">
+    <thead>
+    <tr>
+        <td style="width: 20%">主键</td>
+        <td style="width: 50%">列</td>
+        <td style="width: 30%">单元格</td>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<table id="tb2" class="layui-table" style="width: 100%;display: none;text-align: center">
+    <thead>
+    <tr style="display: block;width:468px;">
+        <td style="width: 184px">公式</td>
+        <td style="width: 184px">出错后显示信息</td>
+        <td style="width: 75px">强制提交</td>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<!--添加 数据填报 名称的弹出框-->
+<div id="ConnNameDiv" style="text-align: center;display: none;">
+    <input type="text">
+</div>
+<div id="tableNameDiv" style="text-align: center;display: none;">
+    <input type="text" style="margin-top: 10%; height: 28px;line-height: 28px;">
+</div>
+<!--添加 数据校验 名称的弹出框-->
+<div id="DataCheckInfoNameDiv" style="text-align: center;display: none;">
+    <input type="text" style="height: 28px;line-height: 28px;">
+</div>
+<!--获取表字段-->
+<select id="column" style="display: none"></select>
+<!--单元格设置弹出框-->
+<div id="cell" style="display: none">
+    <div style="width: 220px; height: 30px; line-height: 30px; margin: auto;">
+        单元格
+    </div>
+    <div style="width: 220px; height: 30px; line-height: 30px; margin: auto;">
+        <input type="text" id="a1" class="cellInput"
+               onkeyup="value=value.replace(/[^a-zA-Z]/g,'').toUpperCase()" value="A" maxlength="2">
+        <input type="text" id="a2" class="cellInput" maxlength="4" value="1"
+               onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+    </div>
+</div>
+<div id="cell_old" style="text-align: center;display: none">
+    单元格<input type="text" id="a1" style="width: 30%;margin-top:10%"
+              onkeyup="value=value.replace(/[^a-zA-Z]/g,'').toUpperCase()" value="A" maxlength="2">
+    <input type="text" id="a2" style="width: 30%;margin-top:10%" maxlength="4" value="1"
+           onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+</div>
+
+<div style="display: none;text-align: center;" id="new_win">
+    <div class="layui-form-item" style="margin: 25px 20px">
+        <div class="layui-input-block" style="margin-left:auto">
+            <input type="text" name="new_name" autocomplete="off" placeholder="请输入模板名称" class="layui-input">
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/design/canvasCommon.js"></script>
+<script type="text/javascript" src="../../js/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../js/design/constants.js"></script>
+<script type="text/javascript">
+    var cur_page_index;
+    var ip = window.sessionStorage.getItem("ef_server_base_url");
+    var ct = 0, jy = 0, f = '';
+    var un = [];
+    var sheetName;
+    var form;
+    layui.use(['layer', 'element', 'form'], function () {
+        let layer = layui.layer;
+        let element = layui.element;
+        form = layui.form;
+    });
+
+    function setSheetName(name) {
+        sheetName = name;
+    }
+
+    function setCurPageIndex(index) {
+        cur_page_index = index;
+    }
+    function divNullIsShowOrHidden() {
+        let len = $("img[name='showTable']").length;
+        if (len > 1) {
+            $("#div_null_show").hide();
+        } else {
+            $("#div_null_show").show();
+        }
+    }
+
+    function initF(json) {
+        if (!Util.isNull(json)) {
+            f = json;
+            let arr = JSON.parse(f);
+            if (arr.length > 0) {
+                let div = "<div id='fields' style='display:none;text-align: left;padding: 5px'>";
+                div += "<form class='layui-form'>";
+                for (let i = 0; i < arr.length; i++) {
+                    div += "<input type='checkbox' lay-skin='primary' value='" + i + "' title='第" + (i + 1) + "组：" + arr[i][0].fieldName + "'> <br/>";
+                }
+                div += "</form>";
+                div += "</div>";
+                $("body").append(div);
+                form.render();
+            }
+        }
+    }
+
+    function init2(json, b) {
+        if (!b) {
+            boundEvent2();
+        }
+        if (json != '' && json != undefined) {
+            let obj;
+            if (b) {
+                obj = json;
+            } else {
+                obj = JSON.parse(json);
+            }
+            //1.添加 左 a 链接
+            for (let i = 0; i < obj.length; i++) {
+                jy++;
+                var data = 'jiaoyan_' + jy;
+                $("#un2").append('<a href="javascript:;" data="' + data + '">' + obj[i].DataCheckInfoName + '</a>');
+                boundCk2($("#un2 a:last-child"));
+                var items = obj[i].DataCheckItems;
+                var tb = $("#tb2").clone();
+                tb.removeAttr('id');
+                tb.attr('data', 'jiaoyan_' + jy);
+                for (var j = 0; j < items.length; j++) {
+                    var t1 = items[j].DataCheckExpr, t2 = items[j].ErrorMessage, t3 = items[j].ErrorType;
+                    var tr = "<tr class='clstr'><td><input type='text' style='width:184px' readonly></td><td><input type='text' style='width: 184px' readonly></td><td style='text-align: center;vertical-align: center;padding-top:4px;'><input type='checkbox' style='width: 95px;height:16px;'></td></tr>";
+                    tb.children('tbody').append(tr);
+                    tb.children('tbody').children('tr:last-child').children('td:eq(0)').children('input').val(t1);
+                    tb.children('tbody').children('tr:last-child').children('td:eq(1)').children('input').val(t2);
+                    tb.children('tbody').children('tr:last-child').children('td:eq(2)').children('input').prop('checked', t3 == 1);
+                }
+                tb.find('thread tr').css({'display': 'block'});
+                tb.find('thread tr td').css({"width": '184px'});
+                tb.find('tbody').css({
+                    'height': '428px',
+                    "width": '468px',
+                    'display': 'block',
+                    'overflow-y': 'auto',
+                    'background-color': '#f2f3f5',
+                    'overflow-x': 'hidden'
+                });
+                $("#tbs2").append(tb);
+                boundTable2(tb);
+            }
+            $("#un2 a:last-child").trigger('click');
+        }
+    }
+
+    function initDs() {
+        let token = window.sessionStorage.getItem("cur_token");
+        let url = ip + "/designSys/getConnInfo?token=" + token;
+        $.ajax({
+            url: url,
+            type: "get",
+            timeout: 5000,
+            contentType: "application/json;charset=UTF-8",
+            success: function (data) {
+                if (data.state === "success") {
+
+                    if (!Util.isNull(data.data)) {
+                        var tmp = data.data;
+                        $.each(tmp, function (i) {
+                            $('select[name="ds"]').append('<option val="' + tmp[i].type + '">' + tmp[i].name + '</option>');
+                        });
+                        var ds = $('select[name="ds"]').find("option:selected").text();
+                    }
+                    form.render();
+                } else if (data.state === "failed") {
+                    layer.msg(data.data);
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                var st = XMLHttpRequest.getResponseHeader("sessionstatus");
+                if (textStatus == 'timeout') {
+                    layer.msg('请求超时,请重试');
+                }
+            }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    }
+
+    function init(json, b, isCopy) {
+        if (!b) {
+            boundEvent();
+        }
+        if (json != '' && json != undefined && json != '[]') {
+            $.ajaxSettings.async = false;
+            let obj;
+            if (b) {
+                obj = json;
+            } else {
+                //默认添加 数据源
+                let token = window.sessionStorage.getItem("cur_token");
+                let url = ip + "/designSys/getConnInfo?token=" + token;
+                $.ajax({
+                    url: url,
+                    type: "get",
+                    timeout: 5000,
+                    contentType: "application/json;charset=UTF-8",
+                    success: function (data) {
+                        if (data.state === "success") {
+                            if (!Util.isNull(data.data)) {
+                                let tmp = data.data;
+                                $.each(tmp, function (i) {
+                                    $('select[name="ds"]').append('<option val="' + tmp[i].type + '">' + tmp[i].name + '</option>');
+                                });
+                            }
+                            form.render();
+
+                        } else if (data.state === "failed") {
+                            layer.msg(data.data);
+                        }
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        let st = XMLHttpRequest.getResponseHeader("sessionstatus");
+                        if (textStatus == 'timeout') {
+                            layer.msg('请求超时,请重试')
+                        }
+                    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+                let ds = $('select[name="ds"]').find("option:selected").text();
+                obj = JSON.parse(json);
+            }
+            for (let x = 0; x < obj.length; x++) {
+                ct++;
+                let data = 'tianbao_' + ct;
+                let ConnName = obj[x].ConnName;
+                let TableName = obj[x].TableName;
+                let DefaultAddRow = obj[x].DefaultAddRow; //添加行按钮
+                //1.添加 左 a 链接
+                $("#un").append('<a href="javascript:;" data="' + data + '" connType="' + obj[x].DatabaseType + '" tb="' + TableName + '" ds="' + ConnName + '" der=' + DefaultAddRow + '>' + obj[x].UploadInfoName + '</a>');
+                boundCk($("#un a:last-child"));
+                //2.添加 上 数据源
+                let showDs = $('.dsDiv').clone();
+                showDs.attr('data', data);
+                showDs.attr('name', 'dsDiv');
+                showDs.removeClass('dsDiv');
+                showDs.find('select[name="ds"]').change(function () {
+                    //getTbList($(this).val(), isCopy);
+                });
+                let selDs = showDs.find('select[name="ds"]');
+                if (selDs.children().length == 0) {
+                    showDs.find('select[name="ds"]').append('<option val="' + obj[x].DatabaseType + '">' + ConnName + '</option>');
+                }
+                showDs.find('select[name="ds"]').val(ConnName);
+                showDs.find('input[name="defaultRow"]').prop('checked', DefaultAddRow);
+                //2.添加 数据表
+                var tb = showDs.find('input[name="tableName"]');
+                tb.empty();
+                let token = window.sessionStorage.getItem("cur_token");
+                if (!isBound(tb)) {
+                    tb.change(function () {
+                        getColumn($(this).val());
+                    });
+                }
+                tb.val(TableName);
+                $('.dsDiv').after(showDs);
+                //3.添加表字段
+                let item = {
+                    ConnName: ConnName,
+                    tableName: TableName,
+                    DefaultAddRow: DefaultAddRow
+                };
+                if (!Util.isNull(item.tableName)) {
+                    let opt = '';
+                    let clm_url = ip + "/designSys/getColumn?token=" + token;
+
+                    $.ajax({
+                        url: clm_url,
+                        type: "get",
+                        timeout: 5000,
+                        contentType: "application/json;charset=UTF-8",
+                        data: item,
+                        success: function (data) {
+                            if (data.code === 1) {
+                                if(data.text != null){
+                                    var arr = JSON.parse(data.text);
+                                    $.each(arr, function (j, item) {
+                                        opt += "<option>" + item + "</option>";
+                                    });
+                                }
+                            }
+                        },
+                        complete: function (XMLHttpRequest, textStatus) {
+                            var st = XMLHttpRequest.getResponseHeader("sessionstatus");
+                            if (textStatus == 'timeout') {
+                                layer.msg('请求超时,请重试');
+                            }
+                        }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        }
+                    });
+                }
+                //4.添加 中 tablecom
+                var tb = $("#tb").clone();
+                var items = obj[x].UploadItems;
+                for (var j = 0; j < items.length; j++) {
+                    var MainKey = items[j].MainKey;
+                    var FieldName = items[j].FieldName;
+                    var fieldCell = spiltCell(items[j].fieldCell);
+                    var tr = '';
+                    tr += '<tr class="clstr">';
+                    tr += '<td style="width: 20%"><input type="checkbox" name="MainKey" ' + (MainKey ? 'checked' : '') + '></td>';
+                    tr += '<td style="width: 50%" class="clscolumn">';
+                    tr += '<input name="FieldName" style="width: 99%" readonly="true" />';
+                    tr += '</td><td style="width: 30%"><input type="text" a1="' + fieldCell[0] + '" a2="' + fieldCell[1] + '"  style="width: 98%" value="' + items[j].fieldCell + '" readonly></td>';
+                    tr += '</tr>';
+                    tr = $(tr);
+
+                    tb.children('tbody').append(tr);
+                    form.render();
+
+                    tr.find('input[name="FieldName"]').val(FieldName);
+                    form.render();
+                    tb.children('tbody').children('tr:last-child').find('td').click(function () {
+                        tb.children('tbody').children('tr').each(function () {
+                            $(this).removeClass('trck');
+                        });
+                        $(this).parent().addClass('trck');
+                    });
+
+                    tb.children('tbody').children('tr').children('td.clscolumn').children('input').unbind();
+                    tb.children('tbody').children('tr').children('td.clscolumn').children('input').dblclick(function () {
+                        var obj = $(this);
+                        var val = $(this).val();
+
+                        let CurConnName = getCurrentDsVal();
+                        let CurTableName = getCurrentTbVal();
+
+                        var index = layer.open({
+                            type: 2,
+                            area: ['400px', '400px'],
+                            closeBtn: 0,
+                            resize: false,
+                            title: ['选择列', 'height:36px;line-height:36px'],
+                            content: 'showColumn.html',
+                            btn: ['确定', '关闭'],
+                            btnAlign: 'c',
+                            end: function () {
+
+                            },
+                            yes: function (index, layero) {
+                                var iframeWin = window[layero.find('iframe')[0]['name']];
+                                var columnname = iframeWin.getColumn();
+
+                                obj.val(columnname);
+
+                                layer.close(index);
+                            },
+                            success: function (layero, index) {
+                                var iframeWin = window[layero.find('iframe')[0]['name']];
+                                // var ds = $('.show-ds').find('select[name="ds"]').find("option:selected").text();
+                                iframeWin.initPage(CurConnName, CurTableName);
+                            }
+                        });
+
+
+                    });
+
+
+                    tb.children('tbody').children('tr').children('td:last-child').children('input').dblclick(function () {
+                        var obj = $(this);
+                        var val = $(this).val();
+                        var vala = [];
+                        if (val.length == 2) {
+                            vala[0] = val[0];
+                            vala[1] = val[1];
+                        }
+                        var index = layer.open({
+                            type: 1,
+                            area: ['350px', '180px'],
+                            title: '单元格',
+                            zIndex: 19991014,
+                            shadeClose: true,
+                            closeBtn: 0,
+                            shade: false,
+                            content: $('#cell')
+                            , btn: ['确定', '关闭']
+                            , btnAlign: 'c' //按钮居中
+                            , yes: function (index, layero) {
+                                obj.attr('a1', $("#a1").val());
+                                obj.attr('a2', $("#a2").val());
+                                obj.val($("#a1").val() + $("#a2").val());
+                                layer.close(index);
+                            }
+                            , success: function () {
+                                $("#a1").val(obj.attr('a1'));
+                                $("#a2").val(obj.attr('a2'));
+                            }
+                        });
+                    });
+                }
+                tb.removeAttr('id');
+                tb.attr('data', data);
+                $("#tbs").append(tb);
+                form.render();
+            }
+            $("#un a:last-child").trigger('click');
+            $.ajaxSettings.async = true;
+
+            $("img[name='showTable']").click(function () {
+                var index = layer.open({
+                    type: 2,
+                    area: ['400px', '400px'],
+                    closeBtn: 0,
+                    resize: false,
+                    title: ['选择表', 'height:36px;line-height:36px'],
+                    content: 'showTable.html',
+                    btn: ['确定', '关闭'],
+                    btnAlign: 'c',
+                    end: function () {
+
+                    },
+                    yes: function (index, layero) {
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        let table = iframeWin.getTableName();
+                        $('.show-ds').find('input[name="tableName"]').val(table);
+                        layer.close(index);
+                    },
+                    success: function (layero, index) {
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        let ds = $('.show-ds').find('select[name="ds"]').find("option:selected").text();
+                        iframeWin.init(ds);
+                    }
+                });
+
+            });
+        } else {
+            initDs();
+        }
+        divNullIsShowOrHidden();
+    }
+
+    var tmps = null;
+
+    function setTmp(t) {
+        tmps = t;
+    }
+
+    function boundEvent() {
+        $("#delf").click(function () {
+            $('.show-now').find('.trck').remove();
+        });
+        $("#fresh").click(function () {
+            $(".show-ds").find('select[name="ds"]').trigger('change');
+        });
+
+        $("#view").click(function () {
+            var sql = "select * from " + getCurrentTbVal();
+            var index = layer.open({
+                type: 2,
+                area: ['750px', '400px'],
+                closeBtn: 0,
+                shadeClose: true,
+                title: false,
+                scrollbar: false,
+                content: ['dataview.html', 'no'],
+                btn: ['关闭'],
+                btnAlign: 'c',
+                success: function (layero, index) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.setDsInfo(getCurrentDsVal(), sql, tmps);
+                }
+            });
+        });
+        $("#auto").click(function () {
+            if (!Util.isNull(f) && f != '[]') {
+                var tb = $(".show-now");
+                var arr = JSON.parse(f);
+                if (arr.length > 0) {
+                    var index = layer.open({
+                        type: 1,
+                        area: ['300px', '220px'],
+                        title: '选择组',
+                        zIndex: 19991014,
+                        closeBtn: 0,
+                        content: $('#fields')
+                        , btn: ['确定', '关闭']
+                        , btnAlign: 'c' //按钮居中
+                        , yes: function (index, layero) {
+                            var item = {
+                                ConnName: getCurrentDsVal(),
+                                tableName: getCurrentTbVal()
+                            };
+                            if (!Util.isNull(item.tableName)) {
+
+                                let token = window.sessionStorage.getItem("cur_token");
+                                let clm_url = ip + "/designSys/getColumn?token=" + token;
+
+                                $.ajax({
+                                    url: clm_url,
+                                    type: "get",
+                                    timeout: 5000,
+                                    contentType: "application/json;charset=UTF-8",
+                                    data: item,
+                                    success: function (data) {
+                                        if (data.code === 1) {
+                                            var cls = JSON.parse(data.text);
+                                            $('#fields input').each(function (i) {
+                                                var t = $(this).prop('checked');
+                                                for (var j = 0; j < arr.length; j++) {
+                                                    if (i == j && t) {
+                                                        for (var x = 0; x < arr[j].length; x++) {
+                                                            var FieldName = arr[j][x].fieldName;
+                                                            var fieldCell = spiltCell(arr[j][x].fieldCell);
+
+
+                                                            var tr = '';
+                                                            tr += '<tr class="clstr">';
+                                                            tr += '<td style="width: 20%"><input type="checkbox" name="MainKey"></td>';
+                                                            tr += '<td style="width: 50%" class="clscolumn">';
+                                                            // tr += '<form class="layui-form" action="">';
+                                                            // tr += '<input type="hidden"><select name="FieldName" style="width: 99%"></select>';
+                                                            tr += '<input type="text" readonly="true" name="FieldName" style="width: 99%"></input>';
+                                                            // tr += '</form>';
+                                                            tr += '</td><td style="width: 30%"><input type="text" a1="' + fieldCell[0] + '" a2="' + fieldCell[1] + '"  style="width: 98%" value="' + arr[j][x].fieldCell + '" readonly></td>';
+                                                            tr += '</tr>';
+
+                                                            tr = $(tr);
+
+
+                                                            // var tr = $('<tr class="clstr"><td  style="width: 20%"><input type="checkbox" name="MainKey"></td>' +
+                                                            // '<td style="width: 50%"><input type="hidden"><select name="FieldName" style="width: 99%"></select></td>' +
+                                                            // '<td style="width: 30%"><input type="text" a1="' + fieldCell[0] + '" a2="' + fieldCell[1] + '" style="width: 98%" value="' + arr[j][x].fieldCell + '" readonly></td></tr>');
+
+                                                            tb.children('tbody').append(tr);
+
+                                                            // var sel = tr.find('select[name="FieldName"]');
+                                                            // for (var i = 0; i < cls.length; i++) {
+                                                            //     sel.append('<option value=' + cls[i] + '>' + cls[i] + '</option>');
+                                                            // }
+                                                            // sel.val(FieldName);
+
+
+                                                            tr.find('input[name="FieldName"]').val(FieldName);
+
+                                                            form.render();
+                                                            tb.children('tbody').children('tr:last-child').find('td').click(function () {
+                                                                tb.children('tbody').children('tr').each(function () {
+                                                                    $(this).removeClass('trck');
+                                                                });
+                                                                $(this).parent().addClass('trck');
+                                                            });
+
+
+                                                            tb.children('tbody').children('tr').children('td.clscolumn').children('input').unbind();
+                                                            tb.children('tbody').children('tr').children('td.clscolumn').children('input').dblclick(function () {
+                                                                var obj = $(this);
+                                                                var val = $(this).val();
+
+                                                                let CurConnName = getCurrentDsVal();
+                                                                let CurTableName = getCurrentTbVal();
+
+                                                                var index = layer.open({
+                                                                    type: 2,
+                                                                    area: ['400px', '400px'],
+                                                                    closeBtn: 0,
+                                                                    resize: false,
+                                                                    title: ['选择列', 'height:36px;line-height:36px'],
+                                                                    content: 'showColumn.html',
+                                                                    btn: ['确定', '关闭'],
+                                                                    btnAlign: 'c',
+                                                                    end: function () {
+
+                                                                    },
+                                                                    yes: function (index, layero) {
+                                                                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                                                                        var columnname = iframeWin.getColumn();
+
+                                                                        obj.val(columnname);
+
+                                                                        layer.close(index);
+                                                                    },
+                                                                    success: function (layero, index) {
+                                                                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                                                                        // var ds = $('.show-ds').find('select[name="ds"]').find("option:selected").text();
+                                                                        iframeWin.initPage(CurConnName, CurTableName);
+                                                                    }
+                                                                });
+
+
+                                                            });
+
+
+                                                            tb.children('tbody').children('tr').children('td:last-child').children('input').dblclick(function () {
+                                                                var obj = $(this);
+                                                                var val = $(this).val();
+                                                                var vala = [];
+                                                                if (val.length == 2) {
+                                                                    vala[0] = val[0];
+                                                                    vala[1] = val[1];
+                                                                }
+                                                                var index = layer.open({
+                                                                    type: 1,
+                                                                    area: ['350px', '180px'],
+                                                                    title: '单元格',
+                                                                    zIndex: 19991014,
+                                                                    shadeClose: true,
+                                                                    closeBtn: 0,
+                                                                    shade: false,
+                                                                    content: $('#cell')
+                                                                    , btn: ['确定', '关闭']
+                                                                    , btnAlign: 'c' //按钮居中
+                                                                    , yes: function (index, layero) {
+                                                                        obj.attr('a1', $("#a1").val());
+                                                                        obj.attr('a2', $("#a2").val());
+                                                                        obj.val($("#a1").val() + $("#a2").val());
+                                                                        layer.close(index);
+                                                                    }
+                                                                    , success: function () {
+                                                                        $("#a1").val(obj.attr('a1'));
+                                                                        $("#a2").val(obj.attr('a2'));
+                                                                    }
+                                                                });
+                                                            });
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                        }
+
+                                    },
+                                    complete: function (XMLHttpRequest, textStatus) {
+                                        var st = XMLHttpRequest.getResponseHeader("sessionstatus");
+                                        if (textStatus == 'timeout') {
+                                            layer.msg('请求超时,请重试');
+                                        }
+                                    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                    }
+                                });
+
+                            }
+                            layer.close(index);
+                        }
+                    });
+                }
+            } else {
+                layer.msg("当前模板没有数据单元格");
+            }
+        });
+        $("#addf").click(function () {
+            var item = {
+                ConnName: getCurrentDsVal(),
+                tableName: getCurrentTbVal()
+            };
+            if (!Util.isNull(item.tableName)) {
+                let token = window.sessionStorage.getItem("cur_token");
+                let clm_url = ip + "/designSys/getColumn?token=" + token;
+
+                $.ajax({
+                    url: clm_url,
+                    type: "get",
+                    timeout: 5000,
+                    contentType: "application/json;charset=UTF-8",
+                    data: item,
+                    success: function (data) {
+                        if (data.code === 1) {
+
+                            var arr = JSON.parse(data.text);
+                            var opt = '';
+                            $.each(arr, function (j, item) {
+                                opt += "<option>" + item + "</option>";
+                            });
+                            var tb = $(".show-now");
+                            var tr = '';
+                            tr += '<tr class="clstr">';
+                            tr += '<td style="width: 20%"><input type="checkbox" name="MainKey"></td>';
+                            tr += '<td style="width: 50%" class="clscolumn">';
+                            // tr += '<form class="layui-form" action="">';
+                            // tr += '<input type="hidden"><select name="FieldName" style="width: 99%">' + opt + '</select>';
+                            tr += '<input type="text" readonly="true" name="FieldName" style="width: 99%" />';
+                            // tr += '</form>';
+                            tr += '</td><td style="width: 30%"><input type="text" a1="A" a2="1"  style="width: 98%" value="A1" readonly></td>';
+                            tr += '</tr>';
+                            tb.children('tbody').append(tr);
+                            tb.children('tbody').find('td').click(function () {
+                                tb.children('tbody').children('tr').each(function () {
+                                    $(this).removeClass('trck');
+                                });
+                                $(this).parent().addClass('trck');
+                            });
+
+                            tb.children('tbody').children('tr').children('td.clscolumn').children('input').unbind();
+                            tb.children('tbody').children('tr').children('td.clscolumn').children('input').dblclick(function () {
+                                var obj = $(this);
+                                var val = $(this).val();
+
+                                let CurConnName = getCurrentDsVal();
+                                let CurTableName = getCurrentTbVal();
+
+                                var index = layer.open({
+                                    type: 2,
+                                    area: ['400px', '400px'],
+                                    closeBtn: 0,
+                                    resize: false,
+                                    title: ['选择列', 'height:36px;line-height:36px'],
+                                    content: 'showColumn.html',
+                                    btn: ['确定', '关闭'],
+                                    btnAlign: 'c',
+                                    end: function () {
+
+                                    },
+                                    yes: function (index, layero) {
+                                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                                        var columnname = iframeWin.getColumn();
+
+                                        obj.val(columnname);
+
+                                        layer.close(index);
+                                    },
+                                    success: function (layero, index) {
+                                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                                        // var ds = $('.show-ds').find('select[name="ds"]').find("option:selected").text();
+                                        iframeWin.initPage(CurConnName, CurTableName);
+                                    }
+                                });
+
+
+                            })
+
+                            tb.children('tbody').children('tr').children('td:last-child').children('input').dblclick(function () {
+                                var obj = $(this);
+                                var val = $(this).val();
+                                var vala = [];
+                                if (val.length == 2) {
+                                    vala[0] = val[0];
+                                    vala[1] = val[1];
+                                }
+                                var index = layer.open({
+                                    type: 1,
+                                    area: ['350px', '180px'],
+                                    title: '单元格',
+                                    zIndex: 19991014,
+                                    shadeClose: true,
+                                    closeBtn: 0,
+                                    shade: false,
+                                    content: $('#cell')
+                                    , btn: ['确定', '关闭']
+                                    , btnAlign: 'c' //按钮居中
+                                    , yes: function (index, layero) {
+                                        obj.attr('a1', $("#a1").val());
+                                        obj.attr('a2', $("#a2").val());
+                                        obj.val($("#a1").val() + $("#a2").val());
+                                        layer.close(index);
+                                    }
+                                    , success: function () {
+                                        $("#a1").val(obj.attr('a1'));
+                                        $("#a2").val(obj.attr('a2'));
+                                    }
+                                });
+                            });
+                            form.render();
+                        }
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        var st = XMLHttpRequest.getResponseHeader("sessionstatus");
+                        if (textStatus == 'timeout') {
+                            layer.msg('请求超时,请重试');
+                        }
+                    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+
+            }
+        });
+        $("#del").click(function () {
+            $('.cka').remove();
+            $('.show-ds').remove();
+            $('.show-now').remove();
+            $("#un a:last-child").trigger('click');
+            divNullIsShowOrHidden();
+        });
+        $("#rename").click(function () {
+            var index = layer.open({
+                type: 1,
+                area: ['250px', '140px'],
+                title: ['重命名填报名称', 'height:20px;line-height:20px'],
+                closeBtn: 0,
+                content: $('#ConnNameDiv')
+                , btn: ['确定', '关闭']
+                , btnAlign: 'c',
+                yes: function (index, layero) {
+                    var v = $('#ConnNameDiv').children(0).val();
+                    if ('' != v.trim()) {
+                        var b = true;
+                        $("#un a").each(function () {
+                            if (!$(this).hasClass('cka')) {
+                                var val = $(this).text();
+                                if (val == v) {
+                                    layer.msg('名称已存在');
+                                    b = false;
+                                    return false;
+                                }
+                            }
+                        });
+
+                        let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9.]+$/;
+                        if (!myReg.test(v)) {
+                            layer.msg('名称只支持字母数字“.”“_”和中文');
+                            b = false;
+                            return false;
+                        }
+
+                        if (b) {
+                            $('.cka').text(v);
+                            layer.close(index);
+                        }
+                    } else {
+                        layer.msg("名称不能为空");
+                    }
+                },
+                success: function (layero, index) {
+                    $('#ConnNameDiv').children(0).val($('.cka').text());
+                }
+            });
+        });
+        $("#copy").click(function () {
+            var data = getCurTbData();
+            if (data.length > 0) {
+                var index = layer.open({
+                    type: 1,
+                    area: ['250px', '140px'],
+                    title: ['填报名称', 'height:20px;line-height:20px'],
+                    closeBtn: 0,
+                    content: $('#ConnNameDiv')
+                    , btn: ['确定', '关闭']
+                    , btnAlign: 'c' //按钮居中
+                    , yes: function (index, layero) {
+                        var input = $('#ConnNameDiv').children(0);
+                        var v = input.val();
+                        if (v.trim() != '') {
+                            var b = true;
+                            $("#un a").each(function () {
+                                var val = $(this).text();
+                                if (val == v) {
+                                    layer.msg("名称已存在");
+                                    b = false;
+                                    return false;
+                                }
+                            });
+
+                            let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9.]+$/;
+                            if (!myReg.test(v)) {
+                                layer.msg("名称只支持字母数字“.”“_”和中文");
+                                b = false;
+                                return false;
+                            }
+
+
+                            if (b) {
+                                data[0].UploadInfoName = v;
+                                init(data, true, true);
+                                layer.close(index);
+                            }
+                        } else {
+                            layer.msg("名称不能为空");
+                        }
+                    }
+                    , success: function (layero, index) {
+                        var input = $('#ConnNameDiv').children(0);
+                        input.val(data[0].UploadInfoName);
+                    }
+                });
+            }
+
+            divNullIsShowOrHidden();
+        });
+        $("#add").click(function () { //添加填报选项
+            var index = layer.open({
+                type: 1,
+                area: ['250px', '140px'],
+                title: ['填报名称', 'height:20px;line-height:20px'],
+                closeBtn: 0,
+                content: $('#ConnNameDiv')
+                , btn: ['确定', '关闭']
+                , btnAlign: 'c' //按钮居中
+                , yes: function (index, layero) {
+                    var input = $('#ConnNameDiv').children(0);
+                    var v = input.val();
+                    if (v.trim() != '') {
+                        var b = true;
+                        $("#un a").each(function () {
+                            var val = $(this).text();
+                            if (val == v) {
+                                layer.msg("名称已存在");
+                                b = false;
+                                return false;
+                            }
+                        });
+
+                        let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9.]+$/;
+                        if (!myReg.test(v)) {
+                            layer.msg("名称只支持字母数字“.”“_”和中文");
+                            b = false;
+                            return false;
+                        }
+
+                        if (b) {
+                            ct++;
+                            $("div[name='dsDiv']").each(function () {
+                                $(this).removeClass('show-ds');
+                                $(this).hide();
+                            });
+                            var data = 'tianbao_' + ct;
+                            //默认添加行按钮
+                            var defaultRow = getCurrentDefaultRow().prop('checked');
+                            $("#un").append('<a href="javascript:;" data="' + data + '" connType="' + getDsType() + '" tb="' + getCurrentTbVal() + '" ds="' + getCurrentDsVal() + '" der=' + defaultRow + '>' + v + '</a>');
+                            //右侧添加填报单元格表格
+                            addTable();
+                            let as = $('#un').find('a');
+                            $.each(as, function (i, e) {
+                                $(e).removeClass("cka");
+                                $(e).addClass("ncka");
+                            })
+                            $("#un a:last-child").removeClass("ncka");
+                            $("#un a:last-child").addClass("cka");
+                            try {
+
+                            } catch (err) {
+
+                            } finally {
+                                var showDs = $('.dsDiv').clone();
+                                $('.dsDiv').after(showDs);
+
+                                if (showDs.find('select[name="ds"]').children().length > 0) {
+                                    showDs.addClass("show-ds");
+                                    showDs.css({"display": "block"});
+                                    showDs.attr('name', 'dsDiv');
+                                    showDs.removeClass('dsDiv');
+                                    showDs.attr('data', data);
+                                    showDs.show();
+
+                                    // 之前是非注释的，重新调整样式发现上面注释部分的代码执行后，会多增加一个select选择框，故而注释掉 huangkun
+                                    showDs.find('select[name="ds"]').change(function () {
+                                        //getTbList($(this).val(), true);
+                                    });
+                                    //showDs.find('select[name="ds"]').trigger('change');
+
+                                    showDs.find('select[name="table"]').change(function () {
+                                        getColumn($(this).val());
+                                    });
+                                    boundCk($("#un a:last-child"));
+
+                                    $("img[name='showTable']").unbind().bind('click', function () {
+                                        var index = layer.open({
+                                            type: 2,
+                                            area: ['400px', '400px'],
+                                            closeBtn: 0,
+                                            resize: false,
+                                            title: ['选择表', 'height:30px;line-height:30px'],
+                                            content: 'showTable.html',
+                                            btn: ['确定', '关闭'],
+                                            btnAlign: 'c',
+                                            end: function () {
+                                                layer.closeAll();
+                                            },
+                                            yes: function (index, layero) {
+                                                var iframeWin = window[layero.find('iframe')[0]['name']];
+                                                var table = iframeWin.getTableName();
+                                                $('.show-ds').find('input[name="tableName"]').val(table);
+                                                layer.close(index);
+                                            },
+                                            success: function (layero, index) {
+                                                var iframeWin = window[layero.find('iframe')[0]['name']];
+                                                var ds = $('.show-ds').find('select[name="ds"]').find("option:selected").text();
+                                                iframeWin.init(ds);
+                                            }
+                                        });
+
+                                    });
+
+                                }
+
+                                layer.close(index);
+                            }
+                        }
+
+                    } else {
+                        layer.msg("名称不能为空");
+                    }
+                    form.render();
+                    divNullIsShowOrHidden();
+                }
+                , success: function (layero, index) {
+
+                    var proname = sheetName + '.填报' + (ct + 1);
+                    var input = $('#ConnNameDiv').children(0);
+                    input.val(proname);
+                }
+                , cancel: function () {
+                }
+            });
+        });
+    }
+
+    //数据校验
+    function boundEvent2() {
+        $("#del2").click(function () {
+            $('.cka2').remove();
+            $('.show-now2').remove();
+            $("#un2 a:last-child").addClass("cka2");
+            $("#tbs2 table:last-child").addClass("show-now2").show();
+        });
+        $("#rename2").click(function () {
+            var index = layer.open({
+                type: 1,
+                area: ['250px', '140px'],
+                title: ['重命名校验名称', 'height:20px;line-height:20px'],
+                closeBtn: 0,
+                content: $('#ConnNameDiv')
+                , btn: ['确定', '关闭']
+                , btnAlign: 'c',
+                yes: function (index, layero) {
+                    var v = $('#ConnNameDiv').children(0).val();
+                    if ('' != v.trim()) {
+                        var b = true;
+                        $("#un2 a").each(function () {
+                            if (!$(this).hasClass('cka2')) {
+                                var val = $(this).text();
+                                if (val == v) {
+                                    layer.msg("名称已存在");
+                                    b = false;
+                                    return false;
+                                }
+                            }
+                        });
+
+                        let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9.]+$/;
+                        if (!myReg.test(v)) {
+                            layer.msg("名称只支持字母数字“.”“_”和中文");
+                            b = false;
+                        }
+
+                        if (b) {
+                            $('.cka2').text(v);
+                            layer.close(index);
+                        }
+                    } else {
+                        layer.msg("名称不能为空");
+                    }
+                },
+                success: function (layero, index) {
+                    $('#ConnNameDiv').children(0).val($('.cka2').text());
+                }
+            });
+        });
+        $("#copy2").click(function () {
+            var data = getCurJyData();
+            if (data.length > 0) {
+                var index = layer.open({
+                    type: 1,
+                    area: ['250px', '140px'],
+                    title: ['校验名称', 'height:20px;line-height:20px'],
+                    closeBtn: 0,
+                    content: $('#ConnNameDiv')
+                    , btn: ['确定', '关闭']
+                    , btnAlign: 'c' //按钮居中
+                    , yes: function (index, layero) {
+                        var input = $('#ConnNameDiv').children(0);
+                        var v = input.val();
+                        if (v.trim() != '') {
+                            var b = true;
+                            $("#un2 a").each(function () {
+                                var val = $(this).text();
+                                if (val == v) {
+                                    layer.msg("名称已存在");
+                                    b = false;
+                                    return false;
+                                }
+                            });
+
+                            let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9.]+$/;
+                            if (!myReg.test(v)) {
+                                layer.msg("名称只支持字母数字“.”“_”和中文");
+                                b = false;
+                            }
+
+                            if (b) {
+                                data[0].DataCheckInfoName = v;
+                                init2(data, true);
+                                layer.close(index);
+                            }
+                        } else {
+                            layer.msg("名称不能为空");
+                        }
+                    }
+                    , success: function (layero, index) {
+                        var input = $('#ConnNameDiv').children(0);
+                        input.val(data[0].DataCheckInfoName);
+                    }
+                });
+            }
+        });
+        $("#add2").click(function () {
+            var index = layer.open({
+                type: 1,
+                area: ['250px', '140px'],
+                title: ['校验名称', 'height:20px;line-height:20px'],
+                closeBtn: 0,
+                content: $('#ConnNameDiv')
+                , btn: ['确定', '关闭']
+                , btnAlign: 'c' //按钮居中
+                , yes: function (index, layero) {
+                    var input = $('#ConnNameDiv').children(0).val();
+                    if (input.trim() != '') {
+                        var b = true;
+                        $('#un2 a').each(function () {
+                            if ($(this).text() == input) {
+                                layer.msg('名称已存在');
+                                b = false;
+                                return;
+                            }
+                        });
+
+                        let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9.]+$/;
+                        if (!myReg.test(input)) {
+                            layer.msg("名称只支持字母数字“.”“_”和中文");
+                            b = false;
+                        }
+                        if (b) {
+                            jy++;
+                            var data = 'jiaoyan_' + jy;
+                            $("#un2").append('<a href="javascript:;" data="' + data + '">' + input + '</a>');
+                            addTable2();
+                            let as = $('#un2').find('a');
+                            $.each(as, function (i, e) {
+                                $(e).removeClass("cka2");
+                                $(e).addClass("ncka");
+                            })
+                            $("#un2 a:last-child").removeClass("ncka");
+                            $("#un2 a:last-child").addClass("cka2");
+                            boundCk2($("#un2 a:last-child"));
+                            layer.close(index);
+                        }
+                    } else {
+                        layer.msg("名称不能为空", {icon: 2});
+                    }
+                }
+                , success: function (layero, index) {
+                    var proname = '校验SQL语句' + (jy + 1);
+                    var input = $('#ConnNameDiv').children(0);
+                    input.val(proname);
+                }
+                , cancel: function () {
+                }
+            });
+        });
+        $("#delf2").click(function () {
+            $('.show-now2').find('.trck').remove();
+        });
+        $("#addf2").click(function () {
+            var tb = $(".show-now2");
+            var tr = '<tr class="clstr"><td><input type="text"  style="width:184px" readonly></td><td><input type="text"  style="width: 184px" readonly></td><td style="text-align: center;vertical-align: center;padding-top:4px;"><input type="checkbox" style="width: 95px;height:16px;"></td></tr>';
+            tb.children('tbody').append(tr);
+            var $tr = tb.children('tbody').children('tr:last-child');
+            boundTable2($tr);
+        });
+    }
+
+    function boundTable2($tr) {
+        $tr.find('input').click(function () {
+            $(this).parent().parent().parent().children('tr').each(function () {
+                $(this).removeClass('trck');
+            });
+            $tr.parent().find('input').each(function () {
+                $(this).removeClass('cktd');
+            });
+            $(this).addClass('cktd');
+            $(this).parent().parent().addClass('trck');
+        });
+        $tr.find('input[type="text"]').dblclick(function () {
+            var obj = $(this);
+            var val = $(this).val();
+            var index = layer.open({
+                type: 2,
+                area: ['700px', '620px'],
+                closeBtn: 0,
+                resize: false,
+                title: false,
+                content: ['../design/expr.html', 'no'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                yes: function (index, layero) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    var expr = iframeWin.getExpr();
+                    obj.val(expr);
+                    layer.close(index);
+                    top.layer.restore(cur_page_index);
+                },
+                success: function (layero, index) {
+                    top.layer.full(cur_page_index);
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.setExpr(val);
+                },
+                btn2: function(){
+                    top.layer.restore(cur_page_index);
+                }
+            });
+        });
+    }
+
+    function addTable2() {
+        $('.show-now2').hide();
+        var tb = $("#tb2").clone();
+        tb.removeAttr('id');
+        tb.attr('data', 'jiaoyan_' + jy);
+        $('.show-now2').removeClass("show-now2");
+        $("#tbs2").append(tb);
+        tb.show();
+        tb.find('thread tr').css({'display': 'block'});
+        tb.find('thread tr td').css({"width": '184px'});
+        tb.find('tbody').css({
+            'height': '428px',
+            "width": '468px',
+            'display': 'block',
+            'overflow-x': 'hidden',
+            'overflow-y': 'auto',
+            'background-color': '#f2f3f5'
+        });
+        tb.addClass("show-now2");
+    }
+
+    function addTable() {
+        $('.show-now').hide();
+        var tb = $("#tb").clone();
+        tb.removeAttr('id');
+        tb.attr('data', 'tianbao_' + ct);
+        $('.show-now').removeClass("show-now");
+        $("#tbs").append(tb);
+        // $('#tbs').css('height', '400px');
+        tb.show();
+        tb.addClass("show-now");
+    }
+
+    function boundCk(a) {
+        a.click(function () {
+            $('.cka').attr('connType', getDsType());
+            $('.cka').attr('ds', getCurrentDsVal());
+            $('.cka').attr('tb', getCurrentTbVal());
+            let as = $('#un').find('a');
+            $.each(as, function (i, e) {
+                $(e).removeClass("cka");
+                $(e).addClass("ncka");
+            })
+            $(this).removeClass("ncka");
+            $(this).addClass("cka");
+            var data = $(this).attr('data');
+            $("div[name='dsDiv']").each(function () {
+                if (data == $(this).attr('data')) {
+                    $(this).addClass('show-ds');
+                    $(this).css({"display": "block"}).show();
+                } else {
+                    $(this).removeClass('show-ds');
+                    $(this).hide();
+                }
+            });
+            $("#tbs table").each(function () {
+                if (data == $(this).attr('data')) {
+                    $(this).addClass('show-now');
+                    $(this).show();
+                } else {
+                    $(this).removeClass('show-now');
+                    $(this).hide();
+                }
+            });
+        });
+    }
+
+    function boundCk2(a) {
+        a.click(function () {
+            let as = $('#un2').find('a');
+            $.each(as, function (i, e) {
+                $(e).removeClass("cka2");
+                $(e).addClass("ncka");
+            })
+            $(this).removeClass("ncka");
+            $(this).addClass("cka2");
+            var data = $(this).attr('data');
+            $("#tbs2 table").each(function () {
+                if (data == $(this).attr('data')) {
+                    $(this).addClass('show-now2');
+                    $(this).show();
+                } else {
+                    $(this).removeClass('show-now2');
+                    $(this).hide();
+                }
+            });
+        });
+    }
+
+    function getTbList(connName, isAdd) {
+        var tb = getCurrentTb();
+        let token = window.sessionStorage.getItem("cur_token");
+
+        tb.empty();
+        if (tb[0] == undefined) {
+            tb = jQuery('select[name="table"]');
+        }
+
+        $(".cka").attr("ds", connName);
+
+
+        let url = ip + "/designSys/getTableList?token=" + token + "&connName=" + connName;
+        $.ajax({
+            url: url,
+            type: "post",
+            timeout: 5000,
+            contentType: "application/json;charset=UTF-8",
+            success: function (data) {
+                if (data.code === 1) {
+                    let dd = data.text;
+                    var arr = JSON.parse(dd);
+
+                    var opt = '';
+                    $.each(arr, function (i, item) {
+                        //只加载10条
+                        if (item != '') {//whj 防止空值出现
+                            opt += '<option value="' + item + '">' + item + '</option>';
+                        }
+                    });
+                    tb.append(opt);
+                    if (!isBound(tb)) {
+                        tb.change(function () {
+                            getColumn($(this).val());
+                        });
+                    }
+                    tb.val(getCurrentTbVal()).trigger('change');
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                var st = XMLHttpRequest.getResponseHeader("sessionstatus");
+                if (textStatus == 'timeout') {
+                    layer.msg("请求超时,请重试");
+                }
+            }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    }
+
+    function getColumn(tb) {
+        if (!Util.isNull(tb)) {
+            let token = window.sessionStorage.getItem("cur_token");
+            var item = {
+                ConnName: getCurrentDsVal(),
+                tableName: tb
+            };
+            $(".cka").attr("tb", item.tableName);
+
+            let clm_url = ip + "/designSys/getColumn?token=" + token;
+            $.ajax({
+                url: clm_url,
+                type: "get",
+                timeout: 5000,
+                contentType: "application/json;charset=UTF-8",
+                data: item,
+                success: function (data) {
+                    if (data.code === 1) {
+                        var arr = JSON.parse(data.text);
+                        var opt = '';
+                        $.each(arr, function (j, item) {
+                            opt += "<option>" + item + "</option>";
+                        });
+                        //修改table字段下拉列表数据，原来的字段不变
+                        $(".show-now").children('tbody').children('tr').each(function () {
+                            $(this).children('td').each(function (i) {
+                                if (i == 1) {
+                                    var obj = $(this).children('select');
+                                    obj.empty();
+                                    obj.append(opt);
+                                }
+                            });
+                        });
+                    }
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    var st = XMLHttpRequest.getResponseHeader("sessionstatus");
+                    if (textStatus == 'timeout') {
+                        layer.msg("请求超时,请重试");
+                    }
+                }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+    }
+
+    function isBound(obj) {
+        if (obj && obj[0]) {
+            var objEvt = $._data(obj[0], "events");
+            if (objEvt && objEvt["change"]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function getDsType() {
+        return getCurrentDs().find("option:selected").attr('val');
+    }
+
+    function getCurrentDsVal() {
+        var ds = getCurrentDs().val();
+        if (!ds) {
+            ds = $("#un a:last-child").attr('ds');
+            if (!ds) {
+                ds = $("select[name='ds']").val();
+            }
+        }
+        return ds;
+    }
+
+    function getCurrentTbVal() {
+        var t = $(".cka").attr('tb');
+        if (!t) {
+            t = getCurrentTb().val();
+        }
+        var ts = getCurrentTb().val();
+        return ts;
+    }
+
+    function getCurrentDs() {
+        var tb = $(".show-ds select[name='ds']");
+        if (tb[0] == undefined) {
+            //tb=$("select[name='ds']");
+        }
+        return tb;
+    }
+
+    function getCurrentTb() {
+        var tb = $(".show-ds input[name='tableName']");
+        if (tb[0] == undefined) {
+            tb = $("input[name='tableName']");
+        }
+        return tb;
+    }
+
+    function getCurrentDefaultRow() {
+        var tb = $(".show-ds input[name='defaultRow']");
+        if (tb[0] == undefined) {
+            tb = $("input[name='defaultRow']");
+        }
+        return tb;
+    }
+
+    function getPage() {
+        var tb = getTbData();
+        var jy = getJyData();
+        var data = {
+            tb: tb,
+            jy: jy
+        };
+        return data;
+    }
+
+    //获取校验数据
+    function getJyData() {
+        var usarr = [];
+        $('#un2 a').each(function () {
+            var ds = {
+                DataCheckInfoName: $(this).text()
+            };
+            var UploadItems = [];
+            var data = $(this).attr('data');
+            var ErrorType = 0; //是否强制提交
+            $("#tbs2").children('table[data="' + data + '"]').children('tbody').children('tr').each(function () {
+                var tr = {};
+                $(this).children('td').each(function (i) {
+                    if (i == 0) {
+                        tr.DataCheckExpr = $(this).children('input').val();
+                    } else if (i == 1) {
+                        tr.ErrorMessage = $(this).children('input').val();
+                    } else if (i == 2) {
+                        var errorType;
+                        if ($(this).children('input').prop('checked')) {
+                            errorType = 1;
+                        } else {
+                            errorType = 0;
+                        }
+                        tr.ErrorType = errorType;
+                    }
+                });
+                UploadItems.push(tr);
+            });
+            ds.DataCheckItems = UploadItems;
+            usarr.push(ds);
+        });
+        return usarr;
+    }
+
+    //获取当前校验数据
+    function getCurJyData() {
+        var usarr = [];
+        $('#un2 a.cka2').each(function () {
+            var ds = {
+                DataCheckInfoName: $(this).text()
+            };
+            var UploadItems = [];
+            var data = $(this).attr('data');
+            $("#tbs2").children('table[data="' + data + '"]').children('tbody').children('tr').each(function () {
+                var tr = {};
+                $(this).children('td').each(function (i) {
+                    if (i == 0) {
+                        tr.DataCheckExpr = $(this).children('input').val();
+                    } else if (i == 1) {
+                        tr.ErrorMessage = $(this).children('input').val();
+                    } else if (i == 2) {
+                        var errorType;
+                        if ($(this).children('input').prop('checked')) {
+                            errorType = 1;
+                        } else {
+                            errorType = 0;
+                        }
+                        tr.ErrorType = errorType;
+                    }
+                });
+                UploadItems.push(tr);
+            });
+            ds.DataCheckItems = UploadItems;
+            usarr.push(ds);
+        });
+        return usarr;
+    }
+
+    //获取填报数据
+    function getTbData() {
+        var usarr = [];
+        $('.cka').attr('connType', getDsType());
+        $('.cka').attr('ds', getCurrentDsVal());
+        $('.cka').attr('tb', getCurrentTbVal());
+        $('.cka').attr('der', getCurrentDefaultRow().prop('checked'));
+        $('#un a').each(function () {
+            var ds = {
+                ConnName: $(this).attr('ds')
+                , DatabaseType: $(this).attr('connType')
+                , TableName: $(this).attr('tb')
+                , UploadInfoName: $(this).text()
+                , DefaultAddRow: $(this).attr('der') == 'true'
+            };
+            var UploadItems = [];
+            var data = $(this).attr('data');
+            $("#tbs").children('table[data="' + data + '"]').children('tbody').children('tr').each(function () {
+                var tr = {};
+                $(this).children('td').each(function (i) {
+                    if (i == 0) {
+                        tr.MainKey = $(this).children('input').prop('checked');
+                    } else if (i == 1) {
+                        tr.FieldName = $(this).children('input').val(); // new 20230306 after
+                        // tr.FieldName = $(this).children('select').val();  // old
+                    } else if (i == 2) {
+                        tr.fieldCell = $(this).children('input').val();
+                    }
+                });
+                UploadItems.push(tr);
+            });
+            ds.UploadItems = UploadItems;
+            usarr.push(ds);
+        });
+        return usarr;
+    }
+
+    //复制使用，获取当前的填报信息
+    function getCurTbData() {
+        var usarr = [];
+        $('.cka').attr('connType', getDsType());
+        $('.cka').attr('ds', getCurrentDsVal());
+        $('.cka').attr('tb', getCurrentTbVal());
+        $('.cka').attr('der', getCurrentDefaultRow().prop('checked'));
+        // var defaultRow = $(".show-ds").find("input[type='checkbox'][name='defaultRow']").checked;
+        $('#un a.cka').each(function () {
+            var ds = {
+                ConnName: $(this).attr('ds')
+                , DatabaseType: $(this).attr('connType')
+                , TableName: $(this).attr('tb')
+                , UploadInfoName: $(this).text()
+                , DefaultAddRow: $(this).attr('der')
+            };
+            var UploadItems = [];
+            var data = $(this).attr('data');
+            $("#tbs").children('table[data="' + data + '"]').children('tbody').children('tr').each(function () {
+                var tr = {};
+                $(this).children('td').each(function (i) {
+                    if (i == 0) {
+                        tr.MainKey = $(this).children('input').prop('checked');
+                    } else if (i == 1) {
+                        tr.FieldName = $(this).children(0).children('select').val();
+                    } else if (i == 2) {
+                        tr.fieldCell = $(this).children('input').val();
+                    }
+                });
+                UploadItems.push(tr);
+            });
+            ds.UploadItems = UploadItems;
+            usarr.push(ds);
+        });
+        return usarr;
+    }
+
+    function spiltCell(str) {
+        var arr = ['', ''];
+        for (var ii = 0; ii < str.length; ii++) {
+            var t = str[ii];
+            if (isNaN(t)) {
+                arr[0] = arr[0] + t;
+            } else {
+                arr[1] = arr[1] + t;
+            }
+        }
+        return arr;
+    }
+</script>
+</html>

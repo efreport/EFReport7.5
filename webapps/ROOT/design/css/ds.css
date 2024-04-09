@@ -1,0 +1,199 @@
+.dsArea{
+    width:100%;
+    height:100%;
+    border-radius: 4px 4px 4px 4px;
+    border-top:1px solid lightgray;
+    background-color: #FCFCFC;
+    padding-top:3px;
+}
+
+.dsArea .dsTab{
+    height:7%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    font-size: 15px;
+    background-color: #1E9FFF;
+    color: white;
+}
+
+.search {
+    height: 7%;
+    min-height: 30px;
+    background-color: #F7F7F7;
+    border-bottom: 1px solid #D5D5D5;
+    border-right: 1px solid #D5D5D5;
+}
+
+#dsName{
+    background-color: #F2F3F5;
+    border-radius: 4px 4px 4px 4px;
+    height: 95%;
+    width: 90%;
+    display: inline-block;
+    margin: 2px;
+}
+
+#dsName:hover{
+    background-color: #FFFFFF;
+    border: 1px solid #0094FF;
+}
+
+
+#dsName:focus{
+    background-color: #FFFFFF;
+    border: 1px solid #0094FF;
+}
+
+.dstool {
+    height: 10%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #F2F3F5;
+}
+
+.toolDiv{
+    width:15%;
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.dstool div:hover{
+    background-color: #B7E1FF;
+}
+
+.dstool div img {
+    vertical-align: middle;
+    width:20px;
+    height:20px;
+}
+
+
+.ico_check{
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+}
+
+.dstool {
+
+}
+
+
+
+.dstool img:hover {
+   /* background-color: #D5D5D5;*/
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.dsval{ /*数据集区域**/
+    height: 78%;
+    width:99%;
+    overflow: auto;
+}
+
+.dsval .dsi{
+    margin:0 0 0 2px;
+}
+
+.gsval .dsi{
+    margin:0 0 0 2px;
+}
+
+/** 数据集名称 **/
+.dsi a{
+    cursor: pointer;
+    font-size:16px;
+}
+/**数据集字段**/
+.dsi ul a{
+    font-size:12px;
+}
+/**
+数据集展开关闭图标
+**/
+.dsi a img{
+    width:32px;
+    height:32px;
+    background-size: 50% 50%;
+}
+/**数据集字段图标**/
+
+.dsii{
+    padding-left:20px;
+}
+
+.dsii a img{
+    width:15px;
+    height:15px;
+}
+
+.dsii li a{
+    font-size:12px;
+}
+
+.ck_a {
+    background-color: #D5D5D5;
+}
+
+.dsval{ /*数据集区域**/
+    height: 78%;
+    width:99%;
+    overflow: auto;
+}
+
+.dsval .dsi{
+    margin:0 0 0 2px;
+}
+
+.dsval::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.dsval::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #d5d5d5;
+}
+
+
+.gsval{ /*数据集区域**/
+    height: 78%;
+    width:99%;
+    overflow: auto;
+}
+
+.gsval .dsi{
+    margin:0 0 0 2px;
+}
+
+.gsval::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.gsval::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #d5d5d5;
+}
+
+#gdsName {
+    background-color: #F2F3F5;
+    border-radius: 4px 4px 4px 4px;
+    height: 95%;
+    width: 90%;
+    display: inline-block;
+    margin: 2px;
+}
+
+

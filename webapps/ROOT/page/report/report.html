@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>模板信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+</head>
+<body style="border: 0px; padding: 0px; margin: 0px;">
+<div class="layuimini-container layuimini-page-anim">
+    <iframe id="myifr" src="" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+</div>
+<script src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script src="../../js/lay-config.js" charset="utf-8"></script>
+<script src="../../js/common.js" charset="utf-8"></script>
+<script>
+
+    $(function(){
+        // console.error("加载执行了。。。。。。。。。。。。。。20221229。。。");
+        let id = 0;
+        let templateName = "";
+        let urlInfo = window.location.href;  //获取当前页面的url
+        // console.log("urlInfo-------->", urlInfo);
+        let len = urlInfo.split("?");//获取url的长度
+        // base = len[0];
+        // base = base.substr(0, base.length - 12);
+        let param = len[1];//取出参数字符串 这里会获得类似“id=1”这样的字符串
+        let params = param.split("&");//对获得的参数字符串按照“=”进行分割
+        for (let i = 0; i < params.length; i++) {
+            let par = params[i];
+            let kav = par.split("=");
+            // console.log("kav------>", kav);
+            let key = kav[0];
+            if (key == "id") {
+                id = kav[1]
+            }
+
+            if (key == "templateName") {
+                templateName = decodeURIComponent(kav[1]);
+            }
+
+        }
+
+        let token = window.sessionStorage.getItem("cur_token");
+        let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+        // let openUrl = server_base_url + "/report.html?token=" + token + "&id=" + id + "&templateName=" + templateName;
+        let openUrl = server_base_url + "/report.html?token=" + token + "&id=" + id;
+        // let contentHeight = $(".layuimini-content-page").height();
+
+        var p_window = window.top;
+        let contentHeight =$(p_window).height();
+        // console.log("contentHeight------>", contentHeight);
+        // debugger;
+        $("body").css("height", (contentHeight - 42) + "px");
+        $("#myifr").attr("src", openUrl);
+		$("#myifr").attr("height", (contentHeight - 42) + "px");
+    });
+
+
+    $(window).resize( function  () {           //当浏览器大小变化时
+        // let contentHeight = $(".layuimini-content-page").height();
+        var p_window = window.top;
+        let contentHeight =$(p_window).height();
+        $("body").css("height", (contentHeight - 42) + "px");
+		$("#myifr").attr("height", (contentHeight - 42) + "px");
+    });
+
+     
+
+</script>
+</body>
+</html>

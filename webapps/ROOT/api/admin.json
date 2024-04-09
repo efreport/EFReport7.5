@@ -1,0 +1,128 @@
+{
+    "homeInfo": {
+      "title": "首页",
+      "href": "page/welcome-1.html?t=1"
+    },
+    "logoInfo": {
+      "title": "盈帆数据",
+      "image": "images/logo.ico",
+      "href": ""
+    },
+    "menuInfo": [
+      {
+        "title": "后台管理",
+        "icon": "fa fa-address-book",
+        "href": "",
+        "target": "_self",
+        "child": [
+          {
+            "title": "系统管理",
+            "href": "",
+            "icon": "fa fa-gears",
+            "target": "_self",
+            "child": [
+              {
+                "title": "公司管理",
+                "href": "page/sys/company/company.html",
+                "icon": "fa fa-archive",
+                "target": "_self"
+              },
+              {
+                "title": "部门管理",
+                "href": "page/sys/dept/dept.html",
+                "icon": "fa fa-university",
+                "target": "_self"
+              },
+              {
+                "title": "角色管理",
+                "href": "page/sys/role/role.html",
+                "icon": "fa fa-graduation-cap",
+                "target": "_self"
+              },
+              {
+                "title": "用户管理",
+                "href": "page/sys/user/user.html",
+                "icon": "fa fa-group",
+                "target": "_self"
+              },
+              {
+                "title": "OEM配置",
+                "href": "page/sys/oem/oem.html",
+                "icon": "fa fa-list-alt",
+                "target": "_self"
+              },
+              {
+                "title": "邮局配置",
+                "href": "page/sys/mail/mail.html",
+                "icon": "fa fa-globe",
+                "target": "_self"
+              },
+              {
+                "title": "任务配置",
+                "href": "page/sys/task/task.html",
+                "icon": "fa fa-sliders",
+                "target": "_self"
+              },
+              {
+                "title": "数据同步管理",
+                "href": "page/sys/task/tasksyn.html",
+                "icon": "fa fa-server",
+                "target": "_self"
+              },
+              {
+                "title": "数据同步日志",
+                "href": "page/sys/synlog/synlog.html",
+                "icon": "fa fa-file-text-o",
+                "target": "_self"
+              },
+              {
+                "title": "系统日志",
+                "href": "page/sys/syslog/syslog.html",
+                "icon": "fa fa-file-text",
+                "target": "_self"
+              },
+              {
+                "title": "系统设置",
+                "href": "page/sys/setting/setting.html",
+                "icon": "fa fa-cog",
+                "target": "_self"
+              },
+              {
+                "title": "模板存档",
+                "href": "page/sys/syslog/sysRecord.html",
+                "icon": "fa fa-list-ol",
+                "target": "_self"
+              },
+              {
+                "title": "填报日志",
+                "href": "page/sys/syslog/tbRecord.html",
+                "icon": "fa fa-file-text",
+                "target": "_self"
+              },
+              {
+                "title": "授权管理",
+                "href": "page/sys/setting/authority.html",
+                "icon": "fa fa-history",
+                "target": "_self"
+              }
+            ]
+          },
+          {
+            "title": "模板管理",
+            "href": "",
+            "icon": "fa fa-windows",
+            "target": "_self",
+            "child": [
+              {
+                "title": "模板管理",
+                "href": "page/template/template.html",
+                "icon": "fa fa-file-o",
+                "target": "_self"
+              }
+            ]
+          }
+        ]
+      }
+      
+    ]
+  }

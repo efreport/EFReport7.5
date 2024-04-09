@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="/js/common.js" charset="utf-8"></script>
+    <script src="/js/zTree/js/jquery.ztree.core.min.js" charset="utf-8"></script>
+    <script src="/js/zTree/js/jquery.ztree.excheck.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="/js/zTree/css/zTreeStyle.css">
+    <title>Document</title>
+    <style>
+        .layui-form-checked[lay-skin=primary] i {
+            border-color: #0094FF!important;
+            background-color: #0094FF;
+        }
+        .ztree li a.curSelectedNode {
+            height: 22px !important;
+            border: 0px !important;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form class="layui-form" lay-filter="template" style="height:100%;">
+            <input type="hidden" name="tempIds" />
+            <input type="hidden" name="tempnames" />
+            <div id="div_tpl_tree" style="position: relative; width: 100%; background-color: #F5F7F8; overflow:hidden;">
+                <div class="search">
+                    <input type="text" id="tempName" placeholder="模板名称" autocomplete="off" class="layui-input"
+                            style="height: 30px;width: 200px;display: inline-block;margin: 2px">
+                    <button type="button" id="search" class="layui-btn"
+                            style="height: 30px;line-height:30px;width: 60px;background-color: #1e9fff;"><i
+                            class="layui-icon" style="font-size: 12px">&#xe615;</i></button>
+                    <!-- <button type="button" id="search" class="layui-btn"
+                            style="height: 30px;line-height:30px;width: 60px;background-color: #0094FF;">查询</button> -->
+                </div>
+                <div id="tpl_tree" class="demo-tree demo-tree-box" style="display: none; overflow-y:auto;height:320px;"></div>
+
+                <div style="position:relative; width: 100%;height: 320px;overflow-y:auto;">
+                    <ul id="tree" class="ztree"></ul>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+
+    // 保存页面及模板树数组
+    var PageTemplateAry;
+
+    $(document).keydown(function(event){
+        event.stopPropagation();
+    });
+
+    $(document).keypress(function(event){
+        event.stopPropagation();
+    });
+
+    $(document).keyup(function(event){
+        event.stopPropagation();
+    });
+
+    // 页面加载方法
+    // let pageLoad;
+    layui.use(['tree', 'util', 'form'], function(){
+        var tree = layui.tree
+        ,layer = layui.layer
+        ,util = layui.util;
+        form = layui.form;
+
+        var setting = {
+            callback: {
+                beforeDrag: function() {return false;},
+                beforeDrop: function() {return false;},
+                onCheck: function(event, treeId, treeNode) {
+                    // console.log(treeNode);
+                    // $("#tpl").val(treeNode.path);
+                    // $("#tplId").val(treeNode.id);
+
+                    if (treeNode.children === undefined || treeNode.children === "" || treeNode.children.length === 0) {
+                        let tempidstr = $("input[name='tempIds']").val();
+                        let tempnamestr = $("input[name='tempnames']").val();
+                        let obj = treeNode;
+                        if(obj.checked === true) {
+                            // 勾选，结果为true
+                            let id = obj.id;
+                            let name = obj.name;
+                            let idAry = [];
+                            if (tempidstr.length > 0) {
+                                idAry = tempidstr.split(",");
+
+                                // let newIdAry = [];
+                                // for (let i = 0; i < idAry.length; i++) {
+                                //     if (parseInt(idAry[i]) === id) {
+                                //         continue;
+                                //     }
+                                //     newIdAry.push(idAry[i]);
+                                // }
+                                // idAry = newIdAry;
+                                idAry.push(id);
+                            } else {
+                                idAry.push(id);
+                            }
+                            idAry = removeRepeat(idAry);
+                            tempidstr = idAry.join(",");
+                            $("input[name='tempIds']").val(tempidstr);
+
+                            let nameAry = [];
+                            if (tempnamestr.length > 0) {
+                                nameAry = tempnamestr.split(",");
+                                nameAry.push(name);
+                            } else {
+                                nameAry.push(name);
+                            }
+                            nameAry = removeRepeat(nameAry);
+                            tempnamestr = nameAry.join(",");
+                            $("input[name='tempnames']").val(tempnamestr);
+
+                        } else {
+                            // 取消勾选
+                            let id = obj.id;
+                            let name = obj.name;
+                            let idAry = [];
+                            if (tempidstr.length > 0) {
+                                idAry = tempidstr.split(",");
+                                let newIdAry = [];
+                                for (let i = 0; i < idAry.length; i++) {
+                                    if (parseInt(idAry[i]) === id) {
+                                        continue;
+                                    }
+                                    newIdAry.push(idAry[i]);
+                                }
+                                idAry = newIdAry;
+                            }
+                            idAry = removeRepeat(idAry);
+                            tempidstr = idAry.join(",");
+                            $("input[name='tempIds']").val(tempidstr);
+
+                            let nameAry = [];
+                            if (tempnamestr.length > 0) {
+                                nameAry = tempnamestr.split(",");
+                                let newNameAry = [];
+                                for (let i = 0; i < nameAry.length; i++) {
+                                    if (nameAry[i] === name) {
+                                        continue;
+                                    }
+                                    newNameAry.push(nameAry[i]);
+                                }
+                                nameAry = newNameAry;
+                            }
+                            nameAry = removeRepeat(nameAry);
+                            tempnamestr = nameAry.join(",");
+                            $("input[name='tempnames']").val(tempnamestr);
+                        }
+
+                    }
+
+
+                }
+            },
+            view: {
+                showLine: true,
+                showIcon: true,
+                selectedMulti: false
+            },
+            check: {
+                enable: true,
+                chkStyle: "checkbox",
+                chkboxType: {
+                    "Y":"",
+                    "N":""
+                }
+            }
+        };
+
+        let loadtaskconfig = function() {
+            console.log("加载了。。。。。。。。。page...........");
+            // 加载权限树
+            let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+            let token = window.sessionStorage.getItem("cur_token");
+            // console.log("当前token--->", token);
+            let efurl = server_base_url + "/task/getConfigInfo2?token=" + token;
+
+            $.ajax({
+                url: efurl,
+                type: 'post',
+                success: function (res) {
+                    // console.log("task->getConfigInfo->结果集为：res--->",  res);
+                    let templateAry = res.template;
+                    PageTemplateAry = templateAry;
+                    // let ary = res.data;
+                    // for (let i = 0; i < ary.length; i++) {
+                    //     ary[i].title = ary[i].name;
+                    // }
+                    changeTempAry(templateAry);
+                    // console.log("templateAry--->", templateAry);
+                    initTempTree(templateAry);
+
+                    $.fn.zTree.init($("#tree"), setting, templateAry);
+                },
+                error: function () {
+                }
+            });
+        }
+        let page_init_timer = window.setInterval(function(){
+            // 页面加载1秒后进行初始化
+            loadtaskconfig();
+            window.clearInterval(page_init_timer);
+        }, 1000);
+        
+        // pageLoad = loadtaskconfig;
+
+        // 递归调用 更新数组结构（加title）
+        let changeTempAry = function (templateAry) {
+            for (let i = 0; i < templateAry.length; i++) {
+                templateAry[i].title = templateAry[i].name;
+                if (templateAry[i].children !== undefined && templateAry[i].children !== null) {
+                    if (templateAry[i].children.length > 0) {
+                        changeTempAry(templateAry[i].children);
+                    }
+                }
+
+                let tempidstr = $("input[name='tempIds']").val();
+                let tempnamestr = $("input[name='tempnames']").val();
+
+                let idAry = [];
+                if (tempidstr.length > 0) {
+                    idAry = tempidstr.split(",");
+                }
+
+                if (idAry.length > 0) {
+                    for (let k = 0; k < idAry.length; k++) {
+                        if(templateAry[i].id === parseInt(idAry[k])) {
+                            templateAry[i].checked = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 递归调用 更新数组结构（加spread）-->子项
+        let changeTempAryAndSpeard = function (templateAry, seartxt) {
+            for (let i = 0; i < templateAry.length; i++) {
+                // 所有的都先设置为默认不展开
+                templateAry[i].spread = false;
+
+                // 如果有这个值（模糊查询），展开则设置为true
+                if (templateAry[i].title.indexOf(seartxt) !== -1 ) {
+                    templateAry[i].spread = true;
+                }
+
+                if (templateAry[i].children !== undefined && templateAry[i].children !== null) {
+                    if (templateAry[i].children.length > 0) {
+                        changeTempAryAndSpeard(templateAry[i].children, seartxt);
+                    }
+                }
+            }
+        }
+
+        // 递归调用，去除没有子项的父元素
+        let searchTempAryDelNoDataRoot = function(templateAry, searchname) {
+            for (let i = 0; i < templateAry.length; i++) {
+                if (templateAry[i].children === undefined) {
+                    // 无children属性，表明是最底层子项
+                    if (templateAry[i].name.indexOf(searchname) > -1) {
+
+                    } else {
+                        // 子项不匹配查询内容，删除
+                        templateAry.splice(i, 1);
+                    }
+                }
+
+                if (templateAry[i].children !== undefined && templateAry[i].children !== null) {
+                    if (templateAry[i].children.length > 0) {
+                        searchTempAryDelNoDataRoot(templateAry[i].children, searchname);
+                    } else {
+                        // 父项有子项，但子项元素个数为0 ，则删除父项
+                        templateAry.splice(i, 1);
+                    }
+                }
+
+            }
+        }
+
+
+        let changeTempAryAndSpeard2 = function (templateAry) {
+            for (let i = 0; i < templateAry.length; i++) {
+                
+                if (templateAry[i].children !== undefined && templateAry[i].children !== null) {
+                    if (templateAry[i].children.length > 0) {
+
+                        let childrenAry = templateAry[i].children;
+                        for (let k = 0; k < childrenAry.length; k++) {
+                            if (childrenAry[k].spread === true ) {
+                                templateAry[i].spread = true;
+                                break;
+                            }
+                        }
+                        changeTempAryAndSpeard2(templateAry[i].children);
+                    }
+                }
+            }
+        }
+
+
+
+        // 去掉重复项
+        let removeRepeat = function(arys) {
+            return Array.from(new Set(arys));
+        }
+
+        let initTempTree = function(tempdata) {
+            //常规用法
+            tree.render({
+                elem: '#tpl_tree' //默认是点击节点可进行收缩
+                ,id: 'demotree'
+                ,data: tempdata
+                ,showCheckbox: true
+                ,accordion: true
+                ,oncheck: function (obj) {
+                    // console.log("obj-->", obj); // 得到当前点击的节点数据
+                    // console.log("obj.data-->", obj.data); // 得到当前点击的节点数据
+                    // console.log("节点是否被选中-->", obj.checked); // 节点是否被选中
+                    // console.log("当前节点元素-->", obj.elem); // 得到当前节点元素
+                    if (obj.data.children === undefined || obj.data.children === "" || obj.data.children.length === 0) {
+                        // 没有子节点，则选择的就是当前节点了
+                        let tempidstr = $("input[name='tempIds']").val();
+                        let tempnamestr = $("input[name='tempnames']").val();
+                        if(obj.checked === true) {
+                            // 勾选，结果为true
+                            let id = obj.data.id;
+                            let name = obj.data.name;
+                            let idAry = [];
+                            if (tempidstr.length > 0) {
+                                idAry = tempidstr.split(",");
+
+                                // let newIdAry = [];
+                                // for (let i = 0; i < idAry.length; i++) {
+                                //     if (parseInt(idAry[i]) === id) {
+                                //         continue;
+                                //     }
+                                //     newIdAry.push(idAry[i]);
+                                // }
+                                // idAry = newIdAry;
+                                idAry.push(id);
+                            } else {
+                                idAry.push(id);
+                            }
+                            idAry = removeRepeat(idAry);
+                            tempidstr = idAry.join(",");
+                            $("input[name='tempIds']").val(tempidstr);
+
+                            let nameAry = [];
+                            if (tempnamestr.length > 0) {
+                                nameAry = tempnamestr.split(",");
+                                // let newNameAry = [];
+                                // for (let i = 0; i < nameAry.length; i++) {
+                                //     if (nameAry[i] === name) {
+                                //         continue;
+                                //     }
+                                //     newNameAry.push(nameAry[i]);
+                                // }
+                                // nameAry = newNameAry;
+                                nameAry.push(name);
+                            } else {
+                                nameAry.push(name);
+                            }
+                            nameAry = removeRepeat(nameAry);
+                            tempnamestr = nameAry.join(",");
+                            $("input[name='tempnames']").val(tempnamestr);
+
+                        } else {
+                            // 取消勾选
+                            let id = obj.data.id;
+                            let name = obj.data.name;
+                            let idAry = [];
+                            if (tempidstr.length > 0) {
+                                idAry = tempidstr.split(",");
+                                let newIdAry = [];
+                                for (let i = 0; i < idAry.length; i++) {
+                                    if (parseInt(idAry[i]) === id) {
+                                        continue;
+                                    }
+                                    newIdAry.push(idAry[i]);
+                                }
+                                idAry = newIdAry;
+                            }
+                            idAry = removeRepeat(idAry);
+                            tempidstr = idAry.join(",");
+                            $("input[name='tempIds']").val(tempidstr);
+
+                            let nameAry = [];
+                            if (tempnamestr.length > 0) {
+                                nameAry = tempnamestr.split(",");
+                                let newNameAry = [];
+                                for (let i = 0; i < nameAry.length; i++) {
+                                    if (nameAry[i] === name) {
+                                        continue;
+                                    }
+                                    newNameAry.push(nameAry[i]);
+                                }
+                                nameAry = newNameAry;
+                            }
+                            nameAry = removeRepeat(nameAry);
+                            tempnamestr = nameAry.join(",");
+                            $("input[name='tempnames']").val(tempnamestr);
+                        }
+                    } else {
+                        var childs = $(obj.elem).find('.' + "layui-tree-pack").find('input[same="layuiTreeCheck"]');
+                        childs.each(function () {
+                            this.checked = false;
+                        });
+                        form.render('checkbox');
+                        // layer.msg("单选父节点无效");
+                    }
+
+                    let tempidstr2 = $("input[name='tempIds']").val();
+                    let tempnamestr2 = $("input[name='tempnames']").val();
+                    // console.log("tempidstr2-------->", tempidstr2);
+                    // console.log("tempnamestr2-------->", tempnamestr2);
+                }
+            });
+            $(".layui-icon-file").hide();
+            form.render();
+        }
+    
+        // $('#tempName').bind('keydown', function (event) {
+        //     console.log("keydown................................");
+        //     event.stopPropagation();
+        //     // event.preventDefault();
+        // });
+
+        // $('#tempName').bind('keyup', function (event) {
+        //     console.log("keydown................................");
+        //     event.stopPropagation();
+        //     // event.preventDefault();
+        // });
+
+
+        $('#tempName').bind('keypress', function (event) {
+            event.stopPropagation();
+            
+            // console.log("keypress---------event------>", event);
+            // console.log("keypress---------event------>", event.keyCode);
+            
+            if (event.keyCode == "13") {
+                event.preventDefault();
+                console.log("点击了回车键！");
+              	var value = $(this).val();
+                console.log("点击了回车键！value---》", value);
+
+                // 加载权限树
+                let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+                let token = window.sessionStorage.getItem("cur_token");
+                // console.log("当前token--->", token);
+                let efurl = server_base_url + "/task/getConfigInfo2?token=" + token;
+
+                if(value !== "") {
+                    efurl += "&tempname=" + value;
+                }
+
+                $.ajax({
+                    url: efurl,
+                    type: 'post',
+                    success: function (res) {
+                        // console.log("task->getConfigInfo->结果集为：res--->",  res);
+                        let templateAry = res.template;
+                        PageTemplateAry = templateAry;
+                        changeTempAry(templateAry);
+                        initTempTree(templateAry);
+
+                        if(value!=="") {
+                            searchTempAryDelNoDataRoot(templateAry, value);
+                            searchTempAryDelNoDataRoot(templateAry, value);
+                            searchTempAryDelNoDataRoot(templateAry, value);
+                            searchTempAryDelNoDataRoot(templateAry, value);
+                            searchTempAryDelNoDataRoot(templateAry, value);
+                        }
+
+
+                        console.log(templateAry);
+
+                        $.fn.zTree.init($("#tree"), setting, templateAry);
+
+                        if(value!=="") {
+                            var treeObj = $.fn.zTree.getZTreeObj("tree");
+                            treeObj.expandAll(true);
+                        }
+                        
+                    },
+                    error: function () {
+                    }
+                });
+
+                
+            }
+        });
+
+
+        // // huangkun--->2023-02-09 注释掉，今天-->换方法了
+        // $("#search").click(function(){
+        //     var value = $("#tempName").val();
+
+        //     if(value === "") {
+        //         return false;
+        //     }
+
+        //     //首选应将文本的颜色恢复正常
+        //     var node = $("#tpl_tree");
+        //     node.find('.layui-tree-txt').css('color', '');
+            
+
+        //     changeTempAryAndSpeard(PageTemplateAry, value);
+
+        //     changeTempAryAndSpeard2(PageTemplateAry);
+        //     changeTempAryAndSpeard2(PageTemplateAry);
+        //     changeTempAryAndSpeard2(PageTemplateAry);
+
+        //     // console.log("PageTemplateAry------->", PageTemplateAry);
+
+        //     initTempTree(PageTemplateAry);
+
+        //     //重载树，使得之前展开的记录全部折叠起来
+        //     // tree.reload('demotree', {});
+
+        //     if (value) {
+        //         $.each(node.find('.layui-tree-txt'), function (index, elem) {
+        //             elem = $(elem);
+        //             let textTemp = elem.text();
+        //             if (textTemp.indexOf(value) !==-1) {
+        //                 elem.addClass("tree-txt-active");
+        //                 elem.filter(':contains(' + value + ')').css('color', '#0094FF'); //搜索文本并设置标志颜色
+        //             }
+        //         });
+        //     }
+        // });
+
+
+        // 
+        $("#search").click(function(){
+            var value = $("#tempName").val().trim();
+            
+
+            // 加载权限树
+            let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+            let token = window.sessionStorage.getItem("cur_token");
+            // console.log("当前token--->", token);
+            let efurl = server_base_url + "/task/getConfigInfo2?token=" + token;
+
+            if(value !== "") {
+                efurl += "&tempname=" + value;
+            }
+
+            $.ajax({
+                url: efurl,
+                type: 'post',
+                success: function (res) {
+                    // console.log("task->getConfigInfo->结果集为：res--->",  res);
+                    let templateAry = res.template;
+                    PageTemplateAry = templateAry;
+                    changeTempAry(templateAry);
+                    initTempTree(templateAry);
+
+                    if(value!=="") {
+                        searchTempAryDelNoDataRoot(templateAry, value);
+                        searchTempAryDelNoDataRoot(templateAry, value);
+                        searchTempAryDelNoDataRoot(templateAry, value);
+                        searchTempAryDelNoDataRoot(templateAry, value);
+                        searchTempAryDelNoDataRoot(templateAry, value);
+                    }
+
+                    $.fn.zTree.init($("#tree"), setting, templateAry);
+
+                    if(value!=="") {
+                        var treeObj = $.fn.zTree.getZTreeObj("tree");
+                        treeObj.expandAll(true);
+                    }
+                    
+                },
+                error: function () {
+                }
+            });
+
+        });
+
+
+    });
+    function setPageVal(ids, names) {
+        $("input[name='tempIds']").val(ids);
+        $("input[name='tempnames']").val(names);
+        // pageLoad();
+    }
+    function getPage() {
+        let tempids = $("input[name='tempIds']").val();
+        let tempnames = $("input[name='tempnames']").val();
+
+        let idAry = tempids.split(",");
+        let nameAry = tempnames.split(",");
+
+        // 去除重复项
+        let new_id_ary = Array.from(new Set(idAry));
+        let new_name_ary = Array.from(new Set(nameAry));
+
+        let obj = {
+            ids: new_id_ary.join(","),
+            names: new_name_ary.join(",")
+        };
+        return JSON.stringify(obj);
+    }
+</script>
+</html>
+<style>
+    .ztree li span.button {
+        width: 16px !important;
+        height: 16px !important;
+    }
+    .ztree li span.button.chk {
+        width: 13px !important;
+        height: 13px !important;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 10px;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+        background: #d5d5d5;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+        border-radius: 10px;
+        background: #ffffff;
+    }
+</style>

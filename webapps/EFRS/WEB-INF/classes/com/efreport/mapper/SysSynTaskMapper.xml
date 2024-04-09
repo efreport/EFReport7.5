@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysSynTaskMapper">
+
+    <resultMap id="sysSynTaskMap" type="com.efreport.entity.SysSynTask">
+        <id column="ID" property="id"></id>
+        <result column="TASKNAME" property="taskName"></result>
+        <result column="TASKDES" property="taskDes"></result>
+        <result column="SOURCENAME" property="sourceName"></result>
+        <result column="SOURCEURL" property="sourceUrl"></result>
+        <result column="SOURCEUSER" property="sourceUser"></result>
+        <result column="SOURCEPASS" property="sourcePass"></result>
+        <result column="SOURCESQL" property="sourceSql"></result>
+        <result column="TARGETNAME" property="targetName"></result>
+        <result column="TARGETURL" property="targetUrl"></result>
+        <result column="TARGETUSER" property="targetUser"></result>
+        <result column="TARGETPASS" property="targetPass"></result>
+        <result column="TARGETSQL" property="targetSql"></result>
+        <result column="TARGETQUERY" property="targetQuery"></result>
+        <result column="TASKSCHEDULE" property="taskSchedule"></result>
+    </resultMap>
+
+    <!-- 新增 -->
+    <insert id="saveSynTask" parameterType="com.efreport.entity.SysSynTask">
+  <![CDATA[
+
+  INSERT INTO SYS_SYN_TASK(TASKNAME,TASKDES,SOURCENAME,SOURCEURL,SOURCEUSER,SOURCEPASS,SOURCESQL,TARGETNAME,TARGETURL,TARGETUSER,TARGETPASS,TARGETSQL,TARGETQUERY,TASKSCHEDULE,COMPANYID)
+          VALUES(#{taskName}, #{taskDes} ,#{sourceName},#{sourceUrl},#{sourceUser}, #{sourcePass} ,#{sourceSql} ,#{targetName} , #{targetUrl},#{targetUser}, #{targetPass} ,#{targetSql},#{targetQuery},#{taskSchedule},#{companyId})
+
+        ]]>
+  </insert>
+
+    <select id="listSynTasks" resultMap="sysSynTaskMap">
+        <![CDATA[
+
+  SELECT * FROM  SYS_SYN_TASK WHERE 1=1
+
+        ]]>
+    </select>
+
+    <delete id="deleteSynTaskById" parameterType="int">
+        <![CDATA[
+  DELETE FROM  SYS_SYN_TASK WHERE ID = #{id}
+        ]]>
+    </delete>
+
+    <update id="updateSynTask" parameterType="com.efreport.entity.SysSynTask">
+        <![CDATA[
+
+  UPDATE SYS_SYN_TASK SET TASKNAME = #{taskName},TASKDES  = #{taskDes},SOURCENAME = #{sourceName},SOURCEURL  = #{sourceUrl},SOURCEUSER  = #{sourceUser},SOURCEPASS = #{sourcePass},SOURCESQL = #{sourceSql},TARGETNAME = #{targetName},TARGETURL = #{targetUrl},TARGETUSER = #{targetUser},TARGETPASS = #{targetPass},TARGETSQL = #{targetSql},TARGETQUERY = #{targetQuery},TASKSCHEDULE = #{taskSchedule} WHERE ID = #{id}
+
+        ]]>
+    </update>
+
+    <select id="countSynTasks" resultType="int" parameterType="int">
+        <![CDATA[
+
+  SELECT count(*) FROM  SYS_SYN_TASK WHERE 1=1 and COMPANYID = #{companyId}
+
+        ]]>
+    </select>
+
+    <!-- 列表 -->
+    <select id="listTasksByParam" parameterType="map" resultMap="sysSynTaskMap">
+        select
+          *
+        from
+         SYS_SYN_TASK
+        where 1=1 and companyId = #{companyId}
+        <if test="name != null">
+            and TASKNAME like  CONCAT ('%' , #{name} , '%')
+        </if>
+        <if test="startNum != null">
+            limit #{startNum} , #{limit}
+        </if>
+    </select>
+
+    <select id="getSynTaskById" parameterType="int" resultMap="sysSynTaskMap">
+        <![CDATA[
+
+  SELECT * FROM  SYS_SYN_TASK WHERE 1=1 and id = #{id}
+
+        ]]>
+    </select>
+
+</mapper>

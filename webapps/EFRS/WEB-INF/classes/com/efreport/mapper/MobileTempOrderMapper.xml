@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.MobileTempOrderMapper">
+
+    <resultMap id="sysMobileTempOrderMap" type="com.efreport.entity.MobileTempOrder">
+        <id column="ID" property="id"></id>
+        <result column="USER_ID" property="userId"></result>
+        <result column="TEMPID" property="tempid"></result>
+        <result column="TEMPLATE_ORDER" property="templateOrder"></result>
+    </resultMap>
+
+
+    <select id="getById" parameterType="Integer" resultMap="sysMobileTempOrderMap">
+      SELECT * FROM EF_MOBILE_TEMP_ORDER WHERE id=#{id}
+    </select>
+
+    <!-- 查询所有纪录 -->
+    <select id="getAllList" resultMap="sysMobileTempOrderMap">
+      SELECT * FROM EF_MOBILE_TEMP_ORDER WHERE 1=1
+    </select>
+
+    <select id="getListByUserId" parameterType="Integer" resultMap="sysMobileTempOrderMap">
+      SELECT * FROM EF_MOBILE_TEMP_ORDER WHERE 1=1 and USER_ID = #{userId}
+    </select>
+
+    <insert id="addMobileTempOrder" parameterType="com.efreport.entity.MobileTempOrder">
+        insert into EF_MOBILE_TEMP_ORDER(USER_ID,TEMPID,TEMPLATE_ORDER) values(#{userId},#{tempid},#{templateOrder})
+    </insert>
+
+
+    <delete id="deleteByUserId" parameterType="Integer">
+        delete from EF_MOBILE_TEMP_ORDER where USER_ID=#{userId}
+    </delete>
+</mapper>

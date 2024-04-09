@@ -1,0 +1,152 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="adress=no">
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <style>
+        body {
+            background: #FCFCFC;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap" style="height: 100%">
+    <div class="fixed_top">
+        <div class="top-l"><a href="javascript:window.history.back()"><i class="icons">&#xe626;</i></a></div>
+        <h1 id="param_key"></h1>
+    </div>
+
+    <div class="container" style="height: 100%;">
+        <div class="ztmc">
+            <iframe id="ifr1" frameborder="0" border="0" style="width: 100%; height: 100%;z-index:10000;" id="x-data"
+                    src=""></iframe>
+        </div>
+    </div>
+
+    <div style="height: 60px;"></div>
+    <div class="footer">
+        <ul>
+            <li><a href="index.html"><p><i class="icons">&#xe65c;</i></p><h4>首页</h4></a></li>
+            <li><a href="history.html"><p><i class="icons">&#xe6d0;</i></p><h4>常用</h4></a></li>
+            <li><a href="my.html"><p><i class="icons">&#xe605;</i></p><h4>我的</h4></a></li>
+        </ul>
+    </div>
+
+</div>
+</body>
+<script src="js/jquery-1.7.js"></script>
+<script src="../../js/report/view.js"></script>
+
+<script>
+
+  var tempId;
+  let baseurl;
+  let token;
+  let param_key;
+
+  /**
+  * [通过参数名获取url中的参数值]
+  * 示例URL:http://htmlJsTest/getrequest.html?uid=admin&rid=1&fid=2&name=小明
+  * @param  {[string]} queryName [参数名]
+  * @return {[string]}           [参数值]
+  */
+  function GetQueryValue(queryName) {
+    var query = decodeURI(window.location.search.substring(1));
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split("=");
+      if (pair[0] == queryName) { return pair[1]; }
+    }
+    return null;
+  }
+
+  $(function(){
+    tempId = GetQueryValue("id");
+    param_key = GetQueryValue("key");
+
+    $("#param_key").html(param_key);
+
+    baseurl = window.sessionStorage.getItem("ef_server_base_url");
+    token = window.sessionStorage.getItem("cur_token");
+    // let openUrl = baseurl + "/report.html?token=" + token + "&id=" + tempId;
+    let openUrl = baseurl + "/reportMobile.html?token=" + token + "&id=" + tempId;
+    $("#ifr1").attr("src", openUrl);
+
+
+    if (window.localStorage.getItem("ef_report_mobile_history") != null) {
+        let str = window.localStorage.getItem("ef_report_mobile_history");
+        let hisAry = JSON.parse(str);
+
+        let flag = false;
+        for (let i = 0; i < hisAry.length; i++) {
+            if (hisAry[i].key === param_key ) {
+                flag = true;
+                break;
+            }
+        }
+
+        if (!flag) {
+            let obj = {key: param_key, tempId: tempId };
+            hisAry.push(obj);
+            localStorage.setItem("ef_report_mobile_history", JSON.stringify(hisAry));
+        }
+
+
+    } else {
+
+        let hisAry = new Array();
+        let obj = {key: param_key, tempId: tempId };
+        hisAry.push(obj);
+
+        localStorage.setItem("ef_report_mobile_history", JSON.stringify(hisAry));
+    }
+
+
+
+    if (!localStorage.hasOwnProperty(param_key)) {
+        localStorage.setItem(param_key, tempId);
+    }
+
+  });
+
+
+</script>
+
+<script>
+    $(function () {
+        var h = $("body").height() - $(".fixed_top").height() - $(".footer").height() - 10;
+        $(".ztmc").css("height", h);
+        
+
+     /*   var oHeight = $(document).height();
+
+        if($(document).height() < oHeight){
+            $(".footer").css("position","static");
+        }else{
+            $(".footer").css("position","absolute");
+        }*/
+
+        $(window).resize(function () {
+
+            var win = document.getElementsByTagName('iframe')[0].contentWindow.$;
+            var doc = document.getElementsByTagName('iframe')[0].contentWindow.document;
+
+
+            $('.container').css('position','absolute');
+            $('.container').css('top' , '0px');
+            $('.container').css('width' , '100%');
+            var height = $(document).height();
+
+            $('.container').css('height' , height-97);
+        })
+
+        
+    });
+
+</script>
+</html>

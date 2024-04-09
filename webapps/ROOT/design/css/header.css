@@ -1,0 +1,243 @@
+.header{
+    position: relative;
+}
+
+.header .info{
+    position: absolute;
+    right:20px;
+    height:100%;
+    top:0px;
+    display: flex;
+}
+
+.header .download{
+    position: absolute;
+    right:80px;
+    height:100%;
+    top:0px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+}
+
+.name{
+    color:#4E5969;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:5px;
+}
+
+.buttonDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logout{
+    width:60px;
+    height:80%;
+    background-color: #0094FF;
+    color:#FFFFFF;
+    border: 0px;
+    border-radius: 4px 4px 4px 4px;
+    cursor: pointer;
+}
+
+
+/**
+导航栏背景颜色
+*/
+.layui-nav{
+    background-color: #F2F3F5;
+
+}
+/*修改导航栏选项高度*/
+.layui-nav .layui-nav-item {
+    line-height: 40px;
+    padding:0 15px;
+}
+
+
+
+.layui-nav-child{
+    top:45px;
+}
+
+
+/** 子菜单图片样式*/
+.layui-nav-child img{
+    width:16px;
+    height:16px;
+    margin-right: 5px;
+    margin-left: 20px;
+    display: inline-block;
+}
+
+.layui-nav .layui-nav-child a {
+    color:#FCFCFC;
+    cursor: pointer;
+}
+
+
+
+.layui-nav .layui-this:after, .layui-nav-bar {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 5px;
+    background-color: #F2F3F5;
+    transition: all .2s;
+    -webkit-transition: all .2s;
+    pointer-events: none;
+}
+
+.layui-nav .layui-nav-item a {
+    display: inline-block;
+    padding: 0px 20px 0px 0px;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+    color:#4E5969;
+}
+
+.layui-nav .layui-nav-item a:hover {
+    background-color: transparent;
+}
+
+.layui-nav  .layui-nav .layui-this a {
+    color: #4E5969
+}
+
+.layui-nav-child dd {
+    margin: 1px 0;
+    position: relative;
+    background-color: #FCFCFC;
+    border-bottom: 1px dashed lightgray;
+}
+
+.layui-nav-child dd:hover {
+    background-color: #B7E1FF;
+}
+
+
+.layui-nav .layui-nav-more {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 3px;
+    left: auto !important;
+    margin-top: 0;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all .2s;
+    -webkit-transition: all .2s;
+}
+
+.layui-this{
+    color:#0094FF;
+    text-decoration: underline;
+}
+
+.layui-this a:hover {
+    color: #0094FF;
+}
+
+.layui-nav-item a:hover {
+    color: #0094FF;
+}
+.layui-nav .layui-nav-item a:hover, .layui-nav .layui-this a {
+    /* color: #fff; */
+}
+/**
+新建保存等按钮背景颜色
+**/
+.item{
+    cursor: pointer;
+}
+
+.item:hover{
+    background-color: #B7E1FF;
+}
+
+/**
+合并单元格等按钮背景颜色
+**/
+.item1{
+    display: flex;
+    cursor: pointer;
+    width:50%;
+    height:100%;
+}
+
+.item1:hover{
+    background-color:  #B7E1FF;
+}
+
+
+.item-top-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-top-item:hover{
+    background-color:  #B7E1FF;
+}
+
+.item-bottom-item:hover{
+    background-color:  #B7E1FF;
+}
+
+.item-bottom-item-hover{
+    background-color:  #B7E1FF;
+}
+
+
+
+.sheet img{
+    margin: 2px;
+    cursor: pointer;
+}
+
+/*.sheet img:hover{
+    background-color: lightblue;
+}*/
+
+select:hover{
+    border:1px solid  #B7E1FF;
+}
+
+.layui-nav-child dd.layui-this {
+    background-color: transparent;
+    color: #000;
+}
+
+.layui-nav-child dd:hover{
+    background-color: #B7E1FF;
+}
+
+#cellPos{
+    border:1px solid #000;
+}
+
+#cellPos:hover{
+    background-color: #FFFFFF;
+    border: 1px solid #0094FF;
+}
+
+#editArea{
+    border:1px solid #000;
+}
+
+#editArea:hover{
+    background-color: #FFFFFF;
+    border: 1px solid #0094FF;
+}
+
+
+
+

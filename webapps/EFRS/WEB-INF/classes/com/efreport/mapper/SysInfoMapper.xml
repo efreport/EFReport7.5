@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysInfoMapper">
+<!-- 查询单条纪录 -->
+<select id="load" resultType="com.efreport.entity.SysInfo">
+  SELECT * FROM SYS_INFO
+</select>
+
+<!-- 修改 -->
+<update id="modifySysInfo" parameterType="com.efreport.entity.SysInfo">
+  <![CDATA[
+  UPDATE SYS_INFO SET name = #{name}, company = #{company}, logo = #{logo},team=#{team},product=#{product}
+  ]]>
+</update>
+</mapper>

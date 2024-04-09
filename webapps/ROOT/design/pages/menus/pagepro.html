@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../css/spectrum.css">
+    <link rel="stylesheet" type="text/css" href="../../css/scroll.css">
+    <style>
+
+        html{
+            width:100%;
+            height:100%;
+            overflow: hidden;
+        }
+
+        .layui-elem-field {
+            border-left: 0px !important;
+            border-right: 0px !important;
+            border-bottom: 0px !important;
+        }
+
+        .layui-elem-field legend {
+            margin-left: 20px;
+            padding: 0 0;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .dis {
+            background-color: #F5F5F5;
+            color: #ACA899;
+            opacity: 1;
+        }
+
+        input[type="text"] {
+            padding: 0;
+            height: 23px;
+            border: 1px solid #ccc;
+        }
+
+        select {
+            height: 25px;
+            border: 1px solid #ccc;
+        }
+
+        select:hover {
+            box-shadow: 0 0 1px #44B4FF;
+        }
+
+        input:hover {
+            box-shadow: 0 0 1px #44B4FF;
+        }
+
+        #sheetBKColor:hover {
+            box-shadow: 0 0 1px #44B4FF;
+        }
+
+        .divlefttitle {
+            width: 50%;
+            text-align: left;
+            float: left;
+            height: 32px;
+        }
+
+        .divlefttitle div {
+            margin-left: 20px;
+            font-size: 16px;
+            font-family: PingFang SC-Medium, PingFang SC;
+            height: 24px;
+            line-height: 24px;
+            font-weight: 500;
+            color: #1D2129;
+        }
+
+        .divrighttitle {
+            position: relative;
+            width: 49%;
+            text-align: right;
+            float: left;
+            height: 32px;
+        }
+
+
+
+        .div_insert_expr .spanone {
+            display: block;
+            width: 18px;
+            height: 18px;
+            margin-left: 10px;
+            margin-top: 7px;
+            color: #0094FF;
+            float: left;
+        }
+
+        .div_insert_expr .spantwo {
+            display: block;
+            width: 56px;
+            height: 22px;
+            margin-top: 4px;
+            margin-left: 6px;
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #0094FF;
+            line-height: 22px;
+            float: left;
+        }
+
+        textarea{
+            background-color: #F2F3F5;
+        }
+
+        textarea:hover{
+            border:1px solid #44B4FF;
+            background-color:#fff;
+        }
+
+    </style>
+</head>
+<body style="height:100%;overflow: hidden;">
+
+<div class="layui-tab" style="height:90%;">
+    <ul class="layui-tab-title">
+        <li class="layui-this">页面不显示</li>
+        <li>生成报表前事件</li>
+        <li>生成报表后事件</li>
+        <li>锁定当前sheet</li>
+    </ul>
+    <div class="layui-tab-content" style="height:90%;">
+        <div class="layui-tab-item layui-show" style="height:90%;">
+            <div style="width: 100%;height: auto;display: flex;align-items: center;justify-content: center;">
+                <div style="width:2%;"></div>
+                <div style="width: 48%;height:32px;display: flex;align-items: center;justify-content: flex-start;font-size: 16px;">
+
+                </div>
+                <div style="width:48%;display: flex;align-items: center;justify-content: flex-end;">
+                    <div id="express" style="cursor:pointer;border-radius:4px;display: flex;align-items: center;justify-content: center;width:100px;height:30px; color: #0094FF;border: 1px solid #0094FF;">
+                        <span style="margin-right: 10px;">∑</span>
+                        <span>插入公式</span>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <div style="width:2%;"></div>
+            </div>
+            <div style="height: 10px;"></div>
+            <div style="position: relative; width: 100%; height: 90%;display: flex;align-items: center;justify-content: center;">
+            <textarea name="sheetPrintExpr" rows="8" cols="99" autocomplete="off"
+                      style="font-size: 14px;width:96%;height:100%;"></textarea>
+            </div>
+        </div>
+        <div class="layui-tab-item" style="height:90%;">
+            <div style="width: 100%;height: auto;display: flex;align-items: center;justify-content: center;">
+                <div style="width:2%;"></div>
+                <div style="width: 48%;height:32px;display: flex;align-items: center;justify-content: flex-start;font-size: 16px;">
+
+                </div>
+                <div style="width:48%;display: flex;align-items: center;justify-content: flex-end;">
+                    <div id="express2" style="cursor:pointer;border-radius:4px;display: flex;align-items: center;justify-content: center;width:100px;height:30px; color: #0094FF;border: 1px solid #0094FF;">
+                        <span style="margin-right: 10px;">∑</span>
+                        <span>插入公式</span>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <div style="width:2%;"></div>
+            </div>
+            <div style="height: 10px;"></div>
+            <div style="position: relative; width: 100%; height: 90%;display: flex;align-items: center;justify-content: center;">
+                <textarea name="sheetReportEvent0" rows="8" cols="99" autocomplete="off"
+                          style="width:96%;font-size: 14px;height:100%;"></textarea>
+            </div>
+        </div>
+        <div class="layui-tab-item" style="height:90%;">
+            <div style="width: 100%;height: auto;display: flex;align-items: center;justify-content: center;">
+                <div style="width:2%;"></div>
+                <div style="width: 48%;height:32px;display: flex;align-items: center;justify-content: flex-start;font-size: 16px;">
+
+                </div>
+                <div style="width:48%;display: flex;align-items: center;justify-content: flex-end;">
+                    <div id="express1" style="cursor:pointer;border-radius:4px;display: flex;align-items: center;justify-content: center;width:100px;height:30px; color: #0094FF;border: 1px solid #0094FF;">
+                        <span style="margin-right: 10px;">∑</span>
+                        <span>插入公式</span>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <div style="width:2%;"></div>
+            </div>
+            <div style="height: 10px;"></div>
+            <div style="position: relative; width: 100%; height: 90%;display: flex;align-items: center;justify-content: center;">
+                <textarea name="sheetReportEvent" rows="8" cols="99" autocomplete="off"
+                          style="font-size: 14px;width: 96%;height:100%;"></textarea>
+            </div>
+        </div>
+        <div class="layui-tab-item" style="height:90%;">
+            <div style="height: 10px;"></div>
+            <div class="layui-field-box" style="padding-left: 20px;">
+                <input type="checkbox" id="lock"><span
+                    style="margin-left: 5px;color: #4E5969; font-weight: 400;font-family: PingFang SC-Regular, PingFang SC; font-size: 14px;">设计状态下是否允许编辑</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/layui.js"></script>
+<script src="../../js/def/global.js"></script>
+<script type="text/javascript">
+    let proIndex;
+    layui.use(['layer', 'element'], function () {
+        let layer = layui.layer, element = layui.element;
+        $('#express').click(function () {
+            let token = window.sessionStorage.getItem("cur_token");
+            let index = layer.open({
+                type: 2,
+                area: ['700px', '650px'],
+                closeBtn: 0,
+                maxmin: true,
+                resize: false,
+                title: ['公式编辑', 'height:30px;line-height:30px'],
+                content: ['../design/expr.html', 'no'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+
+                },
+                yes: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let expr = iframeWin.getExpr();
+                    $('textarea[name="sheetPrintExpr"]').val('=' + expr);
+                    layer.close(index);
+                    top.layer.restore(proIndex);
+                },
+                success: function (layero, index) {
+                    top.layer.full(proIndex);
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let val = $('textarea[name="sheetPrintExpr"]').val();
+                    let valArr = val.split('');
+                    if (valArr[0] == '=') {
+                        val = val.replace('=', '');
+                    }
+                    iframeWin.setExpr(val);
+
+                },
+                btn2: function(){
+                    top.layer.restore(proIndex);
+                }
+            });
+        });
+
+
+        $('#express1').click(function () {
+            let index = layer.open({
+                type: 2,
+                area: ['700px', '650px'],
+                closeBtn: 0,
+                maxmin: true,
+                resize: false,
+                title: ['事件编辑', 'height:30px;line-height:30px'],
+                content: ['../design/expr.html', 'no'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+
+                },
+                yes: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let expr = iframeWin.getExpr();
+                    $('textarea[name="sheetReportEvent"]').val('=' + expr);
+                    layer.close(index);
+                    top.layer.restore(proIndex);
+                },
+                success: function (layero, index) {
+                    top.layer.full(proIndex);
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+
+                    let val = $('textarea[name="sheetReportEvent"]').val();
+                    let valArr = val.split('');
+                    if (valArr[0] == '=') {
+                        val = val.replace('=', '');
+                    }
+                    iframeWin.setExpr(val);
+                },
+                btn2: function(){
+                    top.layer.restore(proIndex);
+                }
+            });
+        });
+
+        $('#express2').click(function () {
+            let index = layer.open({
+                type: 2,
+                area: ['700px', '650px'],
+                closeBtn: 0,
+                maxmin: true,
+                resize: false,
+                title: ['事件编辑', 'height:30px;line-height:30px'],
+                content: ['../design/expr.html', 'no'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+
+                },
+                yes: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let expr = iframeWin.getExpr();
+                    $('textarea[name="sheetReportEvent0"]').val('=' + expr);
+                    layer.close(index);
+                    top.layer.restore(proIndex);
+                },
+                success: function (layero, index) {
+                    top.layer.full(proIndex);
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let val = $('textarea[name="sheetReportEvent0"]').val();
+                    let valArr = val.split('');
+                    if (valArr[0] == '=') {
+                        val = val.replace('=', '');
+                    }
+                    iframeWin.setExpr(val);
+                },
+                btn2: function(){
+                    top.layer.restore(proIndex);
+                }
+            });
+        });
+    });
+
+
+    function init(sheetPrintExpr, sheetReportEvent, allowEdit, sheetReportEvent0 , index) {
+        proIndex = index;
+        $('textarea[name="sheetPrintExpr"]').val(sheetPrintExpr);
+        $('textarea[name="sheetReportEvent"]').val(sheetReportEvent);
+        $('textarea[name="sheetReportEvent0"]').val(sheetReportEvent0);
+        $('#lock').prop('checked', allowEdit);
+    }
+
+    function getPage() {
+
+        let page = {
+            sheetPrintExpr: $("textarea[name='sheetPrintExpr']").val(),
+            sheetReportEvent: $("textarea[name='sheetReportEvent']").val(),
+            sheetReportEvent0: $("textarea[name='sheetReportEvent0']").val(),
+            allowEdit: $("#lock").prop('checked')
+        };
+        return page;
+    }
+
+
+</script>
+</html>

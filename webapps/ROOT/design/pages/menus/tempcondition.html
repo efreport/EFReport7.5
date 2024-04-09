@@ -1,0 +1,3073 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../css/spectrum.css">
+    <link rel="stylesheet" type="text/css" href="../../css/scroll.css">
+    <style>
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .cka {
+            background: #0094FF;
+            color: #FFFFFF;
+        }
+
+        .cka:hover {
+            background: #0094FF;
+            color: #FFFFFF;
+        }
+
+        .left {
+            width: 35%;
+        }
+
+        #un a {
+            display: block;
+            transition: all .3s;
+            padding-left: 10px;
+            height: 34px;
+            line-height: 34px;
+            border-bottom: 1px solid #D5D5D5
+        }
+
+        .ncka:hover {
+            background: #e6e6e6;
+        }
+
+        .add {
+            width: 25px;
+            height: 25px;
+        }
+
+        .delete {
+            width: 25px;
+            height: 25px;
+        }
+
+        .left .up {
+            width: 20px;
+            height: 20px;
+        }
+
+
+        .middle {
+            width: 4%;
+        }
+
+        .right {
+            width: 61%;
+        }
+
+        .right .setting {
+            width:100%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .setting .setting-d {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .setting-d .label {
+            height: 100%;
+            width:20%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            color: #1D2129;
+            font-size: 14px;
+            font-weight: bolder;
+        }
+
+
+        .d-input {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .d-input input {
+            width: 86%;
+            height: 50%;
+            background-color: #F2F3F5;
+            border: 1px solid #F2F3F5;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .d-input input:hover {
+            border: 1px solid #0094FF;
+            background-color: #fff;
+        }
+
+        .right .params {
+            padding-top:1%;
+            height: 89%;
+        }
+
+        .props-left {
+            width: 50%;
+            height: 100%;
+        }
+
+        .props-top {
+            width: 100%;
+            height: 40%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            color: #1D2129;
+            font-size: 14px;
+            font-weight: bolder;
+        }
+
+        .props-bottom {
+            height: 60%;
+            width: 100%;
+        }
+
+        .props-bottom > input {
+            width: 95%;
+            height: 80%;
+            background-color: #F2F3F5;
+            border: none;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .props-bottom > select {
+            width: 95%;
+            height: 80%;
+            background-color: #F2F3F5;
+            border: none;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .props-right {
+            width: 50%;
+            height: 100%;
+        }
+
+        .layui-elem-field legend {
+            margin-left: 20px;
+            padding: 0 0;
+            font-size: small;
+            font-weight: normal;
+        }
+
+        table td {
+            height: 28px;
+            vertical-align: middle;
+        }
+
+        td input {
+            padding: 0;
+            height: 23px;
+            border: 1px solid #ccc;
+        }
+
+        td select {
+            height: 25px;
+            border: 1px solid #ccc;
+        }
+
+        input, select {
+            margin-left: 5px;
+        }
+
+        div input {
+            padding: 0;
+            height: 23px;
+            border: 1px solid #ccc;
+            margin-bottom: 2px;
+        }
+
+        div select {
+            height: 25px;
+            border: 1px solid #ccc;
+            margin-bottom: 2px;
+            min-width: 100px;
+        }
+
+        div select:hover {
+            border: 1px solid #0094FF;
+            background-color: #fff;
+        }
+
+        div input:hover {
+            border: 1px solid #0094FF;
+            background-color: #fff;
+        }
+
+        .levelChoose {
+            height: 30px;
+            line-height: 30px;
+            font-size: 15px;
+            background-color: rgb(0, 148, 255);
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+        }
+
+        .levelUnChoose {
+            height: 30px;
+            line-height: 30px;
+            font-size: 15px;
+            background-color: rgb(242, 243, 245);
+            color: rgb(78, 89, 105);
+            cursor: pointer;
+        }
+
+        .leftDiv {
+            background-color: #f2f3f5;
+            border: 0 1px 1px 0 solid #E5E6EB;
+        }
+
+        .rightDiv {
+            background-color: #f2f3f5;
+            border: 0 1px 0px 0 solid #E5E6EB;
+        }
+
+        .chooseDefine {
+            background-color: #1E9FFF;
+        }
+
+
+        .chooseDefine > div > input {
+            background-color: #1E9FFF;
+            color: #fff;
+            margin-left: 0px;
+            width: 99%;
+            height: 98%;
+        }
+
+
+        .dtinput {
+            margin-left: 0px;
+            width: 99%;
+            height: 99%;
+            background-color: #f2f3f5;
+            color: #333;
+        }
+
+        .dtinput:hover {
+            box-shadow: 0;
+        }
+
+
+        #un::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        #un::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background: #d5d5d5;
+        }
+
+        .defineTable::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        .defineTable::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background: #d5d5d5;
+        }
+
+        select::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        select::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background: #d5d5d5;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="left">
+        <div style="height:10%;display: flex;align-items: center;justify-content:center;">
+            <div style="cursor:pointer;height:35px;width:70px;display: flex;background-color: #0094FF;border-radius: 4px;margin-right: 10px;"
+                 id="add">
+                <div style="width:35px;display: flex;justify-content: flex-end;align-items: center;padding-right:2px;">
+                    <img src="../../images/design/pages/add.png" title="添加" class="add">
+                </div>
+                <div style="display:flex;align-items:center;color:white;width:35px;padding-left: 5px;">
+                    新增
+                </div>
+            </div>
+            <div style="cursor:pointer;height:35px;width:70px;display: flex;background-color: #FFFFFF;border-radius: 4px;border: 1px solid #F53F3F;"
+                 id="del">
+                <div style="display:flex;width:35px;justify-content: flex-end;align-items: center;padding-right:2px;">
+                    <img src="../../images/design/pages/delete.png" class="delete" title="删除">
+                </div>
+                <div style="display:flex;align-items:center;color:#F53F3F;width:35px;padding-left: 5px;">
+                    删除
+                </div>
+            </div>
+           <!-- <div style="cursor:pointer;height:35px;width:35px;display: flex;background-color: #0094FF;margin-left:10px;"
+                 id="up">
+                <div style="display:flex;width:35px;justify-content: center;align-items: center;">
+                    <img src="../../images/design/pages/up.png" class="up">
+                </div>
+            </div>
+            <div style="cursor:pointer;height:35px;width:35px;display: flex;background-color: #0094FF;"
+                 id="down">
+                <div style="display:flex;width:35px;justify-content: center;align-items: center;">
+                    <img src="../../images/design/pages/down.png" class="up">
+                </div>
+            </div>-->
+        </div>
+        <div style="height:90%;width: 100%;display: flex;align-items: center;justify-content: center;">
+            <div id="un"
+                 style="white-space: nowrap;overflow: auto;height: 99%;width:97%;border:none;background-color:#F2F3F5;">
+
+            </div>
+        </div>
+    </div>
+    <div class="middle"></div>
+    <div class="right">
+        <div class="setting">
+            <div class="setting-d">
+                <div class="label">
+                    下方留白像素
+                </div>
+                <div class="d-input">
+                    <input type="text" id="rowNum" value="4">
+                </div>
+            </div>
+        </div>
+        <div class="params">
+
+        </div>
+    </div>
+</div>
+
+<div id="temp" style="display: none;height: 89%;width:98%;">
+    <div class="props" style="height:30%;width:100%;">
+        <div style="height:33%;width:100%;display: flex;align-items: center;justify-content: center;">
+            <div class="props-left">
+                <div class="props-top">
+                    名称
+                </div>
+                <div class="props-bottom" style="display: flex;align-items: center;width:100%;">
+                    <input type="text" name="Name" autocomplete="off">
+                    <input type="text" name="paramWidth" style="display: none;">
+                    <input type="text" name="paramHeight" style="display: none;">
+                    <input type="text" name="paramX" style="display: none;">
+                    <input type="text" name="paramY" style="display: none;">
+                    <input type="text" name="labelWidth" style="display: none;">
+                    <input type="text" name="labelHeight" style="display: none;">
+                    <input type="text" name="labelX" style="display: none;">
+                    <input type="text" name="labelY" style="display: none;">
+                    <input type="text" name="labelVisible" style="display: none;">
+                    <input type="text" name="visible" style="display: none;">
+                </div>
+            </div>
+            <div class="props-right">
+                <div class="props-top">
+                    默认值
+                </div>
+                <div class="props-bottom" style="display: flex;align-items: center;">
+                    <input type="text" name="DefaultValue" autocomplete="off" style="width:90%;margin-right:0px;">
+                    <img id="expr" title="公式" src="../../images/design/tool/formula.png"
+                         style="width:20px;height:20px;cursor: pointer;">
+                </div>
+            </div>
+        </div>
+        <div style="height:33%;display: flex;align-items: center;justify-content: center">
+            <div class="props-left">
+                <div class="props-top">
+                    数据类型
+                </div>
+                <div class="props-bottom">
+                    <select name="DataType">
+                        <option value="1">字符串</option>
+                        <option value="2">整型</option>
+                        <option value="3">浮点</option>
+                        <option value="4">日期时间</option>
+                        <option value="5">布尔</option>
+                    </select>
+                </div>
+            </div>
+            <div class="props-right">
+                <div class="props-top">
+                    联动参数
+                </div>
+                <div class="props-bottom">
+                    <select name="IsAffectParams" style="width: 90%;">
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </select>
+                    <img class="paramsSet" title="设置联动参数" src="../../images/design/tool/setting.png"
+                         style="width:20px;height:20px;cursor: pointer;">
+                </div>
+            </div>
+        </div>
+        <div style="height:33%;display: flex;align-items: center;justify-content: center">
+            <div class="props-left">
+                <div class="props-top">
+                    是否必填
+                </div>
+                <div class="props-bottom">
+                    <select name="isRequire">
+                        <option value="0" selected>否</option>
+                        <option value="1">是</option>
+                    </select>
+                </div>
+            </div>
+            <div class="props-right">
+
+            </div>
+        </div>
+<!--
+        <div style="height:49%;display: none;align-items: center;justify-content: center">
+            <div class="props-left">
+                <div class="props-top">
+                    依赖参数
+                </div>
+                <div class="props-bottom">
+                    <select name="ylcs">
+
+                    </select>
+                </div>
+            </div>
+            <div class="props-right">
+                <div class="props-top">
+                    联动参数
+                </div>
+                <div class="props-bottom">
+                    <select name="ldcs" style="width: 97%;">
+
+                    </select>
+                </div>
+            </div>
+        </div>
+-->
+       <!-- <div style="height:33%;display: flex;align-items: center;justify-content: center">
+            <div class="props-left">
+                <div class="props-top">
+                    宽度
+                </div>
+                <div class="props-bottom">
+                    <input type="text" name="width" autocomplete="off" value="120">
+                </div>
+            </div>
+            <div class="props-right">
+
+            </div>
+        </div>-->
+    </div>
+    <div class="divider"
+         style="display:flex;align-items:center;justify-content:center;height:3%;font-size: 16px;font-weight: bolder;">
+        <div style="width:15%;height:100%;display: flex;align-items: center;justify-content: center;">
+            绑定设置
+        </div>
+        <div style="width:2%;"></div>
+        <div style="height:1px;width:83%;border-top: 1px solid #E5E6EB;">
+
+        </div>
+
+    </div>
+    <div class="bond" style="height:67%;width:100%;">
+        <!-- 控件类型选择 -->
+        <div name="prodiv" style="overflow: auto;width: 100%;height: 99%;white-space: normal;padding: 0px">
+            <div style="width:100%;height:20%;display: flex;align-items: center;justify-content: center;">
+                <div class="props-left">
+                    <div class="props-top">
+                        控件类型
+                    </div>
+                    <div class="props-bottom">
+                        <select name="ControlType">
+                            <option value="1">文本编辑框</option>
+                            <option value="2">下拉框</option>
+                            <option value="3">多选下拉框</option>
+                            <option value="4">下拉树</option>
+                            <option value="5">多选下拉树</option>
+                            <option value="6">日期编辑框</option>
+                            <option value="12">日期时间编辑框</option>
+                            <option value="13">日期编辑框(年月)</option>
+                            <option value="7">复选框</option>
+                            <option value="222">自定义下拉框列表</option>
+                            <option value="14">无限级下拉树</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="props-right">
+                    <div class="props-top">
+                        控件名称
+                    </div>
+                    <div class="props-bottom">
+                        <input type="text" name="LabelName" autocomplete="off" style="width:97%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="dateTypeDiv" class="dateTypeDiv" style="display:none;height:20%;">
+    <div class="props-top">
+        日期格式
+    </div>
+    <div class="props-bottom">
+        <select name="dateType" style="width:98.5%;">
+            <option value=0>yyyy-MM-dd</option>
+            <option value=1>yyyy/MM/dd</option>
+            <option value=2>yyyyMMdd</option>
+        </select>
+    </div>
+</div>
+<div id="dateYMTypeDiv" class="dateYMTypeDiv" style="display:none;height:20%;">
+    <div class="props-top">
+        日期格式
+    </div>
+    <div class="props-bottom">
+        <select name="dateYMType" style="width:98.5%;">
+            <option value=0>yyyy-MM</option>
+            <option value=1>yyyy/MM</option>
+            <option value=2>yyyyMM</option>
+            <option value=3>yyyy</option>
+        </select>
+    </div>
+</div>
+<div id="dateTimeTypeDiv" class="dateTimeTypeDiv" style="display:none;height:20%;">
+    <div class="props-top">
+        时间格式
+    </div>
+    <div class="props-bottom">
+        <select name="dateTimeType" style="width:98.5%;">
+            <option value=0>yyyy-MM-dd HH:mm:ss</option>
+            <option value=1>yyyy/MM/dd HH:mm:ss</option>
+            <option value=2>yyyyMMdd HH:mm:ss</option>
+        </select>
+    </div>
+</div>
+
+<!-- 数据源 DOM -->
+<div id="dss" style="display:none;height:40%;" name="dss">
+    <div class="datasource" style="width:100%;height: 50%;">
+        <div class="props-top">数据源</div>
+        <div class="props-bottom">
+            <select name='DSName' style="width: 98.5%;"></select>
+        </div>
+    </div>
+    <div class="index" style="width:100%;height: 50%;display: flex;">
+        <div style="width: 50%;" class="props-left">
+            <div class="props-top">数据字段索引</div>
+            <div class="props-bottom">
+                <select name='ActualFieldName'></select>
+                <!-- <input type="text" autocomplete="off" name="ActualFieldName" maxlength="2"
+                        onkeyup="this.value=this.value.replace(/\D/g,'')"
+                        onafterpaste="this.value=this.value.replace(/\D/g,'')">-->
+            </div>
+        </div>
+        <div style="width: 50%;" class="props-right">
+            <div class="props-top">显示字段索引</div>
+            <div class="props-bottom">
+                <select name='ShowFieldName'></select>
+                <!--<input type="text" autocomplete="off" name="ShowFieldName" maxlength="2"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                       onafterpaste="this.value=this.value.replace(/\D/g,'')">-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 下拉树和多选下拉树层次DIV DOM -->
+<div id="level"
+     style="display:none;height:40%;width:100%;overflow:hidden;align-items: center;justify-content: center;">
+    <div style="width:20%;height: 100%;">
+        <div style="cursor:pointer;height:35px;width:70px;display: flex;background-color: #0094FF;border-radius: 4px;margin-right: 10px;"
+             class="addLevel">
+            <div style="width:35px;display: flex;justify-content: flex-end;align-items: center;padding-right:2px;">
+                <img src="../../images/design/pages/add.png" title="添加" class="add">
+            </div>
+            <div style="display:flex;align-items:center;color:white;width:35px;padding-left: 5px;">
+                新增
+            </div>
+        </div>
+        <div style="margin-top:10px;cursor:pointer;height:35px;width:70px;display: flex;background-color: #FFFFFF;border-radius: 4px;border: 1px solid #F53F3F;"
+             class="delLevel">
+            <div style="display:flex;width:35px;justify-content: flex-end;align-items: center;padding-right:2px;">
+                <img src="../../images/design/pages/delete.png" class="delete" title="删除">
+            </div>
+            <div style="display:flex;align-items:center;color:#F53F3F;width:35px;padding-left: 5px;">
+                删除
+            </div>
+        </div>
+
+    </div>
+    <div style="width:77.5%;height: 100%;background-color: #F2F3F5;overflow: auto;" class="levelContent">
+
+    </div>
+
+</div>
+<!-- 自定义下拉框列表 -->
+<div id="define"
+     style="display:none;height:79%;width:100%;overflow:hidden;align-items: center;justify-content: center;">
+    <div style="width:20%;height: 100%;">
+        <div style="cursor:pointer;height:35px;width:70px;display: flex;background-color: #0094FF;border-radius: 4px;margin-right: 10px;"
+             class="addDefine">
+            <div style="width:35px;display: flex;justify-content: flex-end;align-items: center;padding-right:2px;">
+                <img src="../../images/design/pages/add.png" title="添加" class="add">
+            </div>
+            <div style="display:flex;align-items:center;color:white;width:35px;padding-left: 5px;">
+                新增
+            </div>
+        </div>
+        <div style="margin-top:10px;cursor:pointer;height:35px;width:70px;display: flex;background-color: #FFFFFF;border-radius: 4px;border: 1px solid #F53F3F;"
+             class="delDefine">
+            <div style="display:flex;width:35px;justify-content: flex-end;align-items: center;padding-right:2px;">
+                <img src="../../images/design/pages/delete.png" class="delete" title="删除">
+            </div>
+            <div style="display:flex;align-items:center;color:#F53F3F;width:35px;padding-left: 5px;">
+                删除
+            </div>
+        </div>
+
+    </div>
+    <div style="width:77.5%;height: 100%;background-color: #F2F3F5;overflow: hidden;" class="defineContent">
+        <div style="width:100%;height:10%;display: flex;">
+            <div style="width:50%;height:100%;display: flex;background-color: #0094FF;color:#FFFFFF;align-items: center;justify-content: center;">
+                显示值
+            </div>
+            <div style="width:50%;height:100%;display: flex;background-color: #0094FF;color:#FFFFFF;align-items: center;justify-content: center;">
+                绑定值
+            </div>
+        </div>
+        <div style="height:90%;width:100%;overflow-y:auto;overflow-x: hidden;" class="defineTable">
+
+        </div>
+    </div>
+
+</div>
+<!-- 无限级下拉树选项 -->
+<div id="levels"  style="display:none;height:60%;width:100%;overflow:hidden;align-items: center;justify-content: center;">
+    <div class="datasource" style="width:100%;height: 33%;">
+        <div class="props-top">数据源</div>
+        <div class="props-bottom">
+            <select name='DSName1' style="width: 98.5%;"></select>
+        </div>
+    </div>
+    <div class="index" style="width:100%;height: 33%;display: flex;">
+        <div style="width: 50%;" class="props-left">
+            <div class="props-top">结点ID索引</div>
+            <div class="props-bottom">
+                <select name='IdName'></select>
+            </div>
+        </div>
+        <div style="width: 50%;" class="props-right">
+            <div class="props-top">父结点ID索引</div>
+            <div class="props-bottom">
+                <select name='PidName'></select>
+            </div>
+        </div>
+    </div>
+    <div class="index" style="width:100%;height: 33%;display: flex;">
+        <div style="width: 50%;" class="props-left">
+            <div class="props-top">结点名称索引</div>
+            <div class="props-bottom">
+                <select name='NodeName'></select>
+            </div>
+        </div>
+        <div class="props-right">
+            <div class="props-top">
+                根结点ID
+            </div>
+            <div class="props-bottom">
+                <input type="text" name="RootId" autocomplete="off" style="width:89%;">
+                <img id="rootBtn" title="公式" src="../../images/design/tool/formula.png"
+                     style="width:20px;height:20px;cursor: pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../js/design/canvasUtil.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../js/design/canvasCommon.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../js/design/constants.js"></script>
+<script type="text/javascript" src="../../js/spectrum.js"></script>
+<script type="text/javascript">
+    let curParamName; //当前选中的参数名
+    let paraMap = {};
+    let templateIndex;
+    let ct = 0;
+    let dsarray = null;
+    let dsMap = {};
+    let rowNum, leftM, topM, spaM;
+    let linkMap = {}; //联动信息集合
+
+    //用来保存模板参数层次属性数据
+    let treeNodeMap = {};
+
+    layui.use('layer', function () {
+        var layer = layui.layer;
+    });
+
+    function initDs(index, dsArray, map) {
+        dsarray = dsArray;
+        templateIndex = index;
+        dsMap = map;
+    }
+
+    //初始化参数全局设置
+    function initSetting(row, left, top, interval) {
+        rowNum = row;
+        leftM = left;
+        topM = top;
+        spaM = interval;
+        $('#rowNum').val(row);
+        $('#leftM').val(left);
+        $('#topM').val(top);
+        $('#spaM').val(interval);
+
+        $('#rowNum').bind('change', function () {
+            if (!isPositiveNumber($(this).val())) {
+                $('#rowNum').val(rowNum);
+            }
+
+        })
+
+        $('#leftM').bind('change', function () {
+            if (!isNoNegativeNumber($(this).val())) {
+                $('#leftM').val(leftM);
+            }
+        })
+
+        $('#topM').bind('change', function () {
+            if (!isNoNegativeNumber($(this).val())) {
+                $('#topM').val(topM);
+            }
+        })
+
+        $('#spaM').bind('change', function () {
+            if (!isNoNegativeNumber($(this).val())) {
+                $('#spaM').val(spaM);
+            }
+        })
+
+        $('input[name="width"]').bind('change', function () {
+            if (!isNoNegativeNumber($(this).val())) {
+                $(this).val(120);
+            }
+        })
+    }
+
+    //初始化模板参数
+    function initData(json) {
+        boundEvent();
+        //初始化数据源
+        if (null != dsarray) {
+            for (var t = 0; t < dsarray.length; t++) {
+                var opt = "<option value='" + dsarray[t] + "'>" + dsarray[t] + "</option>";
+                $("select[name='DSName']").append(opt);
+                $("select[name='DSName1']").append(opt);
+            }
+            let curDs = dsarray[0];
+            let firstKey = templateIndex + '@#' + curDs; // 获取第一个数据集的索引值
+            let columns = dsMap[firstKey];
+            if (columns != undefined) {
+                $.each(columns, function (i, e) {
+                    var opt = "<option value='" + e + "'>" + e + "</option>";
+                    $("select[name='ActualFieldName']").append(opt);
+                    $("select[name='ShowFieldName']").append(opt);
+                    $("select[name='IdName']").append(opt);
+                    $("select[name='PidName']").append(opt);
+                    $("select[name='NodeName']").append(opt);
+                })
+            }
+
+        }
+        if (json != '' && json != undefined && json.length > 2) {
+            var obj = JSON.parse(json);
+            var arr = obj.Params;
+            for (var i = 0; i < arr.length; i++) {
+                let isAffectParams = arr[i].IsAffectParams; //是否联动参数
+                if (isAffectParams) {
+                    let yl = arr[i].DependentParams;
+                    let ld = arr[i].RepaintParams;
+                    let ylArr = [];
+                    $.each(yl, function (i, e) {
+                        ylArr.push(e.ParamName);
+                    })
+                    let ldArr = [];
+                    $.each(ld, function (i, e) {
+                        ldArr.push(e.ParamName);
+                    })
+                    let par = {
+                        yl: ylArr,
+                        ld: ldArr
+                    }
+                    linkMap[arr[i].Name] = par;
+                }
+                ct++;
+                $("#un").append("<a href='javascript:;' data=pro_" + ct + ">" + arr[i].Name + "</a>");
+                arr[i].data = "pro_" + ct;
+                boundRight(arr[i], true);
+            }
+            boundCk();
+            $("#un a:first-child").trigger('click');
+        }
+    }
+
+
+    //移除其他模板参数DIV的显示属性
+    function removeShow() {
+        $("#right").children().each(function () {
+            $(this).removeClass('show-now');
+        });
+    }
+
+    function getIndex(str, val) {
+        var t = 0;
+        for (var i = 0; i < str.length; i++) {
+            if (val == str[i]) {
+                t++;
+            }
+            if (2 == t) {
+                return i;
+            }
+        }
+    }
+
+    //新增模板参数属性DIV,isInit为true时，为初始化模板参数操作，isInit为false时，为新增模板参数操作
+    function boundRight(prodata, isInit) {
+
+        //隐藏其他模板参数DIV
+        $("#right").children().each(function () {
+            $(this).removeClass('show-now');
+        });
+
+        //克隆模板参数DIV
+        var temp = $("#temp").clone();
+
+        //移除ID
+        temp.removeAttr('id');
+        //增加data属性
+        temp.attr('data', prodata.data);
+        let tempId = 'param_' + prodata.data;
+
+        let treeNodeArray = [];
+        treeNodeMap[tempId] = treeNodeArray;
+
+        temp.attr('id', tempId); //增加ID
+        temp.attr('name', 'pro');
+        //初始化模板参数基础值
+        temp.find('input[name="Name"]').val(prodata.Name);
+      /*  temp.find('input[name="paramWidth"]').bind('change', function () {
+            if (!isNoNegativeNumber($(this).val())) {
+                $(this).val(120);
+            }
+        })*/
+        if(!isInit){ //新增模板
+            temp.find('input[name="paramWidth"]').val(120); //设置默认值
+            temp.find('input[name="paramHeight"]').val(27);
+            temp.find('input[name="paramX"]').val(-1);
+            temp.find('input[name="paramY"]').val(-1);
+            temp.find('input[name="labelWidth"]').val(120);
+            temp.find('input[name="labelHeight"]').val(27);
+            temp.find('input[name="labelX"]').val(-1);
+            temp.find('input[name="labelY"]').val(-1);
+            temp.find('input[name="labelVisible"]').val('Y');
+            temp.find('input[name="visible"]').val('Y');
+        }else{
+            temp.find('input[name="paramWidth"]').val(prodata.Width); //设置默认值
+            temp.find('input[name="paramHeight"]').val(prodata.Height);
+            temp.find('input[name="paramX"]').val(prodata.X);
+            temp.find('input[name="paramY"]').val(prodata.Y);
+            temp.find('input[name="labelWidth"]').val(prodata.LabelWidth);
+            temp.find('input[name="labelHeight"]').val(prodata.LabelHeight);
+            temp.find('input[name="labelX"]').val(prodata.LabelX);
+            temp.find('input[name="labelY"]').val(prodata.LabelY);
+            temp.find('input[name="labelVisible"]').val(prodata.LabelVisible?'Y':'N');
+            temp.find('input[name="visible"]').val(prodata.Visible?'Y':'N');
+        }
+        //模板参数公式
+        temp.find('#expr').click(function () {
+            var index = layer.open({
+                type: 2,
+                area: ['700px', '650px'],
+                closeBtn: 0,
+                maxmin: true,
+                resize: false,
+                title: ['公式编辑', 'height:30px;line-height:30px'],
+                content: ['../design/expr.html', 'no'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+
+                },
+                yes: function (index, layero) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    var expr = iframeWin.getExpr();
+                    temp.find('input[name="DefaultValue"]').val('=' + expr);
+                    prodata.DefaultValue = expr;
+                    layer.close(index);
+                },
+                success: function (layero, index) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    var val = $('.show-now').find('input[name="DefaultValue"]').val();
+                    var valArr = val.split('');
+                    if (valArr[0] == '=') {
+                        val = val.replace('=', '');
+                    }
+                    iframeWin.setExpr(val);
+
+                }
+            });
+        });
+
+        if (prodata.IsAffectParams) {
+            temp.find('.paramsSet').unbind().bind('click', function () {
+                let index = layer.open({
+                    type: 2,
+                    area: ['600px', '400px'],
+                    closeBtn: 0,
+                    maxmin: true,
+                    resize: false,
+                    title: ['设置联动关系', 'height:30px;line-height:30px'],
+                    content: ['linkParams.html', 'no'],
+                    btn: ['确定', '关闭'],
+                    btnAlign: 'c',
+                    end: function () {
+
+                    },
+                    yes: function (index, layero) {
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        let res = iframeWin.getRelations();
+                        if (res.flag) {
+                            let curParam = $('#un').find('.cka').text(); //当前模板参数
+                            linkMap[curParam] = res;
+                            layer.close(index);
+                        } else {
+                            layer.msg('存在互相依赖，请修改');
+                        }
+
+                    },
+                    success: function (layero, index) {
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        let as = $('#un').find('.ncka');
+                        let paramArray = []; //所有模板参数
+                        $.each(as, function (i, e) {
+                            let paramName = $(e).text();
+                            paramArray.push(paramName);
+                        })
+                        let curParam = $('#un').find('.cka').text(); //当前模板参数
+                        //iframeWin.init(paramArray , prodata.DependentParams , prodata.RepaintParams);
+                        iframeWin.init(paramArray, linkMap[curParam].yl, linkMap[curParam].ld);
+                    }
+                });
+            })
+        }
+
+
+        //是否联动下拉框事件
+        temp.find('select[name="IsAffectParams"]').change(function (e) {
+            let value = $(this).val();
+            if (value == '0') {
+                temp.find('.paramsSet').unbind();
+            } else {
+                temp.find('.paramsSet').unbind().bind('click', function () {
+                    let index = layer.open({
+                        type: 2,
+                        area: ['600px', '400px'],
+                        closeBtn: 0,
+                        maxmin: true,
+                        resize: false,
+                        title: ['设置联动关系', 'height:30px;line-height:30px'],
+                        content: ['linkParams.html', 'no'],
+                        btn: ['确定', '关闭'],
+                        btnAlign: 'c',
+                        end: function () {
+
+                        },
+                        yes: function (index, layero) {
+                            let iframeWin = window[layero.find('iframe')[0]['name']];
+                            let res = iframeWin.getRelations();
+                            if (res.flag) {
+                                let curParam = $('#un').find('.cka').text(); //当前模板参数
+                                linkMap[curParam] = res;
+                                layer.close(index);
+                            } else {
+                                layer.msg('存在互相依赖，请修改');
+                            }
+
+                        },
+                        success: function (layero, index) {
+                            let iframeWin = window[layero.find('iframe')[0]['name']];
+                            let as = $('#un').find('.ncka');
+                            let paramArray = []; //所有模板参数
+                            $.each(as, function (i, e) {
+                                let paramName = $(e).text();
+                                paramArray.push(paramName);
+                            })
+                            let curParam = $('#un').find('.cka').text(); //当前模板参数
+                            let link = linkMap[curParam];
+                            let ylParam;
+                            let ldParam;
+                            if (link == undefined) { //没有定义联动关系
+                                ylParam = [];
+                                ldParam = [];
+                            } else {
+                                ylParam = link['yl'];
+                                ldParam = link['ld'];
+                            }
+                            iframeWin.init(paramArray, ylParam, ldParam);
+                        }
+                    });
+                })
+            }
+
+        })
+
+        //参数名称修改事件
+        temp.find('input[name="Name"]').change(function (e) {
+            let curName = $('.cka').text();
+            let v = $(this).val(), b = true;
+            if (v != undefined && v.trim() == '') {
+                layer.alert("名称不能为空", {icon: 2});
+                $(this).val(curName);
+                return false;
+            }
+
+            if (v != undefined && !isChinese(v)) {
+                layer.alert("名称不能包含特殊字符", {icon: 2});
+                $(this).val(curName);
+                return false;
+            }
+
+            //判断是否有重复的参数名称
+            $("a").each(function () {
+                if (!$(this).hasClass('cka')) {
+                    var val = $(this).text();
+                    if (val == v) {
+                        layer.alert("名称已存在", {icon: 2});
+                        temp.find('input[name="Name"]').val(curName);
+                        b = false;
+                        return false;
+                    }
+                }
+            });
+            if (!b) {
+                return false;
+            }
+            $('.cka').text(v);
+            if (paraMap[prodata.Name] != undefined) { //修改paraMap中的键值对应关系
+                paraMap[v] = paraMap[prodata.Name];
+            }
+            //修改linkMap中所有的对应参数
+            $.each(linkMap, function (key, obj) {
+                let paramName = key;
+                let linkObj = obj;
+                if (paramName == curName) { //修改本身的联动规则键
+                    linkMap[v] = obj;
+                    delete linkMap[paramName];
+                } else { //修改当前参数在其他参数里的联动规则
+                    let ylObj = linkObj.yl;
+                    let ldObj = linkObj.ld;
+                    let newYlObj = [];
+                    $.each(ylObj, function (i, e) {
+                        if (e == curName) {
+                            newYlObj.push(v); //将原先的参数名修改为现在的参数名
+                        } else {
+                            newYlObj.push(e);
+                        }
+                    })
+                    linkMap[key].yl = newYlObj;
+                    let newLdObj = [];
+                    $.each(ldObj, function (i, e) {
+                        if (e == curName) {
+                            newLdObj.push(v); //将原先的参数名修改为现在的参数名
+                        } else {
+                            newLdObj.push(e);
+                        }
+                    })
+                    linkMap[key].ld = newLdObj;
+                }
+            })
+            //模板名修改时，修改对应的dom元素id
+            $('.show-now').find('table').each(function () {
+                if ($(this).attr("id")) {
+                    if ($(this).attr("id").indexOf('tb_') == 0) {
+                        $(this).attr("id", 'tb_' + v);
+                    }
+                }
+            });
+            $('.show-now').find('div').each(function () {
+                if ($(this).attr("id")) {
+                    if ($(this).attr("id").indexOf('ccatb_') == 0) {
+                        $(this).attr("id", 'ccatb_' + v);
+                    }
+                    if ($(this).attr("id").indexOf('ccadd_') == 0) {
+                        $(this).attr("id", 'ccadd_' + v);
+                    }
+                    if ($(this).attr("id").indexOf('tb_') == 0) {
+                        $(this).attr("id", 'tb_' + v);
+                    }
+                    if ($(this).attr("id").indexOf('cc_') == 0) {
+                        $(this).attr("id", 'cc_' + v);
+                    }
+                    if ($(this).attr("id").indexOf('dst_') == 0) {
+                        $(this).attr("id", 'dst_' + v);
+                    }
+                    if ($(this).attr("id").indexOf('cs_') == 0) {
+                        var index = getIndex($(this).attr("id"), '_');
+                        var start = $(this).attr("id").substr(0, index + 1);
+                        $(this).attr("id", start + v);
+                    }
+                }
+                if ($(this).attr("class")) {
+                    if ($(this).attr("class").indexOf('ck_') == 0) {
+                        $(this).attr("class", 'ck_' + v);
+                    }
+                }
+            });
+        });
+        //基本属性复制
+        temp.find('input[name="DefaultValue"]').val(prodata.DefaultValue);
+        temp.find('select[name="DataType"]').val(prodata.DataType);
+        temp.find('select[name="ControlType"]').val(prodata.ControlType);
+        temp.find('input[name="LabelName"]').val(prodata.LabelName);
+        temp.find('input[name="width"]').val(prodata.Width); //设置控件宽度
+        <!-- whj -->
+        temp.find('select[name="IsAffectParams"]').val(prodata.IsAffectParams ? 1 : 0); //是否联动参数
+        let isRequire = prodata.RequiredField;
+        if(isRequire){
+            temp.find('select[name="isRequire"]').val('1'); //是否必须
+        }else{
+            temp.find('select[name="isRequire"]').val('0'); //是否必须
+        }
+        //修改控件类型事件
+        temp.find('select[name="ControlType"]').change(function () {
+            let curParams = $(".show-now"); //当前显示的模板参数设置DIV
+            let paramName = $(".show-now").find('input[name="Name"]').val(); //当前控件名
+            var val = $(this).val();
+            var datasourceId = 'datasource_' + tempId; //创建新ID
+            var dataSourceDiv = curParams.find('#' + datasourceId); //数据源设置DIV
+
+            var levelId = 'level_' + tempId;
+            var levelDiv = curParams.find('#' + levelId); //层次DIV
+
+            let dateTypeId = "dateType_" + tempId;
+            let dateTimeTypeId = "dateTimeType_" + tempId;
+            let dateYMTypeId = "dateYMType_" + tempId;
+
+            let defineId = "define_" + tempId;
+            let defineDiv = curParams.find('#' + defineId); //层次DIV
+
+            let levelsId = 'levels_' + tempId;
+            let levelsDiv = curParams.find('#' + levelsId); //层次DIV
+
+            if (6 == val) {//日期编辑框
+                if ($('#' + dateTypeId).length == 0) {
+                    let clone = $("#dateTypeDiv").clone();
+                    clone.attr("id", dateTypeId);
+                    clone.css('display', 'block');
+                    temp.find('div[name="prodiv"]').append(clone);
+                } else {
+                    $('#' + dateTypeId).show();
+                }
+                $('#' + dateTimeTypeId).hide();
+                $('#' + dateYMTypeId).hide();
+
+                if (dataSourceDiv.length > 0) {
+                    dataSourceDiv.hide();
+                }
+                if (levelDiv.length > 0) {
+                    levelDiv.hide();
+                }
+                if (defineDiv.length > 0) {
+                    defineDiv.hide();
+                }
+
+                if(levelsDiv.length > 0){
+                    levelsDiv.hide();
+                }
+
+            } else if (12 == val) {//日期时间编辑框
+                if ($('#' + dateTimeTypeId).length == 0) {
+                    let clone = $("#dateTimeTypeDiv").clone();
+                    clone.attr("id", dateTimeTypeId);
+                    clone.css('display', 'block');
+                    temp.find('div[name="prodiv"]').append(clone);
+                } else {
+                    $('#' + dateTimeTypeId).show();
+                }
+                $('#' + dateTypeId).hide();
+                $('#' + dateYMTypeId).hide();
+
+                if (dataSourceDiv.length > 0) {
+                    dataSourceDiv.hide();
+                }
+                if (levelDiv.length > 0) {
+                    levelDiv.hide();
+                }
+                if (defineDiv.length > 0) {
+                    defineDiv.hide();
+                }
+                if(levelsDiv.length > 0){
+                    levelsDiv.hide();
+                }
+            } else if (13 == val) {//日期(年月编辑框)
+                if ($('#' + dateYMTypeId).length == 0) {
+                    let clone = $("#dateYMTypeDiv").clone();
+                    clone.attr("id", dateYMTypeId);
+                    clone.css('display', 'block');
+                    temp.find('div[name="prodiv"]').append(clone);
+                } else {
+                    $('#' + dateYMTypeId).show();
+                }
+                $('#' + dateTypeId).hide();
+                $('#' + dateTimeTypeId).hide();
+
+                if (dataSourceDiv.length > 0) {
+                    dataSourceDiv.hide();
+                }
+                if (levelDiv.length > 0) {
+                    levelDiv.hide();
+                }
+                if (defineDiv.length > 0) {
+                    defineDiv.hide();
+                }
+                if(levelsDiv.length > 0){
+                    levelsDiv.hide();
+                }
+            } else if(14 == val){
+                $('#' + dateTypeId).hide();
+                $('#' + dateTimeTypeId).hide();
+                $('#' + dateYMTypeId).hide();
+
+                if (dataSourceDiv.length > 0) {
+                    dataSourceDiv.hide();
+                }
+                if (levelDiv.length > 0) {
+                    levelDiv.hide();
+                }
+                if (defineDiv.length > 0) {
+                    defineDiv.hide();
+                }
+            } else{
+                $('#' + dateTypeId).hide();
+                $('#' + dateTimeTypeId).hide();
+                $('#' + dateYMTypeId).hide();
+            }
+            //复制数据源设置并添加
+            if (2 == val || 3 == val) { //下拉框和多选下拉框
+                if (dataSourceDiv.length != 0) { //如果存在数据源DIV
+                    dataSourceDiv.show(); //显示数据源DIV
+                } else { //如果不存在数据源DIV
+                    let ds = $("#dss").clone(); //克隆dom元素
+                    ds.show();
+                    ds.attr('id', datasourceId);
+                    curParams.find('div[name="prodiv"]').append(ds);
+                    //为当前模板参数添加数据
+                    let curNode = {}
+                    curNode.DSName = ds.find('select[name="DSName"]').val(); //修改层次数据的显示值
+                    curNode.ActualFieldName = temp.find("select[name='ActualFieldName']").val();
+                    curNode.ShowFieldName = temp.find("select[name='ShowFieldName']").val();
+                    if(curNode.DSName == null){
+                        curNode.DSName = "";
+                    }
+                    if(curNode.ActualFieldName == null){
+                        curNode.ActualFieldName = "";
+                    }
+                    if(curNode.ShowFieldName == null){
+                        curNode.ShowFieldName = "";
+                    }
+                    treeNodeMap[tempId] = curNode;
+
+
+                    //绑定数据源切换事件
+                    ds.find('select[name="DSName"]').change(function () {
+                        let curVal = $(this).val();
+                        let dsName = $(this).val();
+                        let index = templateIndex + '@#' + dsName;
+                        let columns = dsMap[index];
+                        temp.find("select[name='ActualFieldName']").empty();
+                        temp.find("select[name='ShowFieldName']").empty();
+                        $.each(columns, function (i, e) {
+                            var opt = "<option value='" + e + "'>" + e + "</option>";
+                            temp.find("select[name='ActualFieldName']").append(opt);
+                            temp.find("select[name='ShowFieldName']").append(opt);
+                        })
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+                        let treeNode = treeNodeMap[divId]; //获取treeNode数据
+                        treeNode.DSName = curVal; //修改层次数据的显示值
+                        treeNode.ActualFieldName = temp.find("select[name='ActualFieldName']").val()
+                        treeNode.ShowFieldName = temp.find("select[name='ShowFieldName']").val()
+                    })
+
+                    ds.find('select[name="ActualFieldName"]').change(function () {
+                        let curVal = $(this).val();
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+                        let treeNode = treeNodeMap[divId]; //获取层次数据
+                        treeNode.ActualFieldName = curVal; //修改层次数据的显示值
+                    })
+
+                    ds.find('select[name="ShowFieldName"]').change(function () {
+                        let curVal = $(this).val();
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+                        let treeNode = treeNodeMap[divId]; //获取层次数据
+                        treeNode.ShowFieldName = curVal; //修改层次数据的显示值
+                    })
+                    ds.show();
+                }
+
+                if (levelDiv.length > 0) {
+                    levelDiv.hide();
+                }
+                if (defineDiv.length > 0) {
+                    defineDiv.hide();
+                }
+                if(levelsDiv.length > 0){
+                    levelsDiv.hide();
+                }
+            } else if (0 == val || 1 == val || 6 == val || 7 == val || 12 == val || 13 == val) {
+                //隐藏数据源DIV
+                if (dataSourceDiv.length != 0) {
+                    dataSourceDiv.hide();
+                }
+                //隐藏层次DIV
+                if (levelDiv.length != 0) {
+                    levelDiv.hide();
+                }
+                if (defineDiv.length > 0) {
+                    defineDiv.hide();
+                }
+                if(levelsDiv.length > 0){
+                    levelsDiv.hide();
+                }
+            } else if (222 == val) {
+                //隐藏数据源DIV
+                if (dataSourceDiv.length != 0) {
+                    dataSourceDiv.hide();
+                }
+                //隐藏层次DIV
+                if (levelDiv.length != 0) {
+                    levelDiv.hide();
+                }
+                if(levelsDiv.length > 0){
+                    levelsDiv.hide();
+                }
+
+                let clone = $('#define').clone();
+                clone.attr('id', defineId);
+                clone.css('display', 'flex');
+
+                curParams.find('div[name="prodiv"]').append(clone);
+                //增加按钮
+                let addDefineButton = clone.find('.addDefine');
+                var bound = addDefineButton.attr('bound');
+                if (!bound) {
+                    addDefineButton.attr('bound', true);
+                    //增加自定义按钮
+                    addDefineButton.click(function () {
+                        let defineTable = clone.find('.defineTable');
+                        defineTable.children().removeClass('chooseDefine');
+                        let text = '<div class="chooseDefine" style="width:100%;height:42px;display:flex;align-items: center;justify-content: center"><div style="width:50%;height:100%;" class="leftDiv"><input class="dtinput" type="text" value="TEXT"></div><div style="width:50%;height:100%;" class="rightDiv"><input class="dtinput" type="text" value="VALUE"></div></div>';
+                        defineTable.append(text);
+                        defineTable.children().each(function () {
+                            $(this).click(function () {
+                                defineTable.children().removeClass('chooseDefine');
+                                $(this).addClass('chooseDefine');
+                            })
+                        })
+                    });
+                }
+
+
+                //删除按钮
+                let delDefineButton = clone.find('.delDefine');
+                var bound = delDefineButton.attr('bound');
+                if (!bound) {
+                    delDefineButton.attr('bound', true);
+                    //增加自定义按钮
+                    delDefineButton.click(function () {
+                        let defineTable = clone.find('.defineTable');
+                        let curDefine = defineTable.find('.chooseDefine');
+                        curDefine.prev().addClass('chooseDefine');
+                        curDefine.remove();
+                    });
+                }
+
+
+            } else if (4 == val || 5 == val) { //下拉树和多选下拉树
+                //处理数据源DIV
+                if (dataSourceDiv.length != 0) {
+                    dataSourceDiv.show();
+                } else {
+                    //克隆数据源设置DIV
+                    var ds = $("#dss").clone();
+                    //增加ID属性
+                    ds.attr('id', datasourceId);
+                    temp.find('div[name="prodiv"]').append(ds);
+                    //绑定数据源切换事件
+                    ds.find('select[name="DSName"]').change(function () {
+                        let dsName = $(this).val();
+                        let index = templateIndex + '@#' + dsName;
+                        let columns = dsMap[index];
+                        temp.find("select[name='ActualFieldName']").empty();
+                        temp.find("select[name='ShowFieldName']").empty();
+                        $.each(columns, function (i, e) {
+                            var opt = "<option value='" + e + "'>" + e + "</option>";
+                            temp.find("select[name='ActualFieldName']").append(opt);
+                            temp.find("select[name='ShowFieldName']").append(opt);
+                        })
+
+                        let val = $(this).val();
+                        let levelContent = temp.find('.levelContent');
+                        //当前选中的层次
+                        let choose = levelContent.find('.levelChoose');
+                        //获取当前选中元素的索引值
+                        let index1 = choose.index();
+
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+
+                        let treeNode = treeNodeMap[divId]; //获取层次数据
+
+                        let curNode = treeNode[index1];
+                        curNode.DSName = val; //修改层次数据的显示值
+                        curNode.ActualFieldName = temp.find("select[name='ActualFieldName']").val()
+                        curNode.ShowFieldName = temp.find("select[name='ShowFieldName']").val()
+
+                    })
+
+                    ds.find('select[name="ActualFieldName"]').change(function () {
+                        let val = $(this).val();
+                        let levelContent = temp.find('.levelContent');
+                        //当前选中的层次
+                        let choose = levelContent.find('.levelChoose');
+                        //获取当前选中元素的索引值
+                        let index = choose.index();
+
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+
+                        let treeNode = treeNodeMap[divId]; //获取层次数据
+
+                        let curNode = treeNode[index];
+                        curNode.ActualFieldName = val; //修改层次数据的显示值
+
+
+                    })
+
+                    ds.find('select[name="ShowFieldName"]').change(function () {
+                        let val = $(this).val();
+                        let levelContent = temp.find('.levelContent');
+                        //当前选中的层次
+                        let choose = levelContent.find('.levelChoose');
+                        //获取当前选中元素的索引值
+                        let index = choose.index();
+
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+
+                        let treeNode = treeNodeMap[divId]; //获取层次数据
+
+                        let curNode = treeNode[index];
+                        curNode.ShowFieldName = val; //修改层次数据的显示值
+
+                    })
+                    ds.show();
+                }
+
+                if (levelDiv.length != 0) { //层次DIV
+                    levelDiv.show();
+                } else {
+                    //添加层次DIV
+                    let level = $("#level").clone();
+                    level.css('display', 'flex');
+                    level.attr('id', levelId);
+                    let addLevelButton = level.find('.addLevel'); //增加按钮
+                    let delLevelButton = level.find('.delLevel'); //删除按钮
+                    temp.find("div[name='prodiv']").append(level);
+                    var div = '<div class="levelChoose" id="cs_' + 1 + "_" + tempId + '" style="padding-left:10px">层次1</div>';
+                    let levelContentDiv = level.find('.levelContent');
+                    //增加层次
+                    levelContentDiv.append(div);
+                    //增加样式
+
+                    let dsName = temp.find("select[name='DSName']").val(); //ds名
+                    let ActualFieldName = temp.find("select[name='ActualFieldName']").val();
+                    let ShowFieldName = temp.find("select[name='ShowFieldName']").val();
+
+                    let treeNode = {
+                        DSName: dsName,
+                        ActualFieldName: ActualFieldName,
+                        ShowFieldName: ShowFieldName
+                    };
+                    if(treeNode.DSName == null){
+                        treeNode.DSName = "";
+                    }
+                    if(treeNode.ActualFieldName == null){
+                        treeNode.ActualFieldName = "";
+                    }
+                    if(treeNode.ShowFieldName == null){
+                        treeNode.ShowFieldName = "";
+                    }
+                    treeNodeMap[tempId] = [];
+                    let treeNodeA = treeNodeMap[tempId];
+                    treeNodeA.push(treeNode);
+
+                    //层次数据绑定点击事件
+                    levelContentDiv.children().each(function () {
+                        $(this).click(function () {
+                            //移除所有层次数据的样式
+                            levelContentDiv.children().each(function () {
+                                $(this).removeClass('levelChoose');
+                                $(this).addClass('levelUnChoose');
+                            });
+                            //给当前数据增加样式
+                            $(this).removeClass('levelUnChoose');
+                            $(this).addClass('levelChoose');
+
+                            //点击时给数据源赋值
+                            let index = $(this).index();
+                            let id = $('.show-now').attr("id");
+                            //获取层次数据
+                            let treeNode = treeNodeMap[id];
+                            let curNode = treeNode[index];
+
+                            temp.find("select[name='DSName']").val(curNode.DSName).prop('selected', true); //ds名
+
+                            let dsIndex = templateIndex + '@#' + curNode.DSName;
+                            let columns = dsMap[dsIndex];
+                            temp.find("select[name='ActualFieldName']").empty();
+                            temp.find("select[name='ShowFieldName']").empty();
+
+                            if (columns != undefined) {
+                                $.each(columns, function (i, e) {
+                                    var opt = "<option value='" + e + "'>" + e + "</option>";
+                                    temp.find("select[name='ActualFieldName']").append(opt);
+                                    temp.find("select[name='ShowFieldName']").append(opt);
+                                })
+                            }
+                            temp.find("select[name='ActualFieldName']").val(curNode.ActualFieldName).prop('selected', true);
+                            temp.find("select[name='ShowFieldName']").val(curNode.ShowFieldName).prop('selected', true);
+
+                        });
+                    });
+
+                    //绑定属性
+                    let bound = addLevelButton.attr('bound');
+                    if (!bound) {
+                        addLevelButton.attr('bound', true);
+                        //增加按钮绑定事件
+                        addLevelButton.click(function () {
+                            let levelContentDiv = temp.find('div[name="prodiv"]').find('.levelContent').eq(0);
+                            //获取最后一个层级数据
+                            let text = levelContentDiv.children('div:last-child').text();
+                            let t1;
+                            if (text == '') { //没有层级数据
+                                t1 = 0;
+                            } else {
+                                t1 = text.substr(2, text.length);
+                            }
+                            //新数据索引
+                            t1 = parseInt(t1) + 1;
+                            //移除其他数据的样式
+                            levelContentDiv.children().each(function () {
+                                $(this).removeClass('levelChoose');
+                                $(this).addClass('levelUnChoose');
+                            });
+
+                            //增加新的数据
+                            levelContentDiv.append('<div class="levelChoose" id="cs_' + t1 + "_" + tempId + '" style="padding-left:' + t1 * 10 + 'px">层次' + t1 + '</div>');
+
+                            //添加层次数据
+                            let dsName = temp.find("select[name='DSName']").val(); //ds名
+                            let ActualFieldName = temp.find("select[name='ActualFieldName']").val();
+                            let ShowFieldName = temp.find("select[name='ShowFieldName']").val();
+
+                            let treeNode = {
+                                DSName: dsName,
+                                ActualFieldName: ActualFieldName,
+                                ShowFieldName: ShowFieldName
+                            };
+
+                            if(treeNode.DSName == null){
+                                treeNode.DSName = "";
+                            }
+                            if(treeNode.ActualFieldName == null){
+                                treeNode.ActualFieldName = "";
+                            }
+                            if(treeNode.ShowFieldName == null){
+                                treeNode.ShowFieldName = "";
+                            }
+
+                            let treeNodeA = treeNodeMap[tempId];
+                            treeNodeA.push(treeNode);
+
+                            //给新增加的数据绑定事件
+                            let last = levelContentDiv.children('div:last-child');
+                            last.click(function () {
+                                //移除其他样式
+                                levelContentDiv.children().each(function () {
+                                    $(this).removeClass('levelChoose');
+                                    $(this).addClass('levelUnChoose');
+                                });
+                                $(this).removeClass('levelUnChoose');
+                                $(this).addClass('levelChoose');
+                                //点击时给数据源赋值
+                                let index = $(this).index();
+                                let id = $('.show-now').attr("id");
+                                //获取层次数据
+                                let treeNode = treeNodeMap[id];
+                                let curNode = treeNode[index];
+
+                                temp.find("select[name='DSName']").val(curNode.DSName).prop('selected', true); //ds名
+
+                                let dsIndex = templateIndex + '@#' + curNode.DSName;
+                                let columns = dsMap[dsIndex];
+                                temp.find("select[name='ActualFieldName']").empty();
+                                temp.find("select[name='ShowFieldName']").empty();
+                                if (columns != undefined) {
+                                    $.each(columns, function (i, e) {
+                                        var opt = "<option value='" + e + "'>" + e + "</option>";
+                                        temp.find("select[name='ActualFieldName']").append(opt);
+                                        temp.find("select[name='ShowFieldName']").append(opt);
+                                    })
+                                }
+
+
+                                temp.find("select[name='ActualFieldName']").val(curNode.ActualFieldName).prop('selected', true);
+                                temp.find("select[name='ShowFieldName']").val(curNode.ShowFieldName).prop('selected', true);
+
+                            });
+                        });
+                    }
+
+
+                    //给删除按钮绑定事件
+                    let bound1 = delLevelButton.attr('bound');
+                    if (!bound1) {
+                        delLevelButton.attr('bound', true);
+                        //增加按钮绑定事件
+                        delLevelButton.click(function () {
+                            let levelContentDiv = temp.find('div[name="prodiv"]').find('.levelContent').eq(0);
+                            //获取当前层次数据的个数
+                            let childrenNum = levelContentDiv.children().length;
+
+                            if (childrenNum == 1) {
+                                layer.msg('当前数据无法删除')
+                            } else {
+                                //获取当前选中层次数据的索引值
+                                let index = levelContentDiv.find('.levelChoose').index();
+
+                                let childrens = levelContentDiv.children();
+
+                                let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                                let divId = parent.attr("id");
+
+                                let treeNode = treeNodeMap[divId]; //获取层次数据
+                                if (index == 0) { //删除的是第一层
+                                    //删除当前索引值后面的所有层次数据
+                                    $.each(childrens, function (i, e) {
+                                        //if (i > index) {
+                                        if (i > 0) {
+                                            e.remove();
+                                        }
+                                        if (i == 0) {
+                                            $(e).trigger('click');
+                                        }
+                                    })
+                                    //删除保存的层次数据
+                                    treeNode = jQuery.grep(treeNode, function (n, i) {
+                                        //return i <= index;
+                                        return i < 1;
+                                    });
+                                    //更新层次数据值
+                                    treeNodeMap[divId] = treeNode;
+                                } else {
+                                    //删除当前索引值后面的所有层次数据
+                                    $.each(childrens, function (i, e) {
+                                        //if (i > index) {
+                                        if (i >= index) {
+                                            e.remove();
+                                        }
+                                        if (i == index - 1) {
+                                            $(e).trigger('click');
+                                        }
+                                    })
+                                    //删除保存的层次数据
+                                    treeNode = jQuery.grep(treeNode, function (n, i) {
+                                        //return i <= index;
+                                        return i < index;
+                                    });
+                                    //更新层次数据值
+                                    treeNodeMap[divId] = treeNode;
+                                }
+
+                            }
+
+                        });
+                    }
+
+                }
+
+                if (defineDiv.length > 0) {
+                    defineDiv.hide();
+                }
+
+                if(levelsDiv.length > 0){
+                    levelsDiv.hide();
+                }
+
+            } else if (14 == val) { //下拉框和多选下拉框
+                if (levelsDiv.length != 0) { //如果存在数据源DIV
+                    levelsDiv.show(); //显示数据源DIV
+                } else { //如果不存在数据源DIV
+                    let ds = $("#levels").clone(); //克隆dom元素
+                    ds.show();
+                    ds.attr('id', levelsId);
+                    curParams.find('div[name="prodiv"]').append(ds);
+                    //为当前模板参数添加数据
+                    let curNode = {}
+                    curNode.DSName = ds.find('select[name="DSName1"]').val(); //修改层次数据的显示值
+                    curNode.IdColumn = temp.find("select[name='IdName']").val();
+                    curNode.PidColumn = temp.find("select[name='PidName']").val();
+                    curNode.NameColumn = temp.find("select[name='NodeName']").val();
+                    treeNodeMap[tempId] = curNode;
+
+                    //绑定数据源切换事件
+                    ds.find('select[name="DSName1"]').change(function () {
+                        let curVal = $(this).val();
+                        let dsName = $(this).val();
+                        let index = templateIndex + '@#' + dsName;
+                        let columns = dsMap[index];
+                        temp.find("select[name='IdName']").empty();
+                        temp.find("select[name='PidName']").empty();
+                        temp.find("select[name='NodeName']").empty();
+                        $.each(columns, function (i, e) {
+                            var opt = "<option value='" + e + "'>" + e + "</option>";
+                            temp.find("select[name='IdName']").append(opt);
+                            temp.find("select[name='PidName']").append(opt);
+                            temp.find("select[name='NodeName']").append(opt);
+                        })
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+                        let treeNode = treeNodeMap[divId]; //获取treeNode数据
+                        treeNode.DSName = curVal; //修改层次数据的显示值
+                        treeNode.IdColumn = temp.find("select[name='IdName']").val();
+                        treeNode.PidColumn = temp.find("select[name='PidName']").val();
+                        treeNode.NameColumn = temp.find("select[name='NodeName']").val();
+                        treeNode.RootId =  temp.find("input[name='RootId']").val();
+                    })
+
+                    ds.find('select[name="IdName"]').change(function () {
+                        let curVal = $(this).val();
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+                        let treeNode = treeNodeMap[divId]; //获取层次数据
+                        treeNode.IdColumn = curVal; //修改层次数据的显示值
+                    })
+
+                    ds.find('select[name="PidName"]').change(function () {
+                        let curVal = $(this).val();
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+                        let treeNode = treeNodeMap[divId]; //获取层次数据
+                        treeNode.PidColumn = curVal; //修改层次数据的显示值
+                    })
+
+                    ds.find('select[name="NodeName"]').change(function () {
+                        let curVal = $(this).val();
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+                        let treeNode = treeNodeMap[divId]; //获取层次数据
+                        treeNode.NameColumn = curVal; //修改层次数据的显示值
+                    })
+
+                    ds.find('input[name="RootId"]').change(function () {
+                        let curVal = $(this).val();
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+                        let treeNode = treeNodeMap[divId]; //获取层次数据
+                        treeNode.RootId = curVal; //修改层次数据的显示值
+                    })
+
+                    //模板参数公式
+                    ds.find('#rootBtn').click(function () {
+                        var index = layer.open({
+                            type: 2,
+                            area: ['700px', '650px'],
+                            closeBtn: 0,
+                            maxmin: true,
+                            resize: false,
+                            title: ['公式编辑', 'height:30px;line-height:30px'],
+                            content: ['../design/expr.html', 'no'],
+                            btn: ['确定', '关闭'],
+                            btnAlign: 'c',
+                            end: function () {
+
+                            },
+                            yes: function (index, layero) {
+                                var iframeWin = window[layero.find('iframe')[0]['name']];
+                                var expr = iframeWin.getExpr();
+                                temp.find('input[name="RootId"]').val('=' + expr);
+                                layer.close(index);
+                            },
+                            success: function (layero, index) {
+                                var iframeWin = window[layero.find('iframe')[0]['name']];
+                                var val = $('.show-now').find('input[name="RootId"]').val();
+                                var valArr = val.split('');
+                                if (valArr[0] == '=') {
+                                    val = val.replace('=', '');
+                                }
+                                iframeWin.setExpr(val);
+
+                            }
+                        });
+                    });
+
+                    ds.show();
+                }
+
+                if (levelDiv.length > 0) {
+                    levelDiv.hide();
+                }
+                if (defineDiv.length > 0) {
+                    defineDiv.hide();
+                }
+            }
+        });
+
+        $(".params").append(temp);
+
+        //初始化模板参数时，根据模板参数类型来初始化设置
+        if (isInit) {
+
+            let controlType = prodata.ControlType;
+            if (controlType == 4 || controlType == 5) { //下拉树和多选下拉树
+                let treeNodes = prodata.TreeNodes; //层次数据
+                //克隆数据源设置DIV
+                let ds = $("#dss").clone();
+                let id = temp.attr('id');
+                treeNodeMap[id] = treeNodes;
+                var datasourceId = 'datasource_' + id; //创建新ID
+                ds.find('input[name=""]')
+                //增加ID属性
+                ds.attr('id', datasourceId);
+                ds.show();
+                temp.find('div[name="prodiv"]').append(ds);
+
+                ds.find('select[name="DSName"]').change(function () {
+                    let dsName = $(this).val();
+                    let index = templateIndex + '@#' + dsName;
+                    let columns = dsMap[index];
+                    temp.find("select[name='ActualFieldName']").empty();
+                    temp.find("select[name='ShowFieldName']").empty();
+                    $.each(columns, function (i, e) {
+                        var opt = "<option value='" + e + "'>" + e + "</option>";
+                        temp.find("select[name='ActualFieldName']").append(opt);
+                        temp.find("select[name='ShowFieldName']").append(opt);
+                    })
+
+                    let val = $(this).val();
+                    let levelContent = temp.find('.levelContent');
+                    //当前选中的层次
+                    let choose = levelContent.find('.levelChoose');
+                    //获取当前选中元素的索引值
+                    let index1 = choose.index();
+
+                    let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                    let divId = parent.attr("id");
+
+                    let treeNode = treeNodeMap[divId]; //获取层次数据
+
+                    let curNode = treeNode[index1];
+                    curNode.DSName = val; //修改层次数据的显示值
+                    curNode.ActualFieldName = temp.find("select[name='ActualFieldName']").val()
+                    curNode.ShowFieldName = temp.find("select[name='ShowFieldName']").val()
+
+                })
+
+                ds.find('select[name="ActualFieldName"]').change(function () {
+                    let val = $(this).val();
+                    let levelContent = temp.find('.levelContent');
+                    //当前选中的层次
+                    let choose = levelContent.find('.levelChoose');
+                    //获取当前选中元素的索引值
+                    let index = choose.index();
+
+                    let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                    let divId = parent.attr("id");
+
+                    let treeNode = treeNodeMap[divId]; //获取层次数据
+
+                    let curNode = treeNode[index];
+                    curNode.ActualFieldName = val; //修改层次数据的显示值
+
+
+                })
+
+                ds.find('select[name="ShowFieldName"]').change(function () {
+                    let val = $(this).val();
+                    let levelContent = temp.find('.levelContent');
+                    //当前选中的层次
+                    let choose = levelContent.find('.levelChoose');
+                    //获取当前选中元素的索引值
+                    let index = choose.index();
+
+                    let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                    let divId = parent.attr("id");
+
+                    let treeNode = treeNodeMap[divId]; //获取层次数据
+
+                    let curNode = treeNode[index];
+                    curNode.ShowFieldName = val; //修改层次数据的显示值
+
+                })
+
+
+                let levelId = 'level_' + id;
+                let levelDiv = $('#level').clone();
+                levelDiv.attr('id', levelId);
+                levelDiv.css('display', 'flex');
+
+                temp.find('div[name="prodiv"]').append(levelDiv);
+
+                //渲染层次数据
+                $.each(treeNodes, function (i, e) {
+                    if (i == treeNodes.length - 1) {
+                        levelDiv.find('.levelContent').append('<div class="levelChoose" id="cs_' + (i + 1) + "_" + tempId + '" style="padding-left:' + (i + 1) * 10 + 'px">层次' + (i + 1) + '</div>');
+                        temp.find("select[name='DSName']").val(e.DSName).prop('selected', true);
+                        //重新赋值
+                        let dsName = e.DSName;
+                        let index = templateIndex + '@#' + dsName;
+                        let columns = dsMap[index];
+                        temp.find("select[name='ActualFieldName']").empty();
+                        temp.find("select[name='ShowFieldName']").empty();
+                        if (columns != undefined) {
+                            $.each(columns, function (i, e) {
+                                var opt = "<option value='" + e + "'>" + e + "</option>";
+                                temp.find("select[name='ActualFieldName']").append(opt);
+                                temp.find("select[name='ShowFieldName']").append(opt);
+                            })
+                        }
+
+                        temp.find("select[name='ActualFieldName']").val(e.ActualFieldName).prop('selected', true);
+                        temp.find("select[name='ShowFieldName']").val(e.ShowFieldName).prop('selected', true);
+                    } else {
+                        levelDiv.find('.levelContent').append('<div class="levelUnChoose" id="cs_' + (i + 1) + "_" + tempId + '" style="padding-left:' + (i + 1) * 10 + 'px">层次' + (i + 1) + '</div>');
+                    }
+                })
+
+                let levelContentDiv = levelDiv.find('.levelContent');
+                //层次数据绑定点击事件
+                levelContentDiv.children().each(function () {
+                    $(this).click(function () {
+                        //移除所有层次数据的样式
+                        levelContentDiv.children().each(function () {
+                            $(this).removeClass('levelChoose');
+                            $(this).addClass('levelUnChoose');
+                        });
+                        //给当前数据增加样式
+                        $(this).removeClass('levelUnChoose');
+                        $(this).addClass('levelChoose');
+
+                        //点击时给数据源赋值
+                        let index = $(this).index();
+                        let id = $('.show-now').attr("id");
+                        //获取层次数据
+                        let treeNode = treeNodeMap[id];
+                        let curNode = treeNode[index];
+
+
+                        temp.find("select[name='DSName']").val(curNode.DSName).prop('selected', true); //ds名
+
+                        let dsIndex = templateIndex + '@#' + curNode.DSName;
+                        let columns = dsMap[dsIndex];
+                        temp.find("select[name='ActualFieldName']").empty();
+                        temp.find("select[name='ShowFieldName']").empty();
+                        if (columns != undefined) {
+                            $.each(columns, function (i, e) {
+                                var opt = "<option value='" + e + "'>" + e + "</option>";
+                                temp.find("select[name='ActualFieldName']").append(opt);
+                                temp.find("select[name='ShowFieldName']").append(opt);
+                            })
+                        }
+                        temp.find("select[name='ActualFieldName']").val(curNode.ActualFieldName).prop('selected', true);
+                        temp.find("select[name='ShowFieldName']").val(curNode.ShowFieldName).prop('selected', true);
+
+                    });
+                });
+
+                let addLevelButton = levelDiv.find('.addLevel');
+                //绑定属性
+                let bound = addLevelButton.attr('bound');
+                if (!bound) {
+                    addLevelButton.attr('bound', true);
+                    //增加按钮绑定事件
+                    addLevelButton.click(function () {
+                        let levelContentDiv = temp.find('div[name="prodiv"]').find('.levelContent').eq(0);
+                        //获取最后一个层级数据
+                        let text = levelContentDiv.children('div:last-child').text();
+                        let t1;
+                        if (text == '') { //没有层级数据
+                            t1 = 0;
+                        } else {
+                            t1 = text.substr(2, text.length);
+                        }
+                        //新数据索引
+                        t1 = parseInt(t1) + 1;
+                        //移除其他数据的样式
+                        levelContentDiv.children().each(function () {
+                            $(this).removeClass('levelChoose');
+                            $(this).addClass('levelUnChoose');
+                        });
+
+                        //增加新的数据
+                        levelContentDiv.append('<div class="levelChoose" id="cs_' + t1 + "_" + tempId + '" style="padding-left:' + t1 * 10 + 'px">层次' + t1 + '</div>');
+
+                        //添加层次数据
+                        let dsName = temp.find("select[name='DSName']").val(); //ds名
+                        let ActualFieldName = temp.find("select[name='ActualFieldName']").val();
+                        let ShowFieldName = temp.find("select[name='ShowFieldName']").val();
+
+                        let treeNode = {
+                            DSName: dsName,
+                            ActualFieldName: ActualFieldName,
+                            ShowFieldName: ShowFieldName
+                        };
+
+                        if(treeNode.DSName == null){
+                            treeNode.DSName = "";
+                        }
+                        if(treeNode.ActualFieldName == null){
+                            treeNode.ActualFieldName = "";
+                        }
+                        if(treeNode.ShowFieldName == null){
+                            treeNode.ShowFieldName = "";
+                        }
+
+                        let treeNodeA = treeNodeMap[tempId];
+                        treeNodeA.push(treeNode);
+
+                        //给新增加的数据绑定事件
+                        let last = levelContentDiv.children('div:last-child');
+                        last.click(function () {
+                            //移除其他样式
+                            levelContentDiv.children().each(function () {
+                                $(this).removeClass('levelChoose');
+                                $(this).addClass('levelUnChoose');
+                            });
+                            $(this).removeClass('levelUnChoose');
+                            $(this).addClass('levelChoose');
+                            //点击时给数据源赋值
+                            let index = $(this).index();
+                            let id = $('.show-now').attr("id");
+                            //获取层次数据
+                            let treeNode = treeNodeMap[id];
+                            let curNode = treeNode[index];
+
+                            temp.find("select[name='DSName']").val(curNode.DSName).prop('selected', true); //ds名
+
+
+                            let dsIndex = templateIndex + '@#' + curNode.DSName;
+                            let columns = dsMap[dsIndex];
+                            temp.find("select[name='ActualFieldName']").empty();
+                            temp.find("select[name='ShowFieldName']").empty();
+                            if (columns != undefined) {
+                                $.each(columns, function (i, e) {
+                                    var opt = "<option value='" + e + "'>" + e + "</option>";
+                                    temp.find("select[name='ActualFieldName']").append(opt);
+                                    temp.find("select[name='ShowFieldName']").append(opt);
+                                })
+
+                            }
+                            temp.find("select[name='ActualFieldName']").val(curNode.ActualFieldName).prop('selected', true);
+                            temp.find("select[name='ShowFieldName']").val(curNode.ShowFieldName).prop('selected', true);
+
+                        });
+                    });
+                }
+
+                let delLevelButton = levelDiv.find('.delLevel');
+                //给删除按钮绑定事件
+                let bound1 = delLevelButton.attr('bound');
+                if (!bound1) {
+                    delLevelButton.attr('bound', true);
+                    //增加按钮绑定事件
+                    delLevelButton.click(function () {
+                        let levelContentDiv = temp.find('div[name="prodiv"]').find('.levelContent').eq(0);
+                        //获取当前层次数据的个数
+                        let childrenNum = levelContentDiv.children().length;
+
+                        if (childrenNum == 1) {
+                            layer.msg('当前数据无法删除')
+                        } else {
+                            //获取当前选中层次数据的索引值
+                            let index = levelContentDiv.find('.levelChoose').index();
+                            let childrens = levelContentDiv.children();
+
+                            let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                            let divId = parent.attr("id");
+
+                            let treeNode = treeNodeMap[divId]; //获取层次数据
+
+                            if (index == 0) { //删除的是第一层
+                                //删除当前索引值后面的所有层次数据
+                                $.each(childrens, function (i, e) {
+                                    //if (i > index) {
+                                    if (i > 0) {
+                                        e.remove();
+                                    }
+                                    if (i == 0) {
+                                        $(e).trigger('click');
+                                    }
+                                })
+                                //删除保存的层次数据
+                                treeNode = jQuery.grep(treeNode, function (n, i) {
+                                    //return i <= index;
+                                    return i < 1;
+                                });
+                                //更新层次数据值
+                                treeNodeMap[divId] = treeNode;
+                            } else {
+                                //删除当前索引值后面的所有层次数据
+                                $.each(childrens, function (i, e) {
+                                    //if (i > index) {
+                                    if (i >= index) {
+                                        e.remove();
+                                    }
+                                    if (i == index - 1) {
+                                        $(e).trigger('click');
+                                    }
+                                })
+                                //删除保存的层次数据
+                                treeNode = jQuery.grep(treeNode, function (n, i) {
+                                    //return i <= index;
+                                    return i < index;
+                                });
+                                //更新层次数据值
+                                treeNodeMap[divId] = treeNode;
+                            }
+                        }
+
+                    });
+                }
+
+            }
+
+            if (controlType == 2 || controlType == 3) { //下拉框和多选下拉框
+
+                let ComboCustomText = prodata.ComboCustomText;
+                if (ComboCustomText != undefined && ComboCustomText != "") { //自定义下拉框
+                    let customText = JSON.parse(ComboCustomText);
+                    let define = $('#define').clone();
+                    let id = temp.attr('id');
+                    define.attr('id', "define_" + id);
+                    define.css('display', 'flex');
+                    //添加自定义下拉列表DOM
+                    temp.find('div[name="prodiv"]').append(define);
+                    temp.find('select[name="ControlType"]').val('222').prop('selected', true);
+
+                    //自定义属性table
+                    let defineTable = define.find('.defineTable');
+                    $.each(customText, function (i, e) {
+                        let text = e.ShowText;
+                        let value = e.ActualText;
+                        let html;
+                        if (i == customText.length - 1) {
+                            html = '<div class="chooseDefine" style="width:100%;height:42px;display:flex;align-items: center;justify-content: center"><div class="leftDiv" style="width:50%;height:100%;"><input class="dtinput" type="text" value="' + text + '"></div><div  class="rightDiv" style="width:50%;height:100%;"><input class="dtinput" type="text" value="' + value + '"></div></div>';
+                        } else {
+                            html = '<div style="width:100%;height:42px;display:flex;align-items: center;justify-content: center"><div  class="leftDiv" style="width:50%;height:100%;"><input class="dtinput"  type="text" value="' + text + '"></div><div  class="rightDiv" style="width:50%;height:100%;"><input class="dtinput" type="text" value="' + value + '"></div></div>';
+                        }
+                        defineTable.append(html);
+                    })
+                    //绑定选中事件
+                    defineTable.children().each(function () {
+                        $(this).click(function () {
+                            defineTable.children().removeClass('chooseDefine');
+                            $(this).addClass('chooseDefine');
+                        })
+                    })
+
+                    //绑定增加按钮
+                    let addDefineButton = define.find('.addDefine');
+                    var bound = addDefineButton.attr('bound');
+                    if (!bound) {
+                        addDefineButton.attr('bound', true);
+                        //增加自定义按钮
+                        addDefineButton.click(function () {
+                            let defineTable = define.find('.defineTable');
+                            defineTable.children().removeClass('chooseDefine');
+                            let text = '<div class="chooseDefine" style="width:100%;height:42px;display:flex;align-items: center;justify-content: center"><div class="leftDiv" style="width:50%;height:100%;"><input class="dtinput" type="text" value="TEXT"></div><div class="rightDiv" style="width:50%;height:100%;"><input class="dtinput" type="text" value="VALUE"></div></div>';
+                            defineTable.append(text);
+                            defineTable.children().each(function () {
+                                $(this).click(function () {
+                                    defineTable.children().removeClass('chooseDefine');
+                                    $(this).addClass('chooseDefine');
+                                })
+                            })
+                        });
+                    }
+
+
+                    //绑定删除按钮
+                    let delDefineButton = define.find('.delDefine');
+                    var bound = delDefineButton.attr('bound');
+                    if (!bound) {
+                        delDefineButton.attr('bound', true);
+                        //增加自定义按钮
+                        delDefineButton.click(function () {
+                            let defineTable = define.find('.defineTable');
+                            let curDefine = defineTable.find('.chooseDefine');
+                            curDefine.prev().addClass('chooseDefine');
+                            curDefine.remove();
+                        });
+                    }
+
+
+                } else {
+                    let treeNodes = prodata.TreeNodes; //数据源数据
+                    //克隆数据源设置DIV
+                    let ds = $("#dss").clone();
+                    let id = temp.attr('id');
+                    treeNodeMap[id] = treeNodes[0];
+                    var datasourceId = 'datasource_' + id; //创建新ID
+
+                    //增加ID属性
+                    ds.attr('id', datasourceId);
+                    ds.show();
+                    temp.find('div[name="prodiv"]').append(ds);
+
+                    let curNode = treeNodes[0];
+                    //初始化数据选中状态
+                    ds.find('select[name="DSName"]').val(curNode.DSName).prop('selected', true);
+
+                    //初始化数据集字段
+                    let index = templateIndex + '@#' + curNode.DSName;
+                    let columns = dsMap[index];
+                    temp.find("select[name='ActualFieldName']").empty();
+                    temp.find("select[name='ShowFieldName']").empty();
+                    if (columns != undefined) {
+                        $.each(columns, function (i, e) {
+                            var opt = "<option value='" + e + "'>" + e + "</option>";
+                            temp.find("select[name='ActualFieldName']").append(opt);
+                            temp.find("select[name='ShowFieldName']").append(opt);
+                        })
+                    }
+
+                    //初始化赋值
+                    ds.find('select[name="ActualFieldName"]').val(curNode.ActualFieldName).prop('selected', true);
+                    ds.find('select[name="ShowFieldName"]').val(curNode.ShowFieldName).prop('selected', true);
+
+                    //绑定事件
+                    ds.find('select[name="DSName"]').change(function () {
+                        let dsName = $(this).val();
+                        let index = templateIndex + '@#' + dsName;
+                        let columns = dsMap[index];
+                        temp.find("select[name='ActualFieldName']").empty();
+                        temp.find("select[name='ShowFieldName']").empty();
+                        if (columns != undefined) {
+                            $.each(columns, function (i, e) {
+                                var opt = "<option value='" + e + "'>" + e + "</option>";
+                                temp.find("select[name='ActualFieldName']").append(opt);
+                                temp.find("select[name='ShowFieldName']").append(opt);
+                            })
+                        }
+                        let val = $(this).val();
+
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+
+                        let treeNode = treeNodeMap[divId]; //获取层次数据
+
+                        treeNode.DSName = val; //修改层次数据的显示值
+                        treeNode.ActualFieldName = temp.find("select[name='ActualFieldName']").val()
+                        treeNode.ShowFieldName = temp.find("select[name='ShowFieldName']").val()
+
+                    })
+
+                    ds.find('select[name="ActualFieldName"]').change(function () {
+                        let val = $(this).val();
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+                        let treeNode = treeNodeMap[divId]; //获取层次数据
+                        treeNode.ActualFieldName = val; //修改层次数据的显示值
+                    })
+                    ds.find('select[name="ShowFieldName"]').change(function () {
+                        let val = $(this).val();
+                        let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                        let divId = parent.attr("id");
+                        let treeNode = treeNodeMap[divId]; //获取层次数据
+                        treeNode.ShowFieldName = val; //修改层次数据的显示值
+                    })
+                }
+
+
+            }
+
+            if (controlType == 6) { //日期编辑框
+                let clone = $("#dateTypeDiv").clone();
+                let dateTypeId = "dateType_" + tempId;
+                clone.attr("id", dateTypeId);
+                clone.css('display', 'block');
+                temp.find('div[name="prodiv"]').append(clone);
+                let dateType = prodata.DateType; //日期类型
+                $('#' + dateTypeId).find('select[name="dateType"]').val(dateType).prop('selected', true);
+            }
+
+            if (controlType == 12) { //日期时间编辑框
+                let clone = $("#dateTimeTypeDiv").clone();
+                let dateTypeId = "dateTimeType_" + tempId;
+                clone.attr("id", dateTypeId);
+                clone.css('display', 'block');
+                temp.find('div[name="prodiv"]').append(clone);
+                let dateType = prodata.DateType; //日期类型
+                $('#' + dateTypeId).find('select[name="dateTimeType"]').val(dateType).prop('selected', true);
+            }
+
+            //日期编辑框(年月)
+            if (controlType == 13) { //日期时间编辑框
+                let clone = $("#dateYMTypeDiv").clone();
+                let dateTypeId = "dateYMType_" + tempId;
+                clone.attr("id", dateTypeId);
+                clone.css('display', 'block');
+                temp.find('div[name="prodiv"]').append(clone);
+                let dateType = prodata.DateType; //日期类型
+                $('#' + dateTypeId).find('select[name="dateYMType"]').val(dateType).prop('selected', true);
+            }
+
+            if(controlType == 14){
+                let treeNodes = prodata.InfiniteComboTree; //数据源数据
+                //克隆数据源设置DIV
+                let ds = $("#levels").clone();
+                let id = temp.attr('id');
+                treeNodeMap[id] = treeNodes;
+                var datasourceId = 'levels_' + id; //创建新ID
+
+                //增加ID属性
+                ds.attr('id', datasourceId);
+                ds.show();
+                temp.find('div[name="prodiv"]').append(ds);
+
+                let curNode = treeNodes;
+                //初始化数据选中状态
+                ds.find('select[name="DSName1"]').val(curNode.DSName).prop('selected', true);
+
+                //初始化数据集字段
+                let index = templateIndex + '@#' + curNode.DSName;
+                let columns = dsMap[index];
+                temp.find("select[name='IdName']").empty();
+                temp.find("select[name='PidName']").empty();
+                temp.find("select[name='NodeName']").empty();
+
+                if (columns != undefined) {
+                    $.each(columns, function (i, e) {
+                        var opt = "<option value='" + e + "'>" + e + "</option>";
+                        temp.find("select[name='IdName']").append(opt);
+                        temp.find("select[name='PidName']").append(opt);
+                        temp.find("select[name='NodeName']").append(opt);
+                    })
+                }
+
+                //初始化赋值
+                ds.find('select[name="IdName"]').val(curNode.IdColumn).prop('selected', true);
+                ds.find('select[name="PidName"]').val(curNode.PidColumn).prop('selected', true);
+                ds.find('select[name="NodeName"]').val(curNode.NameColumn).prop('selected', true);
+                ds.find("input[name='RootId']").val(curNode.RootId);
+                //绑定事件
+                ds.find('select[name="DSName1"]').change(function () {
+                    let dsName = $(this).val();
+                    let index = templateIndex + '@#' + dsName;
+                    let columns = dsMap[index];
+                    temp.find("select[name='IdName']").empty();
+                    temp.find("select[name='PidName']").empty();
+                    temp.find("select[name='NodeName']").empty();
+                    if (columns != undefined) {
+                        $.each(columns, function (i, e) {
+                            var opt = "<option value='" + e + "'>" + e + "</option>";
+                            temp.find("select[name='IdName']").append(opt);
+                            temp.find("select[name='PidName']").append(opt);
+                            temp.find("select[name='NodeName']").append(opt);
+                        })
+                    }
+                    let val = $(this).val();
+
+                    let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                    let divId = parent.attr("id");
+
+                    let treeNode = treeNodeMap[divId]; //获取层次数据
+
+                    treeNode.DSName = val; //修改层次数据的显示值
+                    treeNode.IdColumn = temp.find("select[name='IdName']").val()
+                    treeNode.PidColumn = temp.find("select[name='PidName']").val()
+                    treeNode.NameColumn = temp.find("select[name='NodeName']").val()
+                    treeNode.RootId = temp.find("input[name='RootId']").val();
+                })
+
+                ds.find('select[name="IdName"]').change(function () {
+                    let val = $(this).val();
+                    let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                    let divId = parent.attr("id");
+                    let treeNode = treeNodeMap[divId]; //获取层次数据
+                    treeNode.IdColumn = val; //修改层次数据的显示值
+                })
+                ds.find('select[name="PidName"]').change(function () {
+                    let val = $(this).val();
+                    let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                    let divId = parent.attr("id");
+                    let treeNode = treeNodeMap[divId]; //获取层次数据
+                    treeNode.PidColumn = val; //修改层次数据的显示值
+                })
+                ds.find('select[name="NodeName"]').change(function () {
+                    let val = $(this).val();
+                    let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                    let divId = parent.attr("id");
+                    let treeNode = treeNodeMap[divId]; //获取层次数据
+                    treeNode.NameColumn = val; //修改层次数据的显示值
+                })
+                ds.find('select[name="RootId"]').change(function () {
+                    let val = $(this).val();
+                    let parent = $('.show-now').eq(0); //当前显示的模板参数DIV
+                    let divId = parent.attr("id");
+                    let treeNode = treeNodeMap[divId]; //获取层次数据
+                    treeNode.RootId = val; //修改层次数据的显示值
+                })
+
+                //模板参数公式
+                ds.find('#rootBtn').click(function () {
+                    var index = layer.open({
+                        type: 2,
+                        area: ['700px', '650px'],
+                        closeBtn: 0,
+                        maxmin: true,
+                        resize: false,
+                        title: ['公式编辑', 'height:30px;line-height:30px'],
+                        content: ['../design/expr.html', 'no'],
+                        btn: ['确定', '关闭'],
+                        btnAlign: 'c',
+                        end: function () {
+
+                        },
+                        yes: function (index, layero) {
+                            var iframeWin = window[layero.find('iframe')[0]['name']];
+                            var expr = iframeWin.getExpr();
+                            temp.find('input[name="RootId"]').val('=' + expr);
+                            layer.close(index);
+                        },
+                        success: function (layero, index) {
+                            var iframeWin = window[layero.find('iframe')[0]['name']];
+                            var val = $('.show-now').find('input[name="RootId"]').val();
+                            var valArr = val.split('');
+                            if (valArr[0] == '=') {
+                                val = val.replace('=', '');
+                            }
+                            iframeWin.setExpr(val);
+
+                        }
+                    });
+                });
+            }
+
+        }else{ //非新增参数，初始化样式数据
+
+        }
+
+    }
+
+    //grep过滤数组数据
+    function filter(value, index, key) {
+        return index > key;
+    }
+
+    function edit(obj, type) {
+        if (1 == type) {
+            obj.readOnly = false;
+        } else {
+            obj.readOnly = 'readOnly';
+        }
+    }
+
+    function isPositiveNumber(num) { //判断是否是正整数
+        var g = /^[1-9]*[1-9][0-9]*$/;
+        return g.test(num);
+    }
+
+
+    function isNoNegativeNumber(num) {
+        var g = /^[1-9]*[1-9][0-9]*$/;
+        if (g.test(num)) {
+            return true;
+        } else {
+            if (num == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    function boundDelM(ccatd, prodata) {
+        var bound1 = ccatd.find('img[name="delf"]').attr('bound');
+        if (!bound1) {
+            ccatd.find('img[name="delf"]').attr('bound', true);
+            ccatd.find('img[name="delf"]').click(function () {
+                var tbody = $(this).parent().prev().children('tbody');
+                tbody.children().each(function () {
+                    if ($(this).hasClass('ck_' + prodata.Name)) {
+                        $(this).remove();
+                    }
+                });
+                var one = tbody.children('tr:last-child');
+                one.addClass('ck_' + prodata.Name);
+                one.css('background-color', '#D5D5D5');
+            });
+        }
+    }
+
+    function boundDelf(ccadd, prodata) {
+        var bound1 = ccadd.find('img[name="delf"]').attr('bound');
+        if (!bound1) {
+            ccadd.find('img[name="delf"]').attr('bound', true);
+            ccadd.find('img[name="delf"]').click(function () {
+                var last = $(this).parent().prev().children('div:last-child');
+                var text = last.text();
+                if (last.attr('id').indexOf('cs_1_') > -1) {
+                    return false;
+                }
+                var end = parseInt(text.substr(2, text.length));
+                var ckt = $('.ck_' + prodata.Name).text();
+                var start = parseInt(ckt.substr(2, ckt.length));
+                for (var c = 0; c <= (end - start); c++) {
+                    if (start + c == 1) {
+                        continue;
+                    }
+                    var id = 'cs_' + (start + c) + "_" + prodata.Name;
+                    var tid = 'ds_' + id.substr(3, id.length);
+                    $('div[name="dss"]').each(function () {
+                        var ttid = $(this).attr('id');
+                        if (ttid == tid) {
+                            $(this).remove();
+                        }
+                    });
+                    $('#' + id).remove();
+                }
+                var one = $(this).parent().prev().children('div:last-child');
+                one.addClass('ck_' + prodata.Name);
+                one.css('background-color', '#D5D5D5');
+                var id = one.attr('id');
+                var tid = '#ds_' + id.substr(3, id.length);
+                $(tid).show();
+            });
+        }
+    }
+
+    function boundEvent() {
+        $('input[name="width"]').bind('change', function () {
+            if (!isNoNegativeNumber($(this).val())) {
+                $('input[name="width"]').val(120);
+            }
+        })
+        $("#del").click(function () {
+            var data = '';
+            $("a").each(function () {
+                if ($(this).hasClass("cka")) {
+                    data = $(this).attr('data');
+                    $(this).remove();
+                }
+            });
+            $("div[name='pro']").each(function () {
+                if (data == $(this).attr('data')) {
+                    $(this).remove();
+                    $("#un a:first-child").trigger('click');
+                }
+            });
+        });
+        //新增模板参数
+        $("#add").click(function () {
+            let v = $(".show-now").find('input[name="Name"]').val();
+            if (v != undefined && v.trim() == '') {
+                layer.alert("名称不能为空", {icon: 2});
+                return false;
+            }
+
+            ct++;
+            let proname = 'param' + ct;
+            let existFlag = false;
+            let paramNameAs = $('#un').find('a');
+            let paramIndex = ct;
+            let maxNum = 0;
+            //遍历已经存在的模板参数名
+            $.each(paramNameAs, function (i, e) {
+                let paramName = $(e).text();
+                if (paramName.indexOf("param") != -1) {
+                    let index = paramName.substr(5, paramName.length);
+                    if ($.isNumeric(index)) {
+                        if (parseInt(index) > maxNum) {
+                            maxNum = parseInt(index);
+                        }
+                    }
+                }
+            })
+
+            proname = 'param' + (maxNum + 1);
+            var data = "pro_" + ct;
+            //新增模板参数列表
+            $("#un").append("<a href='javascript:;' data=" + data + ">" + proname + "</a>");
+            //默认参数属性
+            var prodata = { //参数属性
+                data: data,
+                Name: proname,
+                DataType: 1,
+                ControlType: 1,
+                IsAffectParams: 0, //whj
+                Width: 120
+            };
+            //绑定属性设置
+            boundRight(prodata, false);
+            boundCk($("#un a:last-child"));
+            $("#un a:last-child").trigger('click');
+        });
+        //向上排序
+        $("#up").click(function () {
+            var cur = $('#un').find('.cka'); //当前选中元素
+            var index = $("#un a").index(cur);
+            var curDiv = $('div[name="pro"]').eq(index); //当前div
+            curParamName = curDiv.find('input[name="Name"]').val();
+            if (index == 0) {
+                layer.alert('已经处于顶部, 无法上移')
+            } else {
+                var pre = cur.prev(); //获取前一个元素
+                var preDiv = curDiv.prev(); //获取前一个DIV
+                cur.remove(); //删除当前元素
+                curDiv.remove();
+                cur.insertBefore(pre); //前一个元素之前插入
+                curDiv.insertBefore(preDiv);
+                //参数名称修改事件
+                curDiv.find('input[name="Name"]').change(function (e) {
+                    let v = $(this).val(), b = true;
+                    if (v != undefined && v.trim() == '') {
+                        layer.alert("名称不能为空", {icon: 2});
+                        curDiv.find('input[name="Name"]').val($('.cka').text());
+                        return false;
+                    }
+
+                    if (v != undefined && !isChinese(v)) {
+                        layer.alert("名称不能包含特殊字符", {icon: 2});
+                        curDiv.find('input[name="Name"]').val($('.cka').text());
+                        return false;
+                    }
+
+                    //判断是否有重复的参数名称
+                    $("a").each(function () {
+                        if (!$(this).hasClass('cka')) {
+                            var val = $(this).text();
+                            if (val == v) {
+                                layer.alert("名称已存在", {icon: 2});
+                                //还原参数名
+                                curDiv.find('input[name="Name"]').val($('.cka').text());
+                                b = false;
+                                return false;
+                            }
+                        }
+                    });
+                    if (!b) {
+                        return false;
+                    }
+                    $('.cka').text(v);
+                    if (paraMap[prodata.Name] != undefined) { //修改paraMap中的键值对应关系
+                        paraMap[v] = paraMap[prodata.Name];
+                    }
+                    //模板名修改时，修改对应的dom元素id
+                    $('.show-now').find('table').each(function () {
+                        if ($(this).attr("id")) {
+                            if ($(this).attr("id").indexOf('tb_') == 0) {
+                                $(this).attr("id", 'tb_' + v);
+                            }
+                        }
+                    });
+                    $('.show-now').find('div').each(function () {
+                        if ($(this).attr("id")) {
+                            if ($(this).attr("id").indexOf('ccatb_') == 0) {
+                                $(this).attr("id", 'ccatb_' + v);
+                            }
+                            if ($(this).attr("id").indexOf('ccadd_') == 0) {
+                                $(this).attr("id", 'ccadd_' + v);
+                            }
+                            if ($(this).attr("id").indexOf('tb_') == 0) {
+                                $(this).attr("id", 'tb_' + v);
+                            }
+                            if ($(this).attr("id").indexOf('cc_') == 0) {
+                                $(this).attr("id", 'cc_' + v);
+                            }
+                            if ($(this).attr("id").indexOf('dst_') == 0) {
+                                $(this).attr("id", 'dst_' + v);
+                            }
+                            if ($(this).attr("id").indexOf('cs_') == 0) {
+                                var index = getIndex($(this).attr("id"), '_');
+                                var start = $(this).attr("id").substr(0, index + 1);
+                                $(this).attr("id", start + v);
+                            }
+                        }
+                        if ($(this).attr("class")) {
+                            if ($(this).attr("class").indexOf('ck_') == 0) {
+                                $(this).attr("class", 'ck_' + v);
+                            }
+                        }
+                    });
+                });
+                boundCk(cur); //重新绑定事件
+            }
+
+        });
+        $("#down").click(function () {
+            var cur = $('#un').find('.cka'); //当前选中元素
+            var index = $("#un a").index(cur);
+            var curDiv = $('div[name="pro"]').eq(index); //当前div
+            curParamName = curDiv.find('input[name="Name"]').val();
+            var all = $('#un a');
+            if (index == all.length - 1) {
+                layer.alert('已经处于底部, 无法下移');
+            } else {
+                var pre = cur.next(); //获取下一个元素
+                var preDiv = curDiv.next(); //获取前一个DIV
+                cur.remove(); //删除当前元素
+                curDiv.remove();
+                cur.insertAfter(pre); //下一个元素之后插入
+                curDiv.insertAfter(preDiv);
+                //参数名称修改事件
+                curDiv.find('input[name="Name"]').change(function (e) {
+                    let v = $(this).val(), b = true;
+                    if (v != undefined && v.trim() == '') {
+                        layer.alert("名称不能为空", {icon: 2});
+                        curDiv.find('input[name="Name"]').val($('.cka').text());
+                        return false;
+                    }
+
+                    if (v != undefined && !isChinese(v)) {
+                        layer.alert("名称不能包含特殊字符", {icon: 2});
+                        curDiv.find('input[name="Name"]').val($('.cka').text());
+                        return false;
+                    }
+
+                    //判断是否有重复的参数名称
+                    $("a").each(function () {
+                        if (!$(this).hasClass('cka')) {
+                            var val = $(this).text();
+                            if (val == v) {
+                                //还原参数名
+                                curDiv.find('input[name="Name"]').val($('.cka').text());
+                                layer.alert("名称已存在", {icon: 2});
+                                b = false;
+                                return false;
+                            }
+                        }
+                    });
+                    if (!b) {
+                        return false;
+                    }
+                    $('.cka').text(v);
+                    if (paraMap[prodata.Name] != undefined) { //修改paraMap中的键值对应关系
+                        paraMap[v] = paraMap[prodata.Name];
+                    }
+                    //模板名修改时，修改对应的dom元素id
+                    $('.show-now').find('table').each(function () {
+                        if ($(this).attr("id")) {
+                            if ($(this).attr("id").indexOf('tb_') == 0) {
+                                $(this).attr("id", 'tb_' + v);
+                            }
+                        }
+                    });
+                    $('.show-now').find('div').each(function () {
+                        if ($(this).attr("id")) {
+                            if ($(this).attr("id").indexOf('ccatb_') == 0) {
+                                $(this).attr("id", 'ccatb_' + v);
+                            }
+                            if ($(this).attr("id").indexOf('ccadd_') == 0) {
+                                $(this).attr("id", 'ccadd_' + v);
+                            }
+                            if ($(this).attr("id").indexOf('tb_') == 0) {
+                                $(this).attr("id", 'tb_' + v);
+                            }
+                            if ($(this).attr("id").indexOf('cc_') == 0) {
+                                $(this).attr("id", 'cc_' + v);
+                            }
+                            if ($(this).attr("id").indexOf('dst_') == 0) {
+                                $(this).attr("id", 'dst_' + v);
+                            }
+                            if ($(this).attr("id").indexOf('cs_') == 0) {
+                                var index = getIndex($(this).attr("id"), '_');
+                                var start = $(this).attr("id").substr(0, index + 1);
+                                $(this).attr("id", start + v);
+                            }
+                        }
+                        if ($(this).attr("class")) {
+                            if ($(this).attr("class").indexOf('ck_') == 0) {
+                                $(this).attr("class", 'ck_' + v);
+                            }
+                        }
+                    });
+                });
+                boundCk(cur); //重新绑定事件
+            }
+        });
+    }
+
+    function boundCk(a) {
+        if (!a) {
+            a = $("a");
+        }
+        a.click(function () {
+            let b = true;
+            let v = $(".show-now").find('input[name="Name"]').val();
+            let curName = $('.cka').text();
+
+            if (v != undefined && v.trim() == '') {
+                layer.alert("名称不能为空", {icon: 2});
+                $(".show-now").find('input[name="Name"]').val(curName);
+                return false;
+            }
+
+            if (v != undefined && !isChinese(v)) {
+                layer.alert("名称不能包含特殊字符", {icon: 2});
+                $(".show-now").find('input[name="Name"]').val(curName);
+                return false;
+            }
+
+            $("#un a").each(function (i) {
+                var val = $(this).text();
+                if (!$(this).hasClass('cka')) {
+                    if (val == v) {
+                        b = false;
+                        layer.alert("名称已存在", {icon: 2});
+                        $(".show-now").find('input[name="Name"]').val(curName);
+                        return false;
+                    }
+                }
+            });
+            if (!b) {
+                return false;
+            }
+            $("a").each(function () {
+                $(this).removeClass("cka");
+                $(this).addClass("ncka");
+            });
+            $(this).removeClass("ncka");
+            $(this).addClass("cka");
+            var data = $(this).attr('data');
+            $("div[name='pro']").each(function () {
+                if (data == $(this).attr('data')) {
+                    $(this).show();
+                    $(this).addClass('show-now');
+                } else {
+                    $(this).hide();
+                    $(this).removeClass('show-now');
+                }
+            });
+        });
+    }
+
+    function getPage() {
+        let curName = $('.cka').text();
+        let res = [];
+        let b = true;
+        let v = $(".show-now").find('input[name="Name"]').val();
+        if (v != undefined && v.trim() == '') {
+            layer.alert("名称不能为空", {icon: 2});
+            $(".show-now").find('input[name="Name"]').val(curName);
+            return false;
+        }
+        if (v != undefined && !isChinese(v)) {
+            layer.alert("名称不能包含特殊字符", {icon: 2});
+            $(".show-now").find('input[name="Name"]').val(curName);
+            return false;
+        }
+
+        $("a").each(function () {
+            if (!$(this).hasClass('cka')) {
+                var val = $(this).text();
+                if (val == v) {
+                    b = false;
+                    layer.alert("名称已存在", {icon: 2});
+                    $(".show-now").find('input[name="Name"]').val(curName);
+                    return false;
+                }
+            }
+        });
+        if (!b) {
+            return false;
+        }
+        let errorFlag = false;
+        $("div[name='pro']").each(function () {
+            let dt = {};
+            let Name = $(this).find('input[name="Name"]').val();
+            let LabelName = $(this).find('input[name="LabelName"]').val();
+            let DataType = parseInt($(this).find('select[name="DataType"]').val());
+            let DefaultValue = $(this).find('input[name="DefaultValue"]').val();
+            let ControlType = parseInt($(this).find('select[name="ControlType"]').val());
+            let IsAffectParamsVal = parseInt($(this).find('select[name="IsAffectParams"]').val());
+            let IsAffectParams = IsAffectParamsVal == 0 ? false : true;
+            let width = parseInt($(this).find('input[name="paramWidth"]').val());
+            let height = parseInt($(this).find('input[name="paramHeight"]').val());
+            let x = parseInt($(this).find('input[name="paramX"]').val());
+            let y = parseInt($(this).find('input[name="paramY"]').val());
+            let labelWidth = parseInt($(this).find('input[name="labelWidth"]').val());
+            let labelHeight = parseInt($(this).find('input[name="labelHeight"]').val());
+            let labelX = parseInt($(this).find('input[name="labelX"]').val());
+            let labelY = parseInt($(this).find('input[name="labelY"]').val());
+            let isRequire = $(this).find('select[name="isRequire"]').val(); //是否必须
+            let labelVisible = $(this).find('input[name="labelVisible"]').val();
+            let visible = $(this).find('input[name="visible"]').val();
+            let LabelVisble = (labelVisible == 'Y');
+            let Visible = (visible == 'Y');
+
+            let ComboDSType = 1;
+            let ShowControlExprStr = paraMap[Name];
+            if (IsAffectParams) {
+                let option = linkMap[Name];
+                if (option == undefined) { //联动参数为设置联动条件
+                    layer.msg('参数' + Name + '未设置联动条件');
+                    errorFlag = true;
+                }
+                let yl = option['yl'];
+                let ld = option['ld'];
+                let ylArr = [];
+                $.each(yl, function (i, e) {
+                    let obj = {ParamName: e}
+                    ylArr.push(obj);
+                })
+                let ldArr = [];
+                $.each(ld, function (i, e) {
+                    let obj = {ParamName: e}
+                    ldArr.push(obj);
+                })
+                dt.DependentParams = ylArr;
+                dt.RepaintParams = ldArr;
+            }
+            dt.Name = Name;
+            dt.LabelName = LabelName;
+            dt.DataType = DataType;
+            dt.DefaultValue = DefaultValue;
+            dt.ComboDSType = ComboDSType;
+            dt.ControlType = ControlType;
+            dt.IsAffectParams = IsAffectParams;
+            dt.Width = width;
+            dt.Height = height;
+            dt.X = x;
+            dt.Y = y;
+            dt.LabelWidth = labelWidth;
+            dt.LabelHeight = labelHeight;
+            dt.LabelX = labelX;
+            dt.LabelY = labelY;
+            dt.RequiredField = (isRequire == '1');
+            dt.LabelVisible = LabelVisble;
+            dt.Visible = Visible;
+
+            dt.ComboCustomText = "";
+            if (ShowControlExprStr != undefined) {
+                dt.ShowControlExprStr = ShowControlExprStr;
+            }
+            if (ControlType == 222) { //自定义下拉框列表
+                dt.ControlType = 2;
+                dt.ComboDSType = 2;
+                let ComboCustomText = [];
+                let tb = $(this).find('div[name="prodiv"]').find('.defineTable');
+                let divs = tb.children();
+                $.each(divs, function (i, e) {
+                    let div = $(e);
+                    let text = div.find('input').eq(0).val();
+                    let value = div.find('input').eq(1).val();
+                    var ts = {
+                        ShowText: text,
+                        ActualText: value
+                    };
+                    ComboCustomText.push(ts);
+                })
+                dt.ComboCustomText = JSON.stringify(ComboCustomText);
+
+            } else if (ControlType == 2 || ControlType == 3) { //下拉框，多选下拉框
+                let TreeNodes = [];
+                let id = $(this).attr("id");
+                let treeNode = treeNodeMap[id];
+                TreeNodes.push(treeNode)
+                dt.TreeNodes = TreeNodes;
+            } else if (ControlType == 4 || ControlType == 5) { //下拉树，多选下拉树
+                var TreeNodes = [];
+                let id = $(this).attr("id");
+                TreeNodes = treeNodeMap[id]
+                dt.TreeNodes = TreeNodes;
+            } else if (ControlType == 6 || ControlType == 12 || ControlType == 13) {
+                if (ControlType == 6) {
+                    dt.DateType = parseInt($(this).find('select[name="dateType"]').val());
+                } else if (ControlType == 12) {
+                    dt.DateType = parseInt($(this).find('select[name="dateTimeType"]').val());
+                } else {
+                    dt.DateType = parseInt($(this).find('select[name="dateYMType"]').val());
+                }
+            }  else if (ControlType == 14) { //无限极下拉树
+                let TreeNodes = [];
+                let id = $(this).attr("id");
+                let treeNode = treeNodeMap[id];
+
+                let rootId = $(this).find('input[name="RootId"]').val(); //根结点ID
+                if(rootId == ""){
+                    treeNode.RootId = "";
+                    layer.msg('模板参数' + Name + '未设置根结点ID,根结点ID将默认为空' , {time:2000});
+                }else{
+                    treeNode.RootId = rootId;
+                }
+                dt.InfiniteComboTree = treeNode;
+            }
+            res.push(dt);
+        });
+        var data = {
+            count: parseInt($('#rowNum').val()),
+            top: 0,
+            left: 0,
+            spa: 0,
+            Params: res
+        };
+        if (errorFlag) {
+            return false;
+        } else {
+            return data;
+        }
+
+    }
+</script>
+</html>

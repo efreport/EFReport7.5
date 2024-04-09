@@ -1,0 +1,258 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="adress=no">
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <style>
+      #div_pwd_validate_error {
+        color: red;
+        font-size: 14px;
+        font-weight: 400;
+      }
+      #div_newpwd_error {
+        color: red;
+        font-size: 14px;
+        font-weight: 400;
+      }
+      #div_repwd_error {
+        color: red;
+        font-size: 14px;
+        font-weight: 400;
+      }
+      #div_info {
+        display: none;
+        position: absolute;
+        width: 30%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        vertical-align: middle;
+        left: 35%;
+        top: 200px;
+        z-index: 999;
+        font-size: 14px;
+        font-weight: 400;
+        border-radius: 5px;
+        border: 1px solid #d5d5d5;
+        background-color: #d5d5d5;
+      }
+
+      .myicons {
+        display: block;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        border-radius: 50%;
+        background: rgba(20, 175, 75, 0.07);
+        margin: 0;
+        background-image: url("img/new/person_password.png");
+        background-repeat: no-repeat;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="fixed_top">
+        <div class="top-l"><a href="javascript:window.history.back()"><i class="icons">&#xe626;</i></a></div>
+        <h1>修改密码</h1>
+      </div>
+
+      <div class="container">
+        <form class="login-form">
+          <ul>
+            <li>
+              <label>登录密码<span class="red">*</span></label>
+              <div class="username">
+                <i class="myicons"></i>
+                <input style="height: 42px !important; line-height: 42px !important;" type="password" value="" name="pwd" placeholder="请输入登录密码" />
+              </div>
+            </li>
+            <li>
+              <div id="div_pwd_validate_error" style="display:none;"></div>
+            </li>
+            <li>
+              <label>新的登录密码<span class="red">*</span></label>
+              <div class="password">
+                <i class="myicons"></i>
+                <input style="height: 42px !important; line-height: 42px !important;" type="password" value="" name="newpwd" placeholder="请输入新的登录密码" />
+              </div>
+            </li>
+            <li>
+              <div id="div_newpwd_error" style="display:none;"></div>
+            </li>
+            <li>
+              <label>确认新的登录密码<span class="red">*</span></label>
+              <div class="address">
+                <i class="myicons"></i>
+                <input style="height: 42px !important; line-height: 42px !important;" type="password" value="" name="repwd" placeholder="请输入确认新的登录密码" />
+              </div>
+            </li>
+            <li>
+              <div id="div_repwd_error" style="display:none;"></div>
+            </li>
+          </ul>
+          <div class="log">
+            <a href="javascript:;" class="btn-login">确定</a>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="div_info">
+      
+    </div>
+  </body>
+  <script src="js/jquery-1.7.js"></script>
+  <script>
+  var flag = false;
+  $(function() {
+
+    let baseurl = window.sessionStorage.getItem("ef_server_base_url");
+    let token = window.sessionStorage.getItem("cur_token");
+
+    $("input[name='pwd']").change(function() {
+        var repwd = $(this).val();
+        if (repwd.trim().length == 0) {
+          // alert('请输入登录密码');
+          $("#div_pwd_validate_error").show();
+          $("#div_pwd_validate_error").html("请输入登录密码");
+          flag = false;
+        }
+        $.post(baseurl + "/user/pwd/validate?token="+token, {pwd: repwd}, function(resp) {
+          if (0 == resp.code) {
+            // alert(resp.text);
+            $("#div_pwd_validate_error").show();
+            $("#div_pwd_validate_error").html(resp.text);
+            flag = false;
+          } else {
+            $("#div_pwd_validate_error").html("");
+            $("#div_pwd_validate_error").hide();
+            flag = true;
+          }
+        });
+    });
+
+    
+
+    $("input[name='newpwd']").change(function() {
+        var newpwd = $(this).val();
+        if (newpwd.trim().length == 0) {
+          // alert('请输入登录密码');
+          $("#div_newpwd_error").show();
+          $("#div_newpwd_error").html("请输入新的登录密码");
+        } else {
+          $("#div_newpwd_error").hide();
+          $("#div_newpwd_error").html("");
+        }
+    });
+
+
+    $("input[name='repwd']").change(function() {
+        var repwd = $(this).val();
+        if (repwd.trim().length == 0) {
+          $("#div_repwd_error").show();
+          $("#div_repwd_error").html("请输入确认新的登录密码");
+        } else {
+          $("#div_repwd_error").hide();
+          $("#div_repwd_error").html("");
+        }
+
+        if ($("input[name='newpwd']").val() != $("input[name='repwd']").val()) {
+          // alert('两次输入的新密码不匹配');
+          $("#div_repwd_error").show();
+          $("#div_repwd_error").html("两次输入的新密码不匹配");
+        } else {
+          $("#div_repwd_error").hide();
+          $("#div_repwd_error").html("");
+        }
+    });
+
+
+
+    $("div.log a").click(function() {
+      // console.log("点击了确定按钮。。。");
+      if (!flag) {
+        // alert('请输入登录密码');
+        $("#div_pwd_validate_error").show();
+        $("#div_pwd_validate_error").html("请输入登录密码");
+        return false;
+      }
+
+      if($("input[name='newpwd']").val().trim() === ""){
+        $("#div_newpwd_error").show();
+        $("#div_newpwd_error").html("请输入新的登录密码");
+        return false;
+      }
+
+      if($("input[name='repwd']").val().trim() === ""){
+        $("#div_repwd_error").show();
+        $("#div_repwd_error").html("请输入确认新的登录密码");
+        return false;
+      }
+
+      if ($("input[name='newpwd']").val() != $("input[name='repwd']").val()) {
+        // alert('两次输入的新密码不匹配');
+        $("#div_repwd_error").show();
+        $("#div_repwd_error").html("两次输入的新密码不匹配");
+        return false;
+      }
+
+      let validate_err_html = $("#div_pwd_validate_error").html();
+      if (validate_err_html !== "") {
+        return false;
+      }
+
+      $.post(baseurl + "/user/pwd/resetPwd?token=" + token, {pwd: $("input[name='newpwd']").val()}, function(resp) {
+        if (resp.code) {
+          // alert('密码修改成功');
+
+          $("#div_info").show();
+          $("#div_info").html("密码修改成功");
+          let div_info_cur_timer = window.setInterval(function(){
+            $("#div_info").hide();
+            
+
+            let efurl_logout = baseurl + "/user/logout?token=" + token;
+            $.ajax({
+                url: efurl_logout,
+                type: 'get',
+                success: function (res) {
+                    // console.log("加载时----返回的结果为----res--->",  res);
+                    if (res.state === "success") {
+                        window.sessionStorage.setItem("cur_accout", "");
+                        // 将当前登录后token保存到sessionStorage
+                        window.sessionStorage.setItem("cur_token", "");
+                        // 将当前登录后用户类型保存到sessionStorage
+                        window.sessionStorage.setItem("cur_userType", "");
+                        window.location = 'login/index.html';
+                    }
+                },
+                error: function () {
+                }
+            });
+
+            window.clearInterval(div_info_cur_timer);
+          }, 2000);
+
+          
+
+        } else {
+          // alert('密码修改失败');
+          $("#div_info").show();
+          $("#div_info").html("密码修改失败");
+          let div_info_cur_timer = window.setInterval(function(){
+            $("#div_info").hide();
+            window.clearInterval(div_info_cur_timer);
+          }, 2000);
+        }
+      });
+    });
+  });
+  </script>
+</html>

@@ -1,0 +1,456 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="address=no">
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <style>
+        body {
+            margin:0;
+            padding:0;
+            background: #FCFCFC;
+        }
+        .myHeaderTitle {
+            width: 100%; height: 28px; line-height:28px; font-size: 20px;font-weight: 500;color: #1D2129;font-family: PingFang SC-Medium, PingFang SC;
+            text-align: center;
+        }
+        .div_index_list {
+            position: relative;
+            width: 85%;
+            height: auto;
+            margin: auto;
+            line-height: 60px;
+            border-bottom: 2px solid #F2F3F5;
+        }
+        .divlft {
+            width: 40px;height:40px; background: url('img/new/folder01.png') no-repeat;
+            float: left;
+            margin-top: 10px;
+        }
+        .divlft_dir {
+            width: 40px;height:40px; background: url('img/new/folder02.png') no-repeat;
+            float: left;
+            margin-top: 10px;
+        }
+        .divrht {
+            margin-top: 10px;
+            margin-left: 20px;
+            width: 200px;
+            height: auto;
+            line-height: 40px;
+            float: left;
+            font-size: 16px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #4E5969;
+        }
+    </style>
+    <style>
+        .spaceBetween {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            margin:auto;
+        }
+        .subordinate {
+            border-left: #efecec solid 1px;
+            padding: 0 4px;
+            display: flex;
+            align-items: center;
+        }
+        .subordinate p{
+            font-size:10px;
+            color:#0094ff
+        }
+        .DepartmentTree li {
+            list-style: none;
+            padding: 7px;
+            border-bottom: #efecec solid 1px
+        }
+        .DepartmentTree li:hover {
+            background: #f4f4f4
+        }
+        .DepartmentTree ul {
+            background: #ffffff;
+            padding: 0;
+            margin: 0;
+        }
+        .containerm {
+            overflow: auto;
+        }
+        .searchdiv {
+            position: relative;
+            padding: 7px;
+        }
+
+        .spaceBetween2 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            margin:auto;
+        }
+        .iptSearch {
+            width: 80%;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            border: 1px solid #d5d5d5;
+            border-radius: 5px;
+        }
+        .btnSearch {
+            width:18%;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            background-color: #0094ff;
+            border: 1px solid #0094ff;
+            border-radius: 10px;
+            color: #fff;
+        }
+
+        #divControllerSearchdiv {
+            position:absolute; top: 0px; right: 10px; z-index:99; width: 30px;height:30px;line-height: 30px; text-align: center; font-size:20px; border: 1px solid #efecec;
+            border-radius: 50%;
+        }
+
+        #div_search {
+            display: none;
+        }
+    </style>
+
+  </head>
+  <body>
+
+    <div id="divControllerSearchdiv">
+        <img id="crl_img" src="../../image/down_img.png" style="width: 30px; height: 30px;border-radius: 50%;" />
+    </div>
+
+    <div class="wrap" style="background: #FCFCFC;">
+        <div id="div_search" style="width: 100%; height:64px;background: #FCFCFC; padding: 18px 0px;">
+            <div id="rootDiv" class="myHeaderTitle" style="display:none;">
+              我的工作台
+            </div>
+
+            <div  style="padding: 7px;">
+                <div class="searchdiv">
+                    <div class="spaceBetween2">
+                        <input type="text" id="searchName" name="searchName" class="iptSearch" />
+                        <button class="btnSearch">搜索</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="containerm" style="padding: 0px;">
+            <div class="DepartmentTree">
+                <ul id="ulText">
+                    <li id="DepartmentLine">
+                        <div class="spaceBetween">
+                            <p style="display:none">0</p>
+                            <div class="divlft_dir"></div>
+                            <div class="divrht"></div>
+                            <div style="clear:both;"></div>
+                        </div>
+                    </li>
+        
+                </ul>
+            </div>
+        </div>
+        <div style="height: 60px;"></div>
+        <div class="footer">
+            <ul>
+              <li><a href="index.html"><p><i class="icons">&#xe65c;</i></p><h4>首页</h4></a></li>
+              <li><a href="history.html"><p><i class="icons">&#xe6d0;</i></p><h4>常用</h4></a></li>
+              <li><a href="my.html"><p><i class="icons">&#xe605;</i></p><h4>我的</h4></a></li>
+            </ul>
+        </div>
+    </div>
+
+    
+
+
+  </body>
+  <script src="js/jquery-1.7.js"></script>
+  <script src="js/checklogin.js"></script>
+  <script>
+    $(function(){
+
+        $("#divControllerSearchdiv").click(function(){
+            if($("#div_search").is(":hidden")){
+                $("#div_search").show();
+                $("#crl_img").attr("src", "../../image/up_img.png");
+            } else {
+                $("#div_search").hide();
+                $("#crl_img").attr("src", "../../image/down_img.png");
+            }
+            init_table_height();
+        });
+
+
+        function init_table_height() {
+            // 获取body的高度
+            let body_height = $("body").height();
+            let content_height = body_height - 165;
+            if($("#div_search").is(":hidden")){
+                content_height += 100;
+            }
+            $(".containerm").css("height", ""+content_height+"px");
+
+        }
+        init_table_height();
+
+        $(window).resize(function () {
+            // 获取body的高度
+            let body_height = $("body").height();
+            let content_height = body_height - 165;
+            
+
+            if($("#div_search").is(":hidden")){
+                content_height += 100;
+            }
+            $(".containerm").css("height", ""+content_height+"px");
+
+        });
+    });
+</script>
+<script>
+    let orginization = [];
+
+    $(function(){
+        $(".btnSearch").click(function(){
+            let searchName = $("#searchName").val().trim();
+            searchFun(searchName);
+        });
+    });
+
+    function searchFun(searchName) {
+        let token = window.sessionStorage.getItem("cur_token");
+        let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+        let efurl =server_base_url + "/template/getMobileTemplateTreeByUser?token="+token;
+
+        $("#ulText li").remove();//删除标签                
+
+        let childrenHtml = '<li id="DepartmentLine">';
+        childrenHtml += '<div class="spaceBetween">';
+        childrenHtml += ' <p style="display:none">0</p>';
+        childrenHtml += '<div class="divlft_dir"></div>';
+        childrenHtml += '<div class="divrht"></div>';
+        childrenHtml += '<div style="clear:both;"></div>';
+        childrenHtml += '</div>';
+        childrenHtml += '</li>';
+
+        $("#ulText").html(childrenHtml);
+
+
+        if(searchName!=="") {
+            efurl += "&searchname="+searchName;
+        }
+
+        $.ajax({
+            url: efurl,
+            type: 'post',
+            success: function (res) {
+                console.log("加载时----返回的结果为----res--->",  res);
+                orginization = res.data;
+                console.log("orginization---->", orginization);
+
+                let isDelDepartmentLine = false; // 是否删除  DepartmentLine  元素
+                for (let i =0; i < orginization.length; i++) {
+                    if (orginization[i].id === 0 || orginization[i].isRoot === true) {
+                        if (orginization[i].href !== undefined &&  orginization[i].href !== null &&  orginization[i].href !== "") {
+                            isDelDepartmentLine = true;
+                            let strhtml = '';
+                            strhtml+='<li id="Department">';
+                            strhtml+='<div class="spaceBetween">';
+                            strhtml+='<p style="display:none">'+orginization[i].id+'</p>';
+
+                            // if (orginization[i].isParent) {
+                            //     strhtml+='<div class="divlft_dir"></div>';
+                            // } else {
+                                strhtml+='<div class="divlft"></div>';
+                            // }
+                            
+                            strhtml+='<a href="content.html?id='+orginization[i].id+'&key='+orginization[i].name+'&tpl='+orginization[i].name+'.cel">';  
+                            strhtml+='<div class="divrht">'+orginization[i].name+'</div>';
+                            strhtml+='</a>';
+
+                            strhtml+='<div style="clear:both;"></div>';
+                            strhtml+='</div>';
+                            strhtml+='</li>';
+                            $("#ulText").append(strhtml);
+                        } else {
+                            let strhtml = "";
+                            strhtml+="<div class=\"spaceBetween\">";
+                            strhtml+="<p style=\"display:none\">0</p>";
+
+                            // strhtml+='<div class="divlft_dir"></div>';
+                            if (orginization[i].isParent) {
+                                strhtml+='<div class="divlft_dir"></div>';
+                            } else {
+                                strhtml+='<div class="divlft"></div>';
+                            }
+
+                            strhtml+='<div class="divrht">'+orginization[i].name+'</div>';
+    
+                            strhtml+='<div style="clear:both;"></div>';
+                            strhtml+='</div>';
+                        
+                            $("#DepartmentLine").html(strhtml);
+                        }
+                    }
+                }
+
+                if (isDelDepartmentLine) {
+                    $("#DepartmentLine").remove();
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+    $(function(){
+        let token = window.sessionStorage.getItem("cur_token");
+        let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+        let efurl =server_base_url + "/template/getMobileTemplateTreeByUser?token="+token;
+        $.ajax({
+            url: efurl,
+            type: 'post',
+            success: function (res) {
+                // console.log("加载时----返回的结果为----res--->",  res);
+                orginization = res.data;
+                console.log("orginization---->", orginization);
+
+                for (let i =0; i < orginization.length; i++) {
+                    if (orginization[i].id === 0) {
+                        let strhtml = "";
+                        strhtml+="<div class=\"spaceBetween\">";
+                        strhtml+="<p style=\"display:none\">0</p>";
+                        strhtml+='<div class="divlft_dir"></div>';
+                        strhtml+='<div class="divrht">'+orginization[i].name+'</div>';
+  
+                        strhtml+='<div style="clear:both;"></div>';
+                        strhtml+='</div>';
+                    
+                        $("#DepartmentLine").html(strhtml);
+
+                    }
+
+                }
+            },
+            error: function () {
+            }
+        });
+    })
+
+
+    $("#rootDiv").click(function(){
+        getchild("null");
+    });
+
+    //部门行点击有下级
+    $(document).on("click", '#DepartmentLine', function () {
+        //获取点击li的id
+        var uId = $(this).find("p:nth-child(1)").text();
+        getchild(uId);
+
+    });
+    //部门点击无下级
+    $(document).on("click", '#Department', function () {
+        //获取点击li的id
+        var uId = $(this).find("p:nth-child(1)").text();
+        console.log(uId)
+
+    });
+    
+    function getchild(id) {
+
+        $("#ulText li").remove();//删除标签
+        for (var i = 0; i < orginization.length; i++) {
+            if (orginization[i].parentid == id) {
+                //判断是否存在下级
+                if (WhetherLower(orginization[i].id)) {
+
+                    // <li id="DepartmentLine">
+                    //     <div class="spaceBetween">
+                    //         <p style="display:none">0</p>
+                    //         <div class="divlft_dir"></div>
+                    //         <div class="divrht">深圳市公司</div>
+                    //         <div style="clear:both;"></div>
+                    //     </div>
+                    // </li>
+
+                    let strhtml = '';
+                    strhtml+='<li id="DepartmentLine">';
+                    strhtml+='<div class="spaceBetween">';
+                    strhtml+='<p style="display:none">'+orginization[i].id+'</p>';
+
+                    if (orginization[i].isParent) {
+                        strhtml+='<div class="divlft_dir"></div>';
+                    } else {
+                        strhtml+='<div class="divlft"></div>';
+                    }
+                    
+
+                    strhtml+='<div class="divrht">'+orginization[i].name+'</div>';
+                    strhtml+='<div style="clear:both;"></div>';
+                    strhtml+='</div>';
+                    strhtml+='</li>';
+                    $("#ulText").append(strhtml);
+
+
+
+                    // $("#ulText").append("<li id='DepartmentLine'><div class= 'spaceBetween'><p style='display: none'>" + orginization[i].id + "</p><p>" + orginization[i].name + "</p><div class='subordinate'><svg t='1638176598933' class='icon' viewBox='0 0 1024 1024' version='1.1' p-id='2068' width='12' height='12'><path d='M384 725.333333c0 21.333333 17.066667 38.4 38.4 42.666667H640v-42.666667c0-21.333333 17.066667-38.4 38.4-42.666666H853.333333c25.6 0 42.666667 17.066667 42.666667 42.666666v170.666667c0 25.6-17.066667 42.666667-42.666667 42.666667h-170.666666c-25.6 0-42.666667-17.066667-42.666667-42.666667v-42.666667h-213.333333c-68.266667 0-123.733333-51.2-128-119.466666V341.333333H170.666667c-21.333333 0-38.4-17.066667-42.666667-38.4V128c0-25.6 17.066667-42.666667 42.666667-42.666667h341.333333c25.6 0 42.666667 17.066667 42.666667 42.666667v170.666667c0 25.6-17.066667 42.666667-42.666667 42.666666H384v128h256v-42.666666c0-21.333333 17.066667-38.4 38.4-42.666667H853.333333c25.6 0 42.666667 17.066667 42.666667 42.666667v170.666666c0 25.6-17.066667 42.666667-42.666667 42.666667h-170.666666c-25.6 0-42.666667-17.066667-42.666667-42.666667v-42.666666H384v170.666666z m426.666667 42.666667h-85.333334v85.333333h85.333334v-85.333333z m0-298.666667h-85.333334v85.333334h85.333334v-85.333334z m-341.333334-298.666666H213.333333v85.333333h256V170.666667z' p-id='2069' fill='#1296db'></path></svg><p>下级</p></div></div ></li >");
+                } else {
+                    // $("#ulText").append("<li id='Department'><div class= 'spaceBetween'><p>" + orginization[i].name + "</p><div class='subordinate'></div></div ></li >");
+                    let strhtml = '';
+                    strhtml+='<li id="Department">';
+                    strhtml+='<div class="spaceBetween">';
+                    strhtml+='<p style="display:none">'+orginization[i].id+'</p>';
+
+                    if (orginization[i].isParent) {
+                        strhtml+='<div class="divlft_dir"></div>';
+                        strhtml+='<div class="divrht">'+orginization[i].name+'</div>';
+
+                    } else {
+                        strhtml+='<div class="divlft"></div>';
+                        strhtml+='<a href="content.html?id='+orginization[i].id+'&key='+orginization[i].name+'&tpl='+orginization[i].name+'.cel">';  
+                        strhtml+='<div class="divrht">'+orginization[i].name+'</div>';
+                        strhtml+='</a>';
+                    }
+                      
+                    
+
+                    strhtml+='<div style="clear:both;"></div>';
+                    strhtml+='</div>';
+                    strhtml+='</li>';
+                    $("#ulText").append(strhtml);
+                
+                }
+            } else {
+                continue;
+            }
+        }
+    }
+
+    //是否存在下级
+    function WhetherLower(id) {
+        var sds = true;
+        for (var i = 0; i < orginization.length; i++) {
+            if (orginization[i].parentid == id) {
+                //newArray.push(orginization[i]);
+                return true;
+            } else {
+                continue;
+            }
+        }
+        return false;
+    }
+</script>
+
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysPrivateMapper">
+
+
+    <!-- 新增 -->
+    <insert id="save" parameterType="com.efreport.entity.SysPrivateKey">
+      INSERT INTO EF_SYS_PRIVATE(ID,LOCAL_ID,PRIVATE_KEY,COL_DEF1,COL_DEF2)
+          VALUES(#{id}, #{localId} ,#{privateKey},#{colDef1},#{colDef2})
+    </insert>
+    <!-- 获取所有日志记录 -->
+    <select id="list" resultType="com.efreport.entity.SysPrivateKey">
+      SELECT
+        a.id,
+        a.local_id as localId,
+        a.private_key as privateKey,
+        a.col_def1 as colDef1,
+        a.col_def2 as colDef2
+      FROM
+        EF_SYS_PRIVATE a
+    </select>
+
+    <delete id="del" parameterType="int">
+        DELETE FROM EF_SYS_PRIVATE WHERE local_id = #{id}
+    </delete>
+
+
+</mapper>

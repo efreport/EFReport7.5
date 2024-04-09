@@ -1,0 +1,151 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="adress=no">
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <style>
+      body {
+        background: #FCFCFC;
+      }
+      .myHeaderTitle {
+        width: 100%; height: 28px; line-height:28px; font-size: 20px;font-weight: 500;color: #1D2129;font-family: PingFang SC-Medium, PingFang SC;
+        text-align: center;
+      }
+      .div_index_list {
+        position: relative;
+        width: 85%;
+        height: auto;
+        margin: auto;
+        line-height: 60px;
+        border-bottom: 2px solid #F2F3F5;
+      }
+      .divlft {
+        width: 40px;height:40px; background: url('img/new/folder01.png') no-repeat;
+        float: left;
+        margin-top: 10px;
+      }
+      .divrht {
+        margin-top: 10px;
+        margin-left: 20px;
+        width: 200px;
+        height: 40px;
+        line-height: 40px;
+        float: left;
+        font-size: 16px;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #4E5969;
+      }
+    </style>
+  </head>
+  <body>
+  <div class="wrap">
+
+    <div style="width: 100%; height:64px;background: #FCFCFC; padding: 18px 0px;">
+      <div class="myHeaderTitle">
+        常用报表
+      </div>
+    </div>
+
+    <div id="default_div" style="width: 100%; padding: 20px 0px; height: 20px; line-height: 20px; color: #dcdcdc;text-align: center;">
+      暂无数据！
+    </div>
+
+    <ul class="vip_tab" style="display: none;">
+      <li class="active"><a href="#">常用报表</a></li>
+    </ul>
+
+    <div class="container" style="background-color: #FCFCFC;">
+      <div class="div_index_list" style="background-color: #FCFCFC;">
+        
+      </div>
+      <ul class="news_list" style="display: none;"></ul>
+    </div>
+
+    <div class="footer">
+      <ul>
+        <li><a href="index.html"><p><i class="icons">&#xe65c;</i></p><h4>首页</h4></a></li>
+        <li><a href="history.html"><p><i class="icons">&#xe6d0;</i></p><h4>常用</h4></a></li>
+        <li><a href="my.html"><p><i class="icons">&#xe605;</i></p><h4>我的</h4></a></li>
+      </ul>
+    </div>
+
+  </div>
+  </body>
+  <script src="js/jquery-1.7.js"></script>
+  <script src="js/checklogin.js"></script>
+  <script>
+    $(function() {
+      $(".footer ul li:eq(1)").addClass("active");
+
+      var $ul = $("ul.news_list");
+
+      if (window.localStorage.getItem("ef_report_mobile_history") != null) {
+        $("#default_div").hide();
+
+        let str = window.localStorage.getItem("ef_report_mobile_history");
+        let hisAry = JSON.parse(str);
+
+        // let obj = {key: param_key, tempId: tempId };
+
+        // for (let i = 0; i < hisAry.length; i++) {
+        //     let obj = hisAry[i];
+
+        //     $ul.append('<li><a href="content.html?his=true&key=' + obj.key + '&tpl=' + obj.tempId + '"><div class="img"><img src="img/item.png"/></div><div class="listinfo"><h3>' + key + '</h3></div></a></li>');
+
+        // }
+
+
+        var divEle = $(".div_index_list");
+        for (let i = 0; i < hisAry.length; i++) {
+            let obj = hisAry[i];
+            let htmlStr='';
+            htmlStr+='<div style="position: relative; width: 100%;height:60px;background: #FCFCFC;">';
+            htmlStr += '<a href="content.html?his=true&key=' + obj.key + '&id=' + obj.tempId +'">';
+            htmlStr += '<div class="divlft"></div>';
+            htmlStr += '<div class="divrht">';
+            htmlStr += obj.key;
+            htmlStr +='</div>';
+            htmlStr += '</a>';
+            htmlStr += '</div>';
+            divEle.append(htmlStr);
+            
+        }
+
+
+      }
+
+
+      // if(localStorage.length > 0) {
+       
+      // }
+
+      // for(var i=0;i<localStorage.length;i++){
+      //   var key = localStorage.key(i);
+
+      //   $ul.append('<li><a href="content.html?his=true&key=' + key + '&tpl=' + localStorage[key] + '"><div class="img"><img src="img/item.png"/></div><div class="listinfo"><h3>' + key + '</h3></div></a></li>');
+      // }
+
+      // var divEle = $(".div_index_list");
+      // for (var i = 0; i < localStorage.length; i++) {
+      //   var key = localStorage.key(i);
+      //   let htmlStr='';
+      //     htmlStr+='<div style="position: relative; width: 100%;height:60px;background: #FCFCFC;">';
+      //     htmlStr += '<a href="content.html?his=true&key=' + key + '&id=' + localStorage[key] +'">';
+      //     htmlStr += '<div class="divlft"></div>';
+      //     htmlStr += '<div class="divrht">';
+      //     htmlStr += key;
+      //     htmlStr +='</div>';
+      //     htmlStr += '</a>';
+      //     htmlStr += '</div>';
+      //   divEle.append(htmlStr);
+      // }
+
+    });
+  </script>
+</html>

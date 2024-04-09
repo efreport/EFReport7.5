@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="adress=no">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <link rel="stylesheet" href="../../js/css/json-viewer.css">
+    <style type="text/css">
+        .layui-input, .layui-textarea {
+            display: block;
+            width: 99%;
+            padding-left: 10px;
+        }
+
+        #btn_add {
+            width: 120px;
+            height: 32px;
+            background-image: url("../../images/new/btnadd.png");
+            background-repeat: no-repeat;
+            border: 0px !important;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .props {
+            width: 25%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .layui-form-select dl dd.layui-this {
+            background-color: #1e9fff;
+            color: #fff;
+        }
+
+        .hover{
+            background-color: #eee;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <div class="layui-tab" style="margin:0px;">
+        <ul class="layui-tab-title" id="mainTab">
+            <li class="layui-this" id="props">表格配置</li>
+            <li id="json">表头配置</li>
+        </ul>
+        <div class="layui-tab-content" style="height:400px;">
+            <div class="layui-tab-item layui-show">
+
+                <form class="layui-form" action="">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">选择数据源</label>
+                        <div class="layui-input-block">
+                            <select id="datasource" name="datasource" style="width:99%;">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">SQL</label>
+                        <div class="layui-input-block">
+                            <textarea id="sql" name="sql" placeholder="请输入内容" class="layui-textarea"
+                                      style="width:99%;height:350px;"></textarea>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="layui-tab-item">
+                <div style="height:35px;display: flex;align-items: center;justify-content: flex-start;">
+                    <div style="margin-right:10px;cursor:pointer;height:35px;width:100px;display: flex;background-color: #0094FF;border-radius: 4px;margin-left: 10px;"
+                         id="add">
+                        <div style="width:50px;display: flex;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                            <img src="../../images/design/pages/add.png" title="添加" class="add"
+                                 style="width: 25px;height: 25px;">
+                        </div>
+                        <div style="display:flex;align-items:center;color:white;width:50px;padding-left: 5px;">
+                            新增
+                        </div>
+                    </div>
+                    <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #FFFFFF;border-radius: 4px;border: 1px solid #F53F3F;"
+                         id="del">
+                        <div style="display:flex;width:50px;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                            <img src="../../images/design/pages/delete.png" class="delete" title="删除" style="width: 25px;height: 25px;">
+                        </div>
+                        <div style="display:flex;align-items:center;color:#F53F3F;width:50px;padding-left: 5px;">
+                            删除
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex;height:38px;margin-top: 5px;">
+                    <div class="props">列名</div>
+                    <div class="props">显示名</div>
+                    <div class="props">宽度</div>
+                    <div class="props">是否排序</div>
+                </div>
+                <div style="height:322px;border: 1px solid lightgray;margin-top: 5px;" id="container">
+                    <div style="display: flex;height:38px;margin-top: 5px;" id="example">
+                        <div class="props">
+                            <div>
+                                <input type="text" name="title" required lay-verify="required" placeholder="请输入列名"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="props">
+                            <div>
+                                <input type="text" name="title" required lay-verify="required" placeholder="请输入显示名"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="props">
+                            <div>
+                                <input type="text" name="title" required lay-verify="required" placeholder="请输入宽度"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="props">
+                            <div style="width:100%;">
+                                <select name="city" lay-verify="required"
+                                        style="height:38px;width:99%;border: 1px solid #eee;">
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<script src="../../js/layui.js"></script>
+
+<script type="text/javascript">
+    let layer;
+    let form;
+
+    function init(datasources, option) {
+        $.each(datasources, function (i, e) {
+            $("#datasource").append("<option value='" + e + "'>" + e + "</option>");
+        })
+
+        $('#add').unbind().bind('click', function () {
+            let clone = $('#example').clone();
+            $('#container').append(clone);
+        })
+
+        $('#del').unbind().bind('click', function () {
+            $('.hover').remove();
+        })
+
+        $('input').unbind().bind('focus' , function(){
+            $('#container').children().removeClass('hover');
+            $(this).parent().parent().parent().addClass('hover');
+        })
+
+        if (option.datasource != undefined) { //配置过表格属性
+            let datasource = option.datasource;
+            let sql = option.sql;
+            $('#datasource').val(datasource).prop("selected", true);
+            $('#sql').val(sql);
+            let columns = option.columns; //配置表头
+            $.each(columns, function (i, e) {
+                if(i == 0){
+                    let div = $('#example');
+                    let props = div;
+                    let propsDiv = props.children();
+                    $.each(propsDiv, function (ii, ee) {
+                        if (ii == 0) { //列名
+                            $(ee).find('input').val(e.id);
+                        } else if (ii == 1) { //显示名
+                            $(ee).find('input').val(e.name);
+                        } else if (ii == 2) { //列宽
+                            $(ee).find('input').val(e.width);
+                        } else { //是否排序
+                            $(ee).find('select').val(e.sort).prop('selected', true);
+                        }
+                    })
+                }else{
+                    let div = $('#example').clone();
+                    $('#container').append(div);
+                    div.attr("id" , "example_" + i)
+                    let props = div;
+                    let propsDiv = props.children();
+                    $.each(propsDiv, function (ii, ee) {
+                        if (ii == 0) { //列名
+                            $(ee).find('input').val(e.id);
+                        } else if (ii == 1) { //显示名
+                            $(ee).find('input').val(e.name);
+                        } else if (ii == 2) { //列宽
+                            $(ee).find('input').val(e.width);
+                        } else { //是否排序
+                            $(ee).find('select').val(e.sort).prop('selected', true);
+                        }
+                    })
+                    $('input').unbind().bind('focus' , function(){
+                        $('#container').children().removeClass('hover');
+                        $(this).parent().parent().parent().addClass('hover');
+                    })
+                }
+
+            })
+        }
+
+        layui.use('form', function () {
+            form = layui.form;
+            form.render();
+        });
+    }
+
+    layui.use('element', function () {
+        let element = layui.element;
+        $('#mainTab').on('click', function (title) {
+            form.render();
+        });
+    });
+
+
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+    /**
+     * Created by whj on 2019/9/10.
+     */
+    let plugin = {
+        optionJson: {},
+        util: {
+            isPositiveNumber: function (num) { //判断是否是正整数
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                return g.test(num);
+            },
+            isNoNegativeNumber: function (num) {
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) {
+                    return true;
+                } else {
+                    if (num == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            isPercentNumber: function (num) { //是否是百分整数
+                var g = new RegExp(/^\d+%$/); //不包含小数
+                //new RegExp(/^\d+\.{0,1}\d+%$/); //包含小数
+                if (g.test(num)) {
+                    return true;
+                } else {
+                    if (num == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            isRotateNumber: function (num) {
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                var g1 = /^-[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) { //是正整数
+                    if (num <= 90) {
+                        return true;
+                    } else {
+                        layer.alert("请输入-90到90间整数!");
+                        return false;
+                    }
+                } else if (g1.test(num)) {
+                    if (num >= -90) {
+                        return true;
+                    } else {
+                        layer.alert("请输入-90到90间整数!");
+                        return false;
+                    }
+                } else if (num == 0) {
+                    return true;
+                }
+            },
+        },
+        bind: function () {
+
+        },
+        init: function () {
+
+        },
+        initTheme: function (theme) {
+
+        },
+        initByJson: function (json) {
+
+        },
+        initStyle: function (json) {
+
+        }
+    }
+
+    function getOptions() {
+        let option = {};
+        option.datasource = $('#datasource').val();
+        option.sql = $('#sql').val();
+        let columns = [];
+
+        let children = $('#container').children(); //获取表头配置内容
+        $.each(children, function (i, e) {
+            let column = {};
+            let props = $(e).children();
+            let propsDiv = props.children();
+            $.each(propsDiv, function (ii, ee) {
+                if (ii == 0) { //列名
+                    column.id = $(ee).find('input').val();
+                } else if (ii == 1) { //显示名
+                    column.name = $(ee).find('input').val();
+                } else if (ii == 2) { //列宽
+                    column.width = $(ee).find('input').val();
+                } else { //是否排序
+                    column.sort = $(ee).find('select').val();
+                }
+            })
+            columns.push(column);
+        })
+
+        option.columns = columns;
+        return option;
+    }
+</script>
+</html>

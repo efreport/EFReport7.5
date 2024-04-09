@@ -1,0 +1,95 @@
+html{
+    width:100%;
+    height:100%;
+    overflow: hidden;
+}
+
+body{
+    width: 100%;
+    height: 100%;
+}
+
+#report{
+    height:100%;
+    width:100%;
+    position: relative;
+}
+
+
+.content{
+    position:fixed;
+    top:40px;
+    overflow: auto;
+    width:100%;
+    height:100%;
+}
+
+.content .x-data-bg_block{
+    position: relative;
+    top:0px;
+    left:0px;
+    overflow:auto;
+}
+
+.x-data-bg_block::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.x-data-bg_block::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #d5d5d5;
+}
+
+
+.shadow{
+    width:100%;
+    height:100%;
+    top: 0;
+    left: 0;
+    position:absolute;
+    vertical-align: middle;
+    background-color:#F0F0F0;
+    opacity:0.6;
+    display:none;
+}
+.shadow img{
+    position: absolute;
+    top: 42%;
+    left: 50%;
+}
+
+
+.subsheetDiv::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.subsheetDiv::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #d5d5d5;
+}
+
+.layui-anim::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.layui-anim::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #d5d5d5;
+}
+
+.scroll-body::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.scroll-body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #d5d5d5;
+}

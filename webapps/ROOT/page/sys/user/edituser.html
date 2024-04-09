@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>盈帆数据报表-编辑用户</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../../lib/layui-v2.7.6/css/layui.css" media="all">
+    <style>
+        .center {
+            position: relative;
+            width: 100%;
+            height: 80px;
+        }
+        .center .item {
+            width: 80%;
+            text-align: center;
+            margin: auto;
+            margin-top: 30px;
+        }
+        .redspan {
+            color: red;
+        }
+        .icon {display:inline-block;width:33px;height:22px; margin-top: 5px;}
+        .icon-4 {background:url(../../../imgs/icon-login.png) no-repeat 0 -43px;position:absolute;right:-10px;cursor:pointer;}
+        .icon-5 {background:url(../../../imgs/icon-login.png) no-repeat -55px -43px;}
+
+
+        /* 修改radio选中状态的颜色信息 */
+        .layui-form-radio:hover *, .layui-form-radioed, .layui-form-radioed > i {
+            color: #0094FF !important;
+        }
+
+        .layui-form-checked[lay-skin=primary] i {
+            border-color: #0094FF!important;
+            background-color: #0094FF;
+        }
+
+        /* .layui-form-select .layui-input {
+            background-color: #f2f3f5 !important;
+        } */
+        .layui-form-select dl dd.layui-this {
+            background-color: #0094FF !important;
+        }
+        .layui-form-select dl dd:hover {
+            background-color: #0094FF !important;
+        }
+
+        .layui-form-onswitch {
+            border-color: #1E9FFF !important;
+            background-color: #1E9FFF !important;
+        }
+
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 1px;
+        }
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+            background: #d5d5d5;
+        }
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+            border-radius: 10px;
+            background: #ffffff;
+        }
+
+    </style>
+</head>
+<body>
+    <div style="padding: 20px;">
+        <form class="layui-form" lay-filter="user">
+            <input type="hidden" id="id" name="id" />
+
+            <div style="position: relative; width: 752px; height: auto; margin: auto;">
+
+                <div style="width: 250px; float: left;">
+                  <div class="layui-form-item">
+                    <span class="redspan">*</span>用户名
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 240px;">
+                        <input type="text" name="name" placeholder="请输入姓名" value="" autocomplete="off" class="layui-input" lay-verify="required">
+                    </div>
+                  </div>
+                </div>
+                <div style="width: 250px; float: left;">
+                    <div class="layui-form-item">
+                      <span class="redspan">*</span>账号
+                    </div>
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline" style="width: 240px;">
+                          <input type="text" name="account" placeholder="请输入账号" value="" autocomplete="off" class="layui-input" lay-verify="required">
+                      </div>
+                    </div>
+                </div>
+                <div style="width: 250px; float: left;">
+                    <div class="layui-form-item">
+                      <span class="redspan">*</span>密码
+                    </div>
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline" style="width: 240px;">
+                          <input type="password" name="password" placeholder="" class="layui-input" style="display:inline !important; width: 210px !important;">
+                          <span class="bind-password icon icon-4"></span>
+                      </div>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div style="position: relative; width: 752px; height: 10px; margin: auto;"></div>
+            <div style="position: relative; width: 752px; height: auto; margin: auto;">
+
+                <div style="width: 250px; float: left;">
+                    <div class="layui-form-item">
+                      <span class="redspan">*</span>用户类型
+                    </div>
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline" style="width: 240px;">
+                        <select id="isDesign" name="isDesign" lay-filter="selectDesign">
+                            <option value="1">管理员</option>
+                            <option value="2">设计器管理员</option>
+                            <option value="3">普通预览用户</option>
+                            <option value="4">设计器用户</option>
+                        </select>
+                      </div>
+                    </div>
+                </div>
+
+                <div style="width: 250px; float: left;">
+                    <div class="layui-form-item">
+                      部门
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline" style="width: 240px;">
+                            <input type="hidden" name="deptId">
+                            <input type="text" name="dept_name" lay-verify="required" placeholder="点击选择部门" class="layui-input" readonly="readonly" autocomplete="off">
+                            <div id="div_dept_tree" style="position: absolute; display: none; z-index: 9999; background-color: #F5F7F8;">
+                                <div id="department_tree" class="demo-tree demo-tree-box" style="width: 190px;height: 160px; overflow-y: auto;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 250px; float: left;">
+                    <div class="layui-form-item" id="role_label">
+                      <span class="redspan">*</span>角色
+                    </div>
+                    <div class="layui-form-item">
+                        <div id="role_input" class="layui-input-inline" style="width: 240px;">
+                            <input type="hidden" name="roleId">
+                            <input type="text" name="role_name" lay-verify="required" placeholder="点击选择角色" class="layui-input" readonly="readonly" autocomplete="off">
+                            <div id="div_role_tree" style="position: absolute; display: none; z-index: 9999; background-color: #F5F7F8;">
+                                <div id="role_tree" class="demo-tree demo-tree-box" style="width: 190px;height: 160px; overflow-y: auto;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div style="clear: both;"></div>
+            </div>
+            <div style="position: relative; width: 752px; height: 10px; margin: auto;"></div>
+
+            <div style="position: relative; width: 752px; height: auto; margin: auto;">
+                <div style="width: 250px; float: left;">
+                    <div class="layui-form-item">
+                      电子邮箱
+                    </div>
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline" style="width: 240px;">
+                          <input type="text" name="email" placeholder="请输入电子邮件" value="" class="layui-input" lay-verify="required" autocomplete="off">
+                      </div>
+                    </div>
+                </div>
+                <div style="width: 250px; float: left;">
+                    <div class="layui-form-item">
+                      微信
+                    </div>
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline" style="width: 240px;">
+                          <input type="text" name="wechat" placeholder="请输入微信" value="" class="layui-input" lay-verify="required" autocomplete="off">
+                      </div>
+                    </div>
+                </div>
+                <div style="width: 250px; float: left;">
+                    <div class="layui-form-item">
+                      钉钉
+                    </div>
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline" style="width: 240px;">
+                          <input type="text" name="talkding" placeholder="请输入钉钉" value="" class="layui-input" lay-verify="required" autocomplete="off">
+                      </div>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div style="position: relative; width: 755px; height: 10px; margin: auto;"></div>
+            <div style="position: relative; width: 755px; height: auto; margin: auto;">
+                <div style="width: 250px; float: left;">
+                    <div class="layui-form-item">
+                      <span class="redspan">*</span>使用状态
+                    </div>
+                    <div class="layui-form-item">
+                      <div class="layui-input-inline" style="width: 240px;">
+                        <!-- <input type="radio" name="locked" value="1" title="停用" autocomplete="off">
+                        <input type="radio" name="locked" value="0" title="正常" checked="checked" autocomplete="off"> -->
+                        <input type="hidden" name="locked" value="0" />
+                        <input type="checkbox" id="locked" lay-skin="switch" lay-filter="locked-switch" lay-text="">
+                      </div>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+
+            <div class="layuimini-main">
+                <div class="layui-form layuimini-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" style="display: none;">*是否受限</label>
+                        <div class="layui-input-inline" style="display: none;">
+                            <input type="radio" name="isLimited" value="1" title="是">
+                            <input type="radio" name="isLimited" value="0" title="否">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+<script src="../../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script src="../../../js/common.js" charset="utf-8"></script>
+</body>
+</html>
+<script>
+    var form;
+    var tree;
+    layui.use(['tree', 'util', 'form'], function(){
+        form = layui.form;
+         tree = layui.tree;
+         var layer = layui.layer
+        ,util = layui.util;
+        
+
+        let loaddept = function() {
+            // 加载部门树
+            let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+            let token = window.sessionStorage.getItem("cur_token");
+            // console.log("当前token--->", token);
+            let efurl = server_base_url + "/department/list?token=" + token;
+            $.ajax({
+                url: efurl,
+                type: 'post',
+                success: function (res) {
+                    // console.log("部门数据结果集为：res--->",  res);
+                    initDeptTree(res.departments);
+                },
+                error: function () {
+                }
+            });
+        }
+        loaddept();
+        let initDeptTree = function(data1) {
+            //常规用法
+            tree.render({
+                elem: '#department_tree' //默认是点击节点可进行收缩
+                ,data: data1
+                ,accordion: true
+                ,click: function(obj){
+                    // console.log("当前点击的节点数据--->", obj.data); // 得到当前点击的节点数据
+                    // console.log("得到当前节点的展开状态：open、close、normal--->", obj.state); // 得到当前节点的展开状态：open、close、normal
+                    // console.log("当前节点-->", obj.elem); // 得到当前节点元素
+                    // console.log("子节点：-->", obj.data.children); //当前节点下是否有子节点
+                    if (obj.data.children === undefined || obj.data.children === "" || obj.data.children.length === 0) {
+                        // 没有子节点，则选择的就是当前节点了
+                        $("input[name='deptId']").val(obj.data.id);
+                        $("input[name='dept_name']").val(obj.data.title);
+                        $("#div_dept_tree").hide();
+                    }
+                }
+            });
+        }
+        let loadrole = function() {
+            // 加载权限树
+            let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+            let token = window.sessionStorage.getItem("cur_token");
+            // console.log("当前token--->", token);
+            let efurl = server_base_url + "/role/list?token=" + token;
+            $.ajax({
+                url: efurl,
+                type: 'get',
+                success: function (res) {
+                    // console.log("角色数据结果集为：res--->",  res);
+                    let ary = res.data;
+                    for (let i = 0; i < ary.length; i++) {
+                        ary[i].title = ary[i].name;
+                    }
+                    let roleStr = $("input[name='roleId']").val();
+                    // console.log("ajax--roleStr-->", roleStr);
+                    if (roleStr !== "") {
+                        let idArys = roleStr.split(",");
+                        // console.log("ajax---idArys--->", idArys);
+                        // console.log("ajax---ary--->", ary);
+                        let nameArys = [];
+                        for (let i = 0; i < ary.length; i++) {
+                            for (let j = 0; j < idArys.length; j++) {
+                                if (ary[i].id === parseInt(idArys[j])) {
+                                    ary[i].checked = true;
+                                    // nameArys.push(ary[i].name);
+                                }
+                            }
+                        }
+                        // $("input[name='role_name']").val(nameArys.join(","));
+                    }
+                    initRoleTree(ary);
+                },
+                error: function () {
+                }
+            });
+            $("#role_label").hide();
+            $("#role_input").hide();
+        }
+        loadrole();
+        let initRoleTree = function(roledata) {
+            //常规用法
+            tree.render({
+                elem: '#role_tree' //默认是点击节点可进行收缩
+                ,data: roledata
+                ,showCheckbox: true
+                ,accordion: true
+                ,oncheck: function(obj){
+                    // console.log(obj.data); // 得到当前点击的节点数据
+                    // console.log("节点是否被选中-->", obj.checked); // 节点是否被选中
+                    // console.log("当前节点元素-->", obj.elem); // 得到当前节点元素
+                    let roleidstr = $("input[name='roleId']").val();
+                    let rolenamestr = $("input[name='role_name']").val();
+                    if (obj.checked === true) {
+                        let id = obj.data.id;
+                        let name = obj.data.name;
+                        let idAry = [];
+                        if (roleidstr.length > 0) {
+                            idAry = roleidstr.split(",");
+                            idAry.push(id);
+                        } else {
+                            idAry.push(id);
+                        }
+                        roleidstr = idAry.join(",");
+                        $("input[name='roleId']").val(roleidstr);
+
+                        let nameAry = [];
+                        if (rolenamestr.length > 0) {
+                            nameAry = rolenamestr.split(",");
+                            nameAry.push(name);
+                        } else {
+                            nameAry.push(name);
+                        }
+                        rolenamestr = nameAry.join(",");
+                        $("input[name='role_name']").val(rolenamestr);
+                    } else {
+                        let id = obj.data.id;
+                        let name = obj.data.name;
+                        let idAry = [];
+                        if (roleidstr.length > 0) {
+                            idAry = roleidstr.split(",");
+                            let newIdAry = [];
+                            for (let i = 0; i < idAry.length; i++) {
+                                if (parseInt(idAry[i]) === id) {
+                                    continue;
+                                }
+                                newIdAry.push(idAry[i]);
+                            }
+                            idAry = newIdAry;
+                        }
+                        roleidstr = idAry.join(",");
+                        $("input[name='roleId']").val(roleidstr);
+
+                        let nameAry = [];
+                        if (rolenamestr.length > 0) {
+                            nameAry = rolenamestr.split(",");
+                            let newNameAry = [];
+                            for (let i = 0; i < nameAry.length; i++) {
+                                if (nameAry[i] === name) {
+                                    continue;
+                                }
+                                newNameAry.push(nameAry[i]);
+                            }
+                            nameAry = newNameAry;
+                        }
+                        rolenamestr = nameAry.join(",");
+                        $("input[name='role_name']").val(rolenamestr);
+                    }
+                }
+            });
+        }
+        
+        form.on("select(selectDesign)", function(data) {
+            // alert($("#isDesign").val());
+            let val = $("#isDesign").val();
+            if (val === "3") {
+                $("#role_label").show();
+                $("#role_input").show();
+            } else {
+                $("#role_label").hide();
+                $("#role_input").hide();
+            }
+        });
+
+        form.on("switch(locked-switch)", function(data){
+            // console.log("点击了状态------------data-->", data);
+            // console.log("this--->", $(this));
+            let val = $(this).prev().val();
+            // console.log("val----->", val);
+            if (parseInt(val) === 0) {
+                $(this).prev().val(1);
+            } else {
+                $(this).prev().val(0);
+            }
+            // console.log("val----->", $(this).prev().val());
+        });
+
+        $('.bind-password').on('click', function () {
+            if ($(this).hasClass('icon-5')) {
+                $(this).removeClass('icon-5');
+                $("input[name='password']").attr('type', 'password');
+            } else {
+                $(this).addClass('icon-5');
+                $("input[name='password']").attr('type', 'text');
+            }
+        });
+   
+   });
+
+    $(function(){
+        $("input[name='dept_name']").click(function(e){
+            // select:
+            //默认状态样式： layui-unselect layui-form-select
+            //已显示下拉选项样式： layui-unselect layui-form-select layui-form-selected layui-form-selectup
+            // 当点击部门input控件时，隐藏所有的下拉列表选项
+            $(".layui-unselect").each(function(index, item){
+                $(this).removeClass("layui-form-selected");
+                $(this).removeClass("layui-form-selectup");
+            });
+
+            $("#div_role_tree").hide();
+            $("#div_dept_tree").show();
+            e.stopPropagation();
+            $("body").click(function(e) {
+                var elem = e.target;
+                while (elem) {
+                    if (elem.tagName == 'DIV' && elem.id === "div_dept_tree") {
+                        return;
+                    }
+                    elem = elem.parentNode;
+                }
+                $("#div_dept_tree").hide();
+            });
+        });
+        $("input[name='role_name']").click(function(e){
+            // select:
+            //默认状态样式： layui-unselect layui-form-select
+            //已显示下拉选项样式： layui-unselect layui-form-select layui-form-selected layui-form-selectup
+            // 当点击部门input控件时，隐藏所有的下拉列表选项
+            $(".layui-unselect").each(function(index, item){
+                $(this).removeClass("layui-form-selected");
+                $(this).removeClass("layui-form-selectup");
+            });
+            $("#div_dept_tree").hide();
+            $("#div_role_tree").show();
+            $(".layui-icon-file").hide();
+            e.stopPropagation();
+            $("body").click(function(e) {
+                var elem = e.target;
+                while (elem) {
+                    if (elem.tagName == 'DIV' && elem.id === "div_role_tree") {
+                        return;
+                    }
+                    elem = elem.parentNode;
+                }
+                $("#div_role_tree").hide();
+                $(".layui-icon-file").show();
+            });
+        });      
+    });
+
+    function getPage() {
+        let id = $("input[name='id']").val();
+        if (id === "") {
+            id = "0";
+        }
+        // 姓名
+        let name = $("input[name='name']").val();
+        // 账号
+        let account = $("input[name='account']").val();
+        // 密码
+        let password = $("input[name='password']").val();
+    
+        let locked = "";
+        // $("input[name='locked']").each(function(idx, item) {
+        //     // console.log("idx--->", idx);
+        //     // console.log("item--->", item);
+        //     if (item.checked === true) {
+        //         locked = item.value;
+        //     }
+        // });
+        locked = $("input[name='locked']").val();
+        let deptId = $("input[name='deptId']").val();
+        let dept_name = $("input[name='dept_name']").val();
+    
+        let roleId = $("input[name='roleId']").val();
+        let roleary = roleId.split(",");
+        let new_role_ary = removeRepeatData(roleary);
+        roleId = new_role_ary.join(",");
+        let role_name = $("input[name='role_name']").val();
+        let email = $("input[name='email']").val();
+        let wechat = $("input[name='wechat']").val();
+        let talkding = $("input[name='talkding']").val();
+        let isLimited = "";
+        $("input[name='isLimited']").each(function(idx, item) {
+            // console.log("idx--->", idx);
+            // console.log("item--->", item);
+            if (item.checked === true) {
+                isLimited = item.value;
+            }
+        });
+        let isDesign = $("[name='isDesign']").val();
+    
+        let obj = {
+            id: id,
+            name: name,
+            account: account,
+            password: password,
+            locked: locked,
+            deptId: deptId,
+            dept_name: dept_name,
+            roleId: roleId,
+            role_name: role_name,
+            email: email,
+            wechat: wechat,
+            talkding: talkding,
+            isLimited: isLimited,
+            isDesign: isDesign
+        };
+        return JSON.stringify(obj);
+    }
+    function setForm(jsonstr) {
+        // debugger;
+        let objForm = JSON.parse(jsonstr);
+        // console.log("objForm--20221116----->", objForm);
+        if (objForm.id>0) {
+            $("#span_pwd_redspan").hide();
+            $("input[name='password']").attr("placeholder", "密码不输入则不修改");
+        }
+        $("input[name='id']").val(objForm.id);
+        $("input[name='name']").val(objForm.name);
+    
+        $("input[name='account']").val(objForm.account);
+        $("input[name='password']").val(objForm.password);
+
+        // $("input[name='locked']").each(function(idx, item) {
+        //     if (item.value === objForm.isLocked) {
+        //         item.checked = true;
+        //     }
+        // });
+
+
+
+        $("input[name='locked']").val(objForm.isLocked);
+        if (objForm.isLocked === "0") {
+            $("#locked").attr("checked", "");
+        } else {
+            $("#locked").removeAttr("checked");
+        } 
+
+        
+
+        $("input[name='deptId']").val(objForm.departmentId);
+        $("input[name='dept_name']").val(objForm.departmentName);
+        $("input[name='email']").val(objForm.email);
+        $("input[name='wechat']").val(objForm.wechat);
+    
+    
+        $("input[name='talkding']").val(objForm.talkding);
+        $("[name='isDesign']").val(objForm.userType);
+        if (objForm.id>0) {
+            $("[name='isDesign']").attr("disabled", "disabled");
+            form.render("select");
+        }
+        $("input[name='isLimited']").each(function(idx, item) {
+            if (item.value === objForm.isFrozen) {
+                // console.log("相等的item--->", item);
+                $(this).attr("checked", "checked");
+            }
+        });
+        $("input[name='roleId']").val(objForm.roleId);
+
+        if (objForm.userType === 3) {
+            // console.log("objForm.userType---20221207-->", objForm.userType);
+            $("#role_label").show();
+            $("#role_input").show();
+        } else {
+            $("#role_label").hide();
+            $("#role_input").hide();
+        }
+
+        let setForm_timer = window.setInterval(function(){
+            form.render();
+            loadrole2();
+            window.clearInterval(setForm_timer);
+        }, 1000);
+        
+    }
+
+    let loadrole2 = function() {
+            // 加载权限树
+            let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+            let token = window.sessionStorage.getItem("cur_token");
+            // console.log("当前token--->", token);
+            let efurl = server_base_url + "/role/list?token=" + token;
+            $.ajax({
+                url: efurl,
+                type: 'get',
+                success: function (res) {
+                    // console.log("角色数据结果集为：res--->",  res);
+                    let ary = res.data;
+                    for (let i = 0; i < ary.length; i++) {
+                        ary[i].title = ary[i].name;
+                    }
+                    let roleStr = $("input[name='roleId']").val();
+                    // console.log("ajax--roleStr-->", roleStr);
+                    if (roleStr !== "") {
+                        let idArys = roleStr.split(",");
+                        // console.log("ajax---idArys--->", idArys);
+                        // console.log("ajax---ary--->", ary);
+                        let nameArys = [];
+                        for (let i = 0; i < ary.length; i++) {
+                            for (let j = 0; j < idArys.length; j++) {
+                                if (ary[i].id === parseInt(idArys[j])) {
+                                    ary[i].checked = true;
+                                    // nameArys.push(ary[i].name);
+                                }
+                            }
+                        }
+                        // $("input[name='role_name']").val(nameArys.join(","));
+                    }
+                    initRoleTree2(ary);
+                },
+                error: function () {
+                }
+            });
+        }
+        
+        let initRoleTree2 = function(roledata) {
+            //常规用法
+            tree.render({
+                elem: '#role_tree' //默认是点击节点可进行收缩
+                ,data: roledata
+                ,showCheckbox: true
+                ,accordion: true
+                ,oncheck: function(obj){
+                    // console.log(obj.data); // 得到当前点击的节点数据
+                    // console.log("节点是否被选中-->", obj.checked); // 节点是否被选中
+                    // console.log("当前节点元素-->", obj.elem); // 得到当前节点元素
+                    let roleidstr = $("input[name='roleId']").val();
+                    let rolenamestr = $("input[name='role_name']").val();
+                    if (obj.checked === true) {
+                        let id = obj.data.id;
+                        let name = obj.data.name;
+                        let idAry = [];
+                        if (roleidstr.length > 0) {
+                            idAry = roleidstr.split(",");
+                            idAry.push(id);
+                        } else {
+                            idAry.push(id);
+                        }
+                        roleidstr = idAry.join(",");
+                        $("input[name='roleId']").val(roleidstr);
+
+                        let nameAry = [];
+                        if (rolenamestr.length > 0) {
+                            nameAry = rolenamestr.split(",");
+                            nameAry.push(name);
+                        } else {
+                            nameAry.push(name);
+                        }
+                        rolenamestr = nameAry.join(",");
+                        $("input[name='role_name']").val(rolenamestr);
+                    } else {
+                        let id = obj.data.id;
+                        let name = obj.data.name;
+                        let idAry = [];
+                        if (roleidstr.length > 0) {
+                            idAry = roleidstr.split(",");
+                            let newIdAry = [];
+                            for (let i = 0; i < idAry.length; i++) {
+                                if (parseInt(idAry[i]) === id) {
+                                    continue;
+                                }
+                                newIdAry.push(idAry[i]);
+                            }
+                            idAry = newIdAry;
+                        }
+                        roleidstr = idAry.join(",");
+                        $("input[name='roleId']").val(roleidstr);
+
+                        let nameAry = [];
+                        if (rolenamestr.length > 0) {
+                            nameAry = rolenamestr.split(",");
+                            let newNameAry = [];
+                            for (let i = 0; i < nameAry.length; i++) {
+                                if (nameAry[i] === name) {
+                                    continue;
+                                }
+                                newNameAry.push(nameAry[i]);
+                            }
+                            nameAry = newNameAry;
+                        }
+                        rolenamestr = nameAry.join(",");
+                        $("input[name='role_name']").val(rolenamestr);
+                    }
+                }
+            });
+        }
+        
+
+    </script>

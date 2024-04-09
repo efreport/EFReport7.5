@@ -1,0 +1,37 @@
+.sheet {
+    height:22px;
+    width:100%;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    background: url("../../image/report/8.gif") repeat-x scroll 0 0 transparent;
+    display:none;
+}
+
+.i-sheet{
+    display: inline-block;
+    letter-spacing: normal;
+}
+
+.sheet_span{
+    text-align: center;
+    cursor: pointer!important;
+    float:left;
+    height:22px;
+    line-height: 22px;
+    font-size: 12px;
+    font-family: Courier New;
+    background: url("../../image/report/8.gif") repeat-x scroll 0 0 transparent;
+    border-right:1px solid lightgrey;
+}
+
+.sheet_ck{
+    background: url("../../image/report/9.gif") repeat-x scroll 0 0 transparent;
+}
+
+/**
+关键字样式
+**/
+.searchTd{
+  background-color: #0094FF;
+}

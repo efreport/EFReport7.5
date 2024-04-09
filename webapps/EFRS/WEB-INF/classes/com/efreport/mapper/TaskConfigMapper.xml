@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.TaskConfigMapper">
+  <!-- 查询所有 -->
+  <select id="queryAll" resultType="com.efreport.entity.TaskConfig" parameterType="int">
+    SELECT id, name, rule, roles, users , companyid FROM SYS_TASK_CONFIG
+  </select>
+
+  <select id="queryByCompanyId" resultType="com.efreport.entity.TaskConfig" parameterType="int">
+    SELECT id, name, rule, roles, users , companyid FROM SYS_TASK_CONFIG WHERE companyid = #{companyId}
+  </select>
+
+  <!-- 查询单条纪录 -->
+  <select id="load" parameterType="Integer" resultType="com.efreport.entity.TaskConfig">
+  <![CDATA[
+    SELECT id,
+           name,
+           rule,
+           roles,
+           users,
+           companyid
+      FROM SYS_TASK_CONFIG
+     WHERE id = #{id}
+  ]]>
+  </select>
+
+  <!-- 新增 -->
+  <insert id="create" parameterType="com.efreport.entity.TaskConfig" useGeneratedKeys="true" keyProperty="id">
+  <![CDATA[
+    INSERT INTO SYS_TASK_CONFIG (name, rule, roles, users , companyid)
+    VALUES (#{name}, #{rule}, #{roles}, #{users},#{companyId})
+  ]]>
+  </insert>
+
+  <!-- 修改 -->
+  <update id="modify" parameterType="com.efreport.entity.TaskConfig">
+  <![CDATA[
+    UPDATE SYS_TASK_CONFIG
+       SET name = #{name},
+           rule = #{rule},
+           roles = #{roles},
+           users = #{users}
+     WHERE id = #{id}
+  ]]>
+  </update>
+
+  <!-- 删除 -->
+  <delete id="remove" parameterType="Integer">
+  <![CDATA[
+    DELETE FROM SYS_TASK_CONFIG WHERE id = #{id}
+  ]]>
+  </delete>
+
+  <!-- 校验名字是否唯一 -->
+  <select id="query" resultType="Integer" parameterType="com.efreport.entity.TaskConfig">
+    SELECT COUNT(1)
+      FROM SYS_TASK_CONFIG
+      WHERE name = #{name} and companyid = #{companyId}
+      <if test="id != 0">
+      AND id != #{id}
+      </if>
+  </select>
+
+  <select id="getTaskChangeFlag" resultType="string">
+    SELECT hasChange from TASK_FLAG WHERE NAME = 'flag'
+  </select>
+
+  <update id="changeTaskFlag" parameterType="string">
+    UPDATE TASK_FLAG SET hasChange=#{hasChange} WHERE NAME = 'flag'
+  </update>
+
+
+</mapper>

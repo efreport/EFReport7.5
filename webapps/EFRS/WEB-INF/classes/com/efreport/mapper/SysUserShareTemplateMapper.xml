@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysUserShareTemplateMapper">
+    <!-- 根据用户ID查询所有被分享的模板 -->
+    <select id="list" resultType="com.efreport.entity.SysUserShareTemplate" parameterType="int">
+        SELECT
+        a.id,
+        a.templateid as templateId,
+        a.shareduserid as sharedUserId ,
+        a.userid as userId ,
+        a.isedit as isEdit ,
+        b.name as templateName,
+        c.name  as userName
+        FROM
+        SYS_USER_SHARE_TEMPLATE  a
+        left join
+        SYS_TEMPLATE  b
+        on a.templateid= b.id
+        left join EF_SYS_USER c
+        on a.shareduserid= c.id
+        where a.shareduserid = #{userId}
+
+    </select>
+
+    <!-- 批量插入数据 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO SYS_USER_SHARE_TEMPLATE (TEMPLATEID,SHAREDUSERID,USERID,ISEDIT)
+        VALUES
+        <foreach collection="list" item="data" index="index" separator=",">
+            (
+            #{data.templateId},#{data.sharedUserId},#{data.userId},#{data.isEdit}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 删除数据 -->
+    <delete id="deleteByUserIdAndSharedId" parameterType="map">
+        DELETE FROM SYS_USER_SHARE_TEMPLATE WHERE USERID = #{userId} AND SHAREDUSERID = #{sharedUserId}
+        AND TEMPLATEID = #{templateId}
+    </delete>
+
+    <select id="count" resultType="int" parameterType="int">
+        SELECT COUNT(*) FROM SYS_USER_SHARE_TEMPLATE where USERID = #{userId}
+    </select>
+
+
+    <select id="listByParam" resultType="com.efreport.entity.SysUserShareTemplate" parameterType="java.util.Map">
+        SELECT
+        a.id,
+        a.templateid as templateId,
+        a.shareduserid as sharedUserId ,
+        a.userid as userId ,
+        a.isedit as isEdit ,
+        b.name as templateName,
+        c.name  as userName
+        FROM
+        SYS_USER_SHARE_TEMPLATE  a
+        left join
+        SYS_TEMPLATE  b
+        on a.templateid= b.id
+        left join EF_SYS_USER c
+        on a.shareduserid= c.id
+        where a.userid = #{userId}
+        order by id desc limit #{start} , #{num}
+    </select>
+
+    <delete id="del" parameterType="int">
+        DELETE FROM SYS_USER_SHARE_TEMPLATE WHERE ID = #{id}
+    </delete>
+
+    <!-- 获取共享数据链接  -->
+    <select id="listDatasource" parameterType="int" resultType="com.efreport.entity.SysShareDatasource">
+
+        select id , userid , shareduserid , datasource_name as dataSourceName from
+        SYS_USER_SHARE_DATASOURCE
+        where userid = #{userId}
+
+    </select>
+
+    <!-- 获取被共享数据链接  -->
+    <select id="listSharedDatasource" parameterType="int" resultType="com.efreport.entity.SysShareDatasource">
+
+        select id , userid , shareduserid , datasource_name as dataSourceName from
+        SYS_USER_SHARE_DATASOURCE
+        where shareduserid = #{sharedUserId}
+
+    </select>
+
+
+    <!-- 批量插入共享数据链接 -->
+    <insert id="insertDatasourceBatch" parameterType="java.util.List">
+        INSERT INTO SYS_USER_SHARE_DATASOURCE (SHAREDUSERID,USERID,DATASOURCE_NAME)
+        VALUES
+        <foreach collection="list" item="data" index="index" separator=",">
+            (
+              #{data.sharedUserId},#{data.userId},#{data.dataSourceName}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="delDatasource" parameterType="java.util.Map">
+        delete from SYS_USER_SHARE_DATASOURCE where userId = #{userId} and sharedUserid = #{sharedUserId}
+    </delete>
+
+    <!-- 根据用户ID来删除当前用户分享的所有模板 -->
+    <delete id="delByUserId" parameterType="int">
+        DELETE FROM SYS_USER_SHARE_TEMPLATE WHERE USERID = #{userId}
+    </delete>
+
+
+    <!-- 根据用户ID来删除当前用户被分享的所有模板 -->
+    <delete id="delSharedByUserId" parameterType="int">
+        DELETE FROM SYS_USER_SHARE_TEMPLATE WHERE SHAREDUSERID = #{userId}
+    </delete>
+
+
+
+
+</mapper>

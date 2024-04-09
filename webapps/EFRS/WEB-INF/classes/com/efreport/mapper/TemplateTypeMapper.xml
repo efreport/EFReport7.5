@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.TemplateTypeMapper">
+  <!-- 查询是否有重名模版类别名称 -->
+  <select id="query" parameterType="java.util.Map" resultType="int">
+    SELECT count(1)
+      FROM SYS_TEMPLATE_TYPE
+     WHERE
+      name = #{name}
+      AND user_id = #{userId}
+      and pid = #{pid}
+  </select>
+
+  <!-- 查询所有数据 -->
+  <select id="queryAll" parameterType="int" resultType="com.efreport.entity.TemplateType">
+    SELECT
+      id,
+      pid,
+      name,
+      order_num,
+      user_id
+    FROM
+      SYS_TEMPLATE_TYPE
+    WHERE
+      user_id = #{userId}
+    ORDER BY ORDER_NUM ASC
+  </select>
+
+  <!-- 查询所有数据 -->
+  <select id="selectAll" resultType="com.efreport.entity.TemplateType">
+    SELECT
+      id,
+      pid,
+      name,
+      order_num,
+      user_id
+    FROM
+      SYS_TEMPLATE_TYPE
+    ORDER BY ORDER_NUM ASC
+  </select>
+
+  <!-- 查询单条纪录 -->
+  <select id="load" parameterType="java.util.Map" resultType="com.efreport.entity.TemplateType">
+  <![CDATA[
+      SELECT id,
+           pid,
+           name,
+           user_id as userId
+      FROM SYS_TEMPLATE_TYPE
+      WHERE id = #{id}
+  ]]>
+  </select>
+
+  <!-- 新增 -->
+  <insert id="save" parameterType="com.efreport.entity.TemplateType" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO SYS_TEMPLATE_TYPE(pid, name , user_id) VALUES(#{pid}, #{name} , #{userId})
+  </insert>
+
+  <!-- 修改 -->
+  <update id="modify" parameterType="com.efreport.entity.TemplateType">
+    UPDATE SYS_TEMPLATE_TYPE SET name = #{name} WHERE id = #{id}
+  </update>
+
+  <!-- 批量更新模板类型序号 -->
+  <update id="updateBatch" parameterType="java.util.List">
+    UPDATE SYS_TEMPLATE_TYPE
+    SET ORDER_NUM =
+    <foreach collection="list" item="item" index="index"
+             separator=" " open="case ID" close="end">
+      when #{item.id} then #{item.order_num}
+    </foreach>
+    where id in
+    <foreach collection="list" index="index" item="item"
+             separator="," open="(" close=")">
+      #{item.id}
+    </foreach>
+  </update>
+
+
+  <!-- 删除模板类型 -->
+  <delete id="remove" parameterType="Integer">
+    DELETE FROM SYS_TEMPLATE_TYPE WHERE id = #{id}
+  </delete>
+
+
+  <!-- 根据父ID查询模板类型 -->
+  <select id="queryByOrder" resultType="com.efreport.entity.TemplateType" parameterType="map">
+    SELECT
+      id,
+      pid,
+      name,
+      order_num
+    FROM
+      SYS_TEMPLATE_TYPE
+    WHERE
+      PID = #{pId} AND user_id = #{userId}
+    ORDER BY ORDER_NUM ASC
+  </select>
+
+  <select id="getPtypeId" parameterType="int" resultType="int">
+      SELECT PID FROM SYS_TEMPLATE_TYPE WHERE ID = #{typeId}
+  </select>
+
+  <select id="getSonTypes" parameterType="int" resultType="com.efreport.entity.TemplateType">
+    SELECT
+      id,
+      pid,
+      name,
+      order_num
+    FROM
+      SYS_TEMPLATE_TYPE
+    WHERE
+      PID = #{pTypeId}
+    ORDER BY ORDER_NUM ASC
+  </select>
+
+  <select id="countByNameAndPid" parameterType="map" resultType="int" >
+    SELECT COUNT(*) FROM SYS_TEMPLATE_TYPE WHERE NAME = #{name} and pid = #{id}
+  </select>
+
+  <update id="renameType" parameterType="map">
+    UPDATE SYS_TEMPLATE_TYPE SET NAME = #{name} where id=#{id}
+  </update>
+
+</mapper>

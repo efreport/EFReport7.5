@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/mono-blue.css">
+    <style>
+        body{
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            border: none;
+            overflow: hidden;
+        }
+        ul li:hover{
+            background-color: #D5D5D5;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .ck_a{
+            background-color: #D5D5D5;
+        }
+        textarea:hover{
+            box-shadow:0px 0px 1px #44B4FF;
+        }
+    </style>
+</head>
+<body>
+<div style="height:470px;width:800px;padding:5px">
+    <table border="0" style="width: 96%;height:100%;position:absolute">
+        <tr>
+            <td style="font-size: 16px;"><label>请在下面的编辑框内输入全局JS函数</label></td>
+        </tr>
+        <tr style="height: 98%">
+            <td colspan="2"><textarea id="expr" style="resize: none;height: 88%;width: 99%;margin:0 auto;font-size:16px;" class="hljs"></textarea></td>
+        </tr>
+
+    </table>
+</div>
+</body>
+
+<script type="text/javascript" src="../../js/ip.js"></script>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script src="../../js/design/canvasCommon.js"></script>
+<script type="text/javascript" src="../../js/layui.js"></script>
+<script src="../../js/def/global.js"></script>
+<script type="text/javascript" src="../../js/design/constants.js"></script>
+<script type="text/javascript" src="../../js/highlight.pack.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+    var base = ip;
+    let token = window.sessionStorage.getItem("cur_token");
+    var layer;
+    layui.use('layer', function() {
+        layer = layui.layer;
+    });
+    $(document).ready(function(){
+        $.ajax({
+            url: base + "/designSys/getGlobalJS?token=" + token,
+            type:'post',
+            dataType:'json',
+            success:function(res){
+                console.log("20221203--->res--->", res);
+                if(res.state == 'success'){
+                    $("#expr").val(res.jsCode);
+                }else{
+                    efalert(layer , res.message);
+                }
+            },
+            error:function(){}
+        })
+    });
+    function setExpr(v){
+        $("#expr").val(v);
+    }
+    function getExpr(){
+        return $("#expr").val();
+    }
+</script>
+</html>

@@ -1,0 +1,20 @@
+/**
+* 点击按钮式不会出现选中状态
+***/
+body{
+  /*  moz-user-select: none; !*火狐*!
+    -webkit-user-select: none; !*webkit浏览器*!
+    -ms-user-select: none; !*IE10*!
+    user-select: none;!*选中文字时避免出现蓝色背景*!*/
+}
+
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #d5d5d5;
+}

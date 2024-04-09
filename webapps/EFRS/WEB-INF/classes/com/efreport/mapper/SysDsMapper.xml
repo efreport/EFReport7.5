@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysDsMapper">
+
+    <!-- 新增 -->
+    <insert id="save" parameterType="com.efreport.entity.SysDs">
+      INSERT INTO EF_SYS_DS(USER_ID,CONN_NAME,DS_NAME,DS_SQL,DS_MEMO)
+          VALUES(#{userId}, #{connName} ,#{dsName},#{dsSql},#{dsMemo})
+    </insert>
+
+    <update id="update" parameterType="com.efreport.entity.SysDs">
+        UPDATE EF_SYS_DS
+        SET USER_ID = #{userId},CONN_NAME = #{connName} , DS_NAME = #{dsName} , DS_SQL = #{dsSql}, DS_MEMO = #{dsMemo}
+        WHERE ID = #{id}
+    </update>
+
+    <select id="count" resultType="int" parameterType="java.util.Map">
+        SELECT
+        COUNT(*)
+        FROM
+        EF_SYS_DS a
+        WHERE 1=1
+        <if test="dsName != null and dsName != ''">
+            a.dsName like concat('%' , #{dsName} , '%')
+        </if>
+    </select>
+    <!-- 根据用户获取通用DS -->
+    <select id="list" resultType="com.efreport.entity.SysDs" parameterType="java.util.Map">
+        SELECT
+        a.id,
+        a.user_id as userId,
+        a.conn_name as connName,
+        a.ds_name as dsName,
+        a.ds_sql as dsSql,
+        a.ds_memo as dsMemo
+        FROM
+        EF_SYS_DS a
+        WHERE 1=1
+        and a.user_id = #{userId}
+        <if test="dsName != null and dsName != ''">
+            a.dsName like concat('%' , #{dsName} , '%')
+        </if>
+    </select>
+
+    <delete id="del" parameterType="int">
+        DELETE FROM EF_SYS_DS WHERE id = #{id}
+    </delete>
+
+</mapper>

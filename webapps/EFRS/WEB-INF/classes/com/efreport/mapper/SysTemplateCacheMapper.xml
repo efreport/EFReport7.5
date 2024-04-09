@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysTemplateCacheMapper">
+
+    <!-- 新增 -->
+    <insert id="saveSysCache" parameterType="com.efreport.entity.SysTemplateCache">
+          INSERT INTO SYS_TEMPLATE_CACHE(templatename,username,paramstr,cachetime,sernum,templateId,userid) VALUES(#{templateName}, #{userName} ,#{paramStr},#{cacheTime},#{serNum},#{templateId},#{userId})
+    </insert>
+
+    <insert id="updateSysCache" parameterType="com.efreport.entity.SysTemplateCache">
+          UPDATE SYS_TEMPLATE_CACHE set cachetime = #{cacheTime},sernum = #{serNum} where id = #{id}
+    </insert>
+    <select id="getSysCacheByParam" resultType="com.efreport.entity.SysTemplateCache" parameterType="map">
+          SELECT * FROM  SYS_TEMPLATE_CACHE WHERE 1=1 and templateId = #{templateId} and userid = #{userId} and paramstr = #{paramStr}
+    </select>
+
+    <delete id="deleteAll">
+          DELETE FROM  SYS_TEMPLATE_CACHE
+    </delete>
+
+    <delete id="deleteByTemplateId" parameterType="int">
+          DELETE FROM  SYS_TEMPLATE_CACHE WHERE TEMPLATEID = #{templateId}
+    </delete>
+
+    <delete id="deleteBySerNum" parameterType="list">
+
+        DELETE FROM SYS_TEMPLATE_CACHE WHERE SERNUM IN
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

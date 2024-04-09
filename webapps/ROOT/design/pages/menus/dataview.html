@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <style type="text/css">
+
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .refresh {
+            width: 20px;
+            height: 20px;
+        }
+
+        .layui-table tr:hover {
+            cursor: pointer;
+        }
+
+        .layui-table tr {
+            background-color: #f2f3f5;
+            transition: all .3s;
+            -webkit-transition: all .3s;
+        }
+
+        .layui-laypage .layui-laypage-curr .layui-laypage-em {
+            position: absolute;
+            left: -1px;
+            top: -1px;
+            padding: 1px;
+            width: 100%;
+            height: 100%;
+            background-color: #0094FF;
+        }
+
+        .layui-table-hover {
+            background-color: #0094FF !important;
+            color: #FFFFFF;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background: #d5d5d5;
+        }
+
+    </style>
+</head>
+<body style="overflow:hidden;">
+<div style="height:80px;">
+    <div style="color:#1D2129;font-size:14px;height:30px;display: flex;align-items: center;justify-content: flex-start;padding-left: 10px;padding-top: 10px;">
+        预览行数
+    </div>
+    <div style="height:30px;display: flex;align-items: center;justify-content: flex-start;padding-left: 10px;">
+        <div style="padding-right:10px;">
+            <input type="text" style="width:200px;height:30px;" name="count" value="10"
+                   onkeyup="this.value=this.value.replace(/\D/g,'')"
+                   onafterpaste="this.value=this.value.replace(/\D/g,'')">
+        </div>
+        <div style="cursor:pointer;width:50px;height:30px;display: flex;justify-content: center;align-items: center;background-color: #0094FF;"
+             id="refre">
+            <img src="../../images/design/pages/refresh.png" style="" title="刷新" class="refresh">
+        </div>
+    </div>
+
+</div>
+<table id="data" lay-filter="data"></table>
+<input type="hidden" id="sql">
+<input type="hidden" id="tmp">
+<input type="hidden" id="cn">
+</body>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/layui.js"></script>
+<script type="text/javascript">
+    var sql = '';
+    var tempParam = "";
+
+    function getUrl() {
+        let token = window.sessionStorage.getItem("cur_token");
+        let ip = window.sessionStorage.getItem("ef_server_base_url");
+
+        /**
+         * 预览时替换url中的参数
+         * 1.通过Module._getParamsJsonStr()方法获取模板参数名和参数的值
+         * 2.将参数传到后台，并在后台完成替换
+         * */
+        let paramStr = getParamStr();
+        let url = ip + "/designSys/getdataList?token=" + token + "&ConnName=" + $("#cn").val() + "&tmp=" + $("#tmp").val() + "&count=" + $("input[name='count']").val() + "&t=" + new Date().getTime();
+        if (paramStr != "{}") {
+            url = url + paramStr;
+        }
+        return url;
+    }
+
+    function setDsInfo(a, b, c , param) {
+        tempParam = param;
+        $("#cn").val(a);
+        $("#tmp").val(c);
+        sql = b.replace('select', '_sel_');
+        layui.use('table', function () {
+            let table = layui.table;
+            $('#refre').click(function () {
+                table.reload('data', {
+                    url: getUrl()
+                    , page: false
+                    , method: 'post'
+                    , cols: [[]]
+                    , where: {
+                        sql: sql
+                    }
+                    , done: function (res) {
+                        show(res);
+                    }
+                    , error: function () {
+                        $('.layui-none').text('返回数据异常');
+                    }
+                });
+            });
+            //第一个实例
+            table.render({
+                elem: '#data'
+                , method: 'post'
+                , page: {limit: Number.MAX_VALUE}
+                , loading: true
+                , url: getUrl()
+                , cols: [[]]
+                , where: {
+                    sql: sql
+                }
+                , done: function (res) {
+                    show(res);
+                }
+                , error: function (res) {
+                    $('.layui-none').text('返回数据异常');
+                }
+            });
+
+            function show(res) {
+                if (res.code == 1) {
+                    if (res.text == 'null') {
+                        $('.layui-table-init').text('返回数据异常');
+                        $('.layui-none').text('返回数据异常');
+                    } else {
+                        let dataRes = JSON.parse(res.text);
+                        if (dataRes.total == 0) {
+                            $('.layui-none').text('返回数据为空');
+                            return;
+                        }
+                    }
+
+                }
+
+                let dataRes = JSON.parse(res.text);
+                let data = dataRes.list;
+                if (data != null) {
+                    let list = [];
+                    let len = data.length;
+                    $.each(data, function (i, v) {
+                        let x = 0;
+                        for (let key in v) {
+                            list[x] = {field: key, title: key, align: 'center', width: 100};
+                            x++;
+                        }
+                    });
+                    table.init('data', {
+                        height: 360
+                        , limits: [len]
+                        , limit: len
+                        , page: {limit: len}
+                        , size: 'sm'
+                        , cols: [list]
+                        , data: data
+                        , pageBar: true
+                        , total: dataRes.total
+                        , done: function () {
+                            $('.layui-none').text('返回数据异常');
+                        }
+                        , error: function () {
+                            $('.layui-none').text('返回数据异常');
+                        }
+                    });
+
+                    $('.layui-laypage-count').text("共" + dataRes.total + "条");
+                    $('.layui-laypage-limits').hide();
+                    $('.layui-laypage-skip').hide();
+                    //$('.layui-table-page').hide();
+
+                } else {
+                    $('.layui-none').text('返回数据异常');
+                }
+
+            }
+        });
+    }
+
+
+    function getParamStr() {
+
+        let paramJson = JSON.parse(tempParam);
+        let paramStr = "&";
+        let i = 0;
+        for (let p in paramJson) {//遍历json对象的每个key/value对,p为key
+            i++;
+        }
+        let j = 0;
+        for (let p in paramJson) {
+            if (j == (i - 1)) {
+                paramStr += p;
+                paramStr += "=";
+                paramStr += paramJson[p];
+            } else {
+                paramStr += p;
+                paramStr += "=";
+                paramStr += paramJson[p];
+                paramStr += "&";
+            }
+        }
+        return paramStr;
+    }
+
+</script>
+</html>

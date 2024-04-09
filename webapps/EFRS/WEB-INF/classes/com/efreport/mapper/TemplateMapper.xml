@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.TemplateMapper">
+
+    <!-- 查询单条模板记录 -->
+    <select id="load" parameterType="Integer" resultType="com.efreport.entity.Template">
+          SELECT
+            id,
+            name,
+            path,
+            user_id AS userId,
+            create_time AS createTime,
+            type_id AS typeId,
+            status,
+            client_type AS clientType,
+            model_id AS modelId,
+            model_name AS modelName,
+            is_open AS isOpen,
+            is_cache AS isCache,
+            cache_time AS cacheTime,
+            template_num AS templateNum,
+            is_send AS isSend
+          FROM
+            SYS_TEMPLATE
+          WHERE
+            id = #{id}
+    </select>
+
+    <!-- 根据模版类别ID、角色、模版客户端类型，查询模板数据 -->
+    <select id="query" resultType="map" parameterType="map">
+        SELECT CONCAT(t.id,'') AS id,
+        t.name,
+        t.path,
+        t.template_num,
+        t.model_id AS modelId
+        FROM SYS_TEMPLATE t
+        WHERE 1 = 1
+        AND t.status = 1
+        AND t.type_id = #{typeId}
+        <if test="roles != null">
+            AND EXISTS (SELECT 1 FROM SYS_ROLE_TEMPLATE_REL rtr WHERE rtr.role_id IN
+            <foreach collection="roles" index="i" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+            AND rtr.tpl_id = t.id)
+        </if>
+        <if test="clientType != null">
+            AND t.client_type IN ('11', #{clientType})
+        </if>
+        order by t.template_order asc
+    </select>
+
+    <!-- 根据公司id及用户id 获取模板列表 -->
+    <select id="GetTempTreeByCompany" parameterType="map" resultType="com.efreport.entity.Template">
+        SELECT * FROM SYS_TEMPLATE  where user_id in (select  id from EF_SYS_USER where company_id = #{companyId} )
+        <if test="userId != null and userId > 0">
+            AND user_id = #{userId}
+        </if>
+    </select>
+
+    <!-- admin模板管理页面分页查询模板数据 -->
+    <select id="queryPage" resultType="com.efreport.entity.Template" parameterType="map">
+        SELECT
+        id,
+        name,
+        path,
+        user_id AS userId,
+        (SELECT name FROM EF_SYS_USER WHERE id = user_id) as userName,
+        create_time AS createTime,
+        status
+        FROM
+        SYS_TEMPLATE
+        WHERE
+        1 = 1
+        AND user_id in (select id from ef_sys_user where company_id = #{companyId})
+        <if test="name != null and name != ''">
+            AND LOWER(name) LIKE CONCAT('%' , LOWER(#{name}) , '%')
+        </if>
+        order by create_time desc
+        limit #{start} , #{limit}
+    </select>
+
+    <!-- admin页面模糊查询模板 -->
+    <select id="queryPageByParam" resultType="com.efreport.entity.Template" parameterType="java.util.Map">
+        SELECT
+        id,
+        name,
+        path,
+        user_id AS userId,
+        (SELECT name FROM EF_SYS_USER WHERE id = user_id) as userName,
+        create_time AS createTime,
+        is_send AS isSend,
+        status
+        FROM
+        SYS_TEMPLATE
+        WHERE
+        1 = 1
+        AND user_id in (select id from ef_sys_user where company_id = #{companyId})
+        <if test="status != null ">
+            AND STATUS = #{status}
+        </if>
+        <if test="operator != null and operator != ''">
+            AND USER_ID = #{operator}
+        </if>
+        <if test="start != null and start != ''">
+            AND CREATE_TIME <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND CREATE_TIME <![CDATA[ <= ]]> #{end}
+        </if>
+        <if test="name != null and name != ''">
+            AND LOWER(name) LIKE CONCAT('%' , LOWER(#{name}) , '%')
+        </if>
+        <if test="id != null">
+            or id = #{name}
+        </if>
+        order by
+        create_time desc, id desc
+        limit #{startNum} , #{limit}
+    </select>
+
+    <!-- 新增模板 -->
+    <insert id="save" parameterType="com.efreport.entity.Template" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        SYS_TEMPLATE
+        (name,
+        path,
+        type_id,
+        user_id,
+        status,
+        client_type ,
+        model_id ,
+        model_name ,
+        is_open ,
+        is_cache ,
+        create_time,
+        cache_time,
+        is_send)
+        VALUES
+        (#{name},
+        #{path},
+        #{typeId},
+        #{userId},
+        #{status},
+        #{clientType} ,
+        #{modelId} ,
+        #{modelName} ,
+        #{isOpen} ,
+        #{isCache} ,
+        #{createTime},
+        #{cacheTime},
+        #{isSend})
+    </insert>
+
+    <!-- 辅助批量更新功能，只对：状态，是否公开，是否缓存，缓存时间，终端 做修改 -->
+    <update id="updateTemplateById" parameterType="com.efreport.entity.Template">
+        update SYS_TEMPLATE set status=#{status}, is_open=#{isOpen},is_cache=#{isCache},cache_time=#{cacheTime},client_type=#{clientType}
+         where id=#{id}
+    </update>
+
+
+    <!-- 根据模板ID来删除模板 -->
+    <delete id="remove" parameterType="Integer">
+        DELETE FROM SYS_TEMPLATE WHERE id = #{id}
+    </delete>
+
+    <!-- 根据模板ID修改模板数据 -->
+    <update id="modify" parameterType="com.efreport.entity.Template">
+        UPDATE
+        SYS_TEMPLATE
+        SET
+        name = #{name},
+        path = #{path},
+        type_id = #{typeId},
+        <if test="createTime != null">
+            create_time = #{createTime},
+        </if>
+        model_id = #{modelId},
+        model_name = #{modelName},
+        status = #{status},
+        client_type = #{clientType},
+        is_open = #{isOpen},
+        is_cache = #{isCache},
+        cache_time = #{cacheTime},
+        is_Send = #{isSend}
+        WHERE
+        id = #{id}
+    </update>
+
+
+    <!-- 校验模版名称唯一性 -->
+    <select id="validateName" resultType="Integer" parameterType="map">
+        SELECT
+        COUNT(1)
+        FROM
+        SYS_TEMPLATE
+        WHERE
+        name = #{name}
+        and user_id = #{userId}
+        <if test="id != 0">
+            AND id != #{id}
+        </if>
+    </select>
+
+    <!-- 根据模版类别ID查询该模版类别下模版总数 -->
+    <select id="queryByTypeId" parameterType="Integer" resultType="Integer">
+        SELECT
+          COUNT(1)
+        FROM
+          SYS_TEMPLATE
+        WHERE
+          type_id = #{typeId}
+    </select>
+
+
+    <!-- 查询模板关联的调度任务数 -->
+    <select id="countTaskByTemplateId" parameterType="int" resultType="int">
+        SELECT
+          count(*)
+        FROM
+          SYS_TASK_TEMPLATE_REL
+        WHERE tpl_id = id
+    </select>
+
+    <!-- 根据任务ID查询所有模版 -->
+    <select id="loadByTaskId" parameterType="Integer" resultType="com.efreport.entity.Template">
+        SELECT
+          id,
+          name,
+          path,
+          user_id AS userId,
+          create_time AS createTime,
+          type_id AS typeId,
+          status
+        FROM
+          SYS_TEMPLATE
+        WHERE
+        id in (SELECT TPL_ID FROM SYS_TASK_TEMPLATE_REL WHERE task_id = #{taskId})
+
+    </select>
+
+    <!-- 根据公司ID获取该公司下的所有设计器用户  old -->
+<!--    <select id="getOperators" resultType="com.efreport.entity.User" parameterType="int">-->
+<!--        SELECT-->
+<!--          DISTINCT(A.name),-->
+<!--          A.id-->
+<!--        FROM-->
+<!--          SYS_TEMPLATE  B ,-->
+<!--          EF_SYS_USER A-->
+<!--        WHERE-->
+<!--          A.ID = B.USER_ID-->
+<!--          AND A.USER_TYPE IN (1,4)-->
+<!--          AND A.COMPANY_ID = #{companyId}-->
+<!--    </select>-->
+
+    <!-- 根据公司ID获取该公司下的所有设计器用户 -->
+    <select id="getOperators" resultType="com.efreport.entity.User" parameterType="int">
+        SELECT
+          DISTINCT(A.name),
+          A.id
+        FROM
+          EF_SYS_USER A
+        WHERE
+          A.USER_TYPE IN (2,4)
+          AND A.COMPANY_ID = #{companyId}
+    </select>
+    <!-- 根据模板类型ID获取所有模板 -->
+    <select id="getTemplateByTypeId" parameterType="Integer" resultType="com.efreport.entity.Template">
+       SELECT
+         id,
+         name,
+         path,
+         user_id AS userId,
+         create_time AS createTime,
+         type_id AS typeId,
+         template_num,
+         status,
+         template_order
+       FROM
+          SYS_TEMPLATE
+       WHERE
+          type_id = #{id}
+          order by
+          TEMPLATE_ORDER asc , id asc
+    </select>
+
+    <!-- 根据模板类型ID和模板名称获取所有模板 -->
+    <select id="getTemplateByTypeIdAndName" parameterType="map" resultType="com.efreport.entity.Template">
+       SELECT
+         id,
+         name,
+         path,
+         user_id AS userId,
+         create_time AS createTime,
+         type_id AS typeId,
+         template_num,
+         status,
+         template_order
+       FROM
+          SYS_TEMPLATE
+       WHERE
+          type_id = #{id}
+          and name like #{name}
+          order by
+          TEMPLATE_ORDER asc , id asc
+    </select>
+
+    <!-- 批量更新模板顺序 -->
+    <update id="updateBatchTemplateOrder" parameterType="java.util.List">
+        UPDATE SYS_TEMPLATE
+        SET TEMPLATE_ORDER =
+        <foreach collection="list" item="item" index="index"
+                 separator=" " open="case ID" close="end">
+            when #{item.id} then #{item.template_order}
+        </foreach>
+        where id in
+        <foreach collection="list" index="index" item="item"
+                 separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+    </update>
+
+
+    <!-- 批量更新模板 -->
+    <update id="updateBatchTemplate" parameterType="java.util.List">
+        UPDATE SYS_TEMPLATE
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="type_id =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.typeId!=null">
+                        when id=#{i.id} then #{i.typeId}
+                    </if>
+                </foreach>
+            </trim>
+
+            <trim prefix="status =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.status!=null">
+                        when id=#{i.id} then #{i.status}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="client_type =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    when id=#{i.id} then #{i.clientType}
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="i" index="index">
+            id=#{i.id}
+        </foreach>
+    </update>
+
+
+    <!-- 更新模板编号 -->
+    <update id="updateTemplateNumber" parameterType="com.efreport.entity.Template">
+        UPDATE SYS_TEMPLATE
+        SET template_num = #{template_num}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据模板编号获取模板名 -->
+    <select id="getTemplateNameByNumber" parameterType="string" resultType="string">
+        SELECT NAME FROM SYS_TEMPLATE
+        WHERE TEMPLATE_NUM = #{templateNum}
+    </select>
+    <!-- 批量插入模板 -->
+    <insert id="insertTemplates" parameterType="List" useGeneratedKeys="true" keyProperty="id">
+
+        INSERT INTO SYS_TEMPLATE(NAME,PATH,TYPE_ID,USER_ID,STATUS,CLIENT_TYPE) values
+        <foreach collection="list" item="obj" separator=",">
+            (#{obj.name},#{obj.path},#{obj.typeId},#{obj.userId},#{obj.status},#{obj.clientType})
+        </foreach>
+    </insert>
+
+
+    <!-- 根据设计器用户ID获取根目录下的所有模板 -->
+    <select id="getRootTemplatesByUserId" parameterType="Integer" resultType="com.efreport.entity.Template">
+        SELECT
+            id,
+            name,
+            path,
+            user_id AS userId,
+            create_time AS createTime,
+            type_id AS typeId,
+            template_num,
+            status,
+            template_order
+        FROM
+            SYS_TEMPLATE
+        WHERE
+            type_id = 0 and user_id = #{userId}
+        order by
+        TEMPLATE_ORDER asc , id asc
+    </select>
+
+
+    <!-- 根据设计器用户ID和名称获取根目录下的所有模板 -->
+    <select id="getRootTemplatesByUserIdAndName" parameterType="map" resultType="com.efreport.entity.Template">
+        SELECT
+            id,
+            name,
+            path,
+            user_id AS userId,
+            create_time AS createTime,
+            type_id AS typeId,
+            template_num,
+            status,
+            template_order
+        FROM
+            SYS_TEMPLATE
+        WHERE
+            type_id = 0 and user_id = #{userId}
+            and name like #{name}
+        order by
+        TEMPLATE_ORDER asc , id asc
+    </select>
+
+
+    <select id="countByUserId" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM
+        SYS_TEMPLATE
+        WHERE USER_ID = #{userId}
+    </select>
+
+    <select id="countByParams" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM SYS_TEMPLATE
+        WHERE
+        1 = 1
+        AND user_id in (select id from ef_sys_user where company_id = #{companyId})
+        <if test="status != null ">
+            AND STATUS = #{status}
+        </if>
+        <if test="operator != null and operator != ''">
+            AND USER_ID = #{operator}
+        </if>
+        <if test="start != null and start != ''">
+            AND CREATE_TIME <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND CREATE_TIME <![CDATA[ <= ]]> #{end}
+        </if>
+        <if test="name != null and name != ''">
+            AND LOWER(name) LIKE CONCAT('%' , LOWER(#{name}) , '%')
+        </if>
+        <if test="id != null">
+            or id = #{name}
+        </if>
+
+    </select>
+
+
+    <select id="listTemplateByUserId" parameterType="int" resultType="com.efreport.entity.TemplateTreeData">
+        SELECT
+            A.ROLE_ID as roleId,
+            B.TPL_ID as templateId,
+            C.NAME  as templateName,
+            C.TYPE_ID as templateTypeId,
+            D.NAME as templateType,
+            D.PID as templatePTypeId,
+            E.NAME as templatePType
+        FROM
+            SYS_USER_ROLE_REL A
+        LEFT JOIN
+            SYS_ROLE_TEMPLATE_REL B
+        ON A.ROLE_ID = B.ROLE_ID
+        LEFT JOIN
+            SYS_TEMPLATE C
+         ON B.TPL_ID = C.ID
+        LEFT JOIN
+        SYS_TEMPLATE_TYPE D
+        ON C.TYPE_ID = D.ID
+        LEFT JOIN SYS_TEMPLATE_TYPE E
+        ON D.PID = E.ID
+        WHERE
+          A.USER_ID = #{userId}
+    </select>
+
+    <select id="listTemplateByUserIdAndName" parameterType="map" resultType="com.efreport.entity.TemplateTreeData">
+        SELECT
+            A.ROLE_ID as roleId,
+            B.TPL_ID as templateId,
+            C.NAME  as templateName,
+            C.TYPE_ID as templateTypeId,
+            D.NAME as templateType,
+            D.PID as templatePTypeId,
+            E.NAME as templatePType
+        FROM
+            SYS_USER_ROLE_REL A
+        LEFT JOIN
+            SYS_ROLE_TEMPLATE_REL B
+        ON A.ROLE_ID = B.ROLE_ID
+        LEFT JOIN
+            SYS_TEMPLATE C
+         ON B.TPL_ID = C.ID
+        LEFT JOIN
+        SYS_TEMPLATE_TYPE D
+        ON C.TYPE_ID = D.ID
+        LEFT JOIN SYS_TEMPLATE_TYPE E
+        ON D.PID = E.ID
+        WHERE
+          A.USER_ID = #{userId}
+          and C.NAME like #{name}
+    </select>
+
+    <!-- 更新模板编号 -->
+    <update id="renameTemplate" parameterType="com.efreport.entity.Template">
+        UPDATE SYS_TEMPLATE
+        SET name = #{name} , path = #{path}
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 根据设计器用户ID获取该用户的所有模板 -->
+    <select id="listTemplateByDesignUserId" parameterType="Integer" resultType="com.efreport.entity.Template">
+        SELECT
+        id,
+        name,
+        path,
+        user_id AS userId,
+        create_time AS createTime,
+        type_id AS typeId,
+        template_num,
+        status,
+        template_order
+        FROM
+        SYS_TEMPLATE
+        WHERE
+        USER_ID = #{userId}
+        order by
+        TEMPLATE_ORDER asc , id asc
+    </select>
+
+    <!-- 根据预览用户ID获取该用户的所有模板, 参数 userId 和clientType  ‘01’表示pc  ‘10’ 表示 mobile -->
+    <select id="getTemplateByViewUserId" parameterType="map" resultType="com.efreport.entity.Template">
+        SELECT
+        temp.id,
+        temp.name,
+        temp.path,
+        temp.user_id AS userId,
+        temp.create_time AS createTime,
+        temp.type_id AS typeId,
+        temp.template_num,
+        temp.status,
+        (case temporder.template_order when null then 0 else temporder.template_order end) as template_order
+        FROM
+        SYS_TEMPLATE as temp
+
+        <if test="clientType == null">
+            left join EF_PC_TEMP_ORDER as temporder on temp.id = temporder.TEMPID
+        </if>
+
+        <if test="clientType == '01'">
+            left join EF_PC_TEMP_ORDER as temporder on temp.id = temporder.TEMPID
+        </if>
+        <if test="clientType == '10'">
+            left join EF_MOBILE_TEMP_ORDER as temporder on temp.id = temporder.TEMPID
+        </if>
+
+        WHERE
+        temp.id in (
+            SELECT distinct tpl_id FROM SYS_ROLE_TEMPLATE_REL where role_id in (
+                select role_id from SYS_USER_ROLE_REL  where user_id=#{userId}
+            )
+        )
+        <if test="clientType == null">
+            AND temp.client_type IN ('11', '01')
+        </if>
+        <if test="clientType != null">
+            AND temp.client_type IN ('11', #{clientType})
+        </if>
+        <if test="status != null">
+            AND temp.status = #{status}
+        </if>
+
+        order by
+        temporder.TEMPLATE_ORDER asc , temp.id asc
+    </select>
+
+    <!-- 根据预览用户ID和模板名称获取该用户的所有模板  和参数：clientType  ‘01’表示pc  ‘10’ 表示 mobile -->
+    <select id="getTemplateByViewUserIdAndName" parameterType="map" resultType="com.efreport.entity.Template">
+        SELECT
+        temp.id,
+        temp.name,
+        temp.path,
+        temp.user_id AS userId,
+        temp.create_time AS createTime,
+        temp.type_id AS typeId,
+        temp.template_num,
+        temp.status,
+        (case temporder.template_order when null then 0 else temporder.template_order end) as template_order
+        FROM
+        SYS_TEMPLATE as temp
+
+        <if test="clientType == null">
+            left join EF_PC_TEMP_ORDER as temporder on temp.id = temporder.TEMPID
+        </if>
+
+        <if test="clientType == '01'">
+            left join EF_PC_TEMP_ORDER as temporder on temp.id = temporder.TEMPID
+        </if>
+        <if test="clientType == '10'">
+            left join EF_MOBILE_TEMP_ORDER as temporder on temp.id = temporder.TEMPID
+        </if>
+
+        WHERE
+        temp.id in (
+            SELECT distinct tpl_id FROM SYS_ROLE_TEMPLATE_REL where role_id in (
+                select role_id from SYS_USER_ROLE_REL  where user_id=#{userId}
+            )
+        )
+         and temp.name like #{name}
+        <if test="clientType == null">
+            AND temp.client_type IN ('11', '01')
+        </if>
+        <if test="clientType != null">
+            AND temp.client_type IN ('11', #{clientType})
+        </if>
+        <if test="status != null">
+            AND temp.status = #{status}
+        </if>
+        order by
+        temporder.TEMPLATE_ORDER asc , temp.id asc
+    </select>
+
+
+
+
+    <!-- 批量更新模板 -->
+    <delete id="deleteBatchTemplate" parameterType="java.util.List">
+        DELETE FROM SYS_TEMPLATE
+        where
+        <foreach collection="list" separator="or" item="i" index="index">
+            id=#{i}
+        </foreach>
+    </delete>
+
+
+    <!-- 批量插入模板 -->
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into SYS_TEMPLATE
+        (
+            NAME,
+            PATH,
+            TYPE_ID,
+            USER_ID,
+            STATUS,
+            CLIENT_TYPE,
+            IS_OPEN,
+            CREATE_TIME
+        ) VALUES
+        <foreach item="obj" collection="list" separator=",">
+            (
+              #{obj.name},
+              #{obj.path},
+              #{obj.typeId},
+              #{obj.userId},
+              #{obj.status},
+              #{obj.clientType},
+              #{obj.isOpen},
+              #{obj.createTime}
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="countByDesignerId" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM SYS_TEMPLATE
+        WHERE
+        user_id = #{userId}
+        <if test="start != null and start != ''">
+            AND CREATE_TIME <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND CREATE_TIME <![CDATA[ <= ]]> #{end}
+        </if>
+        <if test="name != null and name != ''">
+            AND LOWER(name) LIKE CONCAT('%' , LOWER(#{name}) , '%')
+        </if>
+        <if test="id != null">
+            or id = #{name}
+        </if>
+
+    </select>
+
+    <select id="queryPageByDesignerId" resultType="com.efreport.entity.Template" parameterType="java.util.Map">
+        SELECT
+        id,
+        name,
+        path,
+        user_id AS userId,
+        (SELECT name FROM EF_SYS_USER WHERE id = user_id) as userName,
+        create_time AS createTime,
+        status
+        FROM
+        SYS_TEMPLATE
+        WHERE
+        user_id = #{userId}
+        <if test="start != null and start != ''">
+            AND CREATE_TIME <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND CREATE_TIME <![CDATA[ <= ]]> #{end}
+        </if>
+        <if test="name != null and name != ''">
+            AND LOWER(name) LIKE CONCAT('%' , LOWER(#{name}) , '%')
+        </if>
+        <if test="id != null">
+            or id = #{name}
+        </if>
+        order by
+        id desc
+        limit #{startNum} , #{limit}
+    </select>
+
+
+    <!-- 更新模板的目录类型 -->
+    <update id="changeTypeId" parameterType="java.util.Map">
+        UPDATE SYS_TEMPLATE SET TYPE_ID = #{typeId}
+        where
+        id = #{id}
+    </update>
+
+    <!-- 批量上传模板文件时，删除已经存在的模板记录 -->
+    <delete id="delExistTemplate" parameterType="java.util.List">
+        DELETE FROM SYS_TEMPLATE
+        where
+        <foreach collection="list" separator="or" item="i" index="index">
+            USER_ID =#{i.userId} and NAME = #{i.name}
+        </foreach>
+    </delete>
+
+    <!-- 根据设计器用户ID删除所有模板 -->
+    <delete id="delTemplatesByUserId" parameterType="int">
+        DELETE FROM SYS_TEMPLATE WHERE
+        USER_ID = #{userId}
+    </delete>
+
+    <!-- 根据用户ID和模板名查询是否存在同名的模板 -->
+    <select id="countByUserIdAndTemplateName" parameterType="java.util.Map" resultType="int">
+       SELECT COUNT(*) FROM SYS_TEMPLATE WHERE
+       USER_ID = #{userId} and NAME = #{templateName}
+    </select>
+
+</mapper>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../../components/cron/jquery-3.4.1.slim.min.js"></script>
+    <script src="../../components/cron/cron-selector.js"></script>
+    <link href="../../components/cron/cron-selector.css" rel="stylesheet" type="text/css" />
+    <title>Document</title>
+</head>
+<body>
+    <div id="cronSelector"></div>
+	<div style="position: relative;width: 460px;height: 30px; line-height: 30px; margin: auto; margin-top: 10px;text-align: center;">
+		<input class="ipt" type="text" id="cron" name="cron" />
+		<button id="pb_btn_create">生成规则</button>
+	</div>
+</body>
+<script>
+	var cronSelector;
+	$(function(){
+        // cronSelector = $.cronSelector({
+		// 	container:'#cronSelector',
+		// 	locatedWeek:true
+		// });
+		// let code = 'second';
+		// // 初始化选择秒，秒显示出来
+        // $('div[tabitemcode=' + code + ']').show().siblings().hide();
+		// $('div[tabcode=' + code + ']').addClass('active').siblings().removeClass('active');
+		// // 初始化值
+        // // cronSelector.parseVal('7,16,59 1-29/3 * ? * 2,3,1 *');
+        // $('#pb_btn_create').click(function(){
+		// 	let val = cronSelector.val();
+		// 	$("#cron").val(val);
+        //     //alert(cronSelector.val());
+        // });
+    });
+	function getPage() {
+		// let val = $("#cron").val();
+		let val = cronSelector.val();
+		return val;
+	}
+	// 设置值
+	function setVal(val) {
+		cronSelector = $.cronSelector({
+			container:'#cronSelector',
+			locatedWeek:true
+		});
+		let code = 'second';
+		// 初始化选择秒，秒显示出来
+        $('div[tabitemcode=' + code + ']').show().siblings().hide();
+		$('div[tabcode=' + code + ']').addClass('active').siblings().removeClass('active');
+		// 初始化值
+        // cronSelector.parseVal('7,16,59 1-29/3 * ? * 2,3,1 *');
+        $('#pb_btn_create').click(function(){
+			let val = cronSelector.val();
+			$("#cron").val(val);
+            //alert(cronSelector.val());
+        });
+		cronSelector.parseVal(val);
+		$("#cron").val(val);
+	}
+
+	function valChange(obj, min, max) {
+		// console.log("被执行了valChange---------obj.value---", obj.value);
+		// console.log("被执行了valChange---------min---", min);
+		// console.log("被执行了valChange---------max---", max);
+		let val = obj.value;
+		if (val < min) {
+			obj.value = min;
+		}
+		if (val > max) {
+			obj.value = max;
+		}
+	}
+    
+</script>
+</html>
+<style>
+	#cronSelector {
+		position: relative;
+		border: 1px solid #d5d5d5;
+		margin: auto;
+		width: 460px;
+		height: 300px;
+	}
+
+	/* 设置滚动条样式 */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 1px;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+        background: #d5d5d5;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+        border-radius: 10px;
+        background: #ffffff;
+    }
+</style>

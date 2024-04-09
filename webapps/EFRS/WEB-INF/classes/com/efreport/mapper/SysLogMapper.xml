@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysLogMapper">
+
+    <resultMap id="sysLogMap" type="com.efreport.entity.SysLog">
+        <id column="ID" property="id"></id>
+        <result column="MODULE" property="module"></result>
+        <result column="USER_ID" property="userId"></result>
+        <result column="OPERATION_TIME" property="operationTime"></result>
+        <result column="USER_NAME" property="userName"></result>
+    </resultMap>
+
+    <!-- 新增 -->
+    <insert id="saveLog" parameterType="com.efreport.entity.SysLog">
+      INSERT INTO EF_SYS_LOG(MODULE,USER_ID,OPERATION_TIME,USER_NAME,DEPARTMENT_ID,COMPANY_ID)
+          VALUES(#{module}, #{userId} ,#{operationTime},#{userName},#{departmentId},#{companyId})
+    </insert>
+    <!-- 获取所有日志记录 -->
+    <select id="list" resultType="com.efreport.entity.SysLog">
+      SELECT
+          a.id,
+          a.user_id as userId,
+          a.module as module,
+          a.operation_time as operationTime,
+          a.user_name as userName,
+          c.id as departmentId,
+          c.department_name as departmentName,
+          d.id as companyId,
+          d.company_name as companyName
+      FROM
+          EF_SYS_LOG a
+          LEFT JOIN EF_SYS_USER b ON a.user_id = b.id
+          LEFT JOIN EF_SYS_DEPARTMENT c ON b.department_id = c.id
+          LEFT JOIN EF_SYS_COMPANY d ON c.company_id = d.id
+    </select>
+
+    <select id="countByParam" resultType="int" parameterType="map">
+        SELECT count(*) FROM EF_SYS_LOG WHERE 1=1
+        AND COMPANY_ID = #{companyId}
+        <if test="module != null">
+            and module like concat('%' , #{module} , '%')
+        </if>
+        <if test="start != null and start != ''">
+            AND OPERATION_TIME <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND OPERATION_TIME <![CDATA[ <= ]]> #{end}
+        </if>
+        <if test="userName != null">
+            and user_name like concat('%' , #{userName} , '%')
+        </if>
+    </select>
+
+    <!-- 列表 -->
+    <select id="listByParam" parameterType="map" resultType="com.efreport.entity.SysLog">
+
+        SELECT
+        a.id,
+        a.user_id as userId,
+        a.module as module,
+        a.operation_time as operationTime,
+        a.user_name as userName,
+        c.id as departmentId,
+        c.department_name as department,
+        d.id as companyId,
+        d.company_name as company
+        FROM
+        EF_SYS_LOG a
+        LEFT JOIN EF_SYS_USER b ON a.user_id = b.id
+        LEFT JOIN EF_SYS_DEPARTMENT c ON b.department_id = c.id
+        LEFT JOIN EF_SYS_COMPANY d ON c.company_id = d.id
+        WHERE 1=1 AND a.COMPANY_ID = #{companyId}
+        <if test="module != null">
+            and module like concat('%' , #{module} , '%')
+        </if>
+        <if test="start != null and start != ''">
+            AND OPERATION_TIME <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND OPERATION_TIME <![CDATA[ <= ]]> #{end}
+        </if>
+
+        <if test="userName != null">
+            and user_name like concat('%' , #{userName} , '%')
+        </if>
+        order by a.id desc
+        limit #{startNum} , #{limit}
+    </select>
+
+
+</mapper>

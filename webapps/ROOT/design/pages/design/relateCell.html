@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <style>
+
+        html{
+            width:100%;
+            height:100%;
+        }
+
+        .add {
+            width: 25px;
+            height: 25px;
+        }
+
+        .delete {
+            width: 25px;
+            height: 25px;
+        }
+
+        #un{
+            background-color: #E5E6EB;
+        }
+
+        #un a {
+            display: block;
+            transition: all .3s;
+            padding-left: 10px;
+            height: 30px;
+            line-height: 30px;
+            border-bottom: 1px solid #D5D5D5;
+        }
+        #un a:hover {
+            background: #CCCCCC
+        }
+
+        .cka {
+            background: #0094FF;
+            color: #FFFFFF;
+        }
+        table td{
+            height: 40px;
+            vertical-align:middle;
+        }
+
+        div input {
+            padding: 0;
+            height: 33px;
+            margin-bottom: 2px;
+            background-color: #F2F3F5;
+            border: 0;
+            min-width: 200px;
+            margin-left: 10px;
+        }
+
+        div select {
+            height: 33px;
+            margin-bottom: 2px;
+            min-width: 200px;
+            background-color: #F2F3F5;
+            border: 0;
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body style="padding: 5px">
+<div style="width: 100%;height:100%;display: flex;">
+    <div style="width: 30%;height: 95%;">
+        <div style="height:45px;line-height: 45px;display: flex;align-items: center;justify-content: center;">
+            <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #0094FF;border-radius: 4px;margin-right: 10px;"
+                 id="add" class="addShape">
+                <div style="width:40px;display: flex;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                    <img src="../../images/design/pages/add.png" style="" title="添加" class="add">
+                </div>
+                <div style="display:flex;align-items:center;color:white;width:40px;padding-left: 5px;">
+                    新增
+                </div>
+            </div>
+            <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #FFFFFF;border-radius: 4px;border: 1px solid #F53F3F;"
+                 id="del" class="delShape">
+                <div style="display:flex;width:40px;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                    <img src="../../images/design/pages/delete.png" class="delete" title="删除">
+                </div>
+                <div style="display:flex;align-items:center;color:#F53F3F;width:40px;padding-left: 5px;">
+                    删除
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%;height:460px;overflow: hidden;margin-top:5px">
+            <div id="un" style="white-space: nowrap;overflow: auto;height:99%;width:95%;border: 1px solid #D5D5D5">
+
+            </div>
+        </div>
+    </div>
+    <div style="width: 69%;height:95%;">
+        <div id="right-top" style="margin-left:5px;width: 65%;height: 40px;">
+        </div>
+        <div id="right" style="margin-left:5px;margin-top:10px;width: 65%;height: 460px;overflow-y: auto;overflow-x: hidden;"></div>
+    </div>
+</div>
+
+<div id="temp" style="display: none;height: 100%">
+    <table>
+        <tr><td style="margin-right: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;单元格</td><td><input type="text" name="cell" autocomplete="off" style="width:150px;"></td></tr>
+        <tr><td style="margin-right: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;数据集</td><td><select name="dsName" style="width:150px;"></select></td></tr>
+        <tr><td style="margin-right: 10px;">映射列名</td><td><select name="rColumnName" style="width:150px;"></select></td></tr>
+        <tr><td style="margin-right: 10px;">关联列名</td><td><select name="columnName" style="width:150px;"></select></td></tr>
+    </table>
+</div>
+
+<div id="cc" style="display:none;height:120px;width:95%;border:1px solid black;overflow:auto">
+</div>
+
+</body>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/layui.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+    var ct= 0,dsarray=null;
+    var dsMap = {};
+    var curCellName; //当前单元格列
+    layui.use('layer', function() {
+        var layer = layui.layer;
+    });
+
+    function init(cellText , dsM , cellName) {
+        dsMap = dsM;
+        curCellName = cellName;
+        boundEvent();
+        if(cellText!='' && cellText!=undefined){
+            var cells = cellText;
+            for(var i=0;i<cells.length;i++){
+                ct++;
+                $("#un").append("<a href='javascript:;' data=rule_"+ct+">关联单元格</a>");
+                initDiv(cells[i]);
+                boundCk($("#un a:last-child"));
+            }
+            $("#un a:last-child").trigger('click');
+        }
+
+    }
+    function removeShow(){
+        $("#right").children().each(function(){
+            $(this).removeClass('show-now');
+        });
+    }
+    function getIndex(str,val){
+        var t=0;
+        for(var i=0;i<str.length;i++){
+            if(val==str[i]){
+                t++;
+            }
+            if(2==t){
+                return i;
+            }
+        }
+    }
+    function initDiv(data){
+        //隐藏之前的单元格DIV
+        removeShow();
+        //克隆DIV
+        var temp=$("#temp").clone();
+        temp.removeAttr('id');
+        //新增单元格
+        if(data == undefined){
+            var index = 0;
+            $.each(dsMap,function(name,value) {
+                var nameSelect = temp.find('select[name="dsName"]');
+                var columnSelect = temp.find('select[name="columnName"]');
+                var rColumnSelect = temp.find('select[name="rColumnName"]');
+                nameSelect.append("<option name='"+ name +"'>"+ name +"</option>");
+                if(index == 0){
+                    $.each(value , function(i,e){
+                        columnSelect.append("<option name='"+ e +"'>"+ e +"</option>");
+                        rColumnSelect.append("<option name='"+ e +"'>"+ e +"</option>");
+                    })
+                }
+                index++;
+            });
+        }else{//初始化现有单元格
+            var dsName = data.DSName;
+            var columnName = data.EffectCellFieldName;
+            var rColumnName = data.CurrCellFieldName;
+            var x = data.EffectCellX;
+            var y = data.EffectCellY;
+            var cellChar = window.parent.cellPos2Char(x, y);
+            var nameSelect = temp.find('select[name="dsName"]');
+            var columnSelect = temp.find('select[name="columnName"]');
+            var rColumnSelect = temp.find('select[name="rColumnName"]');
+            //初始化界面
+            $.each(dsMap,function(name,value) {
+                nameSelect.append("<option name='"+ name +"'>"+ name +"</option>");
+                if(name == dsName){
+                    $.each(value , function(i,e){
+                        columnSelect.append("<option name='"+ e +"'>"+ e +"</option>");
+                        rColumnSelect.append("<option name='"+ e +"'>"+ e +"</option>");
+                    })
+                    //选中列
+                    columnSelect.val(columnName).prop("selected", true);
+                    rColumnSelect.val(rColumnName).prop("selected", true);
+                }
+
+            });
+            //选中数据集
+            nameSelect.val(dsName).prop("selected", true);
+            //单元格值
+            temp.find('input[name="cell"]').val(cellChar);
+        }
+        temp.find('select[name="dsName"]').unbind().bind('change' , function(){
+            var dsName = $(this).val();
+            var columS = temp.find('select[name="columnName"]');
+            var rColumS = temp.find('select[name="rColumnName"]');
+            columS.empty();
+            rColumS.empty();
+            var columns = dsMap[dsName];
+            $.each(columns , function(i,e){
+                columS.append("<option name='"+ e +"'>"+ e +"</option>");
+                rColumS.append("<option name='"+ e +"'>"+ e +"</option>");
+            })
+        })
+        temp.attr('data','rule_' + ct);
+        temp.attr('name','pro');
+        $("#right").append(temp);
+        temp.show();
+    }
+    function boundEvent(){
+        $("#del").click(function(){
+            var data='';
+            $("a").each(function(){
+                if($(this).hasClass("cka")){
+                    data=$(this).attr('data');
+                    $(this).remove();
+                }
+            });
+            $("div[name='pro']").each(function(){
+                if(data==$(this).attr('data')){
+                    $(this).remove();
+                    $("#un a:first-child").trigger('click');
+                }
+            });
+        });
+        //新增关联单元格
+        $("#add").click(function() {
+            ct++;
+            var data="rule_"+ct;
+            $("#un").append("<a href='javascript:;' data="+data+">关联单元格</a>");
+            //初始化关联单元格界面
+            initDiv();
+            boundCk($("#un a:last-child"));
+            $("#un a:last-child").trigger('click');
+        });
+    }
+    function boundCk(a){
+        a.click(function(){
+            $("a").each(function(){
+                $(this).removeClass("cka");
+            });
+            $(this).addClass("cka");
+            var data=$(this).attr('data');
+            $("div[name='pro']").each(function(){
+                if(data==$(this).attr('data')){
+                    $(this).show();
+                    $(this).addClass('show-now');
+                }else{
+                    $(this).hide();
+                    $(this).removeClass('show-now');
+                }
+            });
+        });
+    }
+    function getPage(){
+        var res=[];
+        $("div[name='pro']").each(function(){
+            var curCell={};
+            var dsName=$(this).find('select[name="dsName"]').val(); //ds名
+            var columnName=$(this).find('select[name="columnName"]').val(); //列名
+            var rColumnName=$(this).find('select[name="rColumnName"]').val(); //列名
+            var cell=$(this).find('input[name="cell"]').val();
+
+            if(cell == '' || dsName == '' || columnName == ''){
+                layer.alert('关联单元格未填写');
+                return false;
+            }
+            curCell.DSName=dsName;
+            curCell.EffectCellFieldName=columnName;
+            curCell.CurrCellFieldName=rColumnName;
+            var cellChar = window.parent.decodeCellChar2Pos(cell);
+            cellChar = JSON.parse(cellChar);
+            curCell.EffectCellX=cellChar.x;
+            curCell.EffectCellY=cellChar.y;
+            res.push(curCell);
+        });
+        return res;
+    }
+</script>
+</html>

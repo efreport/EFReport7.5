@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <style>
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #ds a {
+            display: block;
+            padding-left: 10px;
+            line-height: 34px;
+            max-height: 34px;
+            font-size: 16px;
+        }
+
+        .ncka:hover {
+            background: #e6e6e6;
+        }
+
+        .cka {
+            background: #0094FF;
+            color: #FFFFFF;
+        }
+
+        .cka:hover {
+            background: #0094FF;
+            color: #FFFFFF;
+        }
+
+        .add {
+            width: 25px;
+            height: 25px;
+        }
+
+        .delete {
+            width: 25px;
+            height: 25px;
+        }
+
+        .layui-form-select dl dd.layui-this {
+            background-color: #0094FF;
+            color: #fff;
+        }
+
+        .icon {
+            display: inline-block;
+            width: 33px;
+            height: 22px;
+            margin-top: 5px;
+        }
+
+        .icon-4 {
+            background: url(../../images/design/eye.png) no-repeat 0 -43px;
+            position: absolute;
+            right: -10px;
+            cursor: pointer;
+        }
+
+        .icon-5 {
+            background: url(../../../imgs/icon-login.png) no-repeat -55px -43px;
+        }
+
+        input {
+            background-color: #F2F3F5;
+        }
+
+        input:hover {
+            border: 1px solid #44B4FF;
+            background-color: #FFFFFF;
+        }
+
+        select {
+            background-color: #F2F3F5;
+        }
+
+        select:hover {
+            border: 1px solid #44B4FF;
+            background-color: #FFFFFF;
+        }
+
+        .layui-input {
+            background-color: #F2F3F5;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background: #d5d5d5;
+        }
+
+        .btn_line {
+            width: 60px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 4px;
+            background-color: #ffffff;
+            border: 1px solid #0094FF;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn_line img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .tool a{
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+<body>
+<div style="display:flex;width:100%;height:100%;">
+    <div style="width: 30%;height: 100%;overflow: hidden;flex-direction: column;display: flex;">
+<!--        <div style="height:10%;display: flex;align-items: center;justify-content: center;">
+            <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #0094FF;border-radius: 4px;margin-right: 10px;"
+                 id="add">
+                <div style="width:50px;display: flex;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                    <img src="../../images/design/pages/add.png" style="" title="添加" class="add">
+                </div>
+                <div style="display:flex;align-items:center;color:white;width:50px;padding-left: 5px;">
+                    新增
+                </div>
+            </div>
+            <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #FFFFFF;border-radius: 4px;border: 1px solid #F53F3F;"
+                 id="del">
+                <div style="display:flex;width:50px;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                    <img src="../../images/design/pages/delete.png" class="delete" title="删除">
+                </div>
+                <div style="display:flex;align-items:center;color:#F53F3F;width:50px;padding-left: 5px;">
+                    删除
+                </div>
+            </div>
+            <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #FFFFFF;border-radius: 4px;border: 1px solid #F53F3F;"
+                 id="edit">
+                <div style="display:flex;width:50px;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                    <img src="../../images/design/ds/editDs.png" class="edit" title="编辑">
+                </div>
+                <div style="display:flex;align-items:center;color:#F53F3F;width:50px;padding-left: 5px;">
+                    删除
+                </div>
+            </div>
+        </div>-->
+        <div class="tool" style="width: 100%;height: 10%;display: flex;justify-content: center;align-items: center;">
+            <a href="javascript:void(0);" title="新增">
+                <button title="新增" class="btn_line" id="add">
+                    <img src="../../images/design/pages/new.png"/>
+                </button>
+            </a>
+
+            <a href="javascript:void(0);" title="删除">
+                <button title="删除" class="btn_line" id="del">
+                    <img src="../../images/design/pages/delete.png"/>
+                </button>
+            </a>
+
+            <a href="javascript:void(0);" title="编辑">
+                <button title="编辑" class="btn_line" id="edit">
+                    <img src="../../images/design/ds/editDs.png">
+                </button>
+            </a>
+        </div>
+        <div id="ds"
+             style="background-color:#F2F3F5;white-space: nowrap;overflow: auto;margin-left:1%;width:96%;height: 90%;border: 1px solid #D5D5D5">
+        </div>
+    </div>
+    <div style="width: 67%;height: 100%;flex-direction: column;display: flex;">
+        <div style="height:10%;display: flex;align-items: center;justify-content: flex-start;">
+
+        </div>
+        <div style="height:90%;border: 1px solid #D5D5D5;">
+            <form class="layui-form" action="" autocomplete="off" style="margin-top: 20px;margin-right: 10px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">数据集名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="dsName" lay-verify="required" autocomplete="off"
+                               class="layui-input" disabled='disabled'>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">数据链接</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="connName" lay-verify="required" autocomplete="off"
+                               class="layui-input" disabled='disabled'>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">SQL</label>
+                    <div class="layui-input-block">
+                        <textarea name="dsSql" placeholder="请输入内容" class="layui-textarea"
+                                  style="height:350px;" disabled='disabled'></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                        <textarea name="dsMemo" placeholder="请输入内容" class="layui-textarea"
+                                  style="height:100px;" disabled='disabled'></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<div>
+
+</div>
+</body>
+
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script src="../../js/design/canvasCommon.js"></script>
+<script type="text/javascript" src="../../js/layui.js"></script>
+<script src="../../js/def/global.js"></script>
+<script type="text/javascript" src="../../js/design/constants.js"></script>
+<script type="text/javascript">
+    let ip = window.sessionStorage.getItem("ef_server_base_url");
+    let token = window.sessionStorage.getItem("cur_token");
+    let id;
+    let dsArray = [];
+
+    $(document).ready(function () {
+        init();
+        $("#add").click(function () {
+            layer.open({
+                type: 2,
+                area: ['1000px', '650px'],
+                closeBtn: 0,
+                maxmin: true,
+                title: ['数据集编辑', 'height:30px;line-height:30px'],
+                content: ['sysDsEdit.html', 'no'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+
+                },
+                success: function (layero, index) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.init(0,dsArray);
+                },
+                yes: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let res = iframeWin.saveDs();
+                    if (res) {
+                        let str = encodeURIComponent(JSON.stringify(res));
+                        $.ajax({
+                            url: ip + '/ds/save?token=' + token,
+                            type: 'post',
+                            data: {'data': str},
+                            success: function (res) {
+                                if (res.state == 'success') {
+                                    layer.msg('保存成功');
+                                    init();
+                                } else {
+                                    layer.msg('保存失败');
+                                }
+                                layer.close(index);
+
+                            },
+                            error: function () {
+                            }
+                        })
+                    }
+                }
+            });
+        });
+        $('#del').click(function(){
+            let url = ip + "/ds/del?token=" + token + "&id=" + id;
+            $.ajax({
+                url: url,
+                type: "get",
+                timeout: 5000,
+                success: function (data) {
+                    if (data.state === "success") {
+                      layer.msg('删除成功');
+                      init();
+                      if($('.cka').prev().length > 0){
+                          let prev =  $('.cka').prev();
+                          $('.cka').remove();
+                          prev.trigger('click');
+                      }else if($('.cka').next().length > 0){
+                          let next = $('.cka').next();
+                          $('.cka').remove();
+                          next.trigger('click');
+                      }else{
+                          $('.cka').remove();
+                          $("input[name='dsName']").val('');//数据集
+                          $("input[name='connName']").val(''); //数据连接
+                          $("textArea[name='dsSql']").val(''); //sql
+                          $("textArea[name='dsMemo']").val(''); //sql memo
+                          renderForm();
+                      }
+
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        })
+        $("#edit").click(function () {
+            layer.open({
+                type: 2,
+                area: ['1000px', '650px'],
+                closeBtn: 0,
+                maxmin: true,
+                title: ['数据集编辑', 'height:30px;line-height:30px'],
+                content: ['sysDsEdit.html', 'no'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+
+                },
+                success: function (layero, index) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let dsName = $("input[name='dsName']").val();//数据集
+                    let connName = $("input[name='connName']").val(); //数据连接
+                    let dsSql = $("textArea[name='dsSql']").val(); //sql
+                    let dsMemo = $("textArea[name='dsMemo']").val(); //sql memo
+                    let dsInfo = {
+                        ConnName:connName,
+                        DSName:dsName,
+                        SqlStr:dsSql,
+                        sqlMemo:dsMemo
+                    }
+                    iframeWin.init(1,dsArray , dsInfo);
+                },
+                yes: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let res = iframeWin.saveDs();
+                    if (res) {
+                        let id = $('.cka').attr("id");
+                        let str = encodeURIComponent(JSON.stringify(res));
+                        $.ajax({
+                            url: ip + '/ds/update?token=' + token,
+                            type: 'post',
+                            data: {'data': str , 'id':id},
+                            success: function (res) {
+                                if (res.state == 'success') {
+                                    layer.msg('修改成功');
+                                    init(1);
+                                } else {
+                                    layer.msg('修改失败');
+                                }
+                                layer.close(index);
+
+                            },
+                            error: function () {
+                            }
+                        })
+                    }
+                }
+            });
+        });
+    });
+
+
+    function init() {
+        let url = ip + "/ds/list?token=" + token;
+        $.ajax({
+            url: url,
+            type: "get",
+            timeout: 5000,
+            contentType: "application/json;charset=UTF-8",
+            success: function (data) {
+                if (data.state === "success") {
+                    dsArray = [];
+                    $("#ds").empty();
+                    let dss = data.data;
+                    $.each(dss, function (i, e) {
+                        let ds = e;
+                        let li = "<a href='javascript:;' class='ncka' id='"+ e.id +"'>" + e.dsName + "</a>"; //whj
+                        $("#ds").append(li);
+                        $("#ds").children("a:last-child").data("db", e);
+                        dsArray.push(e.dsName);
+                    });
+                    $("#ds a").click(function () {
+                        $("#ds a").each(function () {
+                            $(this).addClass("ncka");
+                            $(this).removeClass("cka");
+                        });
+                        $(this).removeClass("ncka");
+                        $(this).addClass("cka");
+                        setDb($(this));
+                    });
+                    var t = $("#ds a:last-child");
+                    t.addClass("cka");
+                    t.removeClass("ncka");
+                    setDb(t);
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                var st = XMLHttpRequest.getResponseHeader("sessionstatus");
+                if (textStatus == 'timeout') {
+                    layer.alert("请求超时,请重试", {icon: 2});
+                }
+            }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    }
+
+    function setDb(db) {
+        var db = db.data("db");
+        id = db.id;
+        $("input[name='dsName']").val(db.dsName);//数据集
+        $("input[name='connName']").val(db.connName); //数据连接
+        $("textArea[name='dsSql']").val(db.dsSql); //sql
+        $("textArea[name='dsMemo']").val(db.dsMemo); //sql memo
+        renderForm();
+    }
+
+
+    function renderForm() {
+        layui.use('form', function () {
+            var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+            form.render();
+        });
+    }
+
+    function getParam(){
+        let tempParam = window.parent.getParamsJsonStr();
+        return tempParam;
+    }
+
+</script>
+</html>

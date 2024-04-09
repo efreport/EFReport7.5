@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+    <link rel="stylesheet" href="../../../lib/layui-v2.7.6/css/layui.css">
+    <link rel="stylesheet" href="../../../js/zTree/css/zTreeStyle.css">
+    <title>设置起始页</title>
+  </head>
+  <body>
+    <div style="width: 100%; height: 45px; line-height: 45px;">
+      <a id="a_refash" class="layui-btn layui-btn-normal" style="line-height:1.6em;margin-top:3px; margin-right:10px; float:right" title="刷新">
+        <i class="layui-icon" style="line-height:30px">&#xe666;</i></a>
+      <a id="a_return_old" class="layui-btn layui-btn-normal" style="line-height:1.6em; padding-top: 0.3em; vertical-align: middle; margin-top:3px; margin-right:10px; float:right" title="恢复起始页">
+        恢复起始页</a>
+    </div>
+    <div style="position: relative;">
+      <div id="lay1" style="float: left; width: 478px; border: 1px solid #dedede; padding: 5px; margin-left: 10px; margin-top: 10px; height: 400px; overflow-y: auto; overflow-x: hidden;">
+        <ul id="tree" class="ztree"></ul>
+      </div>
+    </div>
+    <input type="hidden" id="tpl">
+    <input type="hidden" id="tplId">
+  </body>
+  <script src="../../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+  <script src="../../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+  <script src="../../../js/common.js" charset="utf-8"></script>
+  <script src="../../../js/zTree/js/jquery.ztree.core.min.js" charset="utf-8"></script>
+  <script src="../../../js/zTree/js/jquery.ztree.excheck.min.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    let pageIndex = -1;
+  layui.use(['tree','util','form','layer'], function(){
+    $ = layui.jquery;
+    var form = layui.form, layer = layui.layer;
+    var tree = layui.tree, util = layui.util;
+
+
+    var setting = {
+        callback: {
+            beforeDrag: function() {return false;},
+            beforeDrop: function() {return false;},
+            onCheck: function(event, treeId, treeNode) {
+                // console.log(treeNode);
+                if (treeNode.type === "temp") {
+                  $("#tpl").val(treeNode.name);
+                  $("#tplId").val(treeNode.id);
+                } else {
+                  $("#tpl").val("");
+                  $("#tplId").val("");
+                }
+            }
+        },
+        view: {
+            showLine: true,
+            showIcon: true,
+            selectedMulti: false
+        },
+        check: {
+            enable: true,
+            chkStyle: "radio",
+            radioType: "all"
+        }
+    };
+
+
+    let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+    let token = window.sessionStorage.getItem("cur_token");
+    // let efurl = server_base_url + "/template/getTemplateTreeByUserTwo?token=" + token;
+
+    let efurl = server_base_url + "/template/getTemplateNewTreeByUser?token=" + token;
+    let initpage = function() {
+        // 加载权限树
+        // console.log(efurl);
+        $.ajax({
+            url: efurl,
+            type: 'get',
+            success: function (res) {
+              // console.log("res------->", res);
+              res = res.menuInfo[0].child;
+              // console.log("res---updated---->", res);
+              let home_str = window.sessionStorage.getItem("cur_user_home");
+              // console.log("home_str--->", home_str);
+              if (home_str !== null && home_str !== "") {
+                let home = JSON.parse(home_str);
+                let tempid = home.id;
+                changeResAry(res, parseInt(tempid));
+                changeResAry2(res, parseInt(tempid), res);
+                // console.log("tempid-------->", tempid);
+                // console.log("res-----2222-->", res);
+              }
+              
+              let objectTree = $.fn.zTree.init($("#tree"), setting, res);
+              objectTree.expandNode(true);
+            },
+            error: function () {
+            }
+        });
+    }
+
+    let changeResAry = function(ary, tempid) {
+      for (let i=0; i < ary.length; i++) {
+        if (ary[i].id === tempid && ary[i].type=="temp") {
+          // console.log("找到了---------------------2023-02-07...");
+          ary[i].checked = true;
+        }
+        if (ary[i].children!==undefined && ary[i].children!==null && ary[i].children.length>0) {
+          changeResAry(ary[i].children, tempid);
+        }
+      }
+    };
+
+    let changeResAry2 = function(ary, tempid, res) {
+      for (let i=0; i < ary.length; i++) {
+
+        if (ary[i].children!==undefined && ary[i].children!==null && ary[i].children.length>0) {
+
+          let flag = false;
+
+          for (let j = 0; j < ary[i].children.length; j++) {
+            if (ary[i].children[j].id === tempid && ary[i].children[j].type=="temp") {
+              // ary[i].children[j].checked = true;
+              ary[i].open = true;
+              flag = true;
+              changeResAry2(res, ary[i].id, res);
+            }
+          }
+
+          if (flag === false) {
+            changeResAry2(ary[i].children, tempid, res);
+          }
+
+        }
+      }
+    }
+
+    initpage();
+
+    $("#a_refash").on("click", function(){
+        // console.log("点击了刷新按钮");
+        initpage();
+    });
+
+    $("#a_return_old").on("click", function(){
+      let efurl_savehome = server_base_url + "/user/changeHome?token=" + token;
+
+      $.ajax({
+          url: efurl_savehome,
+          type: 'post',
+          data: { tpl: "" },
+          success: function (res) {
+              // console.log("加载时----返回的结果为----res--->",  res);
+              if (res.code === 1) {
+                  layer.msg("设置成功！");
+                  window.sessionStorage.setItem("cur_user_home", "");
+                  // layer.close(pageIndex);
+                  setTimeout(function(){
+                    parent.layer.close(pageIndex); //通过父页面来进行关闭当前弹出的页面
+                  }, 1500);
+                  
+              } else {
+                  layer.msg("设置失败，请重试！");
+              }
+          },
+          error: function () {
+          }
+      });
+    });
+
+    
+
+    form.on('submit(add)', function(data) {
+      if ("" == jQuery("#tpl").val()) {
+        layer.msg('请选择模板', {icon:2, time:1000});
+        return false;
+      }
+      return false;
+    });
+  });
+  function getPage() {
+    if ($("#tpl").val() === "") {
+        layer.msg('请选择模板', {icon:2, time:1000});
+        return false;
+    }
+    if ($("#tplId").val() === "") {
+        layer.msg('请选择模板', {icon:2, time:1000});
+        return false;
+    }
+    let obj = {
+        id: $("#tplId").val(),
+        tpl: $("#tpl").val()
+    };
+    return JSON.stringify(obj);
+  }
+
+  //设置当前页  页编号
+  function setPageIndex(idx) {
+    pageIndex = idx;
+  }
+
+  </script>
+</html>
+<style>
+    .ztree li span.button {
+        width: 16px !important;
+        height: 16px !important;
+    }
+    .ztree li span.button.chk {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 1px;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+        background: #d5d5d5;
+    }
+
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+        border-radius: 10px;
+        background: #ffffff;
+    }
+
+</style>

@@ -1,0 +1,2885 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="adress=no">
+    <link rel="stylesheet" type="text/css" href="../../js/css/plugin.css">
+    <link rel="stylesheet" type="text/css" href="../../js/css/spectrum.css">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <link rel="stylesheet" href="../../js/css/json-viewer.css">
+    <link rel="stylesheet" href="../../js/zTree/css/zTreeStyle.css">
+    <style type="text/css">
+        body {
+            /*display: flex;
+            justify-content: center;*/
+        }
+
+        .plugin-container {
+            width: 800px;
+            height: 400px;
+            text-align: center;
+            display: flex;
+        }
+
+        .json-container {
+            width: 800px;
+            height: 390px;
+            text-align: center;
+            display: flex;
+            overflow-y: scroll;
+        }
+
+        .chart-panel {
+            width: 600px;
+            display: flex;
+        }
+
+        .property-panel .layui-tab-title .layui-this:after {
+            height: 70px;
+        }
+
+        .json-document {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .layui-unselect {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <div class="layui-tab" style="margin:0px;">
+        <ul class="layui-tab-title" id="mainTab">
+            <li class="layui-this">属性</li>
+            <li>json</li>
+            <li>扩展属性</li>
+        </ul>
+        <div class="layui-tab-content" style="height:400px;">
+
+            <div class="layui-tab-item layui-show">
+                <div class="plugin-container" style="height:400px;">
+                    <div class="chart-panel" id="plugin">
+
+
+                    </div>
+                    <!-- 备份Echart -->
+                    <div class="chart-panel1" id="pluginBack" style="display: none;">
+
+                    </div>
+                    <div class="property-panel" style="height:400px;">
+                        <div class="layui-tab">
+                            <ul class="layui-tab-title" id="lay_expend" style="width: 20px;">
+                                <li class="layui-this">标<br>题</li>
+                                <li>图<br>例</li>
+                                <li>视<br>觉<br>映<br>射</li>
+                                <li>数<br>据</li>
+                                <li>位<br>置</li>
+                            </ul>
+                            <div class="layui-tab-content" style="width: 100%;height:400px;padding:5px;">
+                                <div class="layui-tab-item layui-show" id="title"
+                                     style="overflow: auto;white-space: normal;height:390px;">
+                                    <div id="chart" class="chart">
+                                        <table style="width: 100%; display: table;">
+                                            <tbody>
+                                            <tr>
+                                                <td style="width:100px;">控件主题</td>
+                                                <td style="width:130px;"><select id="chartTheme">
+
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>控件背景颜色</td>
+                                                <td>
+                                                    <div style="width: 100px;margin-right:5px;display:table-cell"><input
+                                                            type="text"
+                                                            id="chartBgInput"
+                                                            style="margin-right:5px;" value="#ffffff00">
+                                                    </div>
+                                                    <div id="chartBg"
+                                                         style="width: 80px; display: table-cell; height: 29px; border: 1px solid rgb(213, 213, 213); background-color: rgb(255, 255, 255);"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width:100px;">显示标题</td>
+                                                <td style="width:130px;"><select id="titleShow">
+                                                    <option value="1">显示</option>
+                                                    <option value="0">不显示</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>标题文本</td>
+                                                <td><input type="text" id="titleText" autocomplete="off"
+                                                           value="iphone销量">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>背景颜色</td>
+                                                <td>
+                                                    <div style="width: 100px;margin-right:5px;display:table-cell"><input
+                                                            type="text"
+                                                            id="titleBgInput"
+                                                            style="margin-right:5px;" value="#00000000">
+                                                    </div>
+                                                    <div id="titleBg"
+                                                         style="width: 80px; display: table-cell; height: 29px; border: 1px solid rgb(213, 213, 213); background-color: rgb(255, 255, 255);"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>上边距</td>
+                                                <td><input type="text" id="title-top" autocomplete="off"
+                                                           class="position"
+                                                           placeholder="" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>下边距</td>
+                                                <td><input type="text" id="title-bottom" autocomplete="off"
+                                                           class="position"
+                                                           placeholder="" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>左边距</td>
+                                                <td><input type="text" id="title-left" autocomplete="off"
+                                                           class="position"
+                                                           placeholder="" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>右边距</td>
+                                                <td><input type="text" id="title-right" autocomplete="off"
+                                                           class="position"
+                                                           placeholder="" value="0"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>文本样式</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>颜色</td>
+                                                <td>
+                                                    <div style="width: 100px;margin-right:5px;display:table-cell"><input
+                                                            type="text"
+                                                            id="titleColorInput"
+                                                            style="margin-right:5px;"
+                                                            value="#333333">
+                                                    </div>
+                                                    <div id="titleColor"
+                                                         style="width: 80px; display: table-cell; height: 29px; border: 1px solid rgb(213, 213, 213); background-color: black;"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体风格</td>
+                                                <td><select id="titleStyle">
+                                                    <option value="normal">正常</option>
+                                                    <option value="italic">斜体</option>
+                                                    <option value="oblique">倾斜</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体粗细</td>
+                                                <td><select id="titleWeight">
+                                                    <option value="normal">正常</option>
+                                                    <option value="bold" selected>加粗</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体名称</td>
+                                                <td><select id="titleFont">
+                                                    <option value="sans-serif">sans-serif</option>
+                                                    <option value="serif">serif</option>
+                                                    <option value="monospace">monospace</option>
+                                                    <option value="Arial">Arial</option>
+                                                    <option value="Microsoft YaHei">Microsoft YaHei</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体大小</td>
+                                                <td><input type="text" autocomplete="off" id="titleSize" value="18">
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="layui-tab-item" id="legend"
+                                     style="overflow: auto;white-space: normal;height:390px;">
+                                    <div class="chart">
+                                        <table style="width:100%;display:table;table-layout:fixed">
+                                            <tbody>
+                                            <tr>
+                                                <td style="width:88px;">图例类型</td>
+                                                <td style="width:114px;"><select id="legendType">
+                                                    <option value="plain">普通图例</option>
+                                                    <option value="scroll" selected>滚动翻页</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">列表布局</td>
+                                                <td style="width:114px;"><select id="legendOrient">
+                                                    <option value="horizontal">水平</option>
+                                                    <option value="vertical" selected>垂直</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>文本对齐</td>
+                                                <td><select id="legendAlign">
+                                                    <option value="auto">自动</option>
+                                                    <option value="left">左</option>
+                                                    <option value="right">右</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>显示图例</td>
+                                                <td><select id="legendShow">
+                                                    <option value="1">显示</option>
+                                                    <option value="0" selected>不显示</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>背景颜色</td>
+                                                <td>
+                                                    <div style="width: 100px;margin-right:5px;display:table-cell">
+                                                        <input type="text" id="legendBgInput" style="margin-right:5px;"
+                                                               value="#00000000">
+                                                    </div>
+                                                    <div id="legendBg"
+                                                         style="width: 80px; display: table-cell; height: 29px; border: 1px solid rgb(213, 213, 213); background-color: white;"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>上边距</td>
+                                                <td><input type="text" autocomplete="off" id="legend-top"
+                                                           class="position" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>下边距</td>
+                                                <td><input type="text" autocomplete="off" id="legend-bottom"
+                                                           class="position" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>左边距</td>
+                                                <td><input type="text" autocomplete="off" id="legend-left"
+                                                           class="position" value="center"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>右边距</td>
+                                                <td><input type="text" autocomplete="off" id="legend-right"
+                                                           class="position" value="0"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>文本样式</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>颜色</td>
+                                                <td>
+                                                    <div style="width: 100px;margin-right:5px;display:table-cell">
+                                                        <input type="text" id="legendColorInput"
+                                                               style="margin-right:5px;" value="#333333">
+                                                    </div>
+                                                    <div id="legendColor"
+                                                         style="width: 80px; display: table-cell; height: 29px; border: 1px solid rgb(213, 213, 213); background-color: black;"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体风格</td>
+                                                <td><select id="legendStyle">
+                                                    <option value="normal">正常</option>
+                                                    <option value="italic">斜体</option>
+                                                    <option value="oblique">倾斜</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体粗细</td>
+                                                <td><select id="legendWeight">
+                                                    <option value="normal">正常</option>
+                                                    <option value="bold">加粗</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体名称</td>
+                                                <td><select id="legendFamily">
+                                                    <option value="sans-serif">sans-serif</option>
+                                                    <option value="serif">serif</option>
+                                                    <option value="monospace">monospace</option>
+                                                    <option value="Arial">Arial</option>
+                                                    <option value="Microsoft YaHei">Microsoft YaHei</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体大小</td>
+                                                <td><input type="text" autocomplete="off" id="legendSize" value="12">
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="layui-tab-item" id="visual"
+                                     style="overflow: auto;white-space: normal;height:390px;">
+                                    <div class="chart">
+                                        <table style="width: 100%;display:table;table-layout:fixed">
+                                            <tr>
+                                                <td style="width:88px;">是否显示</td>
+                                                <td style="width:114px;">
+                                                    <select id="showVis">
+                                                        <option value=true>是</option>
+                                                        <option value=false selected>否</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">方向</td>
+                                                <td style="width:114px;">
+                                                    <select id="orient">
+                                                        <option value='vertical' selected>垂直</option>
+                                                        <option value='horizontal'>水平</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>上边距</td>
+                                                <td><input type="text" id="visual-top" autocomplete="off"
+                                                           class="position"
+                                                           placeholder="" value="auto"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>下边距</td>
+                                                <td><input type="text" id="visual-bottom" autocomplete="off"
+                                                           class="position"
+                                                           placeholder="" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>左边距</td>
+                                                <td><input type="text" id="visual-left" autocomplete="off"
+                                                           class="position"
+                                                           placeholder="" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>右边距</td>
+                                                <td><input type="text" id="visual-right" autocomplete="off"
+                                                           class="position"
+                                                           placeholder="" value="auto"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">是否显示手柄</td>
+                                                <td style="width:114px;">
+                                                    <select id="showCal">
+                                                        <option value=true>显示</option>
+                                                        <option value=false selected>不显示</option>
+                                                    </select>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">是否反转</td>
+                                                <td style="width:114px;">
+                                                    <select id="inverse">
+                                                        <option value=true>是</option>
+                                                        <option value=false selected>否</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">小数精度</td>
+                                                <td style="width:114px;">
+                                                    <input type="text" autocomplete="off" id="precision"
+                                                           class="position" value="0">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">两端文本</td>
+                                                <td style="width:114px;">
+                                                    <input type="text" autocomplete="off" id="text"
+                                                           class="position" value="低,高">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">最小值</td>
+                                                <td style="width:114px;">
+                                                    <input type="text" autocomplete="off" id="min"
+                                                           class="position" value="0">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">最大值</td>
+                                                <td style="width:114px;">
+                                                    <input type="text" autocomplete="off" id="max"
+                                                           class="position" value="2500">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>文本样式</td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>颜色</td>
+                                                <td>
+                                                    <div style="width: 100px;margin-right:5px;display:table-cell"><input
+                                                            type="text"
+                                                            id="visColorInput"
+                                                            style="margin-right:5px;"
+                                                            value="#333333">
+                                                    </div>
+                                                    <div id="visColor"
+                                                         style="width: 80px; display: table-cell; height: 29px; border: 1px solid rgb(213, 213, 213); background-color: black;"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体风格</td>
+                                                <td><select id="visStyle">
+                                                    <option value="normal">正常</option>
+                                                    <option value="italic">斜体</option>
+                                                    <option value="oblique">倾斜</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体粗细</td>
+                                                <td><select id="visWeight">
+                                                    <option value="normal">正常</option>
+                                                    <option value="bold" selected>加粗</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体名称</td>
+                                                <td><select id="visFont">
+
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体大小</td>
+                                                <td><input type="text" autocomplete="off" id="visSize" value="18">
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="layui-tab-item" id="data"
+                                     style="overflow: auto;white-space: normal;height:390px;">
+                                    <div class="chart">
+                                        <table style="width: 100%;display:table;table-layout:fixed">
+                                            <tr>
+                                                <td>数据来源</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">数据来源</td>
+                                                <td style="width:114px;">
+                                                    <select id="dataSource">
+                                                        <option value="cell" selected>单元格数据</option>
+                                                        <option value="ds">数据集数据</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr id="dsTr" style="display:none;">
+                                                <td style="width:88px;">数据集</td>
+                                                <td style="width:114px;">
+                                                    <select id="ds">
+
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>分类</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr id="categoryTr">
+                                                <td style="width:88px;">数据</td>
+                                                <td style="width:114px;">
+                                                    <input type="text" autocomplete="off" id="category"
+                                                           class="position">
+                                                </td>
+                                            </tr>
+                                            <tr id="categoryFieldTr" style="display:none;">
+                                                <td style="width:88px;">数据列</td>
+                                                <td style="width:114px;">
+                                                    <select id="categoryField">
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>系列</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr id="seriesTr">
+                                                <td style="width:88px;">数据</td>
+                                                <td style="width:114px;">
+                                                    <input type="text" autocomplete="off" id="series" class="position">
+                                                </td>
+                                            </tr>
+                                            <tr id="seriesFieldTr" style="display:none;">
+                                                <td style="width:88px;">数据列</td>
+                                                <td style="width:114px;">
+                                                    <select id="seriesField">
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">是否显示提示框</td>
+                                                <td style="width:114px;">
+                                                    <select id="showTip">
+                                                        <option value=true selected>显示</option>
+                                                        <option value=false>不显示</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">是否显示标签</td>
+                                                <td style="width:114px;">
+                                                    <select id="showLabel">
+                                                        <option value=true>显示</option>
+                                                        <option value=false selected>不显示</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="color: red">{a}：系列名。{b}：数据名。{c}：数据值。{d}：百分比。示例：
+                                                    {b} : {c} ({d}%)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">标签格式</td>
+                                                <td style="width:114px;">
+                                                    <input type="text" autocomplete="off" id="labelFormatter"
+                                                           class="position" value="{b}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>值</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr id="valueTr">
+                                                <td style="width:88px;">数据</td>
+                                                <td style="width:114px;">
+                                                    <input type="text" autocomplete="off" id="value" class="position">
+                                                </td>
+                                            </tr>
+                                            <tr id="valueFieldTr" style="display:none;">
+                                                <td style="width:88px;">数据列</td>
+                                                <td style="width:114px;">
+                                                    <select id="valueField">
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="layui-tab-item" id="position"
+                                     style="overflow: auto;white-space: normal;height:390px;">
+                                    <div class="chart">
+                                        <table style="width:100%;display:table;table-layout:fixed">
+                                            <tbody>
+                                            <tr>
+                                                <td>上边距</td>
+                                                <td><input type="text" autocomplete="off" id="map-top"
+                                                           class="position" value="auto"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>下边距</td>
+                                                <td><input type="text" autocomplete="off" id="map-bottom"
+                                                           class="position" value="auto"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>左边距</td>
+                                                <td><input type="text" autocomplete="off" id="map-left"
+                                                           class="position" value="auto"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>右边距</td>
+                                                <td><input type="text" autocomplete="off" id="map-right"
+                                                           class="position" value="auto"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="layui-tab-item">
+                <div class="json-container">
+
+                </div>
+            </div>
+            <div class="layui-tab-item">
+                <div class="extend-container">
+                    <textarea type="text" id="code" cols="107" rows="25" style="resize: none"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<script src="../../js/echarts-4.1.0.min.js"></script>
+<script src="../../js/layui.js"></script>
+<script src="../../js/spectrum.js"></script>
+<script src="../../js/json-viewer.js"></script>
+<script src="../../js/plugin/map/china.js"></script>
+
+
+<script type="text/javascript">
+    var layer;
+    var dsArray = [];//{"ds1":"a,b,c","ds2":"a,b,c,d"}
+    var dsMap = {};
+    var templateIndex;
+    var base;
+    var fonts = [];
+    var option;
+    var chartType;
+    var isFirstInit;
+
+
+    function init(ip, dsA, index, font, dMap, opt, isFirst) {
+        isFirstInit = isFirst;
+        base = ip;
+        dsArray = dsA;
+        templateIndex = index;
+        fonts = font;
+        dsMap = dMap;
+        option = opt;
+
+
+        $.each(dsArray, function (index, element) { //初始化所有DS
+            $('#ds').append('<option value="' + element + '">' + element + '</option>');
+        });
+
+        let ds1 = dsArray[0];
+        $('#ds').val(ds1).prop("selected", true); //选中第一个结果集
+        let key = templateIndex + '@#' + ds1;
+        let dsField = dsMap[key];
+        if (dsField != undefined) { //当前报表包含数据集时
+            let dsFields = dsField;
+            $('#categoryField').append('<option value=""></option>');
+            $('#seriesField').append('<option value=""></option>');
+            $.each(dsFields, function (index, element) { //初始化字段
+                $('#categoryField').append('<option value="' + element + '">' + element + '</option>');
+                $('#seriesField').append('<option value="' + element + '">' + element + '</option>');
+                $('#valueField').append('<option value="' + element + '">' + element + '</option>');
+            });
+        }
+        $('#titleFont').empty();
+        $('#legendFamily').empty();
+        $.each(fonts, function (index, element) {
+            $('#titleFont').append('<option value="' + element + '">' + element + '</option>');
+            $('#legendFamily').append('<option value="' + element + '">' + element + '</option>');
+        });
+        if (isFirst) {
+            plugin.init();
+        } else {
+            plugin.initByJson(option);
+        }
+    }
+
+
+    layui.use('element', function () {
+        let element = layui.element;
+        $('#mainTab').on('click', function (title) {
+            if (title.target.id == "json") {//切换到json tab 页面时
+                $('.json-container').empty();
+                $('.json-container').jsonViewer(plugin.instance.getOption());
+            }
+            ;
+            if (title.target.id == "props") {
+                plugin.reSetOption(); //添加自定义属性
+            }
+        });
+
+    });
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+    /**
+     * Created by whj on 2019/9/10.
+     */
+
+    var plugin = {
+        instance: {},  //Echart实例
+        baInstance: {}, //备份实例
+        optionJson: {},
+        backUpJson: {}, //
+        defCode: {}, //扩展属性
+        saveJson: {
+            dataSource: 'cell',
+            dsName: '',
+            categoryData: '',
+            seriesData: '',
+            valueData: '',
+            theme: '', //主题
+            labelFormatter: '{b}',
+            area: 'china'
+        }, //保存到内核的json
+        util: {
+            isPositiveNumber: function (num) { //判断是否是正整数
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                return g.test(num);
+            },
+            isLeft: function (val) {
+                if ($.inArray(val, ['left', 'center', 'right']) == -1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            isTop: function (val) {
+                if ($.inArray(val, ['top', 'middle', 'bottom']) == -1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            isAuto: function (val) {
+                if (val == 'auto') {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            isNoNegativeNumber: function (num) {
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) {
+                    return true;
+                } else {
+                    if (num == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            isPercentNumber: function (num) { //是否是百分整数
+                var g = new RegExp(/^\d+%$/); //不包含小数
+                //new RegExp(/^\d+\.{0,1}\d+%$/); //包含小数
+                if (g.test(num)) {
+                    return true;
+                } else {
+                    if (num == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            isRotateNumber: function (num) {
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                var g1 = /^-[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) { //是正整数
+                    if (num <= 90) {
+                        return true;
+                    } else {
+                        layer.alert("请输入-90到90间整数!");
+                        return false;
+                    }
+                } else if (g1.test(num)) {
+                    if (num >= -90) {
+                        return true;
+                    } else {
+                        layer.alert("请输入-90到90间整数!");
+                        return false;
+                    }
+                } else if (num == 0) {
+                    return true;
+                }
+            },
+            HexToRgba: function (val) {
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{8})$/;
+                var sColor = val.toLowerCase();
+                if (sColor && reg.test(sColor)) {
+                    if (sColor.length === 4) {
+                        var sColorNew = "#";
+                        for (var i = 1; i < 4; i += 1) {
+                            sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
+                        }
+                        sColor = sColorNew;
+                    }
+                    //处理六位的颜色值
+                    var sColorChange = [];
+                    for (var i = 1; i < 9; i += 2) {
+                        if (i < 7) {
+                            sColorChange.push(parseInt("0x" + sColor.slice(i, i + 2)));
+                        } else {
+                            var number = parseInt("0x" + sColor.slice(i, i + 2));
+                            sColorChange.push(number / 255);
+                        }
+
+                    }
+                    return "RGBA(" + sColorChange.join(",") + ")";
+                } else {
+                    return sColor;
+                }
+            },
+            HexToRgb: function (val) {
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+                var sColor = val.toLowerCase();
+                if (sColor && reg.test(sColor)) {
+                    if (sColor.length === 4) {
+                        var sColorNew = "#";
+                        for (var i = 1; i < 4; i += 1) {
+                            sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
+                        }
+                        sColor = sColorNew;
+                    }
+                    //处理六位的颜色值
+                    var sColorChange = [];
+                    for (var i = 1; i < 7; i += 2) {
+                        sColorChange.push(parseInt("0x" + sColor.slice(i, i + 2)));
+                    }
+                    return "RGB(" + sColorChange.join(",") + ")";
+                } else {
+                    return sColor;
+                }
+            },
+
+            RgbToHex: function (val) {
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+                if (/^(rgb|RGB)/.test(val)) {
+                    var aColor = val.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+                    var strHex = "#";
+                    for (var i = 0; i < aColor.length; i++) {
+                        var hex = Number(aColor[i]).toString(16);
+                        if (hex === "0") {
+                            hex += hex;
+                        }
+                        strHex += hex;
+                    }
+                    if (strHex.length !== 7) {
+                        strHex = val;
+                    }
+                    return strHex;
+                } else if (reg.test(val)) {
+                    var aNum = val.replace(/#/, "").split("");
+                    if (aNum.length === 6) {
+                        return val;
+                    } else if (aNum.length === 3) {
+                        var numHex = "#";
+                        for (var i = 0; i < aNum.length; i += 1) {
+                            numHex += (aNum[i] + aNum[i]);
+                        }
+                        return numHex;
+                    }
+                } else {
+                    return val;
+                }
+            },
+            RgbaToHex: function (val) {
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{8})$/;
+                if (/^(rgba|RGBA)/.test(val)) {
+                    var aColor = val.replace(/(?:\(|\)|rgba|RGBA)*/g, "").split(",");
+                    var strHex = "#";
+                    for (var i = 0; i < aColor.length; i++) {
+                        if (i == 3) {
+                            /* var hex = (Number(aColor[i]) * 255).toString(16);
+                             if (hex === "0") {
+                             hex += hex;
+                             }*/
+                            var hex = plugin.util.alphaToHex(Number(aColor[i]));
+                            strHex += hex;
+                        } else {
+                            var hex = Number(aColor[i]).toString(16);
+                            if (hex === "0") {
+                                hex += hex;
+                            }
+                            strHex += hex;
+                        }
+
+                    }
+
+                    //if(strHex.length !== 9){
+                    //strHex = val;
+                    //}
+                    return strHex;
+                } else if (reg.test(val)) {
+                    var aNum = val.replace(/#/, "").split("");
+                    if (aNum.length === 6) {
+                        return val;
+                    } else if (aNum.length === 3) {
+                        var numHex = "#";
+                        for (var i = 0; i < aNum.length; i += 1) {
+                            numHex += (aNum[i] + aNum[i]);
+                        }
+                        return numHex;
+                    }
+                } else {
+                    return val;
+                }
+            },
+            CheckIsHex6: function (bgVal) {
+                var type = "^#[0-9a-fA-F]{6}$";
+                var re = new RegExp(type);
+                if (bgVal.match(re) == null) {
+                    type = "^[rR][gG][Bb][\(]([\\s]*(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?)[\\s]*,){2}[\\s]*(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)[\\s]*[\)]{1}$";
+                    re = new RegExp(type);
+                    if (bgVal.match(re) == null) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            },
+            CheckIsHex8: function (bgVal) {
+                var type = "^#[0-9a-fA-F]{8}$";
+                var re = new RegExp(type);
+                if (bgVal.match(re) == null) {
+                    type = "^[rR][gG][Bb][\(]([\\s]*(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?)[\\s]*,){2}[\\s]*(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)[\\s]*[\)]{1}$";
+                    re = new RegExp(type);
+                    if (bgVal.match(re) == null) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            },
+            alphaToHex: function (val) {
+                var num = val * 255;
+                if (num == 0) {
+                    return '00';
+                } else {
+                    return (Math.round(num)).toString(16)
+                }
+
+            }
+
+        },
+        colors: [
+            ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)", "rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(255, 255, 255)"],
+            ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)", "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"],
+            ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)", "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)", "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)",
+                "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)", "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)",
+                "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)", "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+                "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)", "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)", "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+        ],
+
+        colorOpt: {
+            allowEmpty: true,
+            showInput: true,
+            containerClassName: "full-spectrum",
+            showInitial: true,
+            showPalette: true,
+            showSelectionPalette: false,
+            showAlpha: true,
+            maxPaletteSize: 10,
+            preferredFormat: "hex",
+
+            change: function (color) { //修改title的背景颜色
+                var hexColor = "transparent";
+
+                if (color) {
+                    if (color.alpha == 1) {
+                        hexColor = color.toHexString();
+                    } else {
+                        hexColor = color.toHexString() + plugin.util.alphaToHex(color.alpha);
+                    }
+
+                    $(this).css("background-color", hexColor);
+                    $(this).prev().find('input').val(hexColor);
+                    if ($(this).attr('id') == 'titleBg') {
+                        plugin.title.changeBgColor(plugin.util.HexToRgba(hexColor)); //将Hex转为rgb数据
+                    } else if ($(this).attr('id') == 'titleColor') {
+                        plugin.title.changeTitleColor(plugin.util.HexToRgba(hexColor));
+                    } else if ($(this).attr('id') == 'legendBg') {
+                        plugin.legend.changeBgColor(plugin.util.HexToRgba(hexColor));
+                    } else if ($(this).attr('id') == 'legendColor') {
+                        plugin.legend.changeTitleColor(plugin.util.HexToRgba(hexColor));
+                    } else if ($(this).attr('id') == 'chartBg') {
+                        plugin.changeBgColor(plugin.util.HexToRgba(hexColor));
+                    } else if ($(this).attr('id') == 'visColor') {
+                        plugin.visualMap.changeVisColor(plugin.util.HexToRgba(hexColor));
+                    }
+                }
+            },
+            beforeShow: function () {
+
+            },
+            hide: function () {
+
+            },
+            palette: this.colors
+        },
+
+        initColorPlugin: function (id) {  //初始化颜色选择控件
+            $('#' + id).spectrum(this.colorOpt);
+        },
+        extendOption: function () {
+            var code = $('#code').val();
+            if (code == "") { //删除自定义属性
+                var option = plugin.instance.getOption(); //Echart Option
+                var defOption = plugin.defCode; //扩展Option
+                //defOption = JSON.parse(defOption);
+                $(Object.keys(defOption)).each(function (idx, e) { //遍历扩展属性
+                    delete option[e];
+                });
+                delete option['defCode']; //删除自定义属性
+                plugin.instance.setOption(option, true);
+                plugin.defCode = {};
+
+
+            } else {
+                var obj = JSON.parse(code);//格式化字符串
+                plugin.instance.setOption(obj);//设置属性
+                plugin.instance.setOption({ //将代码作为自定义属性保存进Echart的Option
+                    defCode: code
+                })
+                plugin.defCode = obj;
+            }
+        },
+
+        reSetOption: function () {
+            var code = $('#code').val(); //获取自定义属性
+            if (code == "") { //删除自定义属性
+                plugin.instance.clear(); //清空实例对象
+                plugin.instance.setOption(plugin.baInstance.getOption()); //重新初始化实例
+            } else {
+                var obj = JSON.parse(code);//格式化字符串
+                plugin.instance.clear();
+                var baOption = plugin.baInstance.getOption();
+                var background = baOption['backgroundColor']; //获取背景色
+                if (background != undefined) {
+                    delete background['__canvasGradient'];
+                }
+                plugin.instance.setOption(baOption);//设置基础属性
+                plugin.instance.setOption(obj); //设置扩展属性
+                plugin.instance.setOption({ //将代码作为自定义属性保存进Echart的Option
+                    defCode: code
+                })
+                plugin.defCode = obj;
+            }
+        },
+        bind: function () {
+
+            plugin.initColorPlugin('titleBg');
+            plugin.initColorPlugin('titleColor');
+            plugin.initColorPlugin('legendBg');
+            plugin.initColorPlugin('legendColor');
+            plugin.initColorPlugin('chartBg');
+            plugin.initColorPlugin('visColor');
+
+            $('#code').bind('change', function () { //自定义代码,以键值对的形式存在
+
+            });
+
+            $('#chartType').bind('change', function () {
+
+            });
+
+            $('#titleShow').bind('change', function () {
+                if ($(this).val() == '0') {
+                    plugin.title.isVisible(false);
+                } else {
+                    plugin.title.isVisible(true);
+                }
+            });
+            $('#legendShow').bind('change', function () {
+                if ($(this).val() == '0') {
+                    plugin.legend.isVisible(false);
+                } else {
+                    plugin.legend.isVisible(true);
+                }
+            });
+
+            $('#titleText').bind('change', function () {
+                plugin.title.changeText($(this).val());
+            });
+
+            $('#titleSize').bind('change', function () {
+                if (plugin.util.isPositiveNumber($(this).val())) {
+                    plugin.title.changeTitleSize($(this).val());
+                } else {
+                    layer.alert("请输入正确的数字!");
+                }
+            });
+
+            $('#chartBgInput').bind('change', function () {
+                if (plugin.util.CheckIsHex6($(this).val())) {
+                    plugin.changeBgColor(plugin.util.HexToRgb($(this).val()));
+                } else if (plugin.util.CheckIsHex8($(this).val())) {
+                    plugin.changeBgColor(plugin.util.HexToRgba($(this).val()));
+                } else {
+                    layer.alert("请输入正确的颜色!");
+                }
+
+            });
+
+            $('#visColorInput').bind('change', function () {
+                if (plugin.util.CheckIsHex6($(this).val())) {
+                    plugin.visualMap.changeVisColor(plugin.util.HexToRgb($(this).val()));
+                } else if (plugin.util.CheckIsHex8($(this).val())) {
+                    plugin.visualMap.changeVisColor(plugin.util.HexToRgba($(this).val()));
+                } else {
+                    layer.alert("请输入正确的颜色!");
+                }
+
+            });
+
+            $('#titleBgInput').bind('change', function () {
+                if (plugin.util.CheckIsHex6($(this).val())) {
+                    plugin.title.changeBgColor(plugin.util.HexToRgb($(this).val()));
+                } else if (plugin.util.CheckIsHex8($(this).val())) {
+                    plugin.title.changeBgColor(plugin.util.HexToRgba($(this).val()));
+                } else {
+                    layer.alert("请输入正确的颜色!");
+                }
+
+            });
+            $('#legendBgInput').bind('change', function () {
+                if (plugin.util.CheckIsHex6($(this).val())) {
+                    plugin.legend.changeBgColor(plugin.util.HexToRgb($(this).val()));
+                } else if (plugin.util.CheckIsHex8($(this).val())) {
+                    plugin.legend.changeBgColor(plugin.util.HexToRgba($(this).val()));
+                } else {
+                    layer.alert("请输入正确的颜色!");
+                }
+
+            });
+
+            $('#legendSize').bind('change', function () {
+                if (plugin.util.isPositiveNumber($(this).val())) {
+                    plugin.legend.changeTitleSize($(this).val());
+                } else {
+                    layer.alert("请输入正确的数字!");
+                }
+            });
+            $('#title-top').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isTop($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.title.changeTop($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.title.changeTop($(this).val());
+                }
+            });
+            $('#title-bottom').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.title.changeBottom($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.title.changeBottom($(this).val());
+                }
+            });
+            $('#title-left').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isLeft($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.title.changeLeft($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.title.changeLeft($(this).val());
+                }
+            });
+            $('#title-right').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.title.changeRight($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.title.changeRight($(this).val());
+                }
+            });
+            $('#titleStyle').bind('change', function () {
+                plugin.title.changeFontStyle($(this).val());
+            });
+            $('#titleFont').bind('change', function () {
+                plugin.title.changeFont($(this).val());
+            })
+            $('#legendStyle').bind('change', function () {
+                plugin.legend.changeFontStyle($(this).val());
+            });
+            $('#titleWeight').bind('change', function () {
+                plugin.title.changeFontWeight($(this).val());
+            });
+            $('#legendWeight').bind('change', function () {
+                plugin.legend.changeFontWeight($(this).val());
+            });
+
+            $('#legendOrient').bind('change', function () {
+                plugin.legend.changeOrient($(this).val());
+            });
+
+            $('#legendType').bind('change', function () {
+                plugin.legend.changeType($(this).val());
+            })
+
+            $('#legendAlign').bind('change', function () {
+                plugin.legend.changeAlign($(this).val());
+            });
+
+            $('#legendFamily').bind('change', function () {
+                plugin.legend.changeFont($(this).val());
+            });
+
+            $('#legend-top').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isTop($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.legend.changeTop($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.legend.changeTop($(this).val());
+                }
+            });
+            $('#legend-bottom').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.legend.changeBottom($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.legend.changeBottom($(this).val());
+                }
+            });
+            $('#legend-left').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isAuto($(this).val()) || plugin.util.isLeft($(this).val())) {
+                    plugin.legend.changeLeft($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.legend.changeLeft($(this).val());
+                }
+            });
+            $('#legend-right').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.legend.changeRight($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.legend.changeRight($(this).val());
+                }
+            });
+
+            $('#category').bind('change', function () { //分类
+                plugin.saveJson.categoryData = $(this).val();
+            })
+
+            $('#series').bind('change', function () { //系列
+                plugin.saveJson.seriesData = $(this).val();
+            })
+
+            $('#value').bind('change', function () { //值
+                plugin.saveJson.valueData = $(this).val();
+            })
+
+            $('#showTip').bind('change', function () {
+                plugin.toolTip.show($(this).val());
+            })
+
+            $('#showLabel').bind('change', function () {
+                plugin.series.showLabel($(this).val());
+                plugin.instance.setOption({
+                    showLabel: $(this).val()
+                })
+                plugin.baInstance.setOption({
+                    showLabel: $(this).val()
+                })
+            })
+
+            $('#labelFormatter').bind('change', function () {
+                plugin.series.formatter($(this).val());
+                plugin.saveJson.labelFormatter = $(this).val();
+            })
+
+            $('#showVis').bind('change', function () {
+                plugin.visualMap.show($(this).val());
+            })
+
+            $('#orient').bind('change', function () {
+                plugin.visualMap.orient($(this).val());
+            })
+
+            $('#visual-top').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isTop($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.visualMap.top($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.visualMap.top($(this).val());
+                }
+            });
+            $('#visual-bottom').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.visualMap.bottom($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.visualMap.bottom($(this).val());
+                }
+            });
+            $('#visual-left').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isLeft($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.visualMap.left($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.visualMap.left($(this).val());
+                }
+            });
+            $('#visual-right').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.visualMap.right($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.visualMap.right($(this).val());
+                }
+            });
+
+            $('#inverse').bind('change', function () {
+                plugin.visualMap.isInverse($(this).val());
+            })
+
+            $('#visStyle').bind('change', function () {
+                plugin.visualMap.changeFontStyle($(this).val());
+            });
+            $('#visFont').bind('change', function () {
+                plugin.visualMap.changeFont($(this).val());
+            })
+
+            $('#visWeight').bind('change', function () {
+                plugin.visualMap.changeFontWeight($(this).val());
+            });
+
+            $('#visSize').bind('change', function () {
+                if (plugin.util.isPositiveNumber($(this).val())) {
+                    plugin.visualMap.changeFontSize($(this).val());
+                } else {
+                    layer.alert("请输入正确的数字!");
+                }
+            });
+
+            $('#showCal').bind('change', function () {
+                plugin.visualMap.showCal($(this).val());
+            })
+
+            $('#precision').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val())) {
+                    plugin.visualMap.precision($(this).val());
+                } else {
+                    layer.alert("请输入正确的数字!");
+                }
+            });
+            $('#text').bind('change', function () {
+                var text = $(this).val();
+                var obj = [];
+                var texts = text.split(',');
+                if (texts.length == 2) {
+                    obj.push(texts[0]);
+                    obj.push(texts[1]);
+                    plugin.visualMap.text(obj);
+                } else {
+                    layer.alert("请输入正确的文本!");
+                }
+
+            })
+
+            $('#min').bind('change', function () {
+                if ($.isNumeric($(this).val())) {
+                    var max = $('#max').val(); //获取最大值
+                    plugin.visualMap.min($(this).val(), max);
+                } else {
+                    layer.alert('请输入正确的数值');
+                }
+            });
+
+            $('#max').bind('change', function () {
+                if ($.isNumeric($(this).val())) {
+                    var min = $('#min').val(); //获取最大值
+                    plugin.visualMap.max($(this).val(), min);
+                } else {
+                    layer.alert('请输入正确的数值');
+                }
+            });
+
+            $('#categoryField').bind('change', function () {//字段切换事件
+                plugin.saveJson.categoryData = $(this).val();
+            });
+
+            $('#seriesField').bind('change', function () {//字段切换事件
+                plugin.saveJson.seriesData = $(this).val();
+            });
+
+            $('#valueField').bind('change', function () {//字段切换事件
+                plugin.saveJson.valueData = $(this).val();
+            });
+
+            $('#map-top').bind('change', function () {
+                var left = $('#map-left').val();
+                var right = $('#map-right').val();
+                var bottom = $('#map-bottom').val();
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isTop($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.series.top($(this).val(), left, right, bottom);
+                } else {
+                    $(this).val('auto');
+                    plugin.series.top($(this).val(), left, right, bottom);
+                }
+                plugin.instance.setOption({
+                    'map-top': $(this).val()
+                })
+                plugin.baInstance.setOption({
+                    'map-top': $(this).val()
+                })
+            });
+
+            $('#map-bottom').bind('change', function () {
+                var left = $('#map-left').val();
+                var right = $('#map-right').val();
+                var top = $('#map-top').val();
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.series.bottom($(this).val(), top, left, right);
+                } else {
+                    $(this).val('auto');
+                    plugin.series.bottom($(this).val(), top, left, right);
+                }
+                plugin.instance.setOption({
+                    'map-bottom': $(this).val()
+                })
+                plugin.baInstance.setOption({
+                    'map-bottom': $(this).val()
+                })
+            });
+
+            $('#map-left').bind('change', function () {
+                var right = $('#map-right').val();
+                var bottom = $('#map-bottom').val();
+                var top = $('#map-top').val();
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isLeft($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.series.left($(this).val(), top, bottom, right);
+                } else {
+                    $(this).val('auto');
+                    plugin.series.left($(this).val(), top, bottom, right);
+                }
+                plugin.instance.setOption({
+                    'map-left': $(this).val()
+                })
+                plugin.baInstance.setOption({
+                    'map-left': $(this).val()
+                })
+            });
+
+            $('#map-right').bind('change', function () {
+                var left = $('#map-left').val();
+                var bottom = $('#map-bottom').val();
+                var top = $('#map-top').val();
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.series.right($(this).val(), top, bottom, left);
+                } else {
+                    $(this).val('auto');
+                    plugin.series.right($(this).val(), top, bottom, left);
+                }
+                plugin.instance.setOption({
+                    'map-right': $(this).val()
+                })
+                plugin.baInstance.setOption({
+                    'map-right': $(this).val()
+                })
+            });
+
+            $('#dataSource').bind('change', function () {//绑定数据来源事件
+
+                var dataSource = $(this).val();
+                if (dataSource == 'cell') { //如果来自于单元格
+
+                    plugin.saveJson.dataSource = 'cell'; //设置数据来源
+
+                    $('#dsTr').hide();
+                    $('#categoryFieldTr').hide();
+                    $('#seriesFieldTr').hide();
+                    $('#valueFieldTr').hide();
+                    $('#categoryTr').show();
+                    $('#seriesTr').show();
+                    $('#valueTr').show();
+
+                    plugin.saveJson.categoryData = $('#category').val(); //设置分类数据
+                    plugin.saveJson.seriesData = $('#series').val(); //设置系列数据
+                    plugin.saveJson.valueData = $('#value').val(); //设置结果数据
+                } else {
+                    plugin.saveJson.dataSource = 'ds'; //设置数据来源
+                    $('#dsTr').show();
+                    plugin.saveJson.dsName = $('#ds').val() //设置结果集
+                    $('#categoryFieldTr').show();
+                    plugin.saveJson.categoryData = $('#categoryField').val(); //设置分类数据
+                    $('#seriesFieldTr').show();
+                    plugin.saveJson.seriesData = $('#seriesField').val(); //设置系列数据
+                    $('#valueFieldTr').show();
+                    plugin.saveJson.valueData = $('#valueField').val(); //设置结果数据
+                    $('#categoryTr').hide();
+                    $('#seriesTr').hide();
+                    $('#valueTr').hide();
+                }
+
+            });
+
+            $('#ds').bind('change', function () { //绑定结果集修改事件
+                var dsName = $(this).val();
+                plugin.saveJson.dsName = dsName; //修改结果集的值
+                var field = dsMap["'" + dsName + "'"]; //获取结果集的字段
+                var fields = field.split(',');
+                $('#categoryField').empty();
+                $('#seriesField').empty();
+                $('#valueField').empty();
+                $('#categoryField').append('<option value=""></option>'); //分类可以为空
+                $('#seriesField').append('<option value=""></option>'); //系列可以为空
+                $.each(fields, function (index, element) {
+                    $('#categoryField').append('<option value="' + element + '">' + element + '</option>');
+                    $('#seriesField').append('<option value="' + element + '">' + element + '</option>');
+                    $('#valueField').append('<option value="' + element + '">' + element + '</option>');
+                    plugin.saveJson.categoryData = $('#categoryField').val(); //设置分类数据
+                    plugin.saveJson.seriesData = $('#seriesField').val(); //设置系列数据
+                    plugin.saveJson.valueData = $('#valueField').val(); //设置结果数据
+                });
+            });
+
+
+        },
+        init: function () { //获取默认option来初始化Echarts实例
+            var myChart = echarts.init(document.getElementById('plugin'));
+            $.getJSON(base + '/pluginResource/data/railway.json', function (data) {
+                echarts.registerMap('china', data);
+                plugin.instance = myChart;
+                plugin.instance.setOption(option);
+                plugin.instance.setOption({
+                    animation: false
+                });
+                plugin.optionJson = option;
+                plugin.instance.setOption({ //设置默认属性
+                    "theme": "default",
+                })
+                var baChart = echarts.init(document.getElementById('pluginBack')); //备份Echart
+                plugin.baInstance = baChart;
+                plugin.baInstance.setOption(option); //设置备份echart Option
+                plugin.baInstance.setOption({ //设置默认属性
+                    "theme": "default",
+                })
+                plugin.optionJson = option;
+                $('.json-container').jsonViewer(option);
+                plugin.bind();
+                plugin.initTheme('default'); //初始化主题
+            })
+
+        },
+        initTheme: function (theme) {
+            $.ajax({
+                url: base + "/plugin/getThemes",
+                type: "post",
+                data: {"type": "RailWayMap"},
+                dataType: "json",
+                success: function (res) {
+                    var defaultOption = res.option; //默认option
+                    $('#chartTheme').empty();
+                    if (res.state == 'failed') {
+                        $('#chartTheme').append("<option>--无主题--</option>")
+                    } else {
+                        var themes = res.themes;
+                        $('#chartTheme').append("<option value='default'>default</option>"); //添加默认主题
+                        $.each(themes, function (index, element) {
+                            $('#chartTheme').append("<option value='" + element.name + "'>" + element.name + "</option>")
+                            $.getScript(element.src); //动态加载js
+                        })
+                        if (theme == undefined) {
+                            $('#chartTheme').find('option:first').prop("selected", true);
+                        } else {
+                            $('#chartTheme').val(theme).prop("selected", true);
+                        }
+                    }
+
+                    $('#chartTheme').unbind();
+                    $('#chartTheme').bind("change", function () {
+                        if ($(this).val() != 'none') { //修改主题后，重新初始化
+                            plugin.instance.dispose(); //销毁当前实例
+                            plugin.baInstance.dispose(); //销毁备份实例
+
+                            var myChart = echarts.init(document.getElementById('plugin'), $(this).val());
+                            var baChart = echarts.init(document.getElementById('pluginBack'), $(this).val());
+                            plugin.instance = myChart;
+                            plugin.baInstance = baChart;
+                           /* plugin.instance.setOption(typeDefaultOption); //使用默认的option来初始化
+                            plugin.baInstance.setOption(typeDefaultOption)*/
+                            plugin.instance.setOption({
+                                animation: false
+                            });
+                            plugin.baInstance.setOption({
+                                animation: false
+                            });
+                            plugin.optionJson = defaultOption;
+                            plugin.backUpJson = defaultOption;
+                            //设置默认数值
+                            plugin.instance.setOption({
+                                "categoryData": '',
+                                "seriesData": '',
+                                "valueData": '',
+                                "theme": $(this).val(),
+                            });
+
+                            //设置默认数值
+                            plugin.baInstance.setOption({
+                                "categoryData": '',
+                                "seriesData": '',
+                                "valueData": '',
+                                "theme": $(this).val(),
+                            });
+
+                            $('#code').val('');
+                            $('#category').val(''); //清空数据
+                            $('#series').val(''); //清空数据
+                            $('#value').val('');
+                            $('.json-container').jsonViewer(plugin.instance.getOption());
+                            plugin.initStyle(plugin.instance.getOption());
+                            plugin.bind();
+
+                        }
+                    });
+
+                },
+                error: function () {
+                    //layer.alert("初始化Echart模板出错!");
+                }
+
+            })
+        },
+        initByJson: function (json) {
+            var option = JSON.parse(json);
+            $.getJSON(base + '/pluginResource/data/railway.json', function (data) {
+                echarts.registerMap('china', data);
+                var myChart = echarts.init(document.getElementById('plugin'));
+                plugin.instance = myChart;
+                plugin.instance.setOption(option);
+                plugin.instance.setOption({
+                    animation: false
+                });
+
+                var baOption = option.backUpOption; //获取基础属性
+                var baChart = echarts.init(document.getElementById('pluginBack')); //获取基础Echart
+                plugin.baInstance = baChart;
+                plugin.baInstance.setOption(baOption);
+                plugin.baInstance.setOption({
+                    animation: false
+                });
+                plugin.optionJson = plugin.instance.getOption();
+                $('.json-container').jsonViewer(plugin.optionJson);
+                plugin.initStyle(option);
+                plugin.bind();
+                plugin.initTheme(option.theme); //初始化主题
+            })
+        },
+        initByDefaultJson: function (json) {
+
+            $.getJSON(base + '/pluginResource/data/railway.json', function (data) {
+                echarts.registerMap('china', data);
+                var option = JSON.parse(json);
+                var myChart = echarts.init(document.getElementById('plugin'));
+                var baChart = echarts.init(document.getElementById('pluginBack')); //备份Echart
+                plugin.instance = myChart;
+                plugin.baInstance = baChart;
+                plugin.instance.setOption(option);
+                plugin.baInstance.setOption(option); //设置备份echart Option
+
+
+                plugin.instance.setOption({
+                    animation: false
+                });
+                plugin.baInstance.setOption({
+                    animation: false
+                })
+                plugin.optionJson = option;
+                $('.json-container').jsonViewer(option);
+                //plugin.initStyle(option);
+                plugin.bind();
+            })
+
+
+        },
+        initStyle: function (json) {
+
+            //加载数据
+            var dataSource = json.dataSource == undefined ? 'cell' : json.dataSource;//数据来源
+            plugin.saveJson.dataSource = dataSource;
+
+            var dsName = json.dsName == undefined ? '' : json.dsName; //数据集
+            plugin.saveJson.dsName = dsName;
+
+            var seriesData = json.seriesData == undefined ? '' : json.seriesData;
+            plugin.saveJson.seriesData = seriesData;
+
+            var categoryData = json.categoryData == undefined ? '' : json.categoryData;
+            plugin.saveJson.categoryData = categoryData;
+
+            var valueData = json.valueData == undefined ? '' : json.valueData;
+            plugin.saveJson.valueData = valueData;
+
+            var formatter = json.labelFormatter; //格式化
+            if (formatter != undefined) {
+                plugin.saveJson.labelFormatter = formatter;
+                plugin.series.formatter(formatter);
+                var reg = new RegExp("&e&", "g");//g,表示全部替换。
+                formatter = formatter.replace(reg, "\\n");
+                $('#labelFormatter').val(formatter);
+            } else {
+                $('#labelFormatter').val('{b}');
+            }
+
+            var showLabel = json.showLabel; //是否显示标签
+            if (showLabel != undefined) {
+                $('#showLabel').val(showLabel).prop("selected", true);
+            } else {
+                $('#showLabel').val('false').prop("selected", true);
+            }
+
+            if (dataSource == 'cell') {
+                $('#dataSource').val(dataSource).prop('selected', true); //选中数据源
+                $('#dsTr').hide();
+                $('#categoryFieldTr').hide();
+                $('#seriesFieldTr').hide();
+                $('#valueFieldTr').hide();
+                $('#categoryTr').show();
+                $('#seriesTr').show();
+                $('#valueTr').show();
+
+                $('#category').val(categoryData);
+                $('#series').val(seriesData);
+                $('#value').val(valueData);
+            } else {
+                $('#dataSource').val(dataSource).prop('selected', true);
+                $('#dsTr').show();
+                $('#ds').val(dsName).prop('selected', true); //选中结果集
+                let key = templateIndex + '@#' + dsName;
+                let fields = dsMap[key];
+                /*
+                 * 当在设计器上修改结果集名称后，根据option里面的DSName可能会找不到对应的Field，针对这种情况，将报表还原为单元格取数 whj
+                 * */
+                if (fields == undefined) {
+
+                    $('#dataSource').val('cell').prop('selected', true); //选中数据源
+                    $('#dsTr').hide();
+                    $('#categoryFieldTr').hide();
+                    $('#seriesFieldTr').hide();
+                    $('#valueFieldTr').hide();
+                    $('#categoryTr').show();
+                    $('#seriesTr').show();
+                    $('#valueTr').show();
+
+                    $('#category').val('');
+                    $('#series').val('');
+                    $('#value').val('');
+
+                } else {
+
+                    var dsFields = fields;
+
+                    $('#categoryField').empty();
+                    $('#seriesField').empty(); //清空下拉框
+                    $('#valueField').empty();
+                    $('#categoryField').append('<option value=""></option>'); //分类可以为空
+                    $('#seriesField').append('<option value=""></option>'); //系列可以为空
+
+                    $.each(dsFields, function (index, element) { //初始化字段
+                        $('#categoryField').append('<option value="' + element + '">' + element + '</option>');
+                        $('#seriesField').append('<option value="' + element + '">' + element + '</option>');
+                        $('#valueField').append('<option value="' + element + '">' + element + '</option>');
+                    });
+
+                    $('#categoryFieldTr').show();
+
+                    $('#categoryField').val(categoryData).prop('selected', true);
+
+                    $('#seriesFieldTr').show();
+
+                    $('#seriesField').val(seriesData).prop('selected', true);
+
+                    $('#valueFieldTr').show();
+
+                    $('#valueField').val(valueData).prop('selected', true);
+
+                    $('#categoryTr').hide();
+                    $('#seriesTr').hide();
+                    $('#valueTr').hide();
+                }
+
+            }
+
+            var defCode = json.defCode; //自定义代码
+            if (defCode != undefined) {
+                $('#code').val(defCode);
+                plugin.defCode = JSON.parse(defCode);
+                plugin.instance.setOption(plugin.defCode);
+                //plugin.baInstance.setOption(plugin.defCode);
+
+            }
+
+            var chartBg = json.backgroundColor;
+
+            if (chartBg == undefined) {
+                $('#chartBgInput').val("#ffffff00");//标题背景颜色
+                $('#chartBg').css("background-color", "#ffffff00");
+            } else {
+                if ($.isPlainObject(chartBg)) { //判断是否是对象
+                    //如果是对象，采用默认设置
+                    $('#chartBgInput').val("#ffffff00");//标题背景颜色
+                    $('#chartBg').css("background-color", "#ffffff00");
+                } else {
+
+                    if (chartBg.indexOf('RGBA') == -1) {//标题背景颜色
+                        if (chartBg.indexOf('rgba') == -1) {
+                            $('#chartBgInput').val(plugin.util.RgbToHex(chartBg));//标题背景颜色
+                            $('#chartBg').css("background-color", plugin.util.RgbToHex(chartBg));
+                        } else {
+                            $('#chartBgInput').val(plugin.util.RgbaToHex(chartBg));//标题背景颜色
+                            $('#chartBg').css("background-color", plugin.util.RgbaToHex(chartBg));
+                        }
+
+                    } else {
+                        $('#chartBgInput').val(plugin.util.RgbaToHex(chartBg));//标题背景颜色
+                        $('#chartBg').css("background-color", plugin.util.RgbaToHex(chartBg));
+                    }
+                }
+            }
+            if(json.title != undefined){
+                let title = json.title[0];
+                $('#titleText').val(title.text); //标题
+                //$('#titleBgInput').val(plugin.util.RgbToHex(title.backgroundColor));//标题背景颜色
+                //$('#titleBg').spectrum("set", plugin.util.RgbToHex(title.backgroundColor));
+                //$('#titleBg').css("background-color" , plugin.util.RgbToHex(title.backgroundColor));
+                if (title.backgroundColor.indexOf('RGBA') == -1) {
+                    if (title.backgroundColor.indexOf('rgba') == -1) {
+                        $('#titleBgInput').val(plugin.util.RgbToHex(title.backgroundColor));//标题背景颜色
+                        $('#titleBg').css("background-color", plugin.util.RgbToHex(title.backgroundColor));
+                    } else {
+                        $('#titleBgInput').val(plugin.util.RgbaToHex(title.backgroundColor));//标题背景颜色
+                        $('#titleBg').css("background-color", plugin.util.RgbaToHex(title.backgroundColor));
+                    }
+                } else {
+                    $('#titleBgInput').val(plugin.util.RgbaToHex(title.backgroundColor));//标题背景颜色
+                    $('#titleBg').css("background-color", plugin.util.RgbaToHex(title.backgroundColor));
+                }
+
+                $('#title-top').val(title.top == undefined ? 0 : title.top);
+                $('#title-bottom').val(title.bottom == undefined ? 0 : title.bottom);
+                $('#title-left').val(title.left == undefined ? 0 : title.left);
+                $('#title-right').val(title.right == undefined ? 0 : title.right);
+
+
+                if (title.show == true) {
+                    $('#titleShow').val("1").prop("selected", true); //是否显示标题
+                } else {
+                    $('#titleShow').val("0").prop("selected", true); //是否显示标题
+                }
+                var textStyle = title.textStyle;
+                $('#titleSize').val(textStyle.fontSize);
+                var weight = textStyle.fontWeight;
+                if (weight == 'normal') {
+                    $('#titleWeight').val('normal').prop("selected", true);
+                } else {
+                    $('#titleWeight').val('bold').prop("selected", true);
+                }
+
+                if (textStyle.color.indexOf('RGBA') == -1) {
+                    if (textStyle.color.indexOf('rgba') == -1) {
+                        $('#titleColorInput').val(plugin.util.RgbToHex(textStyle.color));
+                        $('#titleColor').css("background-color", plugin.util.RgbToHex(textStyle.color));
+                    } else {
+                        $('#titleColorInput').val(plugin.util.RgbaToHex(textStyle.color));
+                        $('#titleColor').css("background-color", plugin.util.RgbaToHex(textStyle.color));
+                    }
+                } else {
+                    $('#titleColorInput').val(plugin.util.RgbaToHex(textStyle.color));
+                    $('#titleColor').css("background-color", plugin.util.RgbaToHex(textStyle.color));
+                }
+
+
+                //$('#titleColorInput').val(textStyle.color);
+                //$('#titleColor').css("background-color"  , textStyle.color);
+
+                //$('#titleStyle').val(textStyle.fontStyle).prop("selected" , true);
+
+                if (textStyle.fontStyle == undefined) {
+                    $('#titleStyle option:first').prop("selected", true);
+                } else {
+                    $('#titleStyle').val(textStyle.fontStyle).prop("selected", true);
+                }
+
+                if (textStyle.fontFamily == undefined) {
+                    $('#titleFont option:first').prop("selected", true);
+                } else {
+                    $('#titleFont').val(textStyle.fontFamily).prop("selected", true);
+                }
+
+            }
+
+
+            //图例
+            var legend = json.legend[0];
+            if (legend.show == true) {
+                $('#legendShow').val("1").prop("selected", true); //是否显示图例
+            } else {
+                $('#legendShow').val("0").prop("selected", true); //是否显示图例
+            }
+            if (legend.backgroundColor.indexOf('RGBA') == -1) {
+                if (legend.backgroundColor.indexOf('rgba') == -1) {
+                    $('#legendBgInput').val(plugin.util.RgbToHex(legend.backgroundColor)) //图例背景颜色
+                    $("#legendBg").css("background-color", plugin.util.RgbToHex(legend.backgroundColor));
+                } else {
+                    $('#legendBgInput').val(plugin.util.RgbaToHex(legend.backgroundColor)) //图例背景颜色
+                    $("#legendBg").css("background-color", plugin.util.RgbaToHex(legend.backgroundColor));
+                }
+
+            } else {
+                $('#legendBgInput').val(plugin.util.RgbaToHex(legend.backgroundColor)) //图例背景颜色
+                $("#legendBg").css("background-color", plugin.util.RgbaToHex(legend.backgroundColor));
+            }
+
+            if (legend.orient == 'horizontal') { //图例布局
+                $('#legendOrient').val("horizontal").prop("selected", true);
+            } else {
+                $('#legendOrient').val("vertical").prop("selected", true);
+            }
+
+            if (legend.type != undefined) { //图例类型
+                $('#legendType').val(legend.type).prop("selected", true);
+            }
+
+            if (legend.align == 'auto') {//图例对齐方式
+                $('#legendAlign').val("auto").prop("selected", true);
+            } else if (legend.align == 'left') {
+                $('#legendAlign').val("left").prop("selected", true);
+            } else {
+                $('#legendAlign').val("right").prop("selected", true);
+            }
+            //图例样式
+            var legendStyle = legend.textStyle;
+            if (legendStyle.color.indexOf('RGBA') == -1) {
+                if (legendStyle.color.indexOf('rgba') == -1) {
+                    $('#legendColorInput').val(plugin.util.RgbToHex(legendStyle.color));
+                    $('#legendColor').css("background-color", plugin.util.RgbToHex(legendStyle.color));
+                } else {
+                    $('#legendColorInput').val(plugin.util.RgbaToHex(legendStyle.color));
+                    $('#legendColor').css("background-color", plugin.util.RgbaToHex(legendStyle.color));
+                }
+
+            } else {
+                $('#legendColorInput').val(plugin.util.RgbaToHex(legendStyle.color));
+                $('#legendColor').css("background-color", plugin.util.RgbaToHex(legendStyle.color));
+            }
+
+            $('#legendSize').val(legendStyle.fontSize == undefined ? 12 : legendStyle.fontSize);
+            var fontStyle = legendStyle.fontStyle;
+            if (fontStyle == 'italic') {
+                $('#legendStyle').val('italic').prop("selected", true);
+            } else if (fontStyle == 'oblique') {
+                $('#legendStyle').val('oblique').prop("selected", true);
+            } else {
+                $('#legendStyle').val('normal').prop("selected", true);
+            }
+
+            $('#legend-top').val(legend.top == undefined ? 0 : legend.top);
+            $('#legend-bottom').val(legend.bottom == undefined ? 0 : legend.bottom);
+            //默认居中
+            if (legend.left == undefined) {
+                $('#legend-left').val(0);
+            } else if (legend.left == 'center') {
+                $('#legend-left').val('center');
+            } else {
+                $('#legend-left').val(legend.left);
+            }
+
+            $('#legend-right').val(legend.right == undefined ? 0 : legend.right);
+
+
+            var fontWeight = legendStyle.fontWeight;
+            if (fontWeight == 'bold') {
+                $('#legendWeight').val('bold').prop("selected", true);
+            } else {
+                $('#legendWeight').val('normal').prop("selected", true);
+            }
+
+            if (legendStyle.fontFamily == undefined) {
+                $('#legendFamily option:first').prop("selected", true);
+            } else {
+                $('#legendFamily').val(legendStyle.fontFamily).prop("selected", true);
+            }
+
+
+            /*  var categoryData = json.categoryData;
+             $('#category').val(categoryData);
+
+             var seriesData = json.seriesData;
+             $('#series').val(seriesData);
+
+             var valueData = json.valueData;
+             $('#value').val(valueData);*/
+
+            $('#showTip').val(String(json.tooltip[0].show)).prop('selected', true);
+
+            var visualMap = json.visualMap[0]; //视觉映射属性
+            var showVis = visualMap.show;
+            $('#showVis').val(showVis == true ? "true" : "false").prop("selected", true);
+
+            var orient = visualMap.orient;
+            $('#orient').val(orient).prop("selected", true);
+
+            $('#visual-top').val(visualMap.top);
+            $('#visual-bottom').val(visualMap.bottom == undefined ? 'auto' : visualMap.bottom);
+            $('#visual-left').val(visualMap.left);
+            $('#visual-right').val(visualMap.right == undefined ? 'auto' : visualMap.right);
+
+            $('#showCal').val(visualMap.calculable == true ? "true" : "false").prop("selected", true);
+
+            $('#inverse').val(visualMap.inverse == true ? "true" : "false").prop("selected", true);
+
+            $('#precision').val(visualMap.precision);
+
+            $('#text').val(visualMap.text);
+
+            var min = visualMap.min;
+            $('#min').val(min);
+            var max = visualMap.max;
+            $('#max').val(max);
+
+            var visStyle = visualMap.textStyle;
+            if (visStyle.color.indexOf('RGBA') == -1) {
+                if (visStyle.color.indexOf('rgba') == -1) {
+                    $('#visColorInput').val(plugin.util.RgbToHex(visStyle.color));
+                    $('#visColor').css("background-color", plugin.util.RgbToHex(visStyle.color));
+                } else {
+                    $('#visColorInput').val(plugin.util.RgbaToHex(visStyle.color));
+                    $('#visColor').css("background-color", plugin.util.RgbaToHex(visStyle.color));
+                }
+
+            } else {
+                $('#visColorInput').val(plugin.util.RgbaToHex(visStyle.color));
+                $('#visColor').css("background-color", plugin.util.RgbaToHex(visStyle.color));
+            }
+
+            //$('#visStyle').val(visStyle.fontStyle).prop("selected" , true);
+            var fontStyle = visStyle.fontStyle;
+            if (fontStyle == 'italic') {
+                $('#visStyle').val('italic').prop("selected", true);
+            } else if (fontStyle == 'oblique') {
+                $('#visStyle').val('oblique').prop("selected", true);
+            } else {
+                $('#visStyle').val('normal').prop("selected", true);
+            }
+            //$('#visWeight').val(visStyle.fontWeight).prop("selected" , true);
+            var visWeight = visStyle.fontWeight;
+            if (visWeight == 'bold') {
+                $('#visWeight').val('bold').prop("selected", true);
+            } else {
+                $('#visWeight').val('normal').prop("selected", true);
+            }
+            //$('#visFont').val(visStyle.fontFamily).prop("selected" , true);
+
+            if (visStyle.fontFamily == undefined) {
+                $('#visFont option:first').prop("selected", true);
+            } else {
+                $('#visFont').val(visStyle.fontFamily).prop("selected", true);
+            }
+            //$('#visSize').val(visStyle.fontSize).prop("selected" , true);
+            $('#visSize').val(visStyle.fontSize == undefined ? 12 : visStyle.fontSize);
+
+            var series = json.series[0];
+            if (series != undefined) {
+                $('#map-top').val(series.top == undefined ? 'auto' : series.top);
+                $('#map-bottom').val(series.bottom == undefined ? 'auto' : series.bottom);
+                $('#map-left').val(series.left == undefined ? 'auto' : series.left);
+                $('#map-right').val(series.right == undefined ? 'auto' : series.right);
+            }
+
+        },
+        title: {
+            isVisible: function (flag) { //设置标题是否显示
+                if (plugin.instance) {
+                    plugin.instance.setOption({
+                        title: {
+                            show: flag
+                        }
+                    })
+                    plugin.baInstance.setOption({
+                        title: {
+                            show: flag
+                        }
+                    })
+                }
+            },
+            changeText: function (text) {  //修改标题文本
+                if (plugin.instance) {
+                    plugin.instance.setOption({
+                        title: {
+                            text: text
+                        }
+                    })
+                    plugin.baInstance.setOption({
+                        title: {
+                            text: text
+                        }
+                    })
+                }
+                $('.json-container').jsonViewer(plugin.instance.getOption());
+
+            },
+            changeBgColor: function (color) { //修改标题背景颜色
+                plugin.instance.setOption({
+                    title: {
+                        backgroundColor: color
+                    }
+                })
+                plugin.baInstance.setOption({
+                    title: {
+                        backgroundColor: color
+                    }
+                })
+            },
+            changeTitleColor: function (color) { //修改标题文本颜色
+                plugin.instance.setOption({
+                    title: {
+                        textStyle: {
+                            color: color
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    title: {
+                        textStyle: {
+                            color: color
+                        }
+                    }
+                })
+            },
+            changeTitleSize: function (size) { //设置标题大小
+                plugin.instance.setOption({
+                    title: {
+                        textStyle: {
+                            fontSize: size
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    title: {
+                        textStyle: {
+                            fontSize: size
+                        }
+                    }
+                })
+            },
+            changeLeft: function (px) {
+                plugin.instance.setOption({
+                    title: {
+                        left: px
+                    }
+                })
+                plugin.baInstance.setOption({
+                    title: {
+                        left: px
+                    }
+                })
+            },
+            changeRight: function (px) {
+                plugin.instance.setOption({
+                    title: {
+                        right: px
+                    }
+                })
+                plugin.baInstance.setOption({
+                    title: {
+                        right: px
+                    }
+                })
+            },
+            changeTop: function (px) {
+                plugin.instance.setOption({
+                    title: {
+                        top: px
+                    }
+                })
+                plugin.baInstance.setOption({
+                    title: {
+                        top: px
+                    }
+                })
+            },
+            changeBottom: function (px) {
+                plugin.instance.setOption({
+                    title: {
+                        bottom: px
+                    }
+                })
+                plugin.baInstance.setOption({
+                    title: {
+                        bottom: px
+                    }
+                })
+            },
+            changeFontStyle: function (style) {
+                plugin.instance.setOption({
+                    title: {
+                        textStyle: {
+                            fontStyle: style
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    title: {
+                        textStyle: {
+                            fontStyle: style
+                        }
+                    }
+                })
+            },
+            changeFontWeight: function (weight) {
+                plugin.instance.setOption({
+                    title: {
+                        textStyle: {
+                            fontWeight: weight
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    title: {
+                        textStyle: {
+                            fontWeight: weight
+                        }
+                    }
+                })
+            },
+            changeFont: function (val) {
+                plugin.instance.setOption({
+                    title: {
+                        textStyle: {
+                            fontFamily: val
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    title: {
+                        textStyle: {
+                            fontFamily: val
+                        }
+                    }
+                })
+            }
+        },
+        legend: {
+            isVisible: function (flag) { //设置图例是否显示
+                if (plugin.instance) {
+                    plugin.instance.setOption({
+                        legend: {
+                            show: flag
+                        }
+                    })
+                    plugin.baInstance.setOption({
+                        legend: {
+                            show: flag
+                        }
+                    })
+                }
+            },
+            changeText: function (text) {  //修改图例文本
+                if (plugin.instance) {
+                    plugin.instance.setOption({
+                        legend: {
+                            text: text,
+                            show: true
+                        }
+                    })
+                    plugin.baInstance.setOption({
+                        legend: {
+                            text: text,
+                            show: true
+                        }
+                    })
+                }
+            },
+            changeBgColor: function (color) { //修改图例背景颜色
+                plugin.instance.setOption({
+                    legend: {
+                        backgroundColor: color
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        backgroundColor: color
+                    }
+                })
+            },
+            changeTitleColor: function (color) { //修改图例文本颜色
+                plugin.instance.setOption({
+                    legend: {
+                        textStyle: {
+                            color: color
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        textStyle: {
+                            color: color
+                        }
+                    }
+                })
+            },
+            changeTitleSize: function (size) { //设置图例大小
+                plugin.instance.setOption({
+                    legend: {
+                        textStyle: {
+                            fontSize: size
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        textStyle: {
+                            fontSize: size
+                        }
+                    }
+                })
+            },
+            changeLeft: function (px) {
+                plugin.instance.setOption({
+                    legend: {
+                        left: px
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        left: px
+                    }
+                })
+            },
+            changeRight: function (px) {
+                plugin.instance.setOption({
+                    legend: {
+                        right: px
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        right: px
+                    }
+                })
+            },
+            changeTop: function (px) {
+                plugin.instance.setOption({
+                    legend: {
+                        top: px
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        top: px
+                    }
+                })
+            },
+            changeBottom: function (px) {
+                plugin.instance.setOption({
+                    legend: {
+                        bottom: px
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        bottom: px
+                    }
+                })
+            },
+            changeFontStyle: function (style) {
+                plugin.instance.setOption({
+                    legend: {
+                        textStyle: {
+                            fontStyle: style
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        textStyle: {
+                            fontStyle: style
+                        }
+                    }
+                })
+            },
+            changeFontWeight: function (weight) {
+                plugin.instance.setOption({
+                    legend: {
+                        textStyle: {
+                            fontWeight: weight
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        textStyle: {
+                            fontWeight: weight
+                        }
+                    }
+                })
+            },
+            changeFont: function (val) {
+                plugin.instance.setOption({
+                    legend: {
+                        textStyle: {
+                            fontFamily: val
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        textStyle: {
+                            fontFamily: val
+                        }
+                    }
+                })
+            },
+            changeOrient: function (orient) {
+                plugin.instance.setOption({
+                    legend: {
+                        orient: orient
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        orient: orient
+                    }
+                })
+            },
+            changeType: function (type) {
+                plugin.instance.setOption({
+                    legend: {
+                        type: type
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        type: type
+                    }
+                })
+            },
+            changeAlign: function (align) {
+                plugin.instance.setOption({
+                    legend: {
+                        align: align
+                    }
+                })
+                plugin.baInstance.setOption({
+                    legend: {
+                        align: align
+                    }
+                })
+            }
+        },
+        visualMap: {
+            show: function (val) { //是否显示
+                var flag;
+                if (val == "true") {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+                plugin.instance.setOption({
+                    visualMap: {
+                        show: flag
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        show: flag
+                    }
+                })
+            },
+            showCal: function (val) { //是否显示手柄
+                var flag;
+                if (val == "true") {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+                plugin.instance.setOption({
+                    visualMap: {
+                        calculable: flag
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        calculable: flag
+                    }
+                })
+            },
+            isInverse: function (val) {//是否翻转
+                var flag;
+                if (val == "true") {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+                plugin.instance.setOption({
+                    visualMap: {
+                        inverse: flag
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        inverse: flag
+                    }
+                })
+            },
+            precision: function (val) {//精度
+                plugin.instance.setOption({
+                    visualMap: {
+                        precision: val
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        precision: val
+                    }
+                })
+            },
+            text: function (val) {
+                plugin.instance.setOption({
+                    visualMap: {
+                        text: val
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        text: val
+                    }
+                })
+            },
+            orient: function (val) {
+                plugin.instance.setOption({
+                    visualMap: {
+                        orient: val
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        orient: val
+                    }
+                })
+            },
+            top: function (val) {
+                plugin.instance.setOption({
+                    visualMap: {
+                        top: val
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        top: val
+                    }
+                })
+            },
+            bottom: function (val) {
+                plugin.instance.setOption({
+                    visualMap: {
+                        bottom: val
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        bottom: val
+                    }
+                })
+            },
+            left: function (val) {
+                plugin.instance.setOption({
+                    visualMap: {
+                        left: val
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        left: val
+                    }
+                })
+            },
+            right: function (val) {
+                plugin.instance.setOption({
+                    visualMap: {
+                        right: val
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        right: val
+                    }
+                })
+            },
+            changeFontStyle: function (style) {
+                plugin.instance.setOption({
+                    visualMap: [{
+                        textStyle: {
+                            fontStyle: style
+                        }
+                    }]
+                })
+                plugin.baInstance.setOption({
+                    visualMap: [{
+                        textStyle: {
+                            fontStyle: style
+                        }
+                    }]
+                })
+            },
+            changeFontWeight: function (weight) {
+                plugin.instance.setOption({
+                    visualMap: {
+                        textStyle: {
+                            fontWeight: weight
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        textStyle: {
+                            fontWeight: weight
+                        }
+                    }
+                })
+            },
+            changeFontSize: function (val) {
+                plugin.instance.setOption({
+                    visualMap: {
+                        textStyle: {
+                            fontSize: val
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        textStyle: {
+                            fontSize: val
+                        }
+                    }
+                })
+            },
+            changeFont: function (val) {
+                plugin.instance.setOption({
+                    visualMap: [{
+                        textStyle: {
+                            fontFamily: val
+                        }
+                    }]
+                })
+                plugin.baInstance.setOption({
+                    visualMap: [{
+                        textStyle: {
+                            fontFamily: val
+                        }
+                    }]
+                })
+            },
+            changeVisColor: function (color) { //修改图例文本颜色
+                plugin.instance.setOption({
+                    visualMap: {
+                        textStyle: {
+                            color: color
+                        }
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        textStyle: {
+                            color: color
+                        }
+                    }
+                })
+            },
+            min: function (val, max) {
+                plugin.instance.setOption({
+                    visualMap: {
+                        min: parseInt(val),
+                        range: [val, max]
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        min: parseInt(val),
+                        range: [val, max]
+                    }
+                })
+            },
+            max: function (val, min) {
+                plugin.instance.setOption({
+                    visualMap: {
+                        max: parseInt(val),
+                        range: [min, val]
+                    }
+                })
+                plugin.baInstance.setOption({
+                    visualMap: {
+                        max: parseInt(val),
+                        range: [min, val]
+                    }
+                })
+            }
+
+
+        },
+        category: {},
+        series: {
+            showLabel: function (val) {
+                var flag;
+                if (val == "true") {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+                plugin.instance.setOption({
+                    series: [{
+                        label: {
+                            show: flag
+                        }
+                    }]
+                })
+                plugin.baInstance.setOption({
+                    series: [{
+                        label: {
+                            show: flag
+                        }
+                    }]
+                })
+            },
+            formatter: function (val) {
+                var newDesc = val.replace(/\\n/g, '\n');
+                plugin.instance.setOption({
+                    series: [{
+                        label: {
+                            formatter: newDesc
+                        }
+                    }]
+                })
+                plugin.baInstance.setOption({
+                    series: [{
+                        label: {
+                            formatter: newDesc
+                        }
+                    }]
+                })
+            },
+            top: function (val, left, right, bottom) {
+                plugin.instance.setOption({
+                    series: [{
+                        top: val,
+                        bottom: bottom,
+                        right: right,
+                        left: left
+                    }]
+                })
+                plugin.baInstance.setOption({
+                    series: [{
+                        top: val,
+                        bottom: bottom,
+                        right: right,
+                        left: left
+                    }]
+                })
+            },
+            bottom: function (val, top, left, right) {
+                plugin.instance.setOption({
+                    series: [{
+                        top: top,
+                        bottom: val,
+                        left: left,
+                        right: right
+                    }]
+                })
+                plugin.baInstance.setOption({
+                    series: [{
+                        top: top,
+                        bottom: val,
+                        left: left,
+                        right: right
+                    }]
+                })
+            },
+            left: function (val, top, bottom, right) {
+                plugin.instance.setOption({
+                    series: [{
+                        left: val,
+                        top: top,
+                        right: right,
+                        bottom: bottom
+                    }]
+                })
+                plugin.baInstance.setOption({
+                    series: [{
+                        left: val,
+                        top: top,
+                        right: right,
+                        bottom: bottom
+                    }]
+                })
+            },
+            right: function (val, top, bottom, left) {
+                plugin.instance.setOption({
+                    series: [{
+                        right: val,
+                        top: top,
+                        bottom: bottom,
+                        left: left
+                    }]
+                })
+                plugin.baInstance.setOption({
+                    series: [{
+                        right: val,
+                        top: top,
+                        bottom: bottom,
+                        left: left
+                    }]
+                })
+            }
+
+
+        },
+        value: {},
+        toolTip: {
+            show: function (val) {
+                var flag;
+                if (val == "true") {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+                plugin.instance.setOption({
+                    tooltip: {
+                        show: flag
+                    }
+                })
+                plugin.baInstance.setOption({
+                    tooltip: {
+                        show: flag
+                    }
+                })
+            }
+
+        },
+        changeBgColor: function (val) {
+            plugin.instance.setOption({
+                backgroundColor: val
+            })
+            plugin.baInstance.setOption({
+                backgroundColor: val
+            })
+        }
+
+    }
+
+    function getOptions() {
+        plugin.reSetOption(); //判断并添加自定义属性
+        var baOption = plugin.baInstance.getOption(); //获取EChart基础属性
+        plugin.instance.setOption({ //将基础属性当做一个字段保存进option中
+            "backUpOption": baOption,
+            "hasInit": 1
+        })
+        console.log(plugin);
+        return plugin;
+    }
+</script>
+</html>

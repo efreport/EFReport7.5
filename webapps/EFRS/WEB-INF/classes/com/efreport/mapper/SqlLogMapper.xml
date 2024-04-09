@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SqlLogMapper">
+
+    <!-- 插入日志 -->
+    <insert id="save" parameterType="com.efreport.entity.SqlLog" useGeneratedKeys="true" keyProperty="id">
+        insert into EF_SQL_LOG (USER_ID,USER_NAME,COMPANY_ID,COMPANY_NAME,PATHID,DATA_SQL,PARAMS,CREATE_TIME,TEMPLATE_NAME) values (#{userId}, #{userName},#{companyId},#{companyName},#{pathId},#{dataSql},#{params},#{createTime},#{templateName})
+    </insert>
+
+
+    <select id="countLogs" resultType="int" parameterType="java.util.Map">
+        SELECT COUNT(*) FROM EF_SQL_LOG  WHERE 1=1
+        <if test="userId != null">
+            and USER_ID = #{userId}
+        </if>
+        <if test="userName != null">
+            and USER_NAME like concat('%' , #{userName} , '%')
+        </if>
+        <if test="companyName != null and companyName != ''">
+            AND COMPANY_NAME like concat('%' , #{companyName} , '%')
+        </if>
+        <if test="templateName != null and templateName != ''">
+            AND TEMPLATE_NAME like concat('%' , #{templateName} , '%')
+        </if>
+        <if test="start != null and start != ''">
+            AND CREATE _TIME <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND CREATE _TIME <![CDATA[ <= ]]> #{end}
+        </if>
+    </select>
+
+
+    <select id="listLogs" parameterType="map" resultType="com.efreport.entity.SqlLog">
+        SELECT
+          ID AS id,
+          USER_ID AS userId,
+          USER_NAME AS userName,
+          COMPANY_ID AS companyId,
+          COMPANY_NAME AS companyName,
+          TEMPLATE_NAME AS templateName,
+          PARAMS AS params,
+          PATHID AS pathId,
+          DATA_SQL AS dataSql,
+          CREATE_TIME AS createTime
+        FROM
+          EF_SQL_LOG
+        WHERE 1=1
+        <if test="userId != null">
+            and USER_ID = #{userId}
+        </if>
+        <if test="userName != null">
+            and USER_NAME like concat('%' , #{userName} , '%')
+        </if>
+        <if test="companyName != null and companyName != ''">
+            AND COMPANY_NAME like concat('%' ,#{companyName},'%')
+        </if>
+        <if test="templateName != null and templateName != ''">
+            AND TEMPLATE_NAME like concat('%' , #{templateName} , '%')
+        </if>
+        <if test="start != null and start != ''">
+            AND CREATE _TIME <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND CREATE _TIME <![CDATA[ <= ]]> #{end}
+        </if>
+        order by ID desc
+        limit #{startNum} , #{limit}
+    </select>
+
+    <delete id="delete" parameterType="int">
+        delete from  EF_SQL_LOG where USER_ID = #{userId}
+    </delete>
+
+
+</mapper>

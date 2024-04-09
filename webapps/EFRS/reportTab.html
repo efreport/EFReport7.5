@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+    <link id="iconLink" rel="icon" href="data:;base64,=">
+    <title></title>
+    <link rel="stylesheet" href="css/scroll.css" type="text/css">
+    <link rel="stylesheet" href="css/report/tool.css" type="text/css">
+    <link rel="stylesheet" href="css/report/sheet.css" type="text/css">
+    <link rel="stylesheet" href="css/report/table.css" type="text/css">
+    <link rel="stylesheet" href="css/report/content.css" type="text/css">
+    <link rel="stylesheet" href="css/report/param.css" type="text/css">
+    <link rel="stylesheet" href="css/report/submit.css" type="text/css">
+    <link rel="stylesheet" href="js/css/layui.css" type="text/css">
+
+    <link rel="stylesheet" href="css/submit/param.css" type="text/css">
+    <link rel="stylesheet" href="css/submit/tool.css" type="text/css">
+    <script type="text/javascript" src="js/report/sheet.js"></script>
+    <script type="text/javascript" src="js/report/normalTable.js"></script>
+    <script type="text/javascript" src="js/report/merge.js"></script>
+    <script type="text/javascript" src="js/report/content.js"></script>
+    <script type="text/javascript" src="js/report/tool.js"></script>
+    <script type="text/javascript" src="js/report/wcpTable.js"></script>
+    <script type="text/javascript" src="js/report/param.js"></script>
+    <script type="text/javascript" src="js/report/wcpForm.js"></script>
+    <script type="text/javascript" src="js/report/form.js"></script>
+    <script type="text/javascript" src="js/report/fold.js"></script>
+    <script type="text/javascript" src="js/report/normalSubmit.js"></script>
+    <script type="text/javascript" src="js/report/link.js"></script>
+    <script type="text/javascript" src="js/report/refresh.js"></script>
+    <script type="text/javascript" src="js/submit/init.js"></script>
+    <script type="text/javascript" src="js/submit/rCanvas.js"></script>
+    <script type="text/javascript" src="js/submit/rDesign.js"></script>
+    <script type="text/javascript" src="js/submit/util.js"></script>
+
+    <script type="text/javascript" src="wasm/qtloader.js"></script>
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/layui.js"></script>
+    <script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+<body style="padding:0px;margin:0px;">
+<!-- 普通模式预览DIV -->
+<div id="report">
+    <div id="tool" class="tool">
+        <!-- 普通预览工具栏  -->
+        <div class="normal" style="display: inline-flex;">
+            <div class="normal-btn">
+                <div class="">
+                    <button class="first" id="first" onclick="first()">首页</button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="normal-btn">
+                <div class="">
+                    <button class="prev" id="prev" onclick="prev()">上一页</button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="normal-input">
+                <div class="btn-input">
+                    <input class="" type="text" id="curr" onchange="cur()">
+                </div>
+                <div class="btn-text">
+                    <span class="" style="margin-left: 8px;">/</span>
+                    <span id="total">1</span>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="normal-btn">
+                <div class="">
+                    <button class="next" id="next" onclick="next()">下一页</button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="normal-btn">
+                <div class="">
+                    <button class="end" id="last" onclick="last()">末页</button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="normal-btn" style="overflow: visible;">
+                <div class="" style="position: relative;">
+                    <button class="print" id="print" onclick="showSheetNames(0);">打印</button>
+                    <div class="" style="clear: both;"></div>
+                </div>
+            </div>
+            <div class="divider print-divider"></div>
+            <div class="normal-btn" style="overflow: visible;">
+                <div class="" style="position: relative;">
+                    <button class="export" id="export">导出</button>
+                    <div class="dropdown-list export-list" style="display: none;margin-top:-3px;">
+                        <div class="dropdown-item" id="PDF">PDF</div>
+                        <div class="dropdown-item" id="EXCEL">EXCEL(分页)</div>
+                        <div class="dropdown-item" id="EXCEL1">EXCEL(不分页)</div>
+                        <div class="dropdown-item" id="EXCEL2">EXCEL(分页转SHEET)</div>
+                        <div class="dropdown-item" id="WORD">WORD</div>
+                    </div>
+                    <div class="" style="clear: both;"></div>
+                </div>
+            </div>
+            <div class="divider  export-divider"></div>
+            <div class="normal-btn">
+                <div class="">
+                    <button class="search" id="searchKey" onclick="searchKeyword();">查找</button>
+                </div>
+            </div>
+            <div class="divider search-divider"></div>
+            <div class="ty-bar-btn backButton" style="display: none;">
+                <div class="">
+                    <button class="return" id="return" onclick="back()">返回</button>
+                </div>
+            </div>
+        </div>
+        <!-- 普通预览填报工具栏 -->
+        <div class="submit" style="display: none;">
+            <div class="submit-btn">
+                <div class="">
+                    <button class="validateP" id="validateP" onclick="submit(1);">数据校验</button>
+                </div>
+            </div>
+            <div class="divider validate-divider"></div>
+            <div class="submit-btn">
+                <div class="">
+                    <button class="submitP" id="submitP" onclick="submit(2);">提交</button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="submit-btn" style="overflow: visible; z-index: 1999;">
+                <div class="" style="position: relative;">
+                    <button class="print" id="sub-print" onclick="showSheetNames(0);">打印</button>
+                    <div class="" style="clear: both;"></div>
+                </div>
+            </div>
+            <div class="divider print-divider"></div>
+            <div class="submit-btn" style="overflow: visible;">
+                <div class="" style="position: relative;">
+                    <button class="sub-export" id="normal-submit-export">导出</button>
+                    <div class="dropdown-list sub-export-list" style="display: none;margin-top:-3px;">
+                        <div class="dropdown-item" id="sub-PDF">PDF</div>
+                        <div class="dropdown-item" id="sub-EXCEL">EXCEL(分页)</div>
+                        <div class="dropdown-item" id="sub-EXCEL1">EXCEL(不分页)</div>
+                        <div class="dropdown-item" id="sub-EXCEL2">EXCEL(分页转SHEET)</div>
+                        <div class="dropdown-item" id="sub-WORD">WORD</div>
+                    </div>
+                    <div class="" style="clear: both;"></div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="submit-btn">
+                <div class="">
+                    <button class="search" id="sub-searchKey" onclick="searchKeyword();">查找</button>
+                </div>
+            </div>
+            <div class="divider search-divider"></div>
+        </div>
+    </div>
+    <div id="ef-normal-param" class="param">
+
+    </div>
+    <div id="content" class="content">
+
+    </div>
+    <div id="sheet" class="x-sheet">
+        <div style="width:20px;height:20px;display:flex;position: relative;left: 0px;z-index:1000;background-color: #EAE9E9;">
+            <div class="btn_left">
+                <img src="image/report/2.png" style="width:10px;height:10px;cursor: pointer;">
+            </div>
+            <div class="btn_right">
+                <img src="image/report/3.png" style="width:10px;height:10px;cursor: pointer;">
+            </div>
+        </div>
+        <div id="sheetDiv">
+            <ul id="sheetD"
+                style="position:relative;display: inline-block;white-space: nowrap;list-style: none;padding: 0; margin: 0;letter-spacing: -8px;">
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- 表格插件预览DIV -->
+<div id="submit" style="width: 100%;height:100%;display: none;" >
+    <!-- 表格插件填报工具栏 -->
+    <div id="buttonDiv"
+         style="width:100%;background: #f5f6f7;padding-left:20px;height:40px;align-items: center;position: absolute;top: 0px;left: 0px;display:none;">
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="validateP" id="validateP" onclick="submitR(1);">数据校验</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider validate-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="clearP" id="clearP" onclick="clearText();">清除错误信息</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider clear-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="submitP" id="submitP" onclick="submitR(2);">提交</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn row-btn" style="overflow: visible; z-index: 0;">
+            <div class="" style="position: relative;">
+                <button class="rowOper" id="rowOper">增加行</button>
+                <div class="dropdown-list row-list" style="display: none;width:100px;margin-top:-3px;">
+                    <div class="dropdown-item" id="add" style="width:80px;">增加行</div>
+                    <div class="dropdown-item" id="clone" style="width:80px;">克隆行</div>
+                </div>
+                <div class="" style="clear: both;"></div>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="deleteP" onclick="deleteRowR()" id="delete">删除行</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="formulaP" onclick="switchR()" id="switch">切换</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="detailP" onclick="detail()" id="detail">详情</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="printP" onclick="showSheetNamer(0)" id="print">打印</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider print-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="sqlP" onclick="sql()" id="sql">查看SQL</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider sql-divider"></div>
+        <div class="ty-bar-btn export-button" style="overflow: visible; z-index: 0;">
+            <div class="" style="position: relative;">
+                <button class="export" id="exportR">导出</button>
+                <div class="dropdown-list export-list" style="display: none;width:100px;margin-top:-3px;">
+                    <div class="dropdown-item" id="PDF">PDF</div>
+                    <div class="dropdown-item" id="EXCEL">EXCEL(分页)</div>
+                    <div class="dropdown-item" id="EXCEL1">EXCEL(不分页)</div>
+                    <div class="dropdown-item" id="EXCEL2">EXCEL(分页转SHEET)</div>
+                    <div class="dropdown-item" id="WORD">WORD</div>
+                </div>
+                <div class="" style="clear: both;"></div>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn" style="width:90px;">
+            <div class="">
+                <button class="excelP" id="importE">导入Excel</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn offline-btn" style="overflow: visible; z-index: 1999;display:none;">
+            <div class="" style="position: relative;">
+                <button class="offline" id="offline">离线填报</button>
+                <div class="dropdown-list offline-list" style="display: none;width:100px;margin-top:-3px;">
+                    <div class="dropdown-item" id="importU" style="width:80px;">导入</div>
+                    <div class="dropdown-item" id="exportU" style="width:80px;">导出</div>
+                </div>
+                <div class="" style="clear: both;"></div>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider offline-divider" style="display:none;"></div>
+    </div>
+    <!-- 表格插件普通预览工具栏 -->
+    <div id="normal-buttonDiv"
+         style="width:100%;background: #f5f6f7;padding-left:20px;height:40px;display:none;align-items: center;position: absolute;top: 0px;left: 0px;">
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="formulaP" onclick="switchR()" id="normal-switch">切换</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="detailP" onclick="detail()" id="normal-detail">详情</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="printP" onclick="showSheetNamer(0)" id="normal-print">打印</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider print-divider"></div>
+        <div class="ty-bar-btn export-btn" style="overflow: visible;">
+            <div class="" style="position: relative;">
+                <button class="normal-export" id="normal-export">导出</button>
+                <div class="dropdown-list normal-export-list" style="display: none;margin-top:-3px;">
+                    <div class="dropdown-item" id="normal-PDF">PDF</div>
+                    <div class="dropdown-item" id="normal-EXCEL">EXCEL(分页)</div>
+                    <div class="dropdown-item" id="normal-EXCEL1">EXCEL(不分页)</div>
+                    <div class="dropdown-item" id="normal-EXCEL2">EXCEL(分页转SHEET)</div>
+                    <div class="dropdown-item" id="normal-WORD">WORD</div>
+                </div>
+                <div class="" style="clear: both;"></div>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider export-divider"></div>
+        <div class="ty-bar-btn table-button" style="overflow: visible; z-index: 0;">
+            <div class="" style="position: relative;">
+                <button class="table" id="table">表格</button>
+                <div class="dropdown-list export-list" style="display: none;width:100px;margin-top:-3px;">
+                    <div class="dropdown-item" id="set">设置表格</div>
+                    <div class="dropdown-item" id="remove">取消表格</div>
+                </div>
+                <div class="" style="clear: both;"></div>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="record" onclick="record()">存档</button>
+            </div>
+        </div>
+        <div class="jm-sheet-toolbar-divider"></div>
+        <div class="ty-bar-btn">
+            <div class="">
+                <button class="record" onclick="viewRecord()">查看存档</button>
+            </div>
+        </div>
+    </div>
+    <div id="ef-grid-param" class="param">
+
+    </div>
+    <div class="x-canvas-container" style="width:2000px;height:2000px;position: absolute;top: 0px;left: 1px;">
+        <canvas id="canvas" style="width:100%;height:100%;" class="canvas"></canvas>
+    </div>
+    <div id='singeSelDiv' style="display: none;"></div>
+</div>
+
+<div id="loadgif" class="shadow">
+    　　<img alt="加载中..." src="image/loading.gif" width="100px" height="100px"
+           style="position: absolute;top: 50%;left: 50%;margin-top: -20px;margin-left: -20px;"/>
+</div>
+
+<ul id="dsMenu" class="contextMenuPlugin" style="display:none;background-color: #F2F3F5;">
+
+</ul>
+
+<ul id="rightRowClickMenu" class="contextMenuPlugin">
+    <div class="gutterLine"></div>
+    <li><a href="#" onclick="copy()"><img
+            src="images/copy.png" style="width:24px;height:20px;margin-right: 5px;"
+            attr="copy"><span>复制到剪切板</span></a>
+    </li>
+    <li><a href="#" onclick="paste()"><img
+            src="images/paste.png" style="width:24px;height:20px;margin-right: 5px;"
+            attr="paste"><span>粘贴</span></a>
+    </li>
+</ul>
+
+<input type="text" style="width:1px;height:1px;display:none;" id="editInput" autocomplete="off"/>
+<textarea style="margin-left:-10px;width:1px;height:1px;" id="copyArea"></textarea>
+<input type="text" style="width:1px;height:1px;" id="dateInput" readonly/>
+<input type="text" style="width:1px;height:1px;" id="timeInput" readonly/>
+<!--
+ 插件模式下图片上传控件触发按钮
+ -->
+<input type="file" name="file" class="layui-upload-file" style="width:1px;height:1px;" id="fileBut">
+
+</body>
+<script type="text/javascript">
+    let id; //模板ID
+    let pathId; //路径ID
+    let serverId; //服务器ID
+    let reportJson = {}; //当前页面报表内容
+    let colorList = []; //颜色列表
+    let fontList = []; //字体列表
+    let sheetInfos = []; //sheet页列表
+    let wcp = 0; //是否自适应
+    let kr = 0; //是否保持横纵比
+    let globalRatio = [1,1];
+    let isAfs = 0; //字体是否自适应
+    let curSheet; //当前选择的sheet页
+    let form;
+    let paramForm;
+    let laydate;
+    let carousel;
+    let isForm;
+    let upload;
+    let isToolShow; //是否显示工具栏
+    let isParamShow; //是否显示模板参数
+    let isUploadCel; //是否填报模板
+    let uploadInfoMap = {}; //填报信息
+    let uploadInfos = []; //按顺序填充填报名
+    let submitColor = '#0094FF'; //填报控件颜色风格
+    let token;
+    let templateName = '';
+    let base;
+    let isshowico;
+    /*//填报模板数据
+    let uploadInfoMap = {}; //保存填报元信息
+    let uploadInfos = []; //按顺序填充填报名*/
+    let isShowValidate = false; //是否显示数据校验按钮
+    //是否有填报的权限
+    let isUploadFlag;
+    let dParam; //第三方传过来的参数
+
+    let isCanvasLoaded = 0; //设计器插件是否已经加载
+    let allowPluginFullScreen = false; //双击全屏
+    let bKColorPluginFullScreen = '#FFFFFF';
+
+    let isAutoFontSize;
+
+    let isAlert = 'false';
+    let isInputShow = false; //是否显示编辑框
+    let keysNone = [8, 9, 13, 16, 17, 18, 19, 20, 27, 33, 32, 34, 35, 36, 37, 38, 39, 40, 45, 91, 92, 93, 110, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 144];
+    let sysname;
+    let isProduction = 'true';
+    //引入layui并且渲染
+    layui.use('form', function () {
+        form = layui.form;
+    });
+
+    layui.use('laydate', function () {
+        laydate = layui.laydate;
+    });
+
+    layui.use('carousel', function () {
+        carousel = layui.carousel;
+    });
+
+    layui.use('upload', function () {
+        upload = layui.upload;
+    });
+
+    function exportUrt() {
+        //导出内容
+        var sval = Module._saveURTToJson();
+        var text = ParamOperator.decodeStrAndFree(sval);
+
+        var blob = new Blob([text], {type: 'text/plain'});
+        var formdata = new FormData();
+        formdata.append('file', blob);
+        $.ajax({
+            url: base + '/designSys/saveUrt?token=' + token,
+            type: 'post',
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            data: formdata,
+            success: function (data) {
+                if (data.state == 'success') {
+                    //打开下载urt页面
+                    var expTempFunc = base + '/designSys/exportUrt?name=' + data.name + '&fileName=' + templateName + '&id=' + id + '&token=' + token;
+                    window.open(expTempFunc);
+                } else {
+                    layer.alert("导出失败,失败原因:" + data.message);
+                }
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }
+    $(document).ready(function () {
+        let urlInfo = window.location.href;  //获取当前页面的url
+        let len = urlInfo.split("?");//获取url的长度
+        base = len[0];
+        base = base.substr(0, base.length - 15);
+        let param = len[1];//取出参数字符串 这里会获得类似“id=1”这样的字符串
+        let params = param.split("&");//对获得的参数字符串按照“=”进行分割
+        for (let i = 0; i < params.length; i++) {
+            let par = params[i];
+            let kav = par.split("=");
+            let key = kav[0];
+            if (key == "id") {
+                id = kav[1]
+            }
+            if (key == "token") {
+                token = par.substr(6 , par.length - 6);
+            }
+
+            if (key == "templateName") {
+                templateName = kav[1];
+            }
+            if (key == "sysname") {
+                sysname = kav[1];
+                if (sysname !== "") {
+                    $("title").html(decodeURI(sysname));
+                }
+            }
+             if(key == 'params'){
+                 dParam = par.substr(7 , par.length); //第三方传递过来的参数
+             }
+
+             if(key == "isAlert"){
+                 isAlert = kav[1];
+             }
+
+            if(key == "production"){
+                isProduction = kav[1];
+            }
+
+            if(key == "isshowico"){
+                isshowico = kav[1];
+            }
+        }
+        if(isshowico == 1){
+            $("#iconLink").attr("href", base + "/oem/favicon.ico?tt=" + new Date().getTime());
+        }
+        //不存在模板名
+        if(id == undefined || id == 'undefined'){
+            layer.alert('链接的模板不存在');
+            return;
+        }
+
+        if(id == 0 && templateName == ''){ //超级链接未正确设置模板
+            layer.alert('链接的模板不存在');
+            return;
+        }
+
+        if(id == "null" || id == null){ //悬浮元素超级链接未正确设置模板
+            layer.alert('链接的模板不存在');
+            return;
+        }
+
+        let url;
+        if (templateName == '') {
+            url = base + "/report/query?isLoaded=1&templateId=" + id + "&sheetName=" +"&token=" + token;
+        } else {
+            url = base + "/report/query?isLoaded=1&templateId=" + id + "&sheetName=" +"&templateName=" + templateName + "&token=" + token;
+
+        }
+        $("#loadgif").show();
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (res) {
+
+                //生成了error.json
+                if (res.type == 0) {
+                    $('#content').append("<div style='color:red;font-size: 16px;'>" + res.errorInfo + "</div>")
+                    $("#loadgif").hide();
+                }
+
+                if (res.state == 'success' && res.type == 2) {
+                    //隐藏普通报表预览DIV
+                    $("#report").show();
+                    //显示表格插件预览DIV
+                    $("#submit").hide();
+
+                    reportJson = JSON.parse(res.message);
+                    if(reportJson.AllowPluginFullScreen != undefined){//模板属性，是否允许插件双击全屏
+                        allowPluginFullScreen = reportJson.AllowPluginFullScreen;
+                    }
+                    if(reportJson.BKColorPluginFullScreen != undefined){
+                        bKColorPluginFullScreen = reportJson.BKColorPluginFullScreen;
+                    }
+                    colorList = reportJson.ColorList; //初始化颜色列表
+                    fontList = reportJson.FontList; //初始化字体列表
+                    sheetInfos = reportJson.SheetInfos; //初始化sheet数组
+                    pathId = reportJson.pathId; //初始化路径ID
+                    serverId = reportJson.serverId; //初始化服务器ID
+                    wcp = reportJson.WebCellPercent;
+                    kr = reportJson.KeepHVRatio;
+                    isAfs = (reportJson.AutoFontSize == undefined); //文本自否自适应
+                    isToolShow = reportJson.ShowToolBar; //是否显示工具栏
+                    isParamShow = reportJson.ShowParamToolBar; //是否显示模板参数栏
+                    isUploadCel = res.isUploadCel; //是否填报模板
+                    initRefresh(reportJson);
+
+                    let formH = reportJson.Pages[0].FormH; //获取页面JSON
+                    isForm = (formH != undefined); //判断是否是Form状态
+                    //有背景图片时，设置背景图片
+                    if (reportJson.hasOwnProperty("WebBKImage")) {
+                        let bgImg = reportJson.WebBKImage.split("/");
+                        let type = reportJson.SheetBKImageStretchType;
+                        if(type == 0){ //背景图片类型
+                            $('.content').css({
+                                "background-image": "url('" + (base + '/export' + "/" + bgImg[bgImg.length - 2]) + "/" + bgImg[bgImg.length - 1] + "')",
+                                "background-repeat": "no-repeat",
+                                "background-position": "0 0",
+                                "background-size": "100% 100%"
+                            });
+                        }else if(type == 1){ //平铺
+                            $('.content').css({
+                                "background-image": "url('" + (base + '/export' + "/" + bgImg[bgImg.length - 2]) + "/" + bgImg[bgImg.length - 1] + "')",
+                                "background-repeat": "repeat",
+                            });
+                        }else{ //居中
+                            $('.content').css({
+                                "background-image": "url('" + (base + '/export' + "/" + bgImg[bgImg.length - 2]) + "/" + bgImg[bgImg.length - 1] + "')",
+                                "background-repeat": "no-repeat",
+                                "background-position": "center center",
+                            });
+                        }
+
+                    } else {//无背景图片时，设置背景颜色
+                        if (reportJson.hasOwnProperty("WebBKColor")) { //whj
+                            $('body').css("background-color", reportJson.WebBKColor);
+                            //$('.x-data-block').css("background-color", reportJson.WebBKColor);
+                        }else{
+                            $('body').css("background-color", '#FFFFFF');
+                            //$('.x-data-block').css("background-color", '#FFFFFF');
+                        }
+                    }
+                    //不显示工具栏
+                    if (!isToolShow) {
+                        if($('#tool').css('diplay') != 'none'){
+                            $('#tool').css('display', 'none');
+                        }
+                        $('#content').css('top', 0);
+                    } else { //显示工具栏
+                        if (isUploadCel) { //如果是填报模板
+                            $('#tool').find('.normal').hide();
+                            $('#tool').find('.submit').css('display', 'inline-flex');
+                            $('#tool').show();
+                            $('#content').css('top', '40px');
+                        }else{
+
+                        }
+                    }
+                    //初始化SHEET页
+                    initSheets(sheetInfos);
+                    //初始化报表区域
+                    if (!isForm) {
+                        if (isUploadCel) { //填报模板
+                            initUploadInfo(reportJson);
+                            initSubmitReport('_tb_0', sheetInfos[0]);
+                            setSubmitContentHeight();
+                        } else {
+                            if (wcp == 0) { //初始化常规报表
+                                if (isToolShow) {
+                                    $('#tool').show();
+                                    $('#content').css('top', '40px');
+                                }
+                                initNormalReport('_tb_0', sheetInfos[0]);
+                                setContentHeight(reportJson.IsShowCenterReport);
+                            } else { //初始化自适应报表
+                                if (isToolShow) {
+                                    $('#tool').show();
+                                    $('#content').css('top', '40px');
+                                }
+                                initWcpReport('_tb_0', sheetInfos[0]);
+                                if(kr == 1){ //保持横纵比
+                                    setWcpContentHeight();
+                                }
+                            }
+                        }
+                    } else {
+                        if (wcp == 0) { //非自适应Form
+                            initForm('_tb_0', sheetInfos[0]);
+                        } else { //自适应Form
+                            initWcpForm();
+                        }
+                    }
+                    //执行js
+                    executeFunction(reportJson.ModelJS);
+                    if(wcp != 0){
+                        /*$(window).resize(function () {
+                            window.location.reload();
+                        });*/
+                    }
+                    $("#loadgif").hide();
+                }
+
+                //生成模板参数xml文件
+                if (res.state == "success" && res.type == 1) {
+                    if(res.isSpreadRpt){ //表格插件预览
+                        $('#report').hide();
+                        $('#submit').show();
+                    }else{//普通预览
+                        $('#submit').hide();
+                        $('#report').show();
+                    }
+                    //初始化模板参数
+                    initParams(res.message , res.isSpreadRpt , res.data);
+
+                }
+                //表格插件预览
+                if (res.type == 3) {
+
+                    document.oncontextmenu = function (ev) {
+                        ev.preventDefault();
+                    }
+
+                    isUploadFlag = res.isUploadDataAllowed;
+                    pathId = res.pathId; //初始化路径ID
+                    reportJson = JSON.parse(res.message);
+                    //隐藏普通报表预览DIV
+                    $("#report").hide();
+                    //显示表格插件预览DIV
+                    $("#submit").show();
+
+                    $('.x-canvas-container').show();
+                    if (isCanvasLoaded == 0) {//canvas未绑定过
+                        Design.init(base + "/wasm/WebDesigner_7.4");
+                        $("#editInput").bind('keydown', keyDownF);
+                        $("#loadgif").hide();
+                        isCanvasLoaded = 1;
+                    } else {
+                        //TempOperator.loadCel2('', "temp", 0);
+                        Module._setTabDisplay(false);
+                        var dataStr = ParamOperator.encodeStr(JSON.stringify(reportJson));
+                        Module._loadReportModelFromJsonStream(dataStr)
+
+                        $("#loadgif").hide();
+                    }
+
+                   /* $(window).resize(function () {
+                        resizeCanvas();
+                    });*/
+
+                    addContentEvent();
+                    //执行js
+                    executeFunction(reportJson.ModelJS);
+                }
+                //$("#loadgif").hide();
+            },
+            error: function () {
+
+            }
+        })
+        initDropdown();
+
+        $('body').unbind().bind('click' , function(){
+            //$('#dsMenu').hide();
+        })
+
+    })
+
+    function initRpt(reportJson){
+        if(reportJson.AllowPluginFullScreen != undefined){//模板属性，是否允许插件双击全屏
+            allowPluginFullScreen = reportJson.AllowPluginFullScreen;
+        }
+        if(reportJson.BKColorPluginFullScreen != undefined){
+            bKColorPluginFullScreen = reportJson.BKColorPluginFullScreen;
+        }
+
+        initSubmitUploadInfo(reportJson);
+        //是否显示工具栏
+        let ShowToolBar = reportJson.ShowToolBar;
+        let ShowParamToolBar = reportJson.ShowParamToolBar;
+        //初始化设计器
+        if(uploadInfos.length == 0 && !isCustomUpload){ //不是常规填报也不是自定义填报
+            $('#buttonDiv').hide();
+            //不显示工具栏
+            if(!ShowToolBar){
+                $('#normal-buttonDiv').hide();
+                if(!ShowParamToolBar){ //不显示参数工具栏
+                    $('#ef-grid-param').hide();
+                    $('.x-canvas-container').css('top',0);
+                    $('.x-canvas-container').css({
+                        width: $('body').width(),
+                        height: $('body').height()
+                    })
+                }else{ // 显示参数工具栏
+                    $('#ef-grid-param').show();
+                    $('.x-canvas-container').css('top',$('#ef-grid-param').height());
+                    $('.x-canvas-container').css({
+                        width: $('body').width(),
+                        height: $('body').height()  - $('#ef-grid-param').height()
+                    })
+                }
+            }else{ //显示工具栏
+                $('#normal-buttonDiv').show();
+                if(!ShowParamToolBar){ //不显示参数工具栏
+                    $('#ef-grid-param').hide();
+                    $('.x-canvas-container').css('top',$('#normal-buttonDiv').height());
+                    $('.x-canvas-container').css({
+                        width: $('body').width(),
+                        height: $('body').height()  - $('#normal-buttonDiv').height()
+                    })
+                }else{ // 显示参数工具栏
+                    $('#ef-grid-param').show();
+                    $('#ef-grid-param').css('top' , $('#normal-buttonDiv').height());
+                    let paramHeight;
+                    if($('#ef-grid-param').height() == 0){
+                        paramHeight = 0;
+                        $('#ef-grid-param').css('padding',0);
+                    }else{
+                        paramHeight = $('#ef-grid-param').height();
+                    }
+                    $('.x-canvas-container').css('top',paramHeight + $('#normal-buttonDiv').height());
+                    $('.x-canvas-container').css({
+                        width: $('body').width(),
+                        height: $('body').height()  - paramHeight - $('#normal-buttonDiv').height()
+                    })
+                }
+            }
+        }else{ //填报模板
+            $('#normal-buttonDiv').hide();
+            //不显示工具栏
+            if(!ShowToolBar){
+                $('#buttonDiv').hide();
+                if(!ShowParamToolBar){ //不显示参数工具栏
+                    $('.x-canvas-container').css('top',0);
+                    $('#ef-grid-param').hide();
+                    $('.x-canvas-container').css({
+                        width: $('body').width(),
+                        height: $('body').height()
+                    })
+                }else{ // 显示参数工具栏
+                    $('#ef-grid-param').show();
+                    $('.x-canvas-container').css('top',$('#ef-grid-param').height());
+                    $('.x-canvas-container').css({
+                        width: $('body').width(),
+                        height: $('body').height()  - $('#ef-grid-param').height()
+                    })
+                }
+            }else{ //显示工具栏
+                $('#buttonDiv').show();
+                if(!ShowParamToolBar){ //不显示参数工具栏
+                    $('.x-canvas-container').css('top',$('#buttonDiv').height());
+                    $('#ef-grid-param').hide();
+                    $('.x-canvas-container').css({
+                        width: $('body').width(),
+                        height: $('body').height()  - $('#buttonDiv').height()
+                    })
+
+                }else{ // 显示参数工具栏
+                    $('#ef-grid-param').show();
+                    let paramHeight;
+                    if($('#ef-grid-param').height() == 0){
+                        paramHeight = 0;
+                        $('#ef-grid-param').css('padding',0);
+                    }else{
+                        paramHeight = $('#ef-grid-param').height();
+                    }
+                    $('.x-canvas-container').css('top',paramHeight + $('#buttonDiv').height());
+                    $('.x-canvas-container').css({
+                        width: $('body').width(),
+                        height: $('body').height()  - paramHeight - $('#buttonDiv').height()
+                    })
+                }
+            }
+        }
+    }
+
+</script>
+</html>

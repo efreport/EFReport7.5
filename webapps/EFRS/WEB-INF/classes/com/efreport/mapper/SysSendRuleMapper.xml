@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysSendRuleMapper">
+    <!-- 批量插入规则 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO SYS_SEND_RULE (TEMPLATE_ID , RECEIVER_ID,RECEIVER_NAME,RECEIVER_TYPE,SENDER_ID,SENDER_NAME,SENDER_TYPE)
+        VALUES
+        <foreach collection="list" item="data" index="index" separator=",">
+            (
+            #{data.templateId},#{data.receiverId},#{data.receiverName},#{data.receiverType},#{data.senderId},#{data.senderName},#{data.senderType}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateRule" parameterType="com.efreport.entity.SysSendRule">
+        UPDATE SYS_SEND_RULE
+        SET
+        TEMPLATE_ID = #{templateId},
+        RECEIVER_ID = #{receiverId},
+        RECEIVER_NAME=#{receiverName},
+        RECEIVER_TYPE = #{receiverType},
+        SENDER_ID = #{senderId},
+        SENDER_NAME = #{senderName},
+        SENDER_TYPE = #{senderType}
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="listById" parameterType="int" resultType="com.efreport.entity.SysSendRule">
+        SELECT
+            ID as id,
+            TEMPLATE_ID as templateId,
+            RECEIVER_ID as receiverId,
+            RECEIVER_TYPE as receiverType,
+            RECEIVER_NAME as receiverName,
+            SENDER_ID as senderId,
+            SENDER_TYPE as senderType,
+            SENDER_NAME as senderName
+        FROM
+            SYS_SEND_RULE
+        WHERE
+            TEMPLATE_ID = #{templateId}
+    </select>
+
+    <delete id="delById" parameterType="int">
+        DELETE FROM SYS_SEND_RULE WHERE id = #{id}
+    </delete>
+</mapper>

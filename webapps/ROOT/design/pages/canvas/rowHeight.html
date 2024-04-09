@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+  <input type="number" id="rowHeight" style="width:150px;height:30px;margin:5px;" autocomplete="off">
+  <select id="unit" style="width:75px;height:35px;">
+      <option value="0">毫米</option>
+      <option value="1">像素</option>
+  </select>
+</body>
+<script type="text/javascript">
+    function init(rowHeight){
+        $('#unit').val('1').prop("selected", true);
+        $('#rowHeight').val(rowHeight); //赋值
+        $('#unit').bind('change', function () {
+            var val = $('#rowHeight').val();
+            var type = $(this).val();
+            if (type == '0') {
+                val = (val * 25.4) / 96; //像素转mm
+                $('#rowHeight').val(val);
+            } else { //像素
+                val = Math.round(val * 96) / 25.4; //mm转像素
+                $('#rowHeight').val(val);
+            }
+        });
+    }
+
+    function getRowHeight(){
+        let result = {
+            rowHeight:$('#rowHeight').val(),
+            unit:$('#unit').val()
+        }
+        return result;
+    }
+</script>
+</html>

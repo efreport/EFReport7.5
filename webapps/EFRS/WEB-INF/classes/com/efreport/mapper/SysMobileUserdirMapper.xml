@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysMobileUserdirMapper">
+
+    <resultMap id="sysMobileUserdirMap" type="com.efreport.entity.SysMobileUserdir">
+        <id column="ID" property="id"></id>
+        <result column="USER_ID" property="userId"></result>
+        <result column="temp_dir_name" property="tempDirName"></result>
+        <result column="PID" property="pid"></result>
+    </resultMap>
+
+
+    <select id="getById" parameterType="Integer" resultMap="sysMobileUserdirMap">
+      SELECT * FROM EF_SYS_Mobile_USERDIr WHERE id=#{id}
+    </select>
+
+    <!-- 查询所有纪录 -->
+    <select id="getAllList" resultMap="sysMobileUserdirMap">
+      SELECT * FROM EF_SYS_Mobile_USERDIr WHERE 1=1
+    </select>
+
+    <select id="getListByUserId" parameterType="Integer" resultMap="sysMobileUserdirMap">
+      SELECT * FROM EF_SYS_Mobile_USERDIr WHERE 1=1 and USER_ID = #{userId}
+    </select>
+
+    <insert id="addSysMobileUserdir" parameterType="com.efreport.entity.SysMobileUserdir">
+        insert into EF_SYS_Mobile_USERDIr(USER_ID,temp_dir_name,PID) values(#{userId},#{tempDirName},#{pid})
+    </insert>
+
+    <!-- 修改 -->
+    <update id="updateSysMobileUserdir" parameterType="com.efreport.entity.SysMobileUserdir">
+      UPDATE EF_SYS_Mobile_USERDIr SET temp_dir_name = #{tempDirName} where id=#{id}
+    </update>
+
+    <delete id="deleteById" parameterType="Integer">
+        delete from EF_SYS_Mobile_USERDIr where id=#{id}
+    </delete>
+
+    <delete id="deleteByUserId" parameterType="Integer">
+        delete from EF_SYS_Mobile_USERDIr where USER_ID=#{userId}
+    </delete>
+</mapper>

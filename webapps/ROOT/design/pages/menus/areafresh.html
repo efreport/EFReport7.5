@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <link rel="stylesheet" href="../../css/scroll.css">
+    <style>
+        .cka {
+            background: #CCCCCC
+        }
+
+        select:hover {
+            box-shadow: 0px 0px 1px #44B4FF;
+        }
+
+        .hoverDiv {
+            background: #0094FF;
+            color: #FFFFFF;
+        }
+
+        .hoverDiv a {
+            color: #FFFFFF;
+        }
+
+        .add {
+            width: 25px;
+            height: 25px;
+        }
+
+        .delete {
+            width: 25px;
+            height: 25px;
+        }
+
+        #rules div:hover{
+            cursor:pointer;
+        }
+
+        .ruleInput{
+            border: 0px;
+            text-align: center;
+            color:#000000;
+        }
+
+    </style>
+</head>
+<body style="padding: 5px;height: 430px">
+<div style="height:45px;line-height: 45px;display: flex;align-items: center;justify-content: flex-start;">
+    <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #0094FF;border-radius: 4px;margin-right: 10px;"
+         id="add2">
+        <div style="width:50px;display: flex;justify-content: flex-end;align-items: center;padding-right: 5px;">
+            <img src="../../images/design/pages/add.png" style="" title="添加" class="add">
+        </div>
+        <div style="display:flex;align-items:center;color:white;width:50px;padding-left: 5px;">
+            新增
+        </div>
+    </div>
+    <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #FFFFFF;border-radius: 4px;border: 1px solid #F53F3F;"
+         id="del2">
+        <div style="display:flex;width:50px;justify-content: flex-end;align-items: center;padding-right: 5px;">
+            <img src="../../images/design/pages/delete.png" class="delete" title="删除">
+        </div>
+        <div style="display:flex;align-items:center;color:#F53F3F;width:50px;padding-left: 5px;">
+            删除
+        </div>
+    </div>
+</div>
+<div style="display: flex;width:100%;height:480px;">
+    <div style="background-color:#F2F3F5;width:40%;border: 0px solid #F2F3F5;overflow: auto;" id="rules">
+
+    </div>
+    <div style="width:3%;">
+
+    </div>
+    <div style="width: 57%;border: 0px solid #D5D5D5;padding-bottom:0px;" id="ruleCon">
+
+    </div>
+
+
+    <div style="width: 100%;height:100%;display:none;" id="template">
+        <label style="margin-right: 5px;color:#1D2129;font-size: 14px;font-weight: bolder;">刷新时间(秒)</label>
+        <div style="height: 35px;line-height:35px;display: flex;align-items: flex-start;justify-content: flex-start;">
+            <input type="text" name="refreshInterval" maxlength="5"
+                   style="height:35px;width:99%;background-color:#F2F3F5;border: 0px;" autocomplete="off">
+        </div>
+        <div style="display: flex;height:45px;align-items: center;">
+            <div style="height:35px;width:180px;display: flex;align-items: center;font-size: 14px;font-weight: bolder;">
+                联动单元格
+            </div>
+            <div style="height:45px;line-height: 45px;display: flex;align-items: center;justify-content: flex-start;">
+                <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #0094FF;border-radius: 4px;margin-right: 10px;"
+                     id="addCell" class="addCell">
+                    <div style="width:40px;display: flex;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                        <img src="../../images/design/pages/add.png" style="" title="添加" class="add">
+                    </div>
+                    <div style="display:flex;align-items:center;color:white;width:40px;padding-left: 5px;">
+                        新增
+                    </div>
+                </div>
+                <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #FFFFFF;border-radius: 4px;border: 1px solid #F53F3F;"
+                     id="delCell" class="delCell">
+                    <div style="display:flex;width:40px;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                        <img src="../../images/design/pages/delete.png" class="delete" title="删除">
+                    </div>
+                    <div style="display:flex;align-items:center;color:#F53F3F;width:40px;padding-left: 5px;">
+                        删除
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%;height: 26%;overflow: hidden;margin-top:5px">
+            <div name="un" id="un"
+                 style="white-space: nowrap;overflow: auto;height: 98%;width:98%;border: 1px solid #D5D5D5;background-color: #F2F3F5;"></div>
+        </div>
+        <div style="display: flex;height:45px;align-items: center;">
+            <div style="height:35px;width:180px;display: flex;align-items: center;font-size: 14px;font-weight: bolder;">
+                联动悬浮插件
+            </div>
+            <div style="height:45px;line-height: 45px;display: flex;align-items: center;justify-content: flex-start;">
+                <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #0094FF;border-radius: 4px;margin-right: 10px;"
+                     id="addShape" class="addShape">
+                    <div style="width:40px;display: flex;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                        <img src="../../images/design/pages/add.png" style="" title="添加" class="add">
+                    </div>
+                    <div style="display:flex;align-items:center;color:white;width:40px;padding-left: 5px;">
+                        新增
+                    </div>
+                </div>
+                <div style="cursor:pointer;height:35px;width:100px;display: flex;background-color: #FFFFFF;border-radius: 4px;border: 1px solid #F53F3F;"
+                     id="delShape" class="delShape">
+                    <div style="display:flex;width:40px;justify-content: flex-end;align-items: center;padding-right: 5px;">
+                        <img src="../../images/design/pages/delete.png" class="delete" title="删除">
+                    </div>
+                    <div style="display:flex;align-items:center;color:#F53F3F;width:40px;padding-left: 5px;">
+                        删除
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 100%;height: 26%;overflow: hidden;margin-top:5px">
+            <div name="un1" id="un1"
+                 style="white-space: nowrap;overflow: auto;height: 98%;width:98%;border: 1px solid #D5D5D5;background-color: #F2F3F5;"></div>
+        </div>
+        <div style="height:35px;width:180px;display: flex;align-items: center;font-size: 14px;font-weight: bolder;">
+            参数
+        </div>
+        <div style="width: 100%;height: 8%;overflow: hidden;" id="paramDiv">
+            <input type="text" name="un2"
+                   style="white-space: nowrap;overflow: auto;height: 95%;width:98%;border: 1px solid #D5D5D5;background-color: #F2F3F5;"></input>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</body>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../js/design/canvasUtil.js" charset="utf-8"></script>
+
+
+<script type="text/javascript">
+
+    var shapeNames;
+    var ruleId = 0;
+    var ruleIndex = 1;
+
+    layui.use(['layer', 'element'], function () {
+        var layer = layui.layer;
+        var element = layui.element;
+    });
+
+    function checkExpress(express) {
+
+        var array = express.split('');
+        var flag;
+
+        if (/^[A-Z]+$/.test(array[0])) //判断第一位是否是大写字母
+        {
+            if (/^[A-Z]+$/.test(array[1])) {//判断第二位是否是大写字母
+
+                var num = express.substring(2);
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+
+            } else { //第二位是数字
+
+                var num = express.substring(1);
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+            }
+        } else {
+            flag = false;
+        }
+
+        return flag;
+
+    }
+
+
+    function getPage1() {
+        var res = 0;
+        var datas = []; //所有的刷新规则
+
+        let divs = $('#ruleCon').children('div');//找到所有刷新规则div
+        $.each(divs, function (index, ele) {
+            let usarr = [];
+            let usarr1 = [];
+            let div = $(ele);
+            let divId = $(ele).attr('id');
+            div.find('div[name="un"]').find("input[type='text']").each(function () {
+                var val = $(this).val();
+                if (val == '') { //空值
+                    res = 1;
+                    return false;
+                }
+                if (!checkExpress(val)) {
+                    res = 2;
+                    return false;
+                }
+                if ($.inArray(val, usarr) != -1) {
+                    res = 3;
+                    return false;
+                }
+                if (div.find('input[name="refreshInterval"]').val() == '') {
+                    res = 4;
+                    return false;
+                }
+                usarr.push($(this).val());
+            });
+
+            div.find('div[name="un1"]').find("select").each(function () {
+                var val = $(this).val();
+                if (val == '') { //空值
+                    res = 1;
+                    return false;
+                }
+                if ($.inArray(val, usarr1) != -1) {
+                    res = 3;
+                    return false;
+                }
+                if (div.find('input[name="refreshInterval"]').val() == '') {
+                    res = 4;
+                    return false;
+                }
+                usarr1.push($(this).val());
+            });
+
+            let divIds = divId.split('_');
+            let ruleId = divIds[1];
+            let ruleName = $('#' + ruleId).find('input').eq(0).val(); //刷新规则名
+
+            if (res == 0) {
+                var data = {
+                    ruleName:ruleName
+                    , regions: usarr
+                    , Interval: div.find('input[name="refreshInterval"]').val()
+                    , shapeRegions: usarr1
+                    , refreshParam: div.find('#paramDiv').find('input[name="un2"]').val()
+                };
+                if (usarr.length == 0 && usarr1.length == 0) { //未设置单元格
+
+                } else {
+                    datas.push(data);
+                }
+
+            } else {
+                return "";
+            }
+        })
+        return JSON.stringify(datas);
+    }
+
+
+    function init1(json, allShapeName) {
+        allShapeName = JSON.parse(allShapeName);
+        shapeNames = allShapeName.allShapeNames;
+        if (json != '' && json != undefined) {
+            let obj = JSON.parse(json);
+            //遍历刷新规则
+            $.each(obj, function (index, elem) {
+                console.log(elem);
+                let ruleName = elem.ruleName;
+                let regions = elem.regions;
+                let interval = elem.Interval;
+                let shapeRegions = elem.shapeRegions;
+                let refreshParam = elem.refreshParam;
+                
+
+                let con = $('#ruleCon');
+                let clone = $('#template').clone();
+                clone.attr('id', 'con_' + index);
+                clone.find('input[name="refreshInterval"]').val(interval);
+                if (regions != undefined) {
+                    for (var i = 0; i < regions.length; i++) {
+                        var ck = '<div style="border-bottom: 1px solid #D5D5D5;"><input type="text" value="' + regions[i] + '" style="background-color:#0094FF;color:#FFFFFF;height:30px;width:100%;border: 0px;"></div>';
+                        clone.find("div[name='un']").append(ck);
+                    }
+                }
+
+                if (shapeRegions != undefined) {
+                    for (var i = 0; i < shapeRegions.length; i++) {
+                        var html = ''
+                        html += '<div style="border-bottom: 1px solid #D5D5D5;"><select style="width:99%;background-color:#0094FF;color:#FFFFFF;height:30px;border:none;">';
+                        $.each(shapeNames, function (index, element) {
+                            if (shapeRegions[i] == element) {
+                                html += '<option value="' + element + '" selected>' + element + '</option>';
+                            } else {
+                                html += '<option value="' + element + '">' + element + '</option>';
+                            }
+
+                        });
+                        html += '</select></div>';
+                        clone.find("div[name='un1']").append(html);
+                    }
+                }
+
+                if (refreshParam != undefined) {
+                    clone.find("input[name='un2']").val(refreshParam);
+                }
+
+
+                clone.find("div[name='un']").find('input').bind('focus', function () {
+                    $(this).parent().parent().find('div').removeClass('hoverDiv');
+                    $(this).parent().addClass('hoverDiv');
+                });
+
+                clone.find("div[name='un1']").find('select').bind('focus', function () {
+                    $(this).parent().parent().find('div').removeClass('hoverDiv');
+                    $(this).parent().addClass('hoverDiv');
+                });
+
+                if (index != (obj.length - 1)) {
+                    clone.css('display', 'none');
+                    $('#rules').append('<div onclick="show(this)" style="width:100;height:30px;line-height:30px;text-align: center;border-bottom:1px solid #D5D5D5;"  id=' + index + '><input onchange="setName(this)" orgValue="'+ ruleName +'" class="ruleInput" type="text" value="'+ ruleName +'"></div>');
+                } else {
+                    clone.css('display', 'block');
+                    $('#rules').append('<div onclick="show(this)" style="width:100;height:30px;line-height:30px;text-align: center;border-bottom:1px solid #D5D5D5;" class="hoverDiv" id=' + index + '><input orgValue="'+ ruleName +'" onchange="setName(this)" class="ruleInput" type="text" value="'+ ruleName +'"></div>');
+
+                }
+                con.append(clone);
+                bindButtons('con_' + index);
+            })
+            ruleId = obj.length;
+        }
+    }
+
+
+    function show(obj) {
+        //var id = $(obj).parent().attr("id");
+        var id = $(obj).attr("id");
+        $('#rules').find('div').removeClass('hoverDiv');
+        //$(obj).parent().addClass('hoverDiv');
+        $(obj).addClass('hoverDiv');
+        $('#ruleCon').children('div').hide();
+        $('#con_' + id).show();
+        $('#con_' + id)
+    }
+
+
+    function bindButtons(id) {
+
+        var obj = $('#' + id)
+
+        obj.find('input[name="refreshInterval"]').bind('change', function () {
+            var val = $(this).val();
+
+            var reg = /^\d+(?=\.{0,1}\d+$|$)/
+            if (!reg.test(val)) {
+                $(this).val('1');
+            }
+        });
+
+        obj.find('.addCell').bind('click', function () {
+            obj.find('div[name="un"]').append('<div style="height:30px;border-bottom: 1px solid #D5D5D5;"><input type="text" style="background-color:#0094FF;color:#FFFFFF;height:30px;width:100%;border: 0px;"></div>');
+            obj.find('div[name="un"]').find('input').bind('focus', function () {
+                $(this).css('background-color', '#0094FF');
+                $(this).css('color', '#FFFFFF');
+                $(this).parent().parent().find('div').removeClass('hoverDiv');
+                $(this).parent().addClass('hoverDiv');
+            });
+        })
+
+        obj.find('.delCell').bind('click', function () {
+            var div = obj.find('div[name="un"]').find('.hoverDiv');
+            div.remove();
+        })
+
+        obj.find('.addShape').bind('click', function () {
+            if (shapeNames.length == 0) {
+                layer.msg('该模板无悬浮元素!');
+            } else {
+                var html = ''
+                html += '<div style="border-bottom: 1px solid #D5D5D5;background-color:#0094FF;"><select style="width:99%;background-color:#0094FF;color:#FFFFFF;height:30px;border:none;">';
+                if (shapeNames != undefined) {
+                    $.each(shapeNames, function (index, element) {
+                        if (index == 0) {
+                            html += '<option style="background-color: #ffffff;color:#000000;" value="' + element + '" selected>' + element + '</option>';
+                        } else {
+                            html += '<option style="background-color: #ffffff;color:#000000;" value="' + element + '">' + element + '</option>';
+                        }
+                    });
+                    html += '</select></div>';
+
+                    obj.find('div[name="un1"]').append(html);
+                }
+
+
+                obj.find('div[name="un1"]').find('select').bind('focus', function () {
+                    $(this).parent().parent().find('div').removeClass('hoverDiv');
+                    $(this).parent().addClass('hoverDiv');
+                });
+            }
+
+        })
+
+        obj.find('.delShape').bind('click', function () {
+            var div = obj.find('div[name="un1"]').find('.hoverDiv');
+            div.remove();
+        })
+    }
+
+
+    $(document).ready(function () {
+        $('#rules').find('div').on('click', function () {
+
+        })
+        //新增规则按钮
+        $('#add2').bind('click', function () {
+            let index = getIndex();
+            var length = $('#rules').find('div').length;
+            $('#rules').find('div').removeClass('hoverDiv');
+            $('#rules').append('<div onclick="show(this)" style="width:100;height:30px;line-height:30px;text-align: center;border-bottom:1px solid #D5D5D5;" class="hoverDiv" id=' + ruleId + '><input onchange="setName(this)" orgValue="刷新规则'+ index +'" class="ruleInput" type="text" value="刷新规则'+ index +'"></div>');
+            $('#ruleCon').children('div').hide();
+            var clone = $('#template').clone();
+            $(clone).css('display', 'block');
+            $(clone).attr('id', 'con_' + ruleId);
+            $('#ruleCon').append(clone);
+            bindButtons('con_' + ruleId);
+            ruleId++;
+        })
+        $('#del2').bind('click', function () {
+
+            var div = $('#rules').find('.hoverDiv');
+            var id = div.attr('id');
+            div.remove();
+            $('#con_' + id).remove();
+
+            $('#rules').children("div:last-child").addClass('hoverDiv');
+            $('#ruleCon').children('div:last-child').css('display', 'block');
+        })
+
+
+    })
+
+    //生成刷新规则名
+    function getIndex(){
+        let maxIndex = 0;
+        let ruleDiv = $('#rules').children('div');
+        $.each(ruleDiv , function(i,e){
+            let div = $(e);
+            let a = div.find('input').eq(0);
+            let ruleName = a.val(); //刷新规则名
+            if(ruleName.indexOf('刷新规则') != -1){
+                let ruleNames = ruleName.substring(4,ruleName.length);
+                if(ruleNames != '' && $.isNumeric(ruleNames)){
+                    if(parseInt(ruleNames) > maxIndex){
+                        maxIndex = parseInt(ruleNames);
+                    }
+                }
+            }
+        })
+        return maxIndex + 1;
+    }
+
+    function setName(obj){
+        let hasRepeatFlag = false; //是否有重复的规则名
+        let ruleDiv = $('#rules').children('div');
+        $.each(ruleDiv , function(i,e){
+            let div = $(e);
+            let divId = div.attr('id');
+            //判断其他规则是否有重名的
+            if(divId != $(obj).parent().attr('id')){
+                let value = div.find('input').eq(0).val();
+                if(value == $(obj).val()){
+                    hasRepeatFlag = true;
+                }
+            }
+        })
+
+        if(hasRepeatFlag){
+            layer.msg('有重复的规则名');
+            $(obj).val($(obj).attr('orgValue'));
+        }
+
+        if($(obj).val().trim() == ''){
+            layer.msg('刷新规则名不能为空');
+            $(obj).val($(obj).attr('orgValue'));
+        }
+
+        if(!isChinese($(obj).val().trim())){
+            layer.msg('刷新规则名不能包含特殊符号');
+            $(obj).val($(obj).attr('orgValue'));
+        }
+    }
+
+</script>
+</html>

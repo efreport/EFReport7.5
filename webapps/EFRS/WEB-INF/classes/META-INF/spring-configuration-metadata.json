@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "config",
+      "type": "com.efreport.config.ServerConfig",
+      "sourceType": "com.efreport.config.ServerConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "config.servers",
+      "type": "java.util.List<com.efreport.config.ServerConfig$Server>",
+      "sourceType": "com.efreport.config.ServerConfig"
+    }
+  ],
+  "hints": []
+}

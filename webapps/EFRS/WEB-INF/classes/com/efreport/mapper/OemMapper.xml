@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.OemMapper">
+    <!-- 查询单条纪录 -->
+    <select id="getOem" resultType="com.efreport.entity.Oem">
+      SELECT * FROM EF_SYS_OEM WHERE 1=1
+    </select>
+
+    <!-- 修改 -->
+    <update id="updateOem" parameterType="com.efreport.entity.Oem">
+      UPDATE EF_SYS_OEM SET name = #{name}, company = #{company}, logo = #{logo},team=#{team},product=#{product},titleico=#{titleico},
+      isshowpclogin=#{isshowpclogin},isshowpcleftmenu=#{isshowpcleftmenu},isshowico=#{isshowico}
+    </update>
+</mapper>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>盈帆数据报表-编辑任务</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../../lib/layui-v2.7.6/css/layui.css" media="all">
+    <style>
+        .center {
+            position: relative;
+            width: 100%;
+            height: 80px;
+        }
+        .center .item {
+            width: 80%;
+            text-align: center;
+            margin: auto;
+            margin-top: 30px;
+        }
+        .redspan {
+            color: red;
+        }
+
+        
+        .layui-form-select dl dd.layui-this {
+            background-color: #0094FF !important;
+        }
+        .layui-form-select dl dd:hover {
+            background-color: #0094FF !important;
+        }
+    </style>
+</head>
+<body>
+    <div style="padding: 20px;">
+        <form class="layui-form login-bottom">
+            <input type="hidden" id="id" name="id" />
+            <div class="layuimini-main">
+                <div class="layui-form layuimini-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="redspan">*</span>名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" placeholder="请输入名称" value="" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form layuimini-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="redspan">*</span>规则</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="rule" placeholder="请输入规则" value="" class="layui-input" readonly="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form layuimini-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="redspan">*</span>选择</label>
+                        <div class="layui-input-block">
+                            <select id="selectvalue" lay-filter="selectvalue">
+                                <option value="1">角色</option>
+                                <option value="2">用户</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form layuimini-form" id="role_div" style="display:block;">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="redspan">*</span>角色</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="roleIds" />
+                            <input type="text" name="roles" placeholder="请输入角色" value="" readonly="true" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form layuimini-form" id="user_div" style="display:none;">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="redspan">*</span>用户</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="userIds" />
+                            <input type="text" name="users" placeholder="请输入用户" value="" readonly="true" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form layuimini-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="redspan">*</span>模板</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="tempIds" />
+                            <input type="text" name="tempnames" placeholder="请输入模板" value="" readonly="true" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+<script src="../../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script>
+    let form;
+    layui.use(['form'], function(){
+        var $ = layui.jquery;
+        form = layui.form;
+        $(function(){
+            $("input[name='rule']").click(function(e){
+                // 点击规则文本框时执行
+                let contentval = $(this).val();
+                let index = layer.open({
+                    type: 2,
+                    area: ['470px', '460px'],
+                    closeBtn: 0,
+                    resize: false,
+                    title: ['时间规则表达式', 'height:30px;line-height:30px'],
+                    content: ['crons.html', 'no'],
+                    btn: ['确定', '关闭'],
+                    btnAlign: 'c',
+                    end: function () {
+                    },
+                    yes: function (index, layero) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        var contentval = iframeWin.getPage(); // 获取规则表达式
+                        $("input[name='rule']").val(contentval);
+                        layer.close(index);
+                    },
+                    success: function (layero, index) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        iframeWin.setVal(contentval);
+                    }
+                });
+            });
+            $("input[name='roles']").click(function(e){
+                // 点击规则文本框时执行
+                let rolesvalue = $(this).val();
+                let index = layer.open({
+                    type: 2,
+                    area: ['470px', '460px'],
+                    closeBtn: 0,
+                    resize: false,
+                    title: ['选择角色', 'height:30px;line-height:30px'],
+                    content: ['roletree.html', 'no'],
+                    btn: ['确定', '关闭'],
+                    btnAlign: 'c',
+                    end: function () {
+                    },
+                    yes: function (index, layero) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        var pageval = iframeWin.getPage(); // 获取规则表达式
+                        let obj = JSON.parse(pageval);
+                        $("input[name='roleIds']").val(obj.ids);
+                        $("input[name='roles']").val(obj.names);
+                        layer.close(index);
+                    },
+                    success: function (layero, index) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        let ids = $("input[name='roleIds']").val();
+                        iframeWin.setPageVal(ids);
+                    }
+                });
+            });
+            $("input[name='tempnames']").click(function(e){
+                // 点击规则文本框时执行
+                let tempsvalue = $(this).val();
+                let index = layer.open({
+                    type: 2,
+                    area: ['550px', '460px'],
+                    closeBtn: 0,
+                    resize: false,
+                    title: ['选择模板', 'height:30px;line-height:30px'],
+                    content: ['temptree.html', 'no'],
+                    btn: ['确定', '关闭'],
+                    btnAlign: 'c',
+                    end: function () {
+                    },
+                    yes: function (index, layero) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        var pageval = iframeWin.getPage(); // 获取规则表达式
+                        let obj = JSON.parse(pageval);
+                        $("input[name='tempIds']").val(obj.ids);
+                        $("input[name='tempnames']").val(obj.names);
+                        layer.close(index);
+                    },
+                    success: function (layero, index) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        let ids = $("input[name='tempIds']").val();
+                        let names = $("input[name='tempnames']").val();
+                        iframeWin.setPageVal(ids, names);
+                    }
+                });
+            });
+            $("input[name='users']").click(function(e){
+                // 点击规则文本框时执行
+                let usersvalue = $(this).val();
+                let index = layer.open({
+                    type: 2,
+                    area: ['470px', '460px'],
+                    closeBtn: 0,
+                    resize: false,
+                    title: ['选择用户', 'height:30px;line-height:30px'],
+                    content: ['usertree.html', 'no'],
+                    btn: ['确定', '关闭'],
+                    btnAlign: 'c',
+                    end: function () {
+                    },
+                    yes: function (index, layero) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        var pageval = iframeWin.getPage(); // 获取规则表达式
+                        let obj = JSON.parse(pageval);
+                        $("input[name='userIds']").val(obj.ids);
+                        $("input[name='users']").val(obj.names);
+                        layer.close(index);
+                    },
+                    success: function (layero, index) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        let ids = $("input[name='userIds']").val();
+                        iframeWin.setPageVal(ids);
+                    }
+                });
+            });
+        });
+        form.on('select(selectvalue)', function (data) {
+            let val = $("#selectvalue").val();
+            if (val === "1") {
+                // 角色
+                $("#role_div").show();
+                $("#user_div").hide();
+            } else {
+                // 用户
+                $("#role_div").hide();
+                $("#user_div").show();
+            }
+
+        });
+
+    });
+</script>
+<script>
+function getPage() {
+    let id = $("input[name='id']").val();
+    let name = $("input[name='name']").val().trim();
+    let rule = $("input[name='rule']").val();
+    let roleIds = $("input[name='roleIds']").val();
+    let userIds = $("input[name='userIds']").val();
+    let tempIds = $("input[name='tempIds']").val();
+    if (id === "") {
+        id = "0";
+    }
+
+    if (name === "") {
+        layer.msg("请输入任务名称");
+        return false;
+    }
+
+    let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+    if (!myReg.test(name)) {
+        layer.msg("名称只支持字母数字“_”和中文");
+        return false;
+    }
+
+    if (rule === "") {
+        layer.msg("请输入规则");
+        return false;
+    }
+
+    
+    if ($("#selectvalue").val() === "1") {
+        if (roleIds === "") {
+            layer.msg("请选择角色");
+            return false;
+        }
+
+        userIds = "";
+    } else {
+        if (userIds === "") {
+            layer.msg("请选择用户");
+            return false;
+        }
+        roleIds = "";
+    }
+
+    if (tempIds === "") {
+        layer.msg("请选择模板");
+        return false;
+    }
+
+    let obj = { id: parseInt(id), name: name, rule: rule, roles: roleIds, users: userIds, tpls: tempIds };
+    return JSON.stringify(obj);
+}
+function setForm(jsonstr) {
+    let objForm = JSON.parse(jsonstr);
+    let id = objForm.id;
+    
+    let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+    let token = window.sessionStorage.getItem("cur_token");
+    let efurl = server_base_url + "/task/get/"+ id +"?token=" + token;
+    $.ajax({
+        url: efurl,
+        type: 'get',
+        success: function (res) {
+            $("input[name='id']").val(id);
+            let task = res.task;
+            let tpls = res.tpls;
+            initTaskForm(task, tpls);
+            $("input[name='name']").val(task.name);
+            $("input[name='rule']").val(task.rule);
+            $("input[name='roleIds']").val(task.roles);
+            $("input[name='userIds']").val(task.users);
+            $("input[name='tempIds']").val(tpls.join(","));
+            if (task.roles !== "") {
+                $("#selectvalue").val("1");
+                // 角色
+                $("#role_div").show();
+                $("#user_div").hide();
+            } else {
+                $("#selectvalue").val("2");
+                // 用户
+                $("#role_div").hide();
+                $("#user_div").show();
+            }
+
+            form.render();
+        },
+        error: function () {
+        }
+    });
+    // form.render();
+}
+// 初始化记录当前模板名称的数据
+let tempnamesAry = [];
+function initTaskForm(task, tpls) {
+    let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+    let token = window.sessionStorage.getItem("cur_token");
+    let efurl = server_base_url + "/task/getConfigInfo?token=" + token;
+    $.ajax({
+        url: efurl,
+        type: 'post',
+        success: function (res) {
+            let templateAry = res.template;
+            let userAry = res.user;
+            let roleAry = res.role;
+
+            let rolesid = $("input[name='roleIds']").val();
+            if (rolesid !== "") {
+                let roleidsAry =  rolesid.split(",");
+                let rolenameAry = [];
+                for (let i = 0; i < roleidsAry.length; i++) {
+                    for (let j = 0; j < roleAry.length; j++) {
+                        if(parseInt(roleidsAry[i]) === roleAry[j].id) {
+                            rolenameAry.push(roleAry[j].name);
+                        }
+                    }
+                }
+                if (rolenameAry.length > 0) {
+                    $("input[name='roles']").val(rolenameAry.join(","));
+                }
+            }
+
+
+            let usersid = $("input[name='userIds']").val();
+            if (usersid !== "") {
+                let useridsAry =  usersid.split(",");
+                let usernameAry = [];
+                for (let i = 0; i < useridsAry.length; i++) {
+                    for (let j = 0; j < userAry.length; j++) {
+                        if(parseInt(useridsAry[i]) === userAry[j].id) {
+                            usernameAry.push(userAry[j].name);
+                        }
+                    }
+                }
+                if (usernameAry.length > 0) {
+                    $("input[name='users']").val(usernameAry.join(","));
+                }
+            }
+
+            let tpls = $("input[name='tempIds']").val();
+            if (tpls!=="") {
+                let tplidsAry = tpls.split(",");
+                tempnamesAry = [];
+                diguiSetTempnames(tplidsAry, templateAry);
+                let new_tempnamesAry = Array.from(new Set(tempnamesAry));
+                $("input[name='tempnames']").val(new_tempnamesAry.join(","));
+            }
+           
+        },
+        error: function () {
+        }
+    });
+}
+function diguiSetTempnames(tplidsAry, templateAry){
+    for (let i= 0; i< templateAry.length; i++) {
+        for(let j = 0; j < tplidsAry.length; j++) {
+            if (templateAry[i].id === parseInt(tplidsAry[j])) {
+                tempnamesAry.push(templateAry[i].name);
+                continue;
+            }
+            if (templateAry[i].children!==undefined && templateAry[i].children!==null && templateAry[i].children!=="") {
+                diguiSetTempnames(tplidsAry, templateAry[i].children);
+            }
+        }
+    }
+}
+
+</script>
+</body>
+</html>

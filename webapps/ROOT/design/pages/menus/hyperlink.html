@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <link href="../../css/scroll.css" rel="stylesheet">
+
+    <style>
+        #un a {
+            display: block;
+            color: #333;
+            padding-left:10px;
+            border-bottom: 1px solid #D5D5D5;
+            height: 34px;
+            line-height: 34px;
+        }
+
+
+        #hypertype p {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        #hypertype p:hover {
+            background: #CCCCCC;
+            cursor: pointer;
+            color: #f2f3f5;
+        }
+
+        .cka {
+            background: #0094FF !important;
+            color: #fff !important;
+        }
+
+        .cka:hover{
+            background: #0094FF !important;
+            color: #fff !important;
+        }
+
+        .ncka:hover {
+            background: #e6e6e6;
+        }
+
+        table td {
+            line-height: 25px;
+            padding-right: 5px;
+        }
+
+        #tempName p {
+            display: block;
+            color: #333;
+            transition: all .3s;
+            margin: 5px 5px;
+            border-bottom: 1px solid #D5D5D5
+        }
+
+        #tempName{
+            background-color: #f2f3f5;
+        }
+
+        #tempName:hover {
+            background-color: #FFFFFF;
+            border: 1px solid #0094FF;
+        }
+
+        img:hover {
+
+        }
+
+        table td {
+            height: 28px;
+            vertical-align: middle;
+        }
+
+        td input[type="text"] {
+            padding: 0;
+            height: 23px;
+            border: 1px solid #ccc;
+        }
+
+        td select {
+            height: 25px;
+            border: 1px solid #ccc;
+        }
+
+        td select:hover {
+            box-shadow: 0px 0px 1px #44B4FF;
+        }
+
+        td input:hover {
+            box-shadow: 0px 0px 1px #44B4FF;
+        }
+
+        textarea:hover {
+            box-shadow: 0px 0px 1px #44B4FF;
+        }
+        #btn_add {
+            width: 120px;
+            height: 32px;
+            background-image: url("../../images/new/btnadd.png");
+            background-repeat: no-repeat;
+            border: 0px !important;
+            margin-left: 10px
+        }
+        #btn_del {
+            width: 120px;
+            height: 32px;
+            background-image: url("../../images/new/btndel.png");
+            background-repeat: no-repeat;
+            border: 0px !important;
+            margin-left: 10px
+        }
+        #btn_add:hover {
+            cursor: pointer;
+        }
+        #btn_del:hover {
+            cursor: pointer;
+        }
+        .myinput {
+            padding: 0;
+            border:1px solid #f2f3f5;
+            width: 100%;
+            height: 32px;
+            line-height: 32px;
+            border-radius: 2px;
+            background-color: #f2f3f5;
+        }
+        .myinput:disabled {
+            padding: 0;
+            border:1px solid #f2f3f5;
+            width: 100%;
+            height: 32px;
+            line-height: 32px;
+            border-radius: 2px;
+            background-color: #fff;
+        }
+        .layui-form-radio {
+            padding-right: 0px !important;
+        }
+        .treeSelect {
+            background-color: #0094FF !important;
+            color: #fff;
+        }
+        /* 修改radio选中状态的颜色信息 */
+        .layui-form-radio:hover *, .layui-form-radioed, .layui-form-radioed > i {
+            color: #0094FF !important;
+        }
+
+        .layui-form-select .layui-input {
+            background-color: #f2f3f5 !important;
+        }
+        .layui-form-select dl dd.layui-this {
+            background-color: #0094FF !important;
+        }
+        .layui-form-select dl dd:hover {
+            background-color: #0094FF !important;
+            color:#FFFFFF;
+        }
+
+        .layui-form-select dl dd{
+            padding: 0 10px;
+            line-height: 22px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .search {
+            padding-top:5px;
+            padding-left:10%;
+            width:80%;
+            height: 30px;
+            border: 0px;
+            position: relative;
+        }
+
+        #tempName{
+            height:30px;
+        }
+
+        .searchImg{
+            position: absolute;
+            right:5%;
+            top:40%
+        }
+
+        .ztree li span.button.template_ico_docu {
+            margin-right: 2px;
+            background: url(../../images/design/tree/template.png) no-repeat scroll 0 0 transparent;
+            vertical-align: top;
+            background-size: 100% 100%;
+        }
+
+
+    </style>
+
+    <script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../js/layui.js"></script>
+    <script type="text/javascript" src="../../js/spectrum.js"></script>
+    <script src="../../js/design/canvasCommon.js"></script>
+    <script src="../../js/def/global.js"></script>
+    <script type="text/javascript" src="../../js/design/constants.js"></script>
+    <script src="../../js/zTree/js/jquery.ztree.core.min.js" charset="utf-8"></script>
+    <script src="../../js/zTree/js/jquery.ztree.excheck.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../../js/zTree/css/zTreeStyle.css" />
+    <script type="text/javascript" src="../../js/zTree/js/jquery.ztree.exhide.min.js"></script>
+
+</head>
+<body style="padding: 0px;height: 480px">
+
+<div style="position: relative; width: 880px; height: auto; margin: auto; margin-top: 20px;">
+    <button id="btn_add"></button>
+    <button id="btn_del"></button>
+</div>
+
+<div style="position:absolute;width: 250px;height: 424px;left:20px;">
+    <div style="width: 100%;height: 424px;overflow: hidden;margin-top:5px; border: 1px solid #D5D5D5">
+        <div id="un" style="white-space: nowrap;overflow: auto;height: 99%;width:100%;"></div>
+    </div>
+</div>
+
+
+<div id="right" style="position:absolute;left:280px;width: 600px;height: 420px;">
+</div>
+
+
+
+<!--网页链接页面-->
+<div id="link" style="display: none;height: 420px;">
+    <form class="layui-form" action="">
+    <div style="position: relative; width: 600px; height: auto;">
+        <div style="width: 300px; float: left;">
+            <div class="layui-form-item">
+                链接名称
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 270px;">
+                    <input type="text" name="LinkName"  class="myinput" autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <div style="width: 299px; float: left;">
+            <div class="layui-form-item">
+                打开方式
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 290px;">
+                    <input type="radio" name="WindowStyle" value="1" title="当前窗口" lay-filter="WindowStyle" autocomplete="off">
+                    <input type="radio" name="WindowStyle" value="2" title="新窗口" lay-filter="WindowStyle" autocomplete="off">
+                    <input type="radio" name="WindowStyle" value="3" title="模态窗口" lay-filter="WindowStyle" autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div style="position: relative; width: 600px; height: auto;">
+        <div style="width: 150px; float: left;">
+            <div class="layui-form-item">模态宽度</div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" name="width" value="200"  class="myinput" autocomplete="off" disabled>
+                </div>
+            </div>
+        </div>
+        <div style="width: 150px; float: left;">
+            <div class="layui-form-item">模态高度</div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" name="height" value="200"  class="myinput" autocomplete="off" disabled>
+                </div>
+            </div>
+        </div>
+        <div style="width: 150px; float: left;">
+            <div class="layui-form-item">左</div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" name="left" value=""  class="myinput" autocomplete="off" disabled>
+                </div>
+            </div>
+        </div>
+        <div style="width: 150px; float: left;">
+            <div class="layui-form-item">上</div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" name="top" value="" autocomplete="off"  class="myinput" disabled>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div style="position: relative; width: 600px; height: auto;">
+        <div class="layui-form-item">链接地址</div>
+        <div class="layui-form-item" style="height: 231px;">
+            <div class="layui-input-inline" style="width: 570px;height: 99%;border: 1px solid #D5D5D5;">
+                <textarea name="Url" style="width: 100%;height: 100%;resize: none;border:none; background-color: #f2f3f5;"></textarea>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+<!--模板链接页面-->
+<div id="temp" style="display: none;height: 420px;">
+    <form class="layui-form" action="">
+    <div style="position: relative; width: 600px; height: auto;">
+        <div style="width: 300px; float: left;">
+            <div class="layui-form-item">
+                链接名称
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 270px;">
+                    <input type="text" name="LinkName"  class="myinput" autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <div style="width: 299px; float: left;">
+            <div class="layui-form-item">
+                打开方式
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 290px;">
+                    <input type="radio" name="WindowStyle" value="1" title="当前窗口" lay-filter="WindowStyle" autocomplete="off">
+                    <input type="radio" name="WindowStyle" value="2" title="新窗口" lay-filter="WindowStyle" autocomplete="off">
+                    <input type="radio" name="WindowStyle" value="3" title="模态窗口" lay-filter="WindowStyle" autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div style="position: relative; width: 600px; height: auto;">
+        <div style="width: 150px; float: left;">
+            <div class="layui-form-item">模态宽度</div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" name="width" value="200"  class="myinput" autocomplete="off" disabled>
+                </div>
+            </div>
+        </div>
+        <div style="width: 150px; float: left;">
+            <div class="layui-form-item">模态高度</div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" name="height" value="200"  class="myinput" disabled>
+                </div>
+            </div>
+        </div>
+        <div style="width: 150px; float: left;">
+            <div class="layui-form-item">左</div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" name="left" value=""  class="myinput" autocomplete="off" disabled>
+                </div>
+            </div>
+        </div>
+        <div style="width: 150px; float: left;">
+            <div class="layui-form-item">上</div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input type="text" name="top" value=""  class="myinput" autocomplete="off" disabled>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+    
+
+    <div style="position: relative; width: 600px; height: auto;">
+
+        <div style="width: 300px; float: left;">
+            <div class="layui-form-item">模板名称</div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 247px;">
+                    <input type="hidden" name="tempId" />
+                    <input type="text" name="Templet"  class="myinput" autocomplete="off">
+                </div>
+                <div class="layui-input-inline" style="width: 23px;">
+                    <img src="../../images/design/open.png" style="margin-left:-3px;margin-top: 5px;">
+                </div>
+            </div>
+        </div>
+        <div style="width: 300px; float: left;">
+            <div class="layui-form-item">模板参数</div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 270px;">
+                    <select name="key" class="myinput" lay-filter="optkey">
+                        <option value="">关键字</option>
+                        <option value="CATEGORY">分类</option>
+                        <option value="SERIES">系列</option>
+                        <option value="VALUE">值</option>
+                        <option value="@{Param1}">参数</option>
+                        <option value="CONTROLVALUE">控件值</option>
+                        <option value="X-AXIS">X轴</option>
+                        <option value="Y-AXIS">Y轴</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+</form>
+    
+    <div style="position: relative; width: 600px; height: auto;">
+        <div class="layui-form-item" style="height: 178px;">
+            <div class="layui-input-inline" style="width: 570px;height: 99%;border: 1px solid #D5D5D5;">
+                <textarea name="Params" style="width: 100%;height: 100%;resize: none;border:none;background-color: #f2f3f5;"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="sheet" style="display: none;height: 420px;">
+    <div style="position: relative; width: 580px; margin: auto; height: auto;">
+        <div style="width: 290px; float: left;">
+            <div class="layui-form-item">链接名称</div>
+            <div class="layui-form-item" style="width: 240px;">
+                <input type="text" name="LinkName" class="myinput" autocomplete="off">
+            </div>
+        </div>
+        <div style="width: 289px; float: left;">
+            <div class="layui-form-item">sheet名称</div>
+            <div class="layui-form-item" style="width: 240px;">
+                <input type="text" name="sheetName" class="myinput" autocomplete="off">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--链接类型-->
+<div id="hypertype" tabindex="1"
+     style="z-index:1000;display: none;position: absolute;width:100px;height:90px;text-align: center;background: white">
+    <p>网页链接</p>
+
+    <p>模板链接</p>
+
+    <p>sheet页</p>
+</div>
+
+<!--选择 模板 名称-->
+<div id="tempdiv" style="display:none;width:100%;height:280px;">
+    <div style="text-align: center;height:30px;margin:5px 5px">
+        <input type="text" style="height: 25px;margin-right:5px;vertical-align: middle" width="75%">
+        <button name="dictPage" class="layui-btn layui-btn-primary layui-btn-sm" style="width: 20%">查询</button>
+    </div>
+    <div class="treeArea" id="tree">
+    </div>
+</div>
+
+
+<!-- 选择模板树 -->
+<div id="tempZTreeDiv" style="display:none;width:100%;height:300px; background-color: #fcfcfc;">
+    <div class="search">
+        <input type="text" id="tempName" placeholder="模板名称" autocomplete="off" class="layui-input">
+        <img src="../../images/design/searchTemplate.png" class="searchImg">
+    </div>
+    <div style="position:relative;width: 100%; margin: auto; overflow:auto;height: 280px;">
+        <div style="position:relative;width: 240px; margin: auto;height: auto">
+            <ul id="ztree" class="ztree"></ul>
+        </div>
+    </div>
+    
+    
+</div>
+
+
+
+</body>
+<script type="text/javascript">
+    var ip = window.sessionStorage.getItem("ef_server_base_url");
+    var base = ip;
+    let token = window.sessionStorage.getItem("cur_token");
+    var ct = 0;
+    var link = 'hyperLink', temp = 'tempLink', sheet = 'sheetLink';
+    var tempName;
+    var tempId;
+    var tpltreeurl = base + '/designSys/getOwnTemplateZTree?token=' + token;
+    var treeObj;
+    let tree;
+    var form;
+    var cur_page_index;
+
+    layui.use(['layer','form'], function () {
+        var layer = layui.layer;
+        tree = layui.tree;
+        form = layui.form;
+    });
+
+
+    var setting = {
+        callback: {
+            beforeDrag: function() {return false;},
+            beforeDrop: function() {return false;},
+            onCheck: function(event, treeId, treeNode) {
+                let isParent = treeNode.isParent;
+                let name = treeNode.title;
+                if (!isParent) { //不是目录，就是报表结点数据
+                    let id = treeNode.id;
+                    tempName = treeNode.title;
+                    tempId = id;
+                }
+            },
+            onClick: function(event, treeId, treeNode) {
+                let isParent = treeNode.isParent;
+                let name = treeNode.title;
+                if (!isParent) { //不是目录，就是报表结点数据
+                    let id = treeNode.id;
+                    tempName = treeNode.title;
+                    $('#tempName').val(tempName);
+                    tempId = id;
+                }
+            }
+        },
+        view: {
+            showIcon: showIconForTree,
+            showLine: false
+        },
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pId",
+                rootPId: 0
+            }
+        }
+    };
+
+    function showIconForTree(treeId, treeNode) {
+        return !treeNode.isParent;
+    }
+
+
+    function init_page_ztree(searchname) {
+        let efurl = tpltreeurl;
+        if (searchname !== "") {
+            efurl += "&tempname="+searchname;
+        }
+
+
+        $.ajax({
+            url: efurl,
+            type: 'get',
+            success: function (res) {
+                if(searchname!=="") {
+                    searchTempAryDelNoDataRoot(res, searchname);
+                    searchTempAryDelNoDataRoot(res, searchname);
+                    searchTempAryDelNoDataRoot(res, searchname);
+                    searchTempAryDelNoDataRoot(res, searchname);
+                    searchTempAryDelNoDataRoot(res, searchname);
+                }
+                
+                if (tempName !=="" && tempId !== "") {
+                    changeAryChecked(res);
+                }
+
+
+                treeObj = $.fn.zTree.init($("#ztree"), setting, res);
+
+                if(searchname!=="") {
+                    let treeObj = $.fn.zTree.getZTreeObj("ztree");
+                    treeObj.expandAll(true);
+                }
+
+            //   $("#tempZTreeDiv").show();
+            },
+            error: function () {
+            }
+        });
+
+
+    }
+
+    // 设置选中默认元素（模板）
+    let changeAryChecked = function(templateAry) {
+        for (let i = 0; i < templateAry.length; i++) {
+            if (templateAry[i].children === undefined) {
+                // 无children属性，表明是最底层子项
+                if (templateAry[i].id === parseInt(tempId)) {
+                    templateAry[i].checked=true;
+                }
+            }
+
+            if (templateAry[i].children !== undefined && templateAry[i].children !== null) {
+                if (templateAry[i].children.length > 0) {
+                    changeAryChecked(templateAry[i].children);
+                }
+            }
+
+        }
+    }
+
+
+    // 递归调用，去除没有子项的父元素
+    let searchTempAryDelNoDataRoot = function(templateAry, searchname) {
+        for (let i = 0; i < templateAry.length; i++) {
+            if (templateAry[i].children === undefined) {
+                // 无children属性，表明是最底层子项
+                if (templateAry[i].name.indexOf(searchname) > -1) {
+
+                } else {
+                    // 子项不匹配查询内容，删除
+                    templateAry.splice(i, 1);
+                }
+            }
+
+            if (templateAry[i].children !== undefined && templateAry[i].children !== null) {
+                if (templateAry[i].children.length > 0) {
+                    searchTempAryDelNoDataRoot(templateAry[i].children, searchname);
+                } else {
+                    // 父项有子项，但子项元素个数为0 ，则删除父项
+                    templateAry.splice(i, 1);
+                }
+            }
+
+        }
+    }
+
+
+
+     // 用于存储(树的数据集)
+     let treeData = [];
+
+    function showParent(treeNode, nodes, showList) { //递归显示所有父节点
+        showList.push(treeNode.id);
+        var parentNode = treeNode.getParentNode();
+        if (parentNode == null) { //如果是根节点
+            return;
+        } else {
+            if ($.inArray(parentNode.id, showList) != -1) {  //如果父节点已经显示
+                treeObj.showNode(treeNode);//显示当前节点
+            } else {
+                showList.push(parentNode.id); //将父节点添加到显示结点列表
+                treeObj.showNode(parentNode); //显示父节点
+                treeObj.hideNodes(parentNode.children);//隐藏父节点的所有子节点
+                treeObj.showNode(treeNode);//显示当前节点
+                showParent(parentNode, null, showList); //遍历父亲结点
+            }
+
+        }
+    }
+
+   
+
+    function boundSearch() {
+
+        $("button[name='dictPage2']").click(function(){
+            // 实现搜索操作
+            var tempNameVal = $(this).prev().val();
+            init_page_ztree(tempNameVal);
+
+        })
+
+        $("#tempName").unbind().bind('keyup' , function (e) {
+            var code = e.keyCode;
+            if (code == 13) {
+                //清除关键字前后的空格
+                var tempName = $.trim($("#tempName").val());
+                if (treeObj) {
+                    if (tempName == "") { //清空搜索框时
+                        var allNode = treeObj.getNodes();
+                        initTree();
+                    } else {
+                        var nodes = treeObj.getNodesByParamFuzzy("name", tempName, null); //在树中模糊查询
+                        if (nodes.length == 0) {
+                            //layer.alert("模板不存在!");
+                            $("#tempName").blur();
+                            layer.msg('模板不存在!', {
+                                time: 1000, //1s后自动关闭
+                                icon: 2
+                            });
+                        } else {
+                            var allNode = treeObj.getNodes();
+                            treeObj.hideNodes(allNode);
+                            var showList = new Array();
+                            var nodeList = new Array(); //当所有搜索的结点都不是末级结点时，需要重新显示所有数结点
+                            $.each(nodes, function (index, element) {
+                                if (!element.isParent) { //是末级结点
+                                    treeObj.showNode(element);
+                                    showParent(element, nodes, showList);
+                                } else {
+                                    nodeList.push(element);
+                                }
+                            });
+                            if (nodeList.length == nodes.length) {
+                                layer.alert("模板不存在!");
+                                var allNode = treeObj.getNodes();
+                                treeObj.showNodes(allNode);
+                                treeObj.expandAll(false);
+                            } else {
+                                treeObj.expandAll(true);
+                            }
+                        }
+                    }
+                }
+
+            }
+        });
+    }
+   
+    function initTemp(url, expand) {
+
+        $.ajax({
+            url: url,
+            type: 'get',
+            success: function (res) {
+                treeData = res;
+                tree.render({
+                    elem: '#tree'  //绑定元素
+                    , showLine: true
+                    , accordion: true
+                    , data: res
+                    , click: function (obj) {
+                        let data = obj.data;
+                        let isParent = data.isParent;
+                        let name = data.title;
+                        if (!isParent) { //不是目录，就是报表结点数据
+                            let id = data.id;
+                            $(".layui-tree-txt").removeClass("treeSelect");
+                            $("[data-id='"+id+"']").children().children().children(".layui-tree-txt").addClass("treeSelect");
+                            tempName = data.title;
+                            tempId = id;
+                        }
+                    }
+                });
+            },
+            error: function (res) {
+
+            }
+        });
+    }
+    function getTempName() {
+        $("#tempdiv").hide();
+        return tempName;
+    }
+    function getTempId() {
+        return tempId;
+    }
+    function boundTempCheck(obj) {
+        obj.click(function () {
+
+            // 加个注释，使用了ztree
+            var index = layer.open({
+                    type: 1,
+                    area: ['300px', '372px'],
+                    title: false,
+                    closeBtn: 0,
+                    content: $('#tempZTreeDiv')
+                    , btn: ['确定', '关闭']
+                    , btnAlign: 'c' //按钮居中
+                    , yes: function (index, layero) {
+                        $(obj).parent().parent().find("input[name='Templet']").val(tempName);
+                        $(obj).parent().parent().find("input[name='tempId']").val(tempId);
+                        layer.close(index);
+                    }, success: function (layero, index) {
+                        tempName = $(obj).parent().parent().find("input[name='Templet']").val();
+                        tempId = $(obj).parent().parent().find("input[name='tempId']").val();
+                        init_page_ztree("");
+                    }
+                });
+
+
+        });
+    }
+
+
+    function showParent(treeNode, nodes, showList) { //递归显示所有父节点
+        showList.push(treeNode.id);
+        var parentNode = treeNode.getParentNode();
+        if (parentNode == null) { //如果是根节点
+            return;
+        } else {
+            if ($.inArray(parentNode.id, showList) != -1) {  //如果父节点已经显示
+                treeObj.showNode(treeNode);//显示当前节点
+            } else {
+                showList.push(parentNode.id); //将父节点添加到显示结点列表
+                treeObj.showNode(parentNode); //显示父节点
+                treeObj.hideNodes(parentNode.children);//隐藏父节点的所有子节点
+                treeObj.showNode(treeNode);//显示当前节点
+                showParent(parentNode, null, showList); //遍历父亲结点
+            }
+
+        }
+    }
+
+
+    function appendRight(linkData, type) {
+        var temp;
+        if (linkData.OpterationType == 1) {
+            temp = $("#temp").clone();
+        } else if (linkData.OpterationType == 2) {
+            temp = $("#link").clone();
+        } else {
+            temp = $('#sheet').clone();
+        }
+        temp.removeAttr('id');
+        temp.attr('data', linkData.data);
+        temp.attr('name', 'link');
+        temp.find('input[name="WindowStyle"]').attr("name", "WindowStyle_" + ct);
+        temp.find('input[name="LinkName"]').val(linkData.LinkName);
+        temp.find('input[name="LinkName"]').change(function () {
+            var v = $(this).val(), b = true;
+            if (v == undefined || v.trim() == '') {
+                layer.msg("名称不能为空");
+                b = false;
+                return false;
+            }
+
+            let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+            if (!myReg.test(v)) {
+                layer.msg("名称只支持字母数字“_”和中文");
+                let ckaText = $('.cka').text()
+                $(this).val(ckaText);
+                b = false;
+                return false;
+            }
+
+
+            $("a").each(function(){
+                if(!$(this).hasClass('cka')){
+                    var val=$(this).text();
+                    if(val==v){
+                        b=false;
+                        layer.msg("名称已存在");
+                    }
+                }
+            });
+
+            if (b === false) {
+                let ckaText = $('.cka').text()
+                $(this).val(ckaText);
+                return false;
+            }
+
+
+            $('.cka').text(v);
+        });
+
+        form.on("radio(WindowStyle)", function(data){
+            // 元素name
+            let elename = data.elem.name;
+            // 元素值
+            let eleval = data.value;
+            let v = parseInt(eleval);
+            let parentEle = $('input[name="' + elename + '"]').parent().parent().parent().parent().parent();
+            if(v == 3){
+                parentEle.find('input[name="width"]').removeAttr("disabled");
+                parentEle.find('input[name="height"]').removeAttr("disabled");
+                parentEle.find('input[name="left"]').removeAttr("disabled");
+                parentEle.find('input[name="top"]').removeAttr("disabled");
+            }else{
+
+                parentEle.find('input[name="width"]').attr("disabled" , 'disabled');
+                parentEle.find('input[name="width"]').val("200");
+                parentEle.find('input[name="height"]').attr("disabled" , 'disabled');
+                parentEle.find('input[name="height"]').val("200");
+                parentEle.find('input[name="left"]').attr("disabled" , 'disabled');
+                parentEle.find('input[name="left"]').val("");
+                parentEle.find('input[name="top"]').attr("disabled" , 'disabled');
+                parentEle.find('input[name="top"]').val("");
+            }
+
+        });
+
+        form.on("select(optkey)", function(data){
+            let val = data.value;
+            var textarea = $(this).parent().parent().parent().parent().parent().parent().parent().next().children(0).children(0).children("textarea");
+            textarea.insertAtCaret(val);
+        
+        });
+
+        if (linkData.OpterationType == 1) {
+            temp.find('textarea[name="Params"]').val(linkData.Params);
+            temp.find('input[name="Templet"]').val(linkData.Templet);
+
+            temp.find('input[name="Templet"]').unbind().bind('dblclick' , function(){
+
+                let index = layer.open({
+                    type: 2,
+                    area: ['700px', '620px'],
+                    closeBtn: 0,
+                    resize: false,
+                    title: false,
+                    content: ['/design/pages/design/expr.html', 'no'],
+                    btn: ['确定', '关闭'],
+                    btnAlign: 'c',
+                    yes: function (index, layero) {
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        let expr = iframeWin.getExpr();
+                        temp.find('input[name="Templet"]').val(expr);
+                        layer.close(index);
+                        top.layer.restore(cur_page_index);
+                    },
+                    success: function (layero, index) {
+                        top.layer.full(cur_page_index);
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        iframeWin.setExpr(temp.find('input[name="Templet"]').val());
+                    },
+                    btn2: function(){
+                        top.layer.restore(cur_page_index);
+                    }
+                });
+
+            })
+
+            temp.find('input[name="tempId"]').val(linkData.tempId);
+            // boundKey(temp.find('select[name="key"]'));
+            boundTempCheck(temp.find('img'));
+        } else if (linkData.OpterationType == 2) {
+            temp.find('textarea[name="Url"]').val(linkData.Url);
+        } else if (linkData.OpterationType == 3) {
+            temp.find('input[name="sheetName"]').val(linkData.sheetName);
+        }
+        temp.find("input[type='radio'][value=" + linkData.WindowStyle + "]").prop('checked', true);
+        if (linkData.WindowStyle == 3) {
+            temp.find('input[name="width"]').val(linkData.width);
+            temp.find('input[name="height"]').val(linkData.height);
+            temp.find('input[name="left"]').val(linkData.left);
+            temp.find('input[name="top"]').val(linkData.top);
+            temp.find('input[name="width"]').removeAttr("disabled");
+            temp.find('input[name="height"]').removeAttr("disabled");
+            temp.find('input[name="left"]').removeAttr("disabled");
+            temp.find('input[name="top"]').removeAttr("disabled");
+        }
+        $("#right").append(temp);
+        if (type) {
+            temp.show();
+        }
+
+        form.render();
+    }
+    function boundEvent() {
+        $("#hypertype").blur(function () {
+            $(this).hide();
+        });
+        $("#hypertype p").click(function () {
+            $("#hypertype").hide();
+            ct++;
+            $("#right div[name='link']:last-child").hide();
+            var linkname = $(this).text() + ct;
+            if ('模板链接' == $(this).text()) {
+                var data = temp + "_" + ct;
+                $("#un").append("<a href='javascript:;' data=" + data + ">" + linkname + "</a>");
+                var linkData = {
+                    OpterationType: 1
+                    , data: data
+                    , LinkName: linkname
+                    , WindowStyle: 2
+                    , Templet: ''
+                    , tempId: 0
+                    , Params: ''
+                };
+                appendRight(linkData, true);
+            } else if ('网页链接' == $(this).text()) {
+                var data = link + "_" + ct;
+                $("#un").append("<a href='javascript:;' data=" + data + ">" + linkname + "</a>");
+                var linkData = {
+                    OpterationType: 2
+                    , data: data
+                    , LinkName: linkname
+                    , WindowStyle: 1
+                    , Url: ''
+                };
+                appendRight(linkData, true);
+            } else {
+                var data = sheet + "_" + ct;
+                $("#un").append("<a href='javascript:;' data=" + data + ">" + linkname + "</a>");
+                var linkData = {
+                    OpterationType: 3
+                    , data: data
+                    , LinkName: linkname
+                    , sheetName: ''
+                };
+                appendRight(linkData, true);
+            }
+            boundCk($("#un a:last-child"));
+            $("#un a:last-child").trigger('click');
+        });
+        // 新的按钮方式huangkun
+        $("#btn_add").click(function (event) {
+            var top = $(this).offset().top;
+            var left = $(this).offset().left;
+            $("#hypertype").css({"top": top + $(this).height(), left: left});
+            $("#hypertype").show().focus();
+        });
+        // 之前图片方式--后续要删除的
+        $("#add").click(function () {
+            var top = $(this).offset().top;
+            var left = $(this).offset().left;
+            $("#hypertype").css({"top": top + $(this).width(), left: left});
+            $("#hypertype").show().focus();
+        });
+        // 新的按钮方式huangkun
+        $("#btn_del").click(function () {
+            $("a").each(function () {
+                if ($(this).hasClass("cka")) {
+                    var data = $(this).attr('data');
+                    $("div[name='link']").each(function () {
+                        if (data == $(this).attr('data')) {
+                            $(this).remove();
+                        }
+                    });
+                    $(this).remove();
+                }
+            });
+            $("#un a:last-child").trigger('click');
+        });
+        // 之前图片方式--后续要删除的
+        $("#del").click(function () {
+            $("a").each(function () {
+                if ($(this).hasClass("cka")) {
+                    var data = $(this).attr('data');
+                    $("div[name='link']").each(function () {
+                        if (data == $(this).attr('data')) {
+                            $(this).remove();
+                        }
+                    });
+                    $(this).remove();
+                }
+            });
+            $("#un a:last-child").trigger('click');
+        });
+    }
+    function boundKey(obj) {
+        obj.change(function () {
+            var textarea = $(this).parent().parent().parent().parent().next().children(0).children(0).children("textarea");
+            textarea.insertAtCaret($(this).val());
+            obj.val('');
+        });
+    }
+    function getPage() {
+        var data = [];
+        var b = true;
+        let nameArys = [];
+        $("#un a").each(function () {
+            var v = $(this).text();
+            if (v == undefined || v.trim() == '') {
+                //layer.alert("名称不能为空", {icon:2});
+                efalert(layer, "名称不能为空!", 2);
+                $(this).trigger('click');
+                b = false;
+                return false;
+            }
+
+            let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+            if (!myReg.test(v)) {
+                // efalert(layer, "名称只支持字母数字“_”和中文", 2);
+                efalert(layer, "名称只支持字母数字“_”和中文", 2);
+                b = false;
+                return false;
+            }
+            nameArys.push(v);
+        });
+        var v = $(".show-now").find('input[name="LinkName"]').val();
+        $("#un a").each(function () {
+            if (!$(this).hasClass('cka')) {
+                var val = $(this).text();
+                if (val == v) {
+                    b = false;
+                    layer.msg("名称已存在!");
+                    return false;
+                }
+            }
+        });
+
+        if (!b) {
+            return false;
+        }
+
+        if (nameArys.length > 0) {
+            // 去重前长度
+            let aLen = nameArys.length;
+            // 去除重复项
+            let new_nameArys = Array.from(new Set(nameArys));
+            let bLen = new_nameArys.length;
+             // 去重后长度
+            if (aLen > bLen) {
+                efalert(layer , "名称不能重复" , 2);
+                return false;
+            }
+        }
+
+        $("div[name='link']").each(function () {
+            var type;
+            //var type=$(this).attr('data').indexOf(temp)>-1?1:2;
+            if ($(this).attr('data').indexOf(temp) > -1) {
+                type = 1;
+            } else if ($(this).attr('data').indexOf('hyperLink') > -1) {
+                type = 2;
+            } else {
+                type = 3;
+            }
+
+            if (type == 1 || type == 2) { //超级链接或者模板链接
+                //模态窗口
+                if (parseInt($(this).find("input[type='radio']:checked").val()) == 3) {
+                    if ($(this).find('input[name="width"]').val() == '') {
+                        efalert(layer, "未设置模态窗口的宽度!");
+                        return false;
+                    }
+
+                    if ($(this).find('input[name="height"]').val() == '') {
+                        efalert(layer, "未设置模态窗口的高度!");
+                        return false;
+                    }
+                }
+            }
+            var width = 0;
+            var height = 0;
+            var left;
+            var top;
+            //模态窗口
+            if(parseInt($(this).find("input[type='radio']:checked").val()) == 3){
+                width = ($(this).find('input[name="width"]').val());
+                height = ($(this).find('input[name="height"]').val());
+                left = $(this).find('input[name="left"]').val();
+                top =  $(this).find('input[name="top"]').val();
+            }
+
+            var link = {
+                LinkName: $(this).find('input[name="LinkName"]').val()
+                , OpterationType: type
+                , WindowStyle: parseInt($(this).find("input[type='radio']:checked").val())
+                , width:width
+                , height:height
+                , SortNum: 1
+                , left:left
+                , top:top
+            };
+            if (1 == type) {
+                link.Params = $(this).find('textarea[name="Params"]').val();
+                link.Templet = $(this).find('input[name="Templet"]').val();
+                link.tempId = $(this).find('input[name="tempId"]').val();
+            } else if (2 == type) {
+                link.Url = $(this).find('textarea[name="Url"]').val();
+            } else if (3 == type) {
+                link.sheetName = $(this).find('input[name="sheetName"]').val();
+            }
+            data.push(link);
+        });
+        //返回空数组会默认为false
+        if (data.length == 0) {
+            data = '1';
+        }
+        return data;
+    }
+    function init(json , curIndex) {
+        cur_page_index = curIndex;
+        boundEvent();
+        boundSearch();
+        initTemp(tpltreeurl);
+        if (json != '' && json != undefined && json != '1') {
+            var unarr = JSON.parse(json);
+            for (var i = 0; i < unarr.length; i++) {
+                ct++;
+                var opterationType = unarr[i].OpterationType;
+                var data;
+                if (opterationType == 1) {
+                    data = temp;
+                } else if (opterationType == 2) {
+                    data = link;
+                } else {
+                    data = sheet;
+                }
+                $("#un").append("<a href='javascript:;' data=" + data + "_" + i + ">" + unarr[i].LinkName + "</a>");
+                unarr[i].data = data + "_" + i;
+                appendRight(unarr[i], false);
+            }
+            boundCk();
+            $("#un a:last-child").trigger('click');
+        }
+    }
+    function boundCk(a) {
+        if (!a) {
+            a = $("a");
+        }
+        a.click(function () {
+            $("a").each(function () {
+                $(this).removeClass("cka");
+                $(this).addClass("ncka");
+            });
+            $(this).addClass("cka");
+            $(this).removeClass("ncka");
+            var data = $(this).attr('data');
+            $("div[name='link']").each(function () {
+                if (data == $(this).attr('data')) {
+                    $(this).show();
+                    $(this).addClass('show-now');
+                } else {
+                    $(this).hide();
+                    $(this).removeClass('show-now');
+                }
+            });
+        });
+    }
+
+(function ($) {
+    $.fn.extend({
+        insertAtCaret: function (myValue) {
+            var $t = $(this)[0];
+            if (document.selection) {
+                this.focus();
+                sel = document.selection.createRange();
+                sel.text = myValue;
+                this.focus();
+            }
+            else
+            if ($t.selectionStart || $t.selectionStart == '0') {
+                var startPos = $t.selectionStart;
+                var endPos = $t.selectionEnd;
+                var scrollTop = $t.scrollTop;
+                $t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);
+                this.focus();
+                $t.selectionStart = startPos + myValue.length;
+                $t.selectionEnd = startPos + myValue.length;
+                $t.scrollTop = scrollTop;
+            }
+            else {
+                this.value += myValue;
+                this.focus();
+            }
+        }
+    })
+})(jQuery);
+</script>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.TaskTemplateRelMapper">
+  <!-- 新增 -->
+  <insert id="save">
+    INSERT INTO SYS_TASK_TEMPLATE_REL(task_id, tpl_id) VALUES(#{taskId}, #{tplId})
+  </insert>
+
+  <!-- 删除 -->
+  <insert id="remove" parameterType="int">
+    DELETE FROM SYS_TASK_TEMPLATE_REL WHERE task_id = #{taskId}
+  </insert>
+
+  <!-- 根据任务ID查询关联所有模版ID -->
+  <select id="loadByTaskId" parameterType="Integer" resultType="Integer">
+    SELECT tpl_id FROM SYS_TASK_TEMPLATE_REL WHERE task_id = #{taskId}
+  </select>
+
+  <!-- 根据模版ID查询关联所有任务ID -->
+  <select id="loadByTemplateId" parameterType="Integer" resultType="Integer">
+    SELECT task_id FROM SYS_TASK_TEMPLATE_REL WHERE tpl_id = #{tplId}
+  </select>
+</mapper>

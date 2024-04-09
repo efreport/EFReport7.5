@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>盈帆数据报表-添加部门</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../../lib/layui-v2.7.6/css/layui.css" media="all">
+    <style>
+        .center {
+            position: relative;
+            width: 100%;
+            height: 80px;
+        }
+        .center .item {
+            width: 80%;
+            text-align: center;
+            margin: auto;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div>
+        <input type="hidden" id="id" name="id" />
+        <input type="hidden" id="pId" name="pId" />
+        <form class="layui-form login-bottom">
+            <div class="center">
+                <div class="item">
+                    <input class="layui-input" type="text" name="departmentName" lay-verify="required" value="" placeholder="请输入部门名称" maxlength="24"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="../../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script>
+function getPage() {
+    var v = $("input[name='departmentName']").val().trim();
+    var id = $("#id").val();
+    var pId = $("#pId").val();
+    let obj = {
+        id: id,
+        pId: pId,
+        departmentName: v
+    };
+    return JSON.stringify(obj);
+}
+function setForm(jsonstr) {
+    let objForm = JSON.parse(jsonstr);
+    $("input[name='departmentName']").val(objForm.departmentName);
+    $("#id").val(objForm.id);
+    $("#pId").val(objForm.pId);
+}
+</script>
+</body>
+</html>

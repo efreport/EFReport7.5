@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>系统设置</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../css/public.css" media="all">
+    <style>
+        html, body {
+            border: 0px;
+            margin: 0px;
+            padding: 0px;
+            background-color: #fcfcfc !important;
+        }
+        /* 将背景颜色都改为#fcfcfc hk->20221223改 */
+        .layuimini-container {
+            background-color: #fcfcfc !important;
+        }
+        #span_isonlylogin_title {
+            width: 120px;
+            height: 24px;
+            line-height: 24px;
+            vertical-align: bottom;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="layuimini-container layuimini-page-anim">
+    <div style="height: 15px;"></div>
+    <div style="height: 40px;line-height: 40px;">
+        <div class="layui-btn-container">
+          <span style="padding-left: 25px;"></span>
+          <button class="layui-btn layui-btn-normal layui-btn-sm" id="btn-refresh"><i class="layui-icon">&#xe666;</i></button>
+        </div>
+    </div>
+    <div class="layuimini-main" style="width: 600px;margin-left: 100px;">
+
+        <form class="layui-form" action="" lay-filter="sysSetting">
+            <h3 style="padding: 10px; font-weight: bold;">单一登录设置</h3>
+            <input type="hidden" name="id" value="0" />
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 100px;">单一登录</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="isonlylogin" value="1" lay-skin="switch" lay-filter="isonlylogin">
+                    <span id="span_isonlylogin_title">后登录踢出先登录</span>
+                </div>
+            </div>
+
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 100px;">密码冻结</label>
+                <div class="layui-input-block">
+                    <div class="layui-input-inline" style="width: 47px;">
+                        <input type="checkbox" value="1" name="isOpenPwdLock" lay-skin="switch" lay-filter="isOpenPwdLock" title="开关">
+                    </div>
+                    <div id="div_pwdErrorCnt" style="display:inline;">
+                        <label style="float: left;display: block;padding-top: 9px;padding-left:5px;width: 40px;">输错</label>
+                        <div class="layui-input-inline" style="width: 60px;">
+                            <input type="text" name="pwdErrorCnt" value="5" autocomplete="off" class="layui-input">
+                        </div>
+                        <div style="float: left; width: 120px; height: 38px; line-height: 38px; vertical-align: middle;">
+                            次后密码锁定
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- <div id="div_pwdErrorCnt" class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 160px;">输错</label>
+                <div class="layui-input-inline" style="width: 60px;">
+                    <input type="text" name="pwdErrorCnt" value="5" autocomplete="off" class="layui-input">
+                </div>
+                <div style="float: left; width: 120px; height: 38px; line-height: 38px; vertical-align: middle;">
+                    次后密码锁定
+                </div>
+                <div style="clear: both;"></div>
+            </div> -->
+
+
+
+            <!-- <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 100px;"></label>
+                <div class="layui-input-block">
+                    <span id="span_isonlylogin_title">后登录踢出先登录</span>
+                </div>
+            </div> -->
+            <div style="display: none;">
+                <h3 style="padding: 10px; font-weight: bold;">登录超时设置</h3>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 100px;">登录超时时间</label>
+                    <div class="layui-input-inline" style="width: 60px;">
+                        <input type="text" name="loginOutTime" value="0" autocomplete="off" class="layui-input">
+                    </div>
+                    <div style="float: left; width: 400px; height: 38px; line-height: 38px; vertical-align: middle;">
+                        分钟<span style="color: #d5d5d5; font-size: 12px;">（当设置值为“0”时，则无登录超时验证。）</span>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+
+            <h3 style="padding: 10px; font-weight: bold;">密码策略设置</h3>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 100px;">密码定期更新</label>
+                <div class="layui-input-inline" style="width: 47px;">
+                    <input type="checkbox" value="1" name="pwdRegularUpdate" lay-skin="switch" lay-filter="pwdRegularUpdate" title="开关">
+                </div>
+                <div id="div_updateCycleDay" style="display:inline;">
+                    <label style="float: left;display: block;padding-top: 9px;padding-left:5px;width: 80px;">更新周期</label>
+                    <div class="layui-input-inline" style="width: 60px;">
+                        <input type="text" name="updateCycleDay" value="90" autocomplete="off" class="layui-input">
+                    </div>
+                    <div style="float: left; width: 160px; height: 38px; line-height: 38px; vertical-align: middle;">
+                        天<span style="color: #d5d5d5; font-size: 12px;">（初始默认值为90天。）</span>
+                    </div>
+                </div>
+
+                
+            </div>
+            <div id="div_beforeDayRemind" class="layui-form-item" style="margin-left: 188px;">
+                <label style="float: left;display: block;padding-top: 9px;padding-left:32px;width: 53px;">提前</label>
+                <div class="layui-input-inline" style="width: 60px;">
+                    <input type="text" name="beforeDayRemind" value="15" autocomplete="off" class="layui-input">
+                </div>
+                <div style="float: left; width: 210px; height: 38px; line-height: 38px; vertical-align: middle;">
+                    天提醒更新<span style="color: #d5d5d5; font-size: 12px;">（初始默认值为15天。）</span>
+                </div>
+            </div>
+
+            <!-- <div id="div_updateCycleDay" class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 160px;">更新周期</label>
+                <div class="layui-input-inline" style="width: 60px;">
+                    <input type="text" name="updateCycleDay" value="90" autocomplete="off" class="layui-input">
+                </div>
+                <div style="float: left; width: 400px; height: 38px; line-height: 38px; vertical-align: middle;">
+                    天<span style="color: #d5d5d5; font-size: 12px;">（初始默认值为90天。）</span>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div id="div_beforeDayRemind" class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 160px;">提前</label>
+                <div class="layui-input-inline" style="width: 60px;">
+                    <input type="text" name="beforeDayRemind" value="15" autocomplete="off" class="layui-input">
+                </div>
+                <div style="float: left; width: 400px; height: 38px; line-height: 38px; vertical-align: middle;">
+                    天提醒更新<span style="color: #d5d5d5; font-size: 12px;">（初始默认值为15天。）</span>
+                </div>
+                <div style="clear: both;"></div>
+            </div> -->
+
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 100px;">密码强度限制</label>
+                <div class="layui-input-inline" style="width: 47px;">
+                    <input type="checkbox" name="isPwdStrengthConfine" value="1" lay-skin="switch" lay-filter="isPwdStrengthConfine" title="开关">
+                </div>
+
+                <div style="width: 260px; float: left; margin-left: 5px;">
+
+                    <div id="div_isLengthConfine" class="layui-form-item" pane="">
+                        
+                        <div class="layui-input-inline" style="width: 100px; margin-bottom: 0px !important;">
+                            <input type="checkbox" value="1" name="isLengthConfine" lay-skin="primary" lay-filter="isLengthConfine" title="长度不低于">
+                        </div>
+                        <div class="layui-input-inline" style="width: 60px;margin-bottom: 0px !important;">
+                            <input type="text" name="minLength" value="3" autocomplete="off" class="layui-input">
+                        </div>
+                        <div style="float: left; width: 80px; height: 38px; line-height: 38px; vertical-align: middle;">
+                            位
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div class="layui-form-item" pane="">
+                       
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="checkbox" value="1" name="isHaveNumber" lay-skin="primary" lay-filter="isHaveNumber" title="包含数字">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" pane="">
+                        
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="checkbox" value="1" name="isHaveSmallLetter" lay-skin="primary" lay-filter="isHaveSmallLetter" title="包含小写字母">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" pane="">
+                        
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="checkbox" value="1" name="isHaveBigLetter" lay-skin="primary" lay-filter="isHaveBigLetter" title="包含大写字母">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" pane="">
+
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="checkbox" value="1" name="isHaveChar" lay-skin="primary" lay-filter="isHaveChar" title="包含符号">
+                        </div>
+                    </div>
+
+
+                </div>
+
+                
+
+            </div>
+            <h3 style="padding: 10px; font-weight: bold;">其他项设置</h3>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 100px;">根目录名称</label>
+                <div class="layui-input-inline" style="width: 180px;">
+                    <input type="text" placeholder="请输入" name="viewUserRootDirName" autocomplete="off" class="layui-input">
+                </div>
+                <div style="float: left; width: 240px; height: 38px; line-height: 38px; vertical-align: middle;">
+                    <span style="color: #d5d5d5; font-size: 12px;">（普通预览用户左侧菜单根目录名称）</span>
+                </div>
+
+                
+            </div>
+
+            <!-- <div id="div_isLengthConfine" class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 100px;">  
+                </label>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="checkbox" value="1" name="isLengthConfine" lay-skin="primary" title="长度不低于">
+                </div>
+                <div class="layui-input-inline" style="width: 60px;">
+                    <input type="text" name="minLength" value="3" autocomplete="off" class="layui-input">
+                </div>
+                <div style="float: left; width: 80px; height: 38px; line-height: 38px; vertical-align: middle;">
+                    位
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 100px;">  
+                </label>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="checkbox" value="1" name="isHaveNumber" lay-skin="primary" title="包含数字">
+                </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 100px;">  
+                </label>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="checkbox" value="1" name="isHaveSmallLetter" lay-skin="primary" title="包含小写字母">
+                </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 100px;">  
+                </label>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="checkbox" value="1" name="isHaveBigLetter" lay-skin="primary" title="包含大写字母">
+                </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 100px;">  
+                </label>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="checkbox" value="1" name="isHaveChar" lay-skin="primary" title="包含符号">
+                </div>
+            </div> -->
+
+            <!-- <h3 style="padding: 10px; font-weight: bold;">登录锁定设置</h3>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 100px;">密码锁定</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" value="1" name="isOpenPwdLock" lay-skin="switch" lay-filter="isOpenPwdLock" title="开关">
+                </div>
+            </div>
+            <div id="div_pwdErrorCnt" class="layui-form-item" pane="">
+                <label class="layui-form-label" style="width: 160px;">输错</label>
+                <div class="layui-input-inline" style="width: 60px;">
+                    <input type="text" name="pwdErrorCnt" value="5" autocomplete="off" class="layui-input">
+                </div>
+                <div style="float: left; width: 120px; height: 38px; line-height: 38px; vertical-align: middle;">
+                    次后密码锁定
+                </div>
+                <div style="clear: both;"></div>
+            </div> -->
+            <div class="layui-form-item" style="display:none;">
+                <div class="layui-input-block">
+                    <label class="layui-form-label" style="width: 100px;"></label>
+                    <button id="btn_submit_save" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="PageBtnSave">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="../../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script src="../../../js/lay-config.js" charset="utf-8"></script>
+<script src="../../../js/common.js" charset="utf-8"></script>
+
+
+<script>
+    layui.use(['jquery', 'form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , $ = layui.jquery;
+
+        let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+        let token = window.sessionStorage.getItem("cur_token");
+
+        /**
+         * 初始化表单，要加上，不然刷新部分组件可能会不加载
+         */
+        form.render();
+
+
+        // 刷新
+        $('#btn-refresh').click(function () {
+            //重载 数据
+            // console.log("setting-----------刷新执行了---------。");
+            initpage();
+        });
+
+
+        $("input[name='loginOutTime']").change(function(){
+            let val = $("input[name='loginOutTime']").val();
+            let reg = /^(0|[1-9][0-9]*)$/;
+            // layer.msg(val);
+            if (!reg.test(val)) {
+                layer.msg("请输入正整数");
+                $("input[name='loginOutTime']").val("0");
+                return;
+            }
+            ChangeSubmit();
+        });
+
+        $("input[name='updateCycleDay']").change(function(){
+            let val = $("input[name='updateCycleDay']").val();
+            let reg = /^(0|[1-9][0-9]*)$/;
+            // layer.msg(val);
+            if (!reg.test(val)) {
+                layer.msg("请输入正整数");
+                $("input[name='updateCycleDay']").val("0");
+                return;
+            }
+
+            let updateCycleDay_val = parseInt($("input[name='updateCycleDay']").val());
+            let beforeDayRemind_val = parseInt($("input[name='beforeDayRemind']").val());
+            if (beforeDayRemind_val>updateCycleDay_val) {
+                layer.msg("提前提醒天数不能比更新周期天数值大。");
+                $("input[name='updateCycleDay']").val("90");
+                $("input[name='beforeDayRemind']").val("15");
+            }
+
+            ChangeSubmit();
+        });
+
+
+        $("input[name='beforeDayRemind']").change(function(){
+            let val = $("input[name='beforeDayRemind']").val();
+            let reg = /^(0|[1-9][0-9]*)$/;
+            // layer.msg(val);
+            if (!reg.test(val)) {
+                layer.msg("请输入正整数");
+                $("input[name='beforeDayRemind']").val("0");
+                return;
+            }
+            
+            let updateCycleDay_val = parseInt($("input[name='updateCycleDay']").val());
+            let beforeDayRemind_val = parseInt($("input[name='beforeDayRemind']").val());
+            if (beforeDayRemind_val>updateCycleDay_val) {
+                layer.msg("提前提醒天数不能比更新周期天数值大。");
+                $("input[name='updateCycleDay']").val("90");
+                $("input[name='beforeDayRemind']").val("15");
+            }
+
+            ChangeSubmit();
+
+        });
+
+        $("input[name='minLength']").change(function(){
+            let val = $("input[name='minLength']").val();
+            let reg = /^(0|[1-9][0-9]*)$/;
+            // layer.msg(val);
+            if (!reg.test(val)) {
+                layer.msg("请输入正整数");
+                $("input[name='minLength']").val("0");
+                return;
+            }
+            ChangeSubmit();
+        });
+
+        $("input[name='viewUserRootDirName']").change(function(){
+            let val = $("input[name='viewUserRootDirName']").val();
+            if (val.trim() === "") {
+                layer.msg("名称不能为空");
+                return;
+            }
+            let reg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+            if (!reg.test(val)) {
+                layer.msg("名称只支持字母数字“_”和中文");
+                $("input[name='viewUserRootDirName']").val("");
+                return;
+            }
+            ChangeSubmit();
+        });
+
+
+        $("input[name='pwdErrorCnt']").change(function(){
+            let val = $("input[name='pwdErrorCnt']").val();
+            let reg = /^(0|[1-9][0-9]*)$/;
+            // layer.msg(val);
+            if (!reg.test(val)) {
+                layer.msg("请输入正整数");
+                $("input[name='pwdErrorCnt']").val("3");
+                return;
+            }
+            ChangeSubmit();
+        });
+
+
+        // 长度不低于
+        form.on('checkbox(isLengthConfine)', function (data) {
+            // console.log(data.elem); //得到checkbox原始DOM对象
+            // console.log(data.elem.checked); //是否被选中，true或者false
+            // console.log(data.value); //复选框value值，也可以通过data.elem.value得到
+            // console.log(data.othis); //得到美化后的DOM对象
+            ChangeSubmit();
+        });
+
+        // 包含数字
+        form.on('checkbox(isHaveNumber)', function (data) {
+            ChangeSubmit();
+        });
+
+         // 包含小写字母
+        form.on('checkbox(isHaveSmallLetter)', function (data) {
+            ChangeSubmit();
+        });
+
+        // 包含大写字母
+        form.on('checkbox(isHaveBigLetter)', function (data) {
+            ChangeSubmit();
+        });
+
+        // 包含符号
+        form.on('checkbox(isHaveChar)', function (data) {
+            ChangeSubmit();
+        });
+
+
+        // 
+        form.on("switch(isonlylogin)", function(data) {
+            // console.log("单一登录");
+            let flag = this.checked;
+            if (flag === true) {
+                // $("input[name='isonlylogin2']").removeAttr("disabled");
+                $("#span_isonlylogin_title").css("color", "#1E9FFF");
+            } else {
+                // $("input[name='isonlylogin2']").attr("disabled", "disabled");
+                $("#span_isonlylogin_title").css("color", "#d5d5d5");
+            }
+            form.render();
+
+            ChangeSubmit();
+        });
+
+        // 密码定期更新
+        form.on("switch(pwdRegularUpdate)", function(data) {
+            let flag = this.checked;
+            if (flag === true) {
+                $("input[name='updateCycleDay']").removeAttr("disabled"); 
+                $("input[name='beforeDayRemind']").removeAttr("disabled");
+                $("#div_updateCycleDay").css("color", "#000000");
+                $("#div_beforeDayRemind").css("color", "#000000");
+                $("input[name='beforeDayRemind']").css("color", "#000000");
+                $("input[name='updateCycleDay']").css("color", "#000000");
+            } else {
+                $("input[name='updateCycleDay']").attr("disabled", "disabled");
+                $("input[name='beforeDayRemind']").attr("disabled", "disabled");
+                $("#div_updateCycleDay").css("color", "#d5d5d5");
+                $("#div_beforeDayRemind").css("color", "#d5d5d5");
+                $("input[name='beforeDayRemind']").css("color", "#d5d5d5");
+                $("input[name='updateCycleDay']").css("color", "#d5d5d5");
+            }
+            form.render();
+
+            ChangeSubmit();
+        });
+
+        // 密码强度
+        form.on("switch(isPwdStrengthConfine)", function(data) {
+            let flag = this.checked;
+            if (flag === true) {
+                $("input[name='isLengthConfine']").removeAttr("disabled"); 
+                $("input[name='minLength']").removeAttr("disabled");
+                $("input[name='minLength']").css("color", "#000000");
+                $("#div_isLengthConfine").css("color", "#000000");
+
+                $("input[name='isHaveNumber']").removeAttr("disabled");
+                $("input[name='isHaveSmallLetter']").removeAttr("disabled");
+                $("input[name='isHaveBigLetter']").removeAttr("disabled");
+                $("input[name='isHaveChar']").removeAttr("disabled");
+            } else {
+                $("input[name='isLengthConfine']").attr("disabled", "disabled");
+                $("input[name='minLength']").attr("disabled", "disabled");
+                $("input[name='minLength']").css("color", "#d5d5d5");
+                $("#div_isLengthConfine").css("color", "#d5d5d5");
+
+                $("input[name='isHaveNumber']").attr("disabled", "disabled");
+                $("input[name='isHaveSmallLetter']").attr("disabled", "disabled");
+                $("input[name='isHaveBigLetter']").attr("disabled", "disabled");
+                $("input[name='isHaveChar']").attr("disabled", "disabled");
+            }
+            form.render();
+
+            ChangeSubmit();
+        });
+
+        // 密码锁定
+        form.on("switch(isOpenPwdLock)", function(data) {
+            let flag = this.checked;
+            if (flag === true) {
+                $("input[name='pwdErrorCnt']").removeAttr("disabled");
+                $("#div_pwdErrorCnt").css("color", "#000000");
+                $("input[name='pwdErrorCnt']").css("color", "#000000");
+                
+            } else {
+                $("input[name='pwdErrorCnt']").attr("disabled", "disabled");
+                $("#div_pwdErrorCnt").css("color", "#d5d5d5");
+                $("input[name='pwdErrorCnt']").css("color", "#d5d5d5");
+            }
+            form.render();
+
+            ChangeSubmit();
+
+        });
+
+        let ChangeSubmit = function(){
+            $("#btn_submit_save").click();
+        }
+        
+
+        //监听提交
+        form.on('submit(PageBtnSave)', function (data) {
+            // console.log("点击了提交--->", data);
+            // layer.alert(JSON.stringify(data.field), {
+            //     title: '最终的提交信息'
+            // })
+
+            let paramObj = {};
+
+            let formobj = data.field;
+            // console.log("formobj--->", formobj);
+            paramObj.id = parseInt(formobj.id);
+            if (formobj.isonlylogin !== undefined) {
+                paramObj.isonlylogin = 1;
+            } else {
+                paramObj.isonlylogin = 0;
+            }
+            paramObj.loginOutTime = parseInt(formobj.loginOutTime);
+            if (formobj.pwdRegularUpdate !== undefined) {
+                paramObj.pwdRegularUpdate = 1;
+            } else {
+                paramObj.pwdRegularUpdate = 0;
+            }
+            paramObj.updateCycleDay = parseInt(formobj.updateCycleDay);
+            paramObj.beforeDayRemind = parseInt(formobj.beforeDayRemind);
+
+            if (formobj.isPwdStrengthConfine !== undefined) {
+                paramObj.isPwdStrengthConfine = 1;
+            } else {
+                paramObj.isPwdStrengthConfine = 0;
+            }
+
+            if (formobj.isLengthConfine !== undefined) {
+                paramObj.isLengthConfine = 1;
+            } else {
+                paramObj.isLengthConfine = 0;
+            }
+            paramObj.minLength = parseInt(formobj.minLength);
+
+            if (formobj.isHaveNumber !== undefined) {
+                paramObj.isHaveNumber = 1;
+            } else {
+                paramObj.isHaveNumber = 0;
+            }
+
+            if (formobj.isHaveSmallLetter !== undefined) {
+                paramObj.isHaveSmallLetter = 1;
+            } else {
+                paramObj.isHaveSmallLetter = 0;
+            }
+
+            if (formobj.isHaveBigLetter !== undefined) {
+                paramObj.isHaveBigLetter = 1;
+            } else {
+                paramObj.isHaveBigLetter = 0;
+            }
+
+            if (formobj.isHaveChar !== undefined) {
+                paramObj.isHaveChar = 1;
+            } else {
+                paramObj.isHaveChar = 0;
+            }
+
+            if (formobj.isOpenPwdLock !== undefined) {
+                paramObj.isOpenPwdLock = 1;
+            } else {
+                paramObj.isOpenPwdLock = 0;
+            }
+            paramObj.pwdErrorCnt = parseInt(formobj.pwdErrorCnt);
+            paramObj.viewUserRootDirName = formobj.viewUserRootDirName;
+
+            // console.log("提交到服务器的参数对象为：paramObj--->", paramObj);
+
+            let saveurl = server_base_url + "/setting/save?token=" + token;
+            $.ajax({
+                url: saveurl,
+                type: 'post',
+                data: paramObj,
+                success: function (res) {
+                    // console.log("数据保存后----返回的结果为----res--->",  res);
+                    if(res.state === "success") {
+                        // layer.msg(res.message);
+                        initpage();
+                    } else if (res.state === "onlylogin") {
+                        // 因为是由 非单一登录  修改 为 单一登录，所以需要重新登录
+                        layer.msg(res.message);
+                        let cc_uu_rr_timer = window.setInterval(function(){
+                            window.location.href = "/login.html";
+                        }, 2000);
+                    } else {
+                        layer.msg(res.message);
+                    }
+                },
+                error: function () {
+                }
+            });
+            return false;
+        });
+
+        let efurl = server_base_url + "/setting/load?token=" + token;
+
+        let initpage = function() {
+            // 获取系统设置
+            // console.log(efurl);
+            $.ajax({
+                url: efurl,
+                type: 'get',
+                success: function (res) {
+                    // console.log("加载时----返回的结果为----res--->",  res);
+                    if(res.state === "success") {
+                        if (res.data === "") {
+                            // 无数据（系统设置数据表中现在没有数据）
+                            form.val('sysSetting', {
+                                "loginOutTime": "60"
+                                , "updateCycleDay": "90"
+                                , "beforeDayRemind": "15"
+                                , "minLength": "3"
+                                , "pwdErrorCnt":"5"
+                            });
+
+                            // $("input[name='isonlylogin2']").attr("disabled", "disabled");
+                            $("#span_isonlylogin_title").css("color", "#d5d5d5");
+                            $("input[name='updateCycleDay']").attr("disabled", "disabled");
+                            $("input[name='beforeDayRemind']").attr("disabled", "disabled");
+                            $("#div_updateCycleDay").css("color", "#d5d5d5");
+                            $("#div_beforeDayRemind").css("color", "#d5d5d5");
+                            $("input[name='beforeDayRemind']").css("color", "#d5d5d5");
+                            $("input[name='updateCycleDay']").css("color", "#d5d5d5");
+                            $("input[name='isLengthConfine']").attr("disabled", "disabled");
+                            $("input[name='minLength']").attr("disabled", "disabled");
+                            $("input[name='minLength']").css("color", "#d5d5d5");
+                            $("#div_isLengthConfine").css("color", "#d5d5d5");
+                            $("input[name='isHaveNumber']").attr("disabled", "disabled");
+                            $("input[name='isHaveSmallLetter']").attr("disabled", "disabled");
+                            $("input[name='isHaveBigLetter']").attr("disabled", "disabled");
+                            $("input[name='isHaveChar']").attr("disabled", "disabled");
+                            $("input[name='pwdErrorCnt']").attr("disabled", "disabled");
+                            $("#div_pwdErrorCnt").css("color", "#d5d5d5");
+                            $("input[name='pwdErrorCnt']").css("color", "#d5d5d5");
+
+                            form.render();
+                        } else {
+                            // console.log("到else里面来了。。。。。。。");
+                            let initObj = {
+                                "id": res.data.id + ""
+                                , "updateCycleDay": res.data.updateCycleDay + ""
+                                , "beforeDayRemind": res.data.beforeDayRemind + ""
+                                , "minLength": res.data.minLength + ""
+                                , "pwdErrorCnt": res.data.pwdErrorCnt + ""
+                                , "viewUserRootDirName": res.data.viewUserRootDirName === null ? "" : res.data.viewUserRootDirName  + ""
+                            }
+                            if (res.data.isonlylogin === 1) {
+                                initObj["isonlylogin"] = "1";
+                                $("#span_isonlylogin_title").css("color", "#1E9FFF");
+                                // $("input[name='isonlylogin2']").removeAttr("disabled"); 
+                            } else {
+                                // $("input[name='isonlylogin2']").attr("disabled", "disabled");
+                                $("#span_isonlylogin_title").css("color", "#d5d5d5");
+                            }
+                            // if (res.data.loginOutTime === 1) {
+                            //     initObj["loginOutTime"] = "65";
+                            // }
+                            initObj["loginOutTime"] = res.data.loginOutTime;
+                            if (res.data.pwdRegularUpdate === 1) {
+                                initObj["pwdRegularUpdate"] = "1";
+                                $("input[name='updateCycleDay']").removeAttr("disabled"); 
+                                $("input[name='beforeDayRemind']").removeAttr("disabled");
+                                $("#div_updateCycleDay").css("color", "#000000");
+                                $("#div_beforeDayRemind").css("color", "#000000");
+                                $("input[name='beforeDayRemind']").css("color", "#000000");
+                                $("input[name='updateCycleDay']").css("color", "#000000");
+                            } else {
+                                $("input[name='updateCycleDay']").attr("disabled", "disabled");
+                                $("input[name='beforeDayRemind']").attr("disabled", "disabled");
+                                $("#div_updateCycleDay").css("color", "#d5d5d5");
+                                $("#div_beforeDayRemind").css("color", "#d5d5d5");
+                                $("input[name='beforeDayRemind']").css("color", "#d5d5d5");
+                                $("input[name='updateCycleDay']").css("color", "#d5d5d5");
+                            }
+                            if (res.data.isPwdStrengthConfine === 1) {
+                                initObj["isPwdStrengthConfine"] = "1";
+                                $("input[name='isLengthConfine']").removeAttr("disabled"); 
+                                $("input[name='minLength']").removeAttr("disabled");
+                                $("input[name='minLength']").css("color", "#000000");
+                                $("#div_isLengthConfine").css("color", "#000000");
+                                $("input[name='isHaveNumber']").removeAttr("disabled");
+                                $("input[name='isHaveSmallLetter']").removeAttr("disabled");
+                                $("input[name='isHaveBigLetter']").removeAttr("disabled");
+                                $("input[name='isHaveChar']").removeAttr("disabled");
+                            } else {
+                                $("input[name='isLengthConfine']").attr("disabled", "disabled");
+                                $("input[name='minLength']").attr("disabled", "disabled");
+                                $("input[name='minLength']").css("color", "#d5d5d5");
+                                $("#div_isLengthConfine").css("color", "#d5d5d5");
+                                $("input[name='isHaveNumber']").attr("disabled", "disabled");
+                                $("input[name='isHaveSmallLetter']").attr("disabled", "disabled");
+                                $("input[name='isHaveBigLetter']").attr("disabled", "disabled");
+                                $("input[name='isHaveChar']").attr("disabled", "disabled");
+                            }
+
+                            if (res.data.isLengthConfine === 1) {
+                                initObj["isLengthConfine"] = "1";
+                            }
+                            if (res.data.isHaveNumber === 1) {
+                                initObj["isHaveNumber"] = "1";
+                            }
+                            if (res.data.isHaveSmallLetter === 1) {
+                                initObj["isHaveSmallLetter"] = "1";
+                            }
+                            if (res.data.isHaveBigLetter === 1) {
+                                initObj["isHaveBigLetter"] = "1";
+                            }
+                            if (res.data.isHaveChar === 1) {
+                                initObj["isHaveChar"] = "1";
+                            }
+                            if (res.data.isOpenPwdLock === 1) {
+                                initObj["isOpenPwdLock"] = "1";
+                                window.sessionStorage.setItem("isOpenPwdLock", "1");
+                                $("input[name='pwdErrorCnt']").removeAttr("disabled");
+                                $("#div_pwdErrorCnt").css("color", "#000000");
+                                $("input[name='pwdErrorCnt']").css("color", "#000000");
+                            } else {
+                                window.sessionStorage.setItem("isOpenPwdLock", "0");
+                                $("input[name='pwdErrorCnt']").attr("disabled", "disabled");
+                                $("#div_pwdErrorCnt").css("color", "#d5d5d5");
+                                $("input[name='pwdErrorCnt']").css("color", "#d5d5d5");
+                            }
+                            // console.log("initObj------->", initObj);
+                            form.val('sysSetting', initObj);
+
+                        }
+                    } else {
+                        layer.msg(res.message);
+                    }
+                    
+                },
+                error: function () {
+                }
+            });
+        }
+        initpage();
+
+        form.render();
+    });
+</script>
+
+</body>
+</html>
+<style>
+    .layui-laypage-em {
+        background-color: #1E9FFF !important;
+    }
+    .layui-form-onswitch {
+        border-color: #1E9FFF !important;
+        background-color: #1E9FFF !important;
+    }
+
+    .layui-form-checked[lay-skin=primary] i {
+        border-color: #1E9FFF !important;
+        background-color: #1E9FFF !important;
+        color: #fff;
+    }
+
+    .layui-disabled span {
+        color: #d5d5d5 !important;
+    }
+    .layui-checkbox-disabled span {
+        color: #d5d5d5 !important;
+    }
+
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 1px;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+        background: #d5d5d5;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+        border-radius: 10px;
+        background: #f2f3f5;
+    }
+</style>

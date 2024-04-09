@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context>
+    <lang type="ch">
+        <message ch="确定" en="OK" text="OK"/>
+        <message ch="取消" en="Cancel" text="Cancel"/>
+        <message ch="单元格" en="Cell" text="Cell"/>
+        <message ch="扩展方向" en="Extension direction" text="ExtenDir"/>
+        <message ch="纵向" en="Vertical" text="Vertical"/>
+        <message ch="横向" en="Horizontal" text="Horizontal"/>
+        <message ch="左父格" en="Left parent" text="LeftParent"/>
+        <message ch="无" en="None" text="None"/>
+        <message ch="默认" en="Default" text="Default"/>
+        <message ch="自定义" en="User-defined" text="UserDefined"/>
+        <message ch="上父格" en="Up parent" text="UpParent"/>
+        <message ch="扩展后" en="Extended" text="Extended"/>
+        <message ch="不排序" en="Non-sorting" text="NonSorting"/>
+        <message ch="升序" en="Ascending order" text="AsceOrder"/>
+        <message ch="降序" en="Descending order" text="DescOrder"/>
+        <message ch="文件" en="File" text="file"/>
+        <message ch="名称" en="Name" text="Name"/>
+        <message ch="盈帆报表设计器6.1" en="EFReportDesigner6.1" text="EFReportDesigner"/>
+        <message ch="分栏设置" en="Column setting" text="ColumnSetting"/>
+        <message ch="开启分栏" en="Open column" text="OpenColumn"/>
+        <message ch="先行后列" en="Row column" text="ColumnRow"/>
+        <message ch="分栏数量" en="Column number" text="ColumnNumber"/>
+        <message ch="伸展设置" en="Stretch setting" text="StretchSetting"/>
+        <message ch="纵向伸展" en="Vertical stretching" text="VerticalStretch"/>
+        <message ch="横向伸展" en="Horizontal stretching" text="HorizontalStretch"/>
+        <message ch="特殊设置" en="Special setting " text="SpecialSetting"/>
+        <message ch="显示0值" en="Display value 0 " text="DisplayValue0"/>
+        <message ch="隐藏单元格" en="Hidden cell" text="HiddenCell"/>
+        <message ch="单元格折叠设置(Web页)" en="Cell collapse settings (web page)" text="CellCollapseSettings"/>
+        <message ch="开启折叠" en="Open folding" text="OpenFolding"/>
+        <message ch="默认折叠" en="Default folding" text="DefaultFolding"/>
+        <message ch="显示最后行(列)" en="Display the last row (column) " text="DisplayLast"/>
+        <message ch="自动调整" en="self-correcting" text="SelfCorrecting;"/>
+        <message ch="否" en="No" text="No"/>
+        <message ch="行高" en="Row height" text="RowHeight"/>
+        <message ch="列宽" en="Col Width" text="ColWidth"/>
+        <message ch="追加字符" en="Appended character" text="AddString"/>
+        <message ch="预览" en="Preview" text="Preview"/>
+        <message ch="预览单元格内容" en="Preview cell content" text="PreviewCell"/>
+        <message ch="打印导出" en="Print export" text="PrintExport"/>
+        <message ch="打印/导出单元格内容" en="Print / export cell content" text="PrintExportCell"/>
+        <message ch="打印/导出单元格背景" en="Print / export cell background" text="PrintExportBackground"/>
+        <message ch="显示内容" en="Display content" text="DisplayContent"/>
+        <message ch="内容提示" en="Content hint" text="ContentHint"/>
+        <message ch="分页" en="Paging" text="Paging"/>
+        <message ch="行前分页" en="Front page" text="FrontPage"/>
+        <message ch="行后分页" en="Row paging" text="RowPaging"/>
+        <message ch="列前分页" en="Column front page" text="ColumnFrontPage"/>
+        <message ch="列后分页" en="Column paging" text="ColumnPaging"/>
+        <message ch="分页时可以断开" en="Can be disconnected when paging" text="DisconnectedPaging"/>
+        <message ch="分页断开时值重复显示" en="Paging disconnected value repeated display" text="DisconnectedRepeatedDisplay"/>
+        <message ch="插入行策略" en="Insert row policy" text="InsertRowPolicy"/>
+        <message ch="空值" en="Null value" text="NullValue"/>
+        <message ch="默认值" en="Default value" text="DefaultValue"/>
+        <message ch="原值" en="Original value" text="OriginalValue"/>
+        <message ch="格式" en="Format" text="Format"/>
+        <message ch="对齐" en="Alignment" text="Alignment"/>
+        <message ch="边框" en="Border" text="Border"/>
+        <message ch="示例" en="give typical examples" text="GiveTypicalExamples"/>
+        <message ch="文本对齐" en="Text alignment " text="TextAlignment"/>
+        <message ch="水平对齐" en="Horizontal alignment" text="HorizontalAlignment"/>
+        <message ch="垂直对齐" en="Vertical alignment" text="VerticalAlignment"/>
+        <message ch="图片对齐" en="Picture alignment" text="PictureAlignment"/>
+        <message ch="样式" en="Pattern" text="Pattern"/>
+        <message ch="线宽" en="line width" text="LineWidth"/>
+        <message ch="颜色" en="Color" text="Color"/>
+        <message ch="扩展" en="Extend" text="Extend"/>
+        <message ch="形态" en="Form" text="XingTai"/>
+        <message ch="其他" en="Other" text="Other"/>
+        <message ch="单元格属性表-扩展属性" en="Cell property Table-extended attributes" text="CellPropertyExtended"/>
+        <message ch="插入内容" en="Insert content" text="InsertContent"/>
+        <message ch="编辑文本信息" en="Edit text information" text="EditTextInformation"/>
+        <message ch="数据集" en="Data set" text="DataSet"/>
+        <message ch="数据列" en="Data column" text="DataColumn"/>
+        <message ch="数据设置" en="Data setting" text="DataSetting"/>
+        <message ch="分组" en="Grouping" text="Grouping"/>
+        <message ch="列表" en="Listing" text="Listing"/>
+        <message ch="汇总" en="Summary" text="Summary"/>
+        <message ch="汇总方式" en="Summary mode" text="SummaryMode"/>
+        <message ch="累加" en="Cumulation" text="Cumulation"/>
+        <message ch="平均" en="Average" text="Average"/>
+        <message ch="最大" en="Maximum" text="Maximum"/>
+        <message ch="最小" en="Minimum" text="Minimum"/>
+        <message ch="数量" en="Quantity" text="Quantity"/>
+        <message ch="筛选" en="Filter" text="Filter"/>
+        <message ch="最小显示行数" en="Minimum rows displayed" text="MinimumDisplayed"/>
+        <message ch="数据字典" en="Data dictionary" text="DataDictionary"/>
+        <message ch="字典源" en="Dictionary source" text="DictionarySource"/>
+        <message ch="映射列" en="Mapping column" text="MappingColumn"/>
+        <message ch="显示列" en="Display column" text="DisplayColumn"/>
+        <message ch="字段分页" en="Field paging" text="FieldPaging"/>
+        <message ch="每页补齐行" en="Complete line per page" text="CompleteLinePerPage"/>
+        <message ch="尾页补齐行" en="End page complete line" text="EndPageCompleteLine"/>
+        <message ch="图表设置（*号为必填项）" en="Chart setting (* is required)" text="ChartSetting"/>
+        <message ch="图表名称" en="Chart name" text="ChartName"/>
+        <message ch="图表类型" en="Chart type" text="ChartType"/>
+        <message ch="省份" en="Province" text="Province"/>
+        <message ch="数据源" en="Data source" text="DataSource"/>
+        <message ch="分类名" en="Class name" text="ClassName"/>
+        <message ch="系列名" en="Series name" text="SeriesName"/>
+        <message ch="X轴" en="X-Axis" text="XAxis"/>
+        <message ch="Y轴" en="Y-Axis" text="YAxis"/>
+        <message ch="值名" en="Value name" text="ValueName"/>
+        <message ch="数据源2" en="Data source2" text="DataSource2"/>
+        <message ch="分类名2" en="Class name2" text="ClassName2"/>
+        <message ch="系列名2" en="Series name2" text="SeriesName2"/>
+        <message ch="值名2" en="Value name2" text="ValueName2"/>
+        <message ch="汇总方式2" en="Summary mode2" text="SummaryMode2"/>
+        <message ch="显示图例" en="Display legend" text="DisplayLegend"/>
+        <message ch="图表选择" en="Chart selection" text="ChartSelection"/>
+        <message ch="图表类型选择" en="Chart type selection" text="ChartTypeSelection"/>
+        <message ch="条件属性" en="Conditional attribute" text="ConditionalAttribute"/>
+        <message ch="条件名称" en="Condition name" text="ConditionName"/>
+        <message ch="属性" en="Attribute" text="Attribute"/>
+        <message ch="公式" en="Formula" text="Formula"/>
+        <message ch="插入函数" en="Insertion function " text="InsertionFunction"/>
+        <message ch="输入条件表达，例：A1 > 100" en="Input conditional expression, example: a1 > 100" text="ConditionalExpression"/>
+        <message ch="控件类型" en="Control type" text="ControlType"/>
+        <message ch="基本属性" en="Essential attribute" text="EssentialAttribute"/>
+        <message ch="控件名称" en="Control name" text="ControlName"/>
+        <message ch="允许为空" en="Allowed empty" text="AllowedEmpty"/>
+        <message ch="提示语" en="Marked words" text="MarkedWords"/>
+        <message ch="高级属性" en="Advanced attribute" text="AdvancedAttribute"/>
+        <message ch="文件大小限制(KB)" en="File size limit(KB)" text="FileSizeLimit"/>
+        <message ch="文件类型限制" en="File type restriction" text="FileTypeRestriction"/>
+        <message ch="允许小数" en="Allowed decimal number" text="AllowedDecimal"/>
+        <message ch="允许负数" en="Allowable negative number" text="AllowableNegative"/>
+        <message ch="允许的小数位数" en="Allowed number of decimal places" text="AllowedDecimalDigits"/>
+        <message ch="最大值" en="Maximal value" text="MaximalValue"/>
+        <message ch="最小值" en="Minimum value" text="MinimumValue"/>
+        <message ch="按钮类型" en="Button type " text="ButtonType"/>
+        <message ch="首单元格" en="First cell" text="FirstCell"/>
+        <message ch="检查框显示的文字" en="The text displayed in the checkbox" text="CheckboxText"/>
+        <message ch="显示时间" en="Display time" text="DisplayTime"/>
+        <message ch="数据字典来源" en="Data dictionary source" text="DataDictionarySource"/>
+        <message ch="键字段" en="Key field" text="KeyField"/>
+        <message ch="显示字段" en="Show field" text="ShowField"/>
+        <message ch="添加" en="Add" text="Add"/>
+        <message ch="删除" en="Delete" text="Del"/>
+        <message ch="添加行" en="Add row" text="AddRow"/>
+        <message ch="数据连接" en="Data connection" text="DataConnection"/>
+        <message ch="表名" en="Table name " text="TableName"/>
+        <message ch="添加字段" en="Add field" text="AddField"/>
+        <message ch="删除字段" en="Delete field" text="DelField"/>
+        <message ch="主键" en="Principal linkage" text="PrincipalLinkage"/>
+        <message ch="列" en="Column" text="Column"/>
+        <message ch="保存路径" en="Save path" text="SavePath"/>
+        <message ch="测试连接" en="Test connection" text="TestConnection"/>
+        <message ch="连接配置" en="Connection configuration" text="ConnectionCfg"/>
+        <message ch="连接名称" en="Connection name" text="ConnectionName"/>
+        <message ch="数据库类型" en="Type of database" text="DatabaseType"/>
+        <message ch="数据库名称" en="Database name" text="DatabaseName"/>
+        <message ch="连接地址" en="Link address" text="LinkAddress"/>
+        <message ch="连接端口" en="Connection port" text="ConnectionPort"/>
+        <message ch="用户名" en="User name" text="UserName"/>
+        <message ch="密码" en="Password" text="Password"/>
+        <message ch="SimSun" en="SimSun" text="DefaultFontName"/>
+        <message ch="字体" en="Font" text="Font"/>
+        <message ch="自定义尺寸" en="Custom Size" text="CustomSize"/>
+        <message ch="数据" en="Data" text="Data"/>
+        <message ch="预览行数" en="Preview number of rows" text="PreviewRows"/>
+        <message ch="适应宽度" en="Fit width" text="FitWidth"/>
+        <message ch="适应高度" en="Fit height" text="FitHeight"/>
+        <message ch="放大" en="Zoom in" text="ZoomIn"/>
+        <message ch="缩小" en="Zoom out" text="ZoomOut"/>
+        <message ch="纵向" en="Portrait" text="Portrait"/>
+        <message ch="横向" en="Landscape" text="Landscape"/>
+        <message ch="最前页" en="First page" text="FirstPage"/>
+        <message ch="前一页" en="Previous page" text="PreviousPage"/>
+        <message ch="下一页" en="Next page" text="NextPage"/>
+        <message ch="最后页" en="Last page" text="LastPage"/>
+        <message ch="单页" en="Show single page" text="ShowSinglePage"/>
+        <message ch="两页" en="Show facing pages" text="ShowFacingPages"/>
+        <message ch="全部页" en="Show overview of all pages" text="ShowAllPages"/>
+        <message ch="页面设置" en="Page setup" text="Pagesetup"/>
+        <message ch="打印" en="Print" text="Print"/>
+        <message ch="信息" en="Infomation" text="Information"/>
+        <message ch="此版本为试用版!" en="This is a trial version!" text="TrialVersionInfo"/>
+        <message ch="此版本为网络版" en="This is a online version!" text="OnlineVersionInfo"/>
+        <message ch="此版本未经授权" en="This version is not authorized！" text="NoLicenceInfo"/>
+        <message ch="页眉" en="Page header" text="Pageheader"/>
+        <message ch="页脚" en="Page footer" text="Pagefooter"/>
+        <message ch="页数" en="Page count" text="PageCountTag"/>
+        <message ch="页码" en="Page number" text="PageNumberTag"/>
+        <message ch="日期" en="Date" text="DateTag"/>
+        <message ch="时间" en="Time" text="TimeTag"/>
+        <message ch="毫米" en="mm" text="mm"/>
+        <message ch="像素" en="pixel" text="pixel"/>
+        <message ch="页面" en="Page" text="Page"/>
+        <message ch="纸张" en="Paper" text="Paper"/>
+        <message ch="纸张类型" en="Paper type" text="PaperType"/>
+        <message ch="宽(毫米)" en="Width(mm)" text="WidthLabel"/>
+        <message ch="高(毫米)" en="Height(mm)" text="HeightLabel"/>
+        <message ch="页边距(毫米)" en="Margin(mm)" text="MarginLabel"/>
+        <message ch="左边距" en="Left margin" text="LeftMarginLabel"/>
+        <message ch="右边距" en="Right margin" text="RightMarginLabel"/>
+        <message ch="上边距" en="Top margin" text="TopMarginLabel"/>
+        <message ch="下边距" en="Bottom margin" text="BottomMarginLabel"/>
+        <message ch="方向" en="Orientation" text="Orientation"/>
+        <message ch="居中方式" en="Center mode" text="CenterMode"/>
+        <message ch="水平居中" en="Horizontal center" text="HorizontalCenter"/>
+        <message ch="垂直居中" en="Vetical center" text="VeticalCenter"/>
+        <message ch="打印表格线" en="Print cell line" text="PrintCellLine"/>
+        <message ch="打印隐藏单元格" en="Print hide cell" text="PrintHideCell"/>
+        <message ch="柱状图" en="Histogram" text="Histogram"/>
+        <message ch="条形图" en="Bar chart" text="Barchart"/>
+        <message ch="折线图" en="Line chart" text="Linechart"/>
+        <message ch="饼图" en="Pie" text="Pie"/>
+        <message ch="堆叠柱状图" en="Stacked histogram" text="StackedHistogram"/>
+        <message ch="百分比柱状图" en="Percentage histogram" text="PercentageHistogram"/>
+        <message ch="堆叠条形图" en="Stacked bar chart" text="StackedBarchart"/>
+        <message ch="百分比条形图" en="Percentage bar chart" text="PercentageBarchart"/>
+        <message ch="面积图" en="Area chart" text="Areachart"/>
+        <message ch="圆环图" en="Ring chart" text="Ringchart"/>
+        <message ch="折线柱状图" en="Line bar chart" text="Linebarhart"/>
+        <message ch="散列图" en="Hash chart" text="Hashchart"/>
+        <message ch="雷达图" en="Radar chart" text="Radarchart"/>
+        <message ch="温度图" en="Temperature chart" text="Temperaturechart"/>
+        <message ch="漏斗图" en="Funnel chart" text="Funnelchart"/>
+        <message ch="仪表图" en="Instrument chart" text="Instrumentchart"/>
+        <message ch="中国地图" en="Map of china" text="ChinaMap"/>
+        <message ch="北京" en="Beijing" text="Beijing"/>
+        <message ch="上海" en="Shanghai" text="Shanghai"/>
+        <message ch="天津" en="Tianjin" text="Tianjin"/>
+        <message ch="重庆" en="Chongqing" text="Chongqing"/>
+        <message ch="河北" en="Hebei" text="Hebei"/>
+        <message ch="山西" en="Shanxi" text="Shanxi"/>
+        <message ch="内蒙古" en="Nei Monggol" text="NeiMonggol"/>
+        <message ch="辽宁" en="Liaoning" text="Liaoning"/>
+        <message ch="吉林" en="Jilin" text="Jilin"/>
+        <message ch="黑龙江" en="Heilongjiang" text="Heilongjiang"/>
+        <message ch="江苏" en="Jiangsu" text="Jiangsu"/>
+        <message ch="浙江" en="Zhejiang" text="Zhejiang"/>
+        <message ch="安徽" en="Anhui" text="Anhui"/>
+        <message ch="福建" en="Fujian" text="Fujian"/>
+        <message ch="江西" en="Jiangxi" text="Jiangxi"/>
+        <message ch="山东" en="Shandong" text="Shandong"/>
+        <message ch="河南" en="Henan" text="Henan"/>
+        <message ch="湖北" en="Hubei" text="Hubei"/>
+        <message ch="湖南" en="Hunan" text="Hunan"/>
+        <message ch="广东" en="Guangdong" text="Guangdong"/>
+        <message ch="广西" en="Guangxi" text="Guangxi"/>
+        <message ch="海南" en="Hainan" text="Hainan"/>
+        <message ch="四川" en="Sichuan" text="Sichuan"/>
+        <message ch="贵州" en="Guizhou" text="Guizhou"/>
+        <message ch="云南" en="Yunnan" text="Yunnan"/>
+        <message ch="西藏" en="Xizang" text="Xizang"/>
+        <message ch="陕西" en="Shaanxi" text="Shaanxi"/>
+        <message ch="甘肃" en="Gansu" text="Gansu"/>
+        <message ch="宁夏" en="Ningxia" text="Ningxia"/>
+        <message ch="青海" en="Qinghai" text="Qinghai"/>
+        <message ch="新疆" en="Xinjiang" text="Xinjiang"/>
+        <message ch="香港" en="Hong Kong" text="HongKong"/>
+        <message ch="澳门" en="Macao" text="Macao"/>
+        <message ch="台湾" en="Taiwan" text="Taiwan"/>
+        <message ch="错误" en="Error" text="Error"/>
+        <message ch="公式循环引用!" en="Formula cyclic reference!" text="ExprCircle"/>
+        <message ch="数据库连接失败!" en="Database connection failed!" text="ConnDBFailed"/>
+        <message ch="父单元格循环引用!" en="Parent cell cyclic reference！" text="ParentCellCircel"/>
+        <message ch="数据集名称" en="Data set name" text="DataSetName"/>
+        <message ch="数据表" en="Data sheet" text="DataSheet"/>
+        <message ch="数据集获取语句" en="Dataset acquisition statement" text="DatasetAcquisitionStatement"/>
+        <message ch="基本" en="Basic" text="Basic"/>
+        <message ch="选择数据列" en="Select a data column" text="SelectDataColumn"/>
+        <message ch="父格设置" en="Parent setting" text="ParentSetting"/>
+        <message ch="分组(将数据列中相同内容的值进行合并)" en="Grouping (merges values of the same content in a data column) " text="GroupingTip"/>
+        <message ch="列表(数据列中的所有数据记录展示出来，无论数据是否重复)" en="List (all data records in the data column are displayed, whether or not the data is duplicated) " text="ListingTip"/>
+        <message ch="汇总(包括求和，取平均数，最大值和最小值等)" en="Summary (including summation, average, maximum, minimum, etc.) " text="SummaryTip"/>
+        <message ch="扩展设置" en="Extended setting" text="ExtendedSetting"/>
+        <message ch="数据显示" en="data display" text="DataDisplay"/>
+        <message ch="图片显示" en="Picture display" text="PictureDisplay"/>
+        <message ch="服务器图片路径前缀" en="Server picture path prefix" text="PathPrefix"/>
+        <message ch="例如: c:/image/或@{serverImages}" en="For example: c:/image/ or @{serverImages}" text="PathPrefixExample"/>
+        <message ch="图片字段" en="Picture field" text="PictureField"/>
+        <message ch="数据单元格设置" en="Data cell setting" text="DataCellSetting"/>
+        <message ch="过滤公式" en="Filtration formula" text="FiltrationFormula"/>
+        <message ch="请在下面的文本编辑框内输入公式" en="Please enter the formula in the text edit box below" text="FormulaInputTip"/>
+        <message ch="检查合法性" en="Check legality" text="CheckLegality"/>
+        <message ch="函数类型" en="Type function" text="TypeFunction"/>
+        <message ch="函数名称" en="Function name" text="FunctionName"/>
+        <message ch="函数说明" en="function declaration" text="FunctionDeclaration"/>
+        <message ch="单元格设置" en="Cell setting" text="CellSetting"/>
+        <message ch="关于盈帆报表设计器" en="About EFReportDesigner" text="AboutEFReportDesigner"/>
+        <message ch="关于" en="About" text="About"/>
+        <message ch="设计器版本" en="Designer version" text="Version"/>
+        <message ch="盈帆报表开发团队" en="Development team" text="DevelopmentTeam"/>
+        <message ch="关闭" en="Close" text="Close"/>
+        <message ch="关键字" en="Keywords" text="Keywords"/>
+        <message ch="控件值" en="Control value" text="ControlValue"/>
+        <message ch="链接名称" en="Link name" text="LinkName"/>
+        <message ch="打开方式" en="Open mode" text="OpenMode"/>
+        <message ch="当前窗口" en="Current window" text="CurrentWindow"/>
+        <message ch="新窗口" en="New window" text="NewWindow"/>
+        <message ch="模板名称" en="Template name" text="TemplateName"/>
+        <message ch="模板参数" en="Template parameter" text="TemplateParameter"/>
+        <message ch="输入参数，例：P1 = 5; P2 = CATAGORY; P3 = B1;" en="Input parameters, such as: p1 = 5, p2 = catagory; p3 = b1;" text="InputParametersTip"/>
+        <message ch="链接地址" en="Chained address" text="ChainedAddress"/>
+        <message ch="超级链接" en="Hyperlink" text="Hyperlink"/>
+        <message ch="关联子报表" en="Associated subreport" text="AssociatedSubreport"/>
+        <message ch="日志|正常" en="Log|Normal" text="LogNormal"/>
+        <message ch="未登陆" en="Not landed" text="NotLanded"/>
+        <message ch="加载皮肤" en="Loaded skin" text="LoadedSkin"/>
+        <message ch="当前格子" en="Current cell" text="CurrentCell"/>
+        <message ch="当前列" en="Current column" text="CurrentColumn"/>
+        <message ch="当前行" en="Current row" text="CurrentRow"/>
+        <message ch="0.5磅像素" en="0.5 lb pixels" text="Pixels0.5"/>
+        <message ch="1.2磅像素" en="1.2 lb pixels" text="Pixels1.2"/>
+        <message ch="1.8磅像素" en="1.8 lb pixels" text="Pixels1.8"/>
+        <message ch="前缀" en="Prefixion" text="Prefixion"/>
+        <message ch="后缀" en="suffix" text="Suffix"/>
+        <message ch="富文本编辑" en="Rich text editing" text="RichTextEditing"/>
+        <message ch="设置尺寸" en="Dimension setting" text="DimensionSetting"/>
+        <message ch="设置宽度" en="Setting width" text="SettingWidth"/>
+        <message ch="设置高度" en="Setting height" text="SettingHeight"/>
+        <message ch="单位" en="Unit" text="Unit"/>
+        <message ch="尺寸适配" en="Size adaptation" text="SizeAdaptation"/>
+        <message ch="自动拉伸" en="Automatic drawing" text="AutomaticDrawing"/>
+        <message ch="（Web页面显示时，最大适配报表区域）" en="(When a web page is displayed, the maximum adaptive report area) " text="AutomaticDrawingTip"/>
+        <message ch="模板属性" en="Template attribute" text="TemplateAttribute"/>
+        <message ch="显示工具栏" en="Display toolbar" text="DisplayToolbar"/>
+        <message ch="参数栏" en="Parameter field" text="Parambar"/>
+        <message ch="基本工具栏" en="Basic toolbar" text="DisplayBase"/>
+        <message ch="参数工具栏" en="Parameter toolbar" text="DisplayParam"/>
+        <message ch="公式出错后的提示信息" en="Prompt information after formula error" text="FormulaErrorTip"/>
+        <message ch="刷新设置" en="Refresh setting" text="RefreshSetting"/>
+        <message ch="自动刷新" en="Automatic refresh" text="AutomaticRefresh"/>
+        <message ch="刷新时间" en="Refresh time" text="RefreshTime"/>
+        <message ch="背景设置" en="Background setting" text="BackgroundSetting"/>
+        <message ch="背景图片" en="Background picture" text="BackgroundPicture"/>
+        <message ch="图片拉伸" en="Picture stretching" text="PictureStretching"/>
+        <message ch="图片预览" en="Preview picture" text="PreviewPicture"/>
+        <message ch="主表单区域选择" en="Main form area selection" text="MainAreaSelection"/>
+        <message ch="区域联动设置" en="Regional linkage setting" text="RegionalLinkageSetting"/>
+        <message ch="数据类型" en="Data type" text="DataType"/>
+        <message ch="字符串" en="Alphabetic string" text="AlphabeticString"/>
+        <message ch="整型" en="Integer" text="Integer"/>
+        <message ch="浮点" en="floating" text="Floating"/>
+        <message ch="日期" en="Date" text="Date"/>
+        <message ch="布尔" en="Bool" text="Bool"/>
+        <message ch="绑定设置" en="Binding setting" text="BindingSetting"/>
+        <message ch="文本编辑框" en="Text edit box" text="TextEditBox"/>
+        <message ch="下拉框" en="Drop down list" text="DropDownList"/>
+        <message ch="多选下拉框" en="Multiple drop-down frame" text="MultipleDropDownList"/>
+        <message ch="下拉树" en="Pull-down tree" text="DropDownTree"/>
+        <message ch="多选下拉树" en="Multiple drop-down tree" text="MultipleDropDownTree"/>
+        <message ch="日期框" en="Date box" text="DateBox"/>
+        <message ch="复选框" en="Check box" text="CheckBox"/>
+        <message ch="自定义下拉框" en="Custom drop-down frame" text="CustomDropDown"/>
+        <message ch="宽" en="Width" text="Width"/>
+        <message ch="高" en="Height" text="Height"/>
+        <message ch="数据字段索引" en="Data field index" text="DataFieldIndex"/>
+        <message ch="显示字段索引" en="Display field index" text="DisplayFieldIndex"/>
+        <message ch="前一个" en="Previous" text="Previous"/>
+        <message ch="后一个" en="The latter one" text="LatterOne"/>
+        <message ch="保存" en="Save" text="Save"/>
+        <message ch="撤销" en="Revoke" text="UnDo"/>
+        <message ch="重做" en="Redo" text="Redo"/>
+        <message ch="剪切" en="Cut" text="Cut"/>
+        <message ch="复制" en="Copy" text="Copy"/>
+        <message ch="粘贴" en="Paste" text="Paste"/>
+        <message ch="格式刷" en="Format brush" text="FormatBrush"/>
+        <message ch="加粗" en="Overstriking" text="Overstriking"/>
+        <message ch="斜体" en="Italic" text="Italic"/>
+        <message ch="下划线" en="Underline" text="Underline"/>
+        <message ch="左对齐" en="Align left" text="AlignLeft"/>
+        <message ch="居中" en="Align middle" text="AlignMiddle"/>
+        <message ch="右对齐" en="Align right" text="AlignRight"/>
+        <message ch="上对齐" en="Align upper" text="AlignUpper"/>
+        <message ch="下对齐" en="Align bottom" text="AlignBottom"/>
+        <message ch="背景" en="Background" text="Background"/>
+        <message ch="前景" en="Foreground" text="Foreground"/>
+        <message ch="合并" en="Cell merge" text="CellMerge"/>
+        <message ch="文本" en="Text" text="Text"/>
+        <message ch="富文本" en="Rich text" text="RichText"/>
+        <message ch="图表" en="Chart" text="Chart"/>
+        <message ch="图片" en="Picture" text="Picture"/>
+        <message ch="斜线" en="Oblique line" text="ObliqueLine"/>
+        <message ch="子报表" en="Subreport" text="Subreport"/>
+        <message ch="悬浮" en="Suspend" text="Suspend"/>
+        <message ch="模板参数设置" en="Template parameter setting" text="TemplateParameterSetting"/>
+        <message ch="数据填报" en="Data reporting" text="DataReporting"/>
+        <message ch="数据校验" en="Data check" text="DataCheck"/>
+        <message ch="控件设置" en="Control settings" text="ControlSettings"/>
+        <message ch="数据连接设置" en="Data connection setting" text="DataConnectionSetting"/>
+        <message ch="数据库文件" en="Data base file" text="DBFile"/>
+        <message ch="提示" en="Hint" text="Hint"/>
+        <message ch="无效的公式!" en="Formula illegality!" text="FormulaIllegality"/>
+        <message ch="公式合法!" en="Formula legal" text="FormulaLegal"/>
+        <message ch="帮助信息" en="Help information" text="HelpInformation"/>
+        <message ch="公式编辑" en="Formul editing" text="FormulEdit"/>
+        <message ch="最小化" en="Minimized" text="Minimized"/>
+        <message ch="最大化" en="Maximized" text="Maximized"/>
+        <message ch="网页链接" en="Web link" text="UrlLink"/>
+        <message ch="模板链接" en="Templet link" text="TempletLink"/>
+        <message ch="CEL文件" en="CEL fiel" text="CELFile"/>
+        <message ch="数据库连接中..." en="Database is connecting... " text="DatabaseConnecting"/>
+        <message ch="选择图片" en="Select pictures" text="SelectPicture"/>
+        <message ch="图片类型(*.jpg;*.png;*.jpeg;*.bmp)" en="Img Files (*.jpg;*.png;*.jpeg;*.bmp)" text="ImgFiles"/>
+        <message ch="Cel文件(*.cel)" en="Cel Files(*.cel)" text="CelFilesType"/>
+        <message ch="另存为" en="Save as" text="SaveAs"/>
+        <message ch="Excel文件" en="Excel file" text="ExcelFile"/>
+        <message ch="Excel文件(*.xlsx)" en="Excel Files (*.xlsx)" text="ExcelFileType"/>
+        <message ch="文件不存在,请重新选择" en="File does not exist, please re-select" text="FileNotExistTip"/>
+        <message ch="文件不存在" en="File does not exist" text="FileNotExist"/>
+        <message ch="当前页面不是报表页面" en="The current page is not a report page" text="NotReportPage"/>
+        <message ch="导出" en="Export" text="Export"/>
+        <message ch="PDF文件(*.pdf)" en="PDF Files (*.pdf)" text="PDFFilesType"/>
+        <message ch="重命名" en="Rename" text="Rename"/>
+        <message ch="请输入新名称" en="Please enter a new name" text="NewName"/>
+        <message ch="保存文件..." en="Save file..." text="SavingFile"/>
+        <message ch="请选择正确的图片文件" en="Please select the correct picture file" text="PictureFileError"/>
+        <message ch="区域单元格" en="Zone cell" text="ZoneCell"/>
+        <message ch="分类" en="Category" text="Category"/>
+        <message ch="系列" en="Series" text="Series"/>
+        <message ch="值" en="Value" text="Value"/>
+        <message ch="参数" en="Param" text="Param"/>
+        <message ch="添加参数" en="Add parameter" text="AddParm"/>
+        <message ch="删除参数" en="Delete parameter" text="DelParm"/>
+        <message ch="显示值" en="Show value" text="ShowValue"/>
+        <message ch="绑定值" en="Binding value " text="BindingValue"/>
+        <message ch="层次" en="Layer" text="Layer"/>
+        <message ch="是" en="Yes" text="Yes"/>
+        <message ch="确定删除模板文件" en="Make sure delete the template file" text="DeleteTemplateTip"/>
+        <message ch="文件删除失败" en="File deletion failed" text="DeleteFileFaild"/>
+        <message ch="打开文件" en="Open file" text="OpenFile"/>
+        <message ch="打开文件夹" en="Open dir" text="OpenDir"/>
+        <message ch="删除文件" en="Delete file" text="DelFile"/>
+        <message ch="新宋体" en="New Song style" text="NewSong"/>
+        <message ch="函数示例" en="Function example" text="FunctionExample"/>
+        <message ch="常规" en="Beaten track" text="BeatenTrack"/>
+        <message ch="数值" en="Number" text="Number"/>
+        <message ch="时间" en="Time" text="Time"/>
+        <message ch="货币" en="Currency" text="Currency"/>
+        <message ch="百分比" en="Percentage" text="Percentage"/>
+        <message ch="条形码" en="Bar code" text="BarCode"/>
+        <message ch="进度条" en="Progress bar" text="ProgressBar"/>
+        <message ch="插入数据列" en="Insert data column" text="InsertDataColumn"/>
+        <message ch="插入普通文本" en="Insert plain text" text="InsertText"/>
+        <message ch="插入公式" en="Insertion formula" text="InsertionFormula"/>
+        <message ch="插入图表" en="Insert chart" text="InsertChart"/>
+        <message ch="插入图片" en="Insert picture" text="InsertPicture"/>
+        <message ch="插入斜线" en="Insert diagonal" text="InsertDiagonal"/>
+        <message ch="省/直辖市/自治区地图" en="Map of provinces / municipalities / autonomous regions" text="MapProvinces"/>
+        <message ch="条件名称不能为空" en="Condition name cannot be null" text="ConditionNameNull"/>
+        <message ch="条件名称已存在" en="Condition name already exists" text="ConditionNameExist"/>
+        <message ch="复选组合框" en="Check combo box" text="RadionButtonGroup"/>
+        <message ch="文件控件" en="File control" text="FileControl"/>
+        <message ch="日期控件" en="Date control" text="DateControl"/>
+        <message ch="检查框控件" en="Check box control" text="CheckBoxControl"/>
+        <message ch="按钮控件" en="Button control" text="ButtonControl"/>
+        <message ch="数字控件" en="Digital control" text="DigitalControl"/>
+        <message ch="文本控件" en="Text control" text="TextControl"/>
+        <message ch="自定义字符串" en="Custom string" text="CustomString"/>
+        <message ch="请先添加数据集再做此编辑" en="Please add the dataset before you do this edit" text="DatasetNull"/>
+        <message ch="请选择键字段名称" en="Please select the key field name" text="KeyFieldNameNull"/>
+        <message ch="请选择显示字段名称" en="Select the display field name" text="ShowFieldNameNull"/>
+        <message ch="此行的键字段名称为空" en="The key field name for this row is called null" text="KeyFieldNameRowNull"/>
+        <message ch="此行的键字段名称重复" en="The key field name for this row is repeated" text="KeyFieldNameRepeat"/>
+        <message ch="此行的显示字段名称为空" en="The display field name for this row is called null" text="ShowFieldNameRowNull"/>
+        <message ch="此行的显示字段名称重复" en="The display field name for this row is repeated " text="ShowFieldNameRepeat"/>
+        <message ch="数据显示出现错误" en="Data display error " text="DataDisplayError"/>
+        <message ch="请选择数据来源" en="Please select the data source" text="DataSourceNull"/>
+        <message ch="数据不能有空值" en="Data cannot have null values" text="DataNull"/>
+        <message ch="填报SQL语句" en="Fill in the sql statement" text="DataReportingDefaultName"/>
+        <message ch="校验SQL语句" en="Check in the sql statement" text="DataCheckDefaultName"/>
+        <message ch="数据填报名称不能重复" en="The name of the data statement cannot be repeated" text="DataReportingNameRepeat"/>
+        <message ch="数据校验名称不能重复" en="The name of the data check cannot be repeated" text="DataCheckNameRepeat"/>
+        <message ch="请选择数据填报名称" en="Please select the data name" text="DataReportingNameNull"/>
+        <message ch="请选择数据校验名称" en="Please select the data check name" text="DataCheckNameNull"/>
+        <message ch="选择数据库文件" en="Select the database file" text="SelectDatabaseFile"/>
+        <message ch="显示密码" en="Display password" text="DisplayPassword"/>
+        <message ch="添加数据连接" en="Add data connection" text="AddDataConnection"/>
+        <message ch="删除数据连接" en="Delete data connection" text="DelDataConnection"/>
+        <message ch="测试数据库连接成功" en="Successful test database connection" text="TestDBConnectionOK"/>
+        <message ch="测试数据库连接失败" en="Test database connection failed" text="TestDBConnectionFailed"/>
+        <message ch="地址" en="Address" text="Address"/>
+        <message ch="相对文件路径请用$$符号开始,例如：$$/EFDemo.db" en="Start with the relative file path with a $sign, e.g.: $$/EFDemo.db" text="SQLITETip"/>
+        <message ch="相对文件路径请用$$符号开始,例如：$$/EFDemo.accdb" en="Start with the relative file path with a $sign, e.g.: $$/EFDemo.accdb" text="ACCESSTip"/>
+        <message ch="相对文件路径请用$$符号开始,例如：$$/EFDemo.xls" en="Start with the relative file path with a $sign, e.g.: $$/EFDemo.xls" text="EXCELTip"/>
+        <message ch="请选择以&quot;.db&quot;结尾的sqlite文件" en="Select the sqlite file that ends with &quot;. Db&quot;" text="SQLITEFileError"/>
+        <message ch="请选择以&quot;.mdb&quot;或&quot;.accdb&quot;结尾的ACCESS数据库文件" en="Select the access database file that ends with &quot;.mdb&quot; or &quot;.accdb&quot;" text="ACCESSFileError"/>
+        <message ch="数据库" en="Data base" text="DataBase"/>
+        <message ch="连接名称已存在" en="Connection name already exists" text="ConnectionNameRepeat"/>
+        <message ch="修改" en="Modify" text="Modify"/>
+        <message ch="刷新" en="Refresh" text="Refresh"/>
+        <message ch="数据获取中" en="Data acquisition" text="DataAcquisition"/>
+        <message ch="确定删除数据源" en="Determining the deletion of data sources" text="DelDBTip"/>
+        <message ch="数据集编辑" en="Data set editing" text="DataSetEditing"/>
+        <message ch="数据表获取中" en="Data table acquisition" text="DataTableAcquisition"/>
+        <message ch="读取公式配置文件失败" en="Load formula file error" text="LoadFormulaXmlError"/>
+        <message ch="解析文件失败,行列位置" en="Parse file failed at line row and column" text="ParseFileFailed"/>
+        <message ch="文档为空" en="Document is null" text="DocumentNull"/>
+        <message ch="恢复" en="Recover" text="Recover"/>
+        <message ch="应用" en="Apply" text="Apply"/>
+        <message ch="链接名称不能为空" en="Link name cannot be empty" text="LinkNameNull"/>
+        <message ch="链接名称已存在" en="Link name already exists" text="LinkNameRepeat"/>
+        <message ch="日志" en="Log" text="Log"/>
+        <message ch="未登录" en="Not logged in" text="NotLoggedIn"/>
+        <message ch="皮肤" en="skin" text="Skin"/>
+        <message ch="模板" en="Mould" text="Mould"/>
+        <message ch="插入" en="Insert" text="Insert"/>
+        <message ch="服务器" en="Server" text="Server"/>
+        <message ch="帮助" en="Help" text="Help"/>
+        <message ch="新建模板" en="New mould" text="NewMould"/>
+        <message ch="定义数据连接" en="Defining data connections" text="DefiningDataConnections"/>
+        <message ch="还有未保存的文件修改,是否全部保存" en="There are also unsaved file changes, whether to save all" text="SaveAll"/>
+        <message ch="单元格元素" en="Cell element" text="CellElement"/>
+        <message ch="模板文件已被修改,是否保存" en="The template file has been modified. Do you want to save it" text="TemplateSaveTip"/>
+        <message ch="确定删除子表单" en="Make sure to delete the subform" text="DelSubformTip"/>
+        <message ch="已有同名子表单存在,请换一个名称" en="A subform with the same name already exists. Please change the name" text="SubformNameRepeat"/>
+        <message ch="新建" en="New" text="New"/>
+        <message ch="保存模板" en="Save mould" text="SaveMould"/>
+        <message ch="自适应行高" en="Adaptive row height" text="AdaptiveRowHeight"/>
+        <message ch="合并单元格" en="Merge cell" text="MergeCell"/>
+        <message ch="拆分单元格" en="Split cell" text="SplitCell"/>
+        <message ch="插入列" en="Insert columns" text="InsertColumns"/>
+        <message ch="追加列" en="Appended column" text="AppendedColumn"/>
+        <message ch="插入行" en="Insert row" text="InsertRow"/>
+        <message ch="追加行" en="Appended row" text="AppendedRow"/>
+        <message ch="删除列" en="Delete columns" text="DelColumns"/>
+        <message ch="删除行" en="Delete row" text="DelRow"/>
+        <message ch="边框类型" en="Border type" text="BorderType"/>
+        <message ch="背景色" en="Background color" text="BackgroundColor"/>
+        <message ch="前景色" en="Foreground color" text="ForegroundColor"/>
+        <message ch="插入数据" en="Insert data" text="InsertData"/>
+        <message ch="固定行列" en="Fixed row column" text="FixedRowColumn"/>
+        <message ch="固定首行数" en="Fixed row count" text="FixedRow"/>
+        <message ch="固定首列数" en="Fixed column count" text="FixedColumn"/>
+        <message ch="固定尾行数" en="Fixed foot row count" text="FixedFootRow"/>
+        <message ch="固定尾列数" en="Fixed foot column count" text="FixedFootColumn"/>
+        <message ch="页眉设置" en="Header setting" text="HeaderSetting"/>
+        <message ch="页脚设置" en="Footer setting" text="FooterSetting"/>
+        <message ch="插入列并粘贴" en="Insert column and paste" text="InsertColumnPaste"/>
+        <message ch="插入行并粘贴" en="Insert row and paste" text="InsertRowPaste"/>
+        <message ch="隐藏行" en="Hidden rows" text="HiddenRows"/>
+        <message ch="隐藏列" en="Hidden columns" text="HiddenColumns"/>
+        <message ch="清除内容" en="Clear contents" text="ClearContents"/>
+        <message ch="新建表单" en="New sheet" text="NewSheet"/>
+        <message ch="删除表单" en="Delete sheet" text="DelSheet"/>
+        <message ch="打开模板" en="Open mould" text="OpenMould"/>
+        <message ch="模板另存为" en="Save as mould" text="SaveAsMould"/>
+        <message ch="关闭模板" en="Close mould" text="CloseMould"/>
+        <message ch="退出" en="Exit" text="Exit"/>
+        <message ch="数据列信息" en="Data column information" text="DataColumnInfo"/>
+        <message ch="导入Excel文件" en="Import excel file" text="ImportExcelFile"/>
+        <message ch="关联子表单" en="Correlation subform" text="CorrelationSubform"/>
+        <message ch="区域联动" en="Regional linkage" text="RegionalLinkage"/>
+        <message ch="导出Excel文件" en="Export excel file" text="ExportExcelFile"/>
+        <message ch="导出PDF文件" en="Export pdf file" text="ExportPdfFile"/>
+        <message ch="插入富文本" en="Insert rich text" text="InsertRichText"/>
+        <message ch="参数名称不能为空" en="Parameter name cannot be null" text="ParamNameNull"/>
+        <message ch="参数名称已存在" en="Parameter name already exists" text="ParamNameRepeat"/>
+        <message ch="请输入新的文件名称" en="Please enter a new file name" text="NewFileNameTip"/>
+        <message ch="文件重命名失败" en="File renaming failed" text="FileRenameFailed"/>
+        <message ch="大小" en="Size" text="Size"/>
+        <message ch="类型" en="Type" text="Type"/>
+        <message ch="修改日期" en="Date Modified" text="Date Modified"/>
+        <message ch="语言" en="Language" text="Language"/>
+        <message ch="英语" en="English" text="En"/>
+        <message ch="汉语" en="Chinese" text="Ch"/>
+        <message ch="语言切换失败" en="Language switching failure" text="LanguageChangeFaild"/>
+        <message ch="语言切换成功,下次启动生效" en="Language switch is successful, next startup takes effect" text="LanguageChangeOK"/>
+        <message ch="字符最大长度" en="Maximum character length" text="MaxLength"/>
+        <message ch="字符最小长度" en="Minimum character length" text="MinLength"/>
+        <message ch="机器码" en="Machine code" text="MachineCode"/>
+        <message ch="注册" en="Register" text="Register"/>
+        <message ch="注册码" en="Registration code " text="RegisterInfo"/>
+        <message ch="导入" en="Import" text="Import"/>
+        <message ch="注册文件" en="Register file" text="RegisterFile"/>
+        <message ch="注册失败" en="Read failed" text="RegisterFailed"/>
+        <message ch="已注册,是否重新注册" en="Registered, whether to register again " text="RegisterExistTip"/>
+        <message ch="注册成功" en="Successful registration" text="RegisterOK"/>
+        <message ch="数据集名称重复" en="Data set name repetition" text="DSNameRepeat"/>
+        <message ch="上移" en="Shift up" text="ShiftUp"/>
+        <message ch="下移" en="Shift down" text="ShiftDown"/>
+        <message ch="排序" en="Reorder" text="Reorder"/>
+        <message ch="秒" en="S" text="Second"/>
+        <message ch="引擎未启动" en="Engine not started" text="EngineNotStarted"/>
+        <message ch="导出目录不存在" en="Export path not exist" text="ExportPathNotExist"/>
+        <message ch="导出的报表Json文件不存在" en="Report Json not exist" text="ReportJsonNotExist"/>
+        <message ch="导出Html文件失败" en="Output Html file failed" text="OutputHtmlFileFailed"/>
+        <message ch="未找到内核目录" en="Kernel path not exist" text="KernelPathNotExist"/>
+        <message ch="没有权限调用内核库" en="No license call kernel" text="NoLicenseCallKernel"/>
+        <message ch="调用导出时,附加的EXE参数数量不够" en="Param count not enough" text="ParamCountNotEnough"/>
+        <message ch="分配共享内存失败" en="Attach share memory failed" text="AttachShareMemoryFailed"/>
+        <message ch="创建共享内存失败" en="Create share memory failed" text="CreateShareMemoryFailed"/>
+        <message ch="参数依赖互相循环" en="Report param circle" text="ReportParamCircle"/>
+        <message ch="参数所在数据库连接失败" en="Report param connect DB failed" text="ReportParamConnDBFailed"/>
+        <message ch="报表参数中下拉数据从数据库读取失败" en="Report param load failed" text="ReportParamLoadFailed"/>
+        <message ch="写报表参数XML失败" en="Output report param file failed" text="OutputReportParamFileFailed"/>
+        <message ch="写报表数据json失败" en="Output report Json file failed" text="OutputReportJsonFileFailed"/>
+        <message ch="未找到任一导出文件" en="Any export file not exist" text="AnyExportFileNotExist"/>
+        <message ch="无此sheet名称" en="Sheet name not exist" text="SheetNameNotExist"/>
+        <message ch="sheet空指针" en="Sheet null pointer" text="SheetNullPointer"/>
+        <message ch="sheetName循环引用" en="SheetName circle" text="SheetNameCircle"/>
+        <message ch="父单元格循环设置" en="Parent cell circle" text="ParentCellCircle"/>
+        <message ch="公式循环引用" en="Expression circle" text="ExpressionCircle"/>
+        <message ch="文件格式错误" en="File format error" text="FileFormatError"/>
+        <message ch="模板文件不存在" en="Model file not exist" text="ModelFileNotExist"/>
+        <message ch="打开文件错误" en="File open error" text="FileOpenError"/>
+        <message ch="保存文件错误" en="Shift down" text="FileSaveError"/>
+        <message ch="数据库连接失败" en="DB conn failed" text="DBConnFailed"/>
+        <message ch="打开导出数据json文件失败" en="Open export report Json failed" text="OpenExportReportJsonFailed"/>
+        <message ch="导出当前页json失败" en="Export current page report failed" text="ExportCurrPageReportFailed"/>
+        <message ch="写子报表数据json失败" en="Output SubReport Json FileFailed" text="OutputSubReportJsonFileFailed"/>
+        <message ch="导出控件数据字典失败" en="Export control data dict failed" text="ExportControlDataDictFailed"/>
+        <message ch="填报Sql语句未准备成功" en="Upload param count failed" text="UploadParamCountFailed"/>
+        <message ch="填报时连接名出错" en="Upload connect name empty" text="UploadConnNameEmpty"/>
+        <message ch="填报连接名不存在" en="UploadConnNameNotExist" text="UploadConnNameNotExist"/>
+        <message ch="填报SQL语句为空" en="Upload sql string empty" text="UploadSqlStringEmpty"/>
+        <message ch="填报数据库连接失败" en="Upload DB connect failed" text="UploadDBConnFailed"/>
+        <message ch="填报SQl执行失败" en="Upload sql exec failed" text="UploadSqlExecFailed"/>
+        <message ch="填报数据提交失败" en="Upload commit failed" text="UploadCommitFailed"/>
+        <message ch="按钮文本" en="Button text" text="ButtonText"/>
+        <message ch="普通" en="General" text="General"/>
+        <message ch="编辑" en="Edit" text="Edit"/>
+        <message ch="JavaScript代码编辑" en="JavaScript code edit" text="CodeEdit"/>
+        <message ch="子表格" en="Subform" text="Subform"/>
+        <message ch="JS注入(web页面初始化时执行)" en="Js injection(Execute when web page initializes)" text="JsInjection"/>
+        <message ch="页名下标" en="Sheet name tag" text="SheetNameTag"/>
+        <message ch="显示页名下标" en="Show sheet name tag" text="ShowSheetNameTag"/>
+        <message ch="保持原比例" en="Raw image scale" text="RawImageScale"/>
+        <message ch="缩放图片" en="Adapt image scale" text="AdaptImageSize"/>
+        <message ch="当前页无法数据填报,请切换到数据页" en="The current page cannot be filled in, please switch to the data page." text="SwitchPage"/>
+        <message ch="自动添加" en="Automatic addition" text="AutoField"/>
+        <message ch="可用子表单" en="Available subform" text="SubReportUsable"/>
+        <message ch="链接子表单" en="Link subform" text="LinkSubreport"/>
+        <message ch="自动滚屏时间(ms)" en="Automatic rolling time(ms)" text="IntervalScrollH"/>
+        <message ch="自动垂直滚动时间(ms)" en="Automatic vertical rolling time(ms)" text="IntervalScrollV"/>
+        <message ch="外部传给引擎的帐号信息格式错误" en="User infos format failed" text="UserInfosFormatFailed"/>
+        <message ch="垂直滚动步长(像素)" en="Vertical rolling step(pixel)" text="StepScrollV"/>
+        <message ch="OEM文件读取失败" en="OEM file read failed" text="OEMFaild"/>
+        <message ch="是否允许全屏显示" en="Full screen display of report area" text="FullScreenReport"/>
+        <message ch="删除校验" en="Delete check" text="DelCheck"/>
+        <message ch="添加校验" en="Add check" text="AddCheck"/>
+        <message ch="出错后显示信息" en="Display information after error" text="ErrorDisplayFormula"/>
+        <message ch="当前页报表文件不存在" en="The current page report file does not exist" text="CurrPageReportNotExist"/>
+        <message ch="关闭所有模板" en="Close all templates" text="CloseAll"/>
+        <message ch="除此之外全部关闭" en="Except for all the closures." text="CloseExceptThis"/>
+        <message ch="当前模板没有保存" en="The current template is not saved" text="FileNotSave"/>
+        <message ch="视图" en="View" text="View"/>
+        <message ch="模板存放区" en="Template directory" text="TempletWidget"/>
+        <message ch="数据源" en="Data source" text="DBManageWidget"/>
+        <message ch="属性栏" en="Cell control" text="CellOperateWidget"/>
+        <message ch="样式栏" en="Cell information" text="CellInfoWidget"/>
+        <message ch="导出SheetNameInfo出错" en="Export sheet name infos failed" text="ExportSheetNameInfosFailed"/>
+        <message ch="动态显示条件" en="Dynamic display condition" text="DynamicCondition"/>
+        <message ch="当前窗口弹出" en="Current window pop-up" text="CurrentPop"/>
+        <message ch="显示新增记录按钮" en="Display new record button" text="PopNew"/>
+        <message ch="填报模板" en="Fill in the form" text="UploadCel"/>
+        <message ch="显示条件" en="Display condition" text="DisCond"/>
+        <message ch="本地文件" en="Local file" text="LocalFile"/>
+        <message ch="网络文件" en="Network file" text="WebFile"/>
+        <message ch="链接配置" en="Link configuration" text="LinkOpt"/>
+        <message ch="下载数据库连接文件失败" en="Failed to download database connection file" text="WebFileGetFailed"/>
+        <message ch="文件下载" en="File download" text="Download"/>
+        <message ch="文件上传" en="File Upload" text="Upload"/>
+        <message ch="覆盖下载" en="Overlay download" text="OverlayDownload"/>
+        <message ch="账号或密码错误" en="Account or password error" text="error1"/>
+        <message ch="校验失败，请联系管理员" en="Check failure, please contact administrator" text="error2"/>
+        <message ch="上传失败，请联系管理员" en="Upload failed, please contact administrator" text="error3"/>
+        <message ch="下载成功" en="Successful download" text="DownloadOK"/>
+        <message ch="上传成功" en="Successful upload" text="UploadOK"/>
+        <message ch="工作目录" en="working directory" text="WorkPath"/>
+        <message ch="重命名表单" en="Rename form" text="RenameSheet"/>
+        <message ch="上传数据库连接文件失败" en="Failed to upload database connection file" text="WebFileSetFailed"/>
+        <message ch="下载json数据失败" en="Download Json Data Failed" text="DownloadJsonDataFailed"/>
+        <message ch="本地sqlite数据库连接失败" en="Local DB Conn Failed" text="LocalDBConnFailed"/>
+        <message ch="执行sql语句失败" en="Exec Sql Failded" text="ExecSqlFailded"/>
+        <message ch="创建本地表失败" en="Create Local Table Failed" text="CreateLocalTableFailed"/>
+        <message ch="插入本地表数据失败" en="Insert Local Data Failded" text="InsertLocalDataFailded"/>
+        <message ch="未找到ds信息" en="No Found DS Info" text="NoFoundDSInfo"/>
+        <message ch="预警推送" en="Push report" text="WarningReport"/>
+        <message ch="预警推送(定时任务时,触发预警条件时进行推送,没有触发时不推送)" en="Early warning push" text="WhetherWarningReport"/>
+        <message ch="文件上传" en="FileUpload" text="FileUpload"/>
+        <message ch="填报数据区域" en="UploadDataArea" text="UploadDataArea"/>
+        <message ch="悬浮元素" en="ShapePlugin" text="ShapePlugin"/>
+    </lang>
+</context>

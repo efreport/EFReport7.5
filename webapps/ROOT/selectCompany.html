@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>选择公司</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/public.css" media="all">
+<style>
+    html, body {
+            border: 0px;
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            background-color: #fcfcfc !important;
+        }
+    .layui-btn:not(.layui-btn-lg ):not(.layui-btn-sm):not(.layui-btn-xs) {height:34px;line-height:34px;padding:0 8px;}
+    .layuimini-container {
+        background-color: #fcfcfc !important;
+    }
+    .page_my_selected {
+        background-color: yellowgreen !important;
+        color: yellow;
+    }
+</style>
+</head>
+<body>
+<input type="hidden" id="id" />
+<input type="hidden" id="companyname" />
+<div class="layuimini-container layuimini-page-anim" style="height: 99.5%;">
+    <div class="layuimini-main">
+        <div>
+            <div class="layui-btn-group">
+                <button class="layui-btn layui-btn-primary" id="btn-expand">全部展开</button>
+                <span style="padding-left: 5px;"></span>
+                <button class="layui-btn layui-btn-normal" id="btn-fold">全部折叠</button>
+                <span style="padding-left: 5px;"></span>
+                <button class="layui-btn layui-btn-normal" id="btn-refresh"><i class="layui-icon">&#xe666;</i></button>
+            </div>
+            <table id="munu-table" class="layui-table" lay-filter="munu-table"></table>
+        </div>
+    </div>
+</div>
+<!-- 操作列 -->
+<script type="text/html" id="auth-state">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="select">选中</a>
+</script>
+
+<script src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script src="js/lay-config.js" charset="utf-8"></script>
+<script src="js/common.js" charset="utf-8"></script>
+
+<script>
+    let pageIdx = 1;
+    layui.use(['table', 'treetable'], function () {
+        var $ = layui.jquery;
+        var table = layui.table;
+        var treetable = layui.treetable;
+        layer = layui.layer;
+        let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+
+        let efurl = server_base_url + "/company/alllist2"
+
+        var loadingTreeTable = function (tableData) {
+
+            let companyid = tableData.data[0].id;
+            let cur_start_pid = -1;
+            for (let i = 0; i < tableData.data2.length; i++) {
+                if (tableData.data2[i].id === parseInt(companyid)) {
+                    cur_start_pid = tableData.data2[i].pId;
+                }
+            }
+
+            // 渲染表格
+            layer.load(2);
+            treetable.render({
+                data: tableData.data2,
+                treeColIndex: 1,
+                treeSpid: cur_start_pid,
+                treeIdName: 'id',
+                treePidName: 'pId',
+                elem: '#munu-table',
+                page: false,
+                cols: [[
+                    {type: 'numbers'},
+                    {field: 'companyName', minWidth: 200, title: '公司名称'},
+                    {templet: '#auth-state', width: 200, align: 'center', title: '操作'}
+                ]],
+                done: function () {
+                    layer.closeAll('loading');
+                }
+            });
+        }
+
+        var initTreeTable = function () {
+            $.ajax({
+                url: efurl,
+                type: 'post',
+                success: function (res) {
+                    loadingTreeTable(res);
+                },
+                error: function () {
+                }
+            });
+        }
+        // 调用初始化表格方法
+        initTreeTable();
+
+        // 刷新
+        $('#btn-refresh').click(function () {
+            initTreeTable();
+        });
+
+        $('#btn-expand').click(function () {
+            treetable.expandAll('#munu-table');
+        });
+
+        $('#btn-fold').click(function () {
+            treetable.foldAll('#munu-table');
+        });
+       
+        //监听工具条
+        table.on('tool(munu-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'select') {
+                $(".page_my_selected").each(function(){
+                    $(this).removeClass("page_my_selected");
+                })
+
+                $("#id").val(data.id);
+                $("#companyname").val(data.companyName);
+
+                $(this).addClass("page_my_selected");
+            } 
+        });
+
+        table.on('row(munu-table)', function(obj) {
+        });
+
+        table.on('rowDouble(munu-table)', function(obj) {
+            let data = obj.data;
+            $("#id").val(data.id);
+            $("#companyname").val(data.companyName);
+
+            let new_obj = {
+                id: data.id,
+                companyname: data.companyName
+            };
+            window.parent.setCompanyData(new_obj, pageIdx);
+        });
+
+    });
+
+    function setPageIdx(idx) {
+        pageIdx = idx;
+    }
+
+    function getPage() {
+        let id = $("#id").val();
+        let companyname = $("#companyname").val();
+        let obj = {
+            id: id,
+            companyname: companyname
+        }
+        return obj;
+    }
+</script>
+</body>
+</html>
+<style>
+    .layui-table-body {
+        height: 350px !important;
+    }
+    .layui-table-main {
+        height: 350px !important;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 1px;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+        background: #d5d5d5;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+        border-radius: 10px;
+        background: #ffffff;
+    }
+</style>

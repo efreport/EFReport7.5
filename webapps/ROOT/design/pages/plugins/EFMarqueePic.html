@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="adress=no">
+    <link rel="stylesheet" type="text/css" href="../../js/css/plugin.css">
+    <link rel="stylesheet" type="text/css" href="../../js/css/spectrum.css">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <link rel="stylesheet" href="../../js/css/json-viewer.css">
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+<div>
+    <div class="layui-tab" style="margin:0px;">
+        <ul class="layui-tab-title" id="mainTab">
+            <li class="layui-this">属性</li>
+        </ul>
+        <div class="layui-tab-content" style="height:400px;">
+            <div class="layui-tab-item layui-show">
+                <div class="plugin-container" style="height:400px;">
+                    <div class="chart-panel" id="plugin"
+                         style="display: flex;justify-content: center;align-items: center;">
+                        <div class='swiper-container' style='width:200px;height:50px;margin:0px;padding:0px;'>
+
+                        </div>
+                    </div>
+                    <div class="property-panel" style="height:400px;">
+                        <div class="layui-tab">
+                            <ul class="layui-tab-title" id="lay_expend" style="width: 20px;">
+                                <li class="layui-this">属<br>性</li>
+                            </ul>
+                            <div class="layui-tab-content" style="width: 100%;height:400px;padding:5px;">
+                                <div class="layui-tab-item layui-show" id="title"
+                                     style="overflow: auto;white-space: normal;height:390px;">
+                                    <div id="chart" class="chart">
+                                        <table style="width: 100%; display: table;">
+                                            <tbody>
+                                            <tr>
+                                                <td>滚动速度(ms)</td>
+                                                <td><input type="text" autocomplete="off" id="speed" value="3000">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>文本字段</td>
+                                                <td><input type="text" autocomplete="off" id="valueDs" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:100px;">是否网络图片</td>
+                                                <td style="width:130px;">
+                                                    <select id="picType">
+                                                        <option value="Y">是</option>
+                                                        <option value="N" selected>否</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<script src="../../js/echarts-4.1.0.min.js"></script>
+<script src="../../js/layui.js"></script>
+<script src="../../js/spectrum.js"></script>
+<script src="../../js/json-viewer.js"></script>
+
+<script type="text/javascript">
+    var layer;
+    var dsArray = [];//{"ds1":"a,b,c","ds2":"a,b,c,d"}
+    var dsMap = {};
+    var templateIndex;
+    var base;
+    var fonts = [];
+    var option;
+
+    function init(ip, dsA, index, font, dMap, opt , isFirst) {
+        base = ip;
+        dsArray = dsA;
+        templateIndex = index;
+        fonts = font;
+        dsMap = dMap;
+        option = opt;
+        plugin.initByJson(option);
+    }
+
+
+    layui.use('element', function () {
+        let element = layui.element;
+    });
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+
+    /**
+     * Created by whj on 2019/9/10.
+     */
+
+    var plugin = {
+        instance: {},  //Echart实例
+        optionJson: {},
+        saveJson: {
+            speed:'',
+            valueDs:'', //判断字段
+            picType:'N'
+        }, //保存到内核的json
+        util: {
+            isPositiveNumber: function (num) { //判断是否是正整数
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                return g.test(num);
+            }
+        },
+        bind: function () {
+
+            $('#valueDs').bind('change' , function(){
+               plugin.saveJson.valueDs = $(this).val();
+            });
+
+            $('#speed').bind('change', function () {
+                if (plugin.util.isPositiveNumber($(this).val())) {
+                    plugin.saveJson.speed = $(this).val();
+                } else {
+                    layer.alert("请输入正确的数字!");
+                }
+            });
+
+            $('#picType').bind('change' , function(){
+                plugin.saveJson.picType = $(this).val();
+            });
+
+
+
+        },
+        init: function () {
+            plugin.bind();
+        },
+        initByJson: function (json) {
+            let option = JSON.parse(json);
+            plugin.initStyle(option);
+            plugin.bind();
+        },
+        initStyle: function (json) {
+
+            $('#valueDs').val(json.valueDs);
+            plugin.saveJson.valueDs = json.valueDs;
+
+            $('#speed').val(json.speed);
+            plugin.saveJson.speed = json.speed;
+
+            if(json.picType == undefined){
+                $('#picType').val('N').prop("selected", true); //默认控件类型
+                plugin.saveJson.picType = json.picType;
+            }else{
+                $('#picType').val(json.picType).prop("selected", true); //默认控件类型
+                plugin.saveJson.picType = json.picType;
+            }
+
+
+        }
+
+    }
+
+    function getOptions(){
+        return plugin;
+    }
+</script>
+</html>

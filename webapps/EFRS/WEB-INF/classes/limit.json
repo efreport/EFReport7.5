@@ -1,0 +1,15 @@
+{
+	"sqlite": "select * from (_efTableName_) as t limit &n&",
+	"h2": "select * from (_efTableName_) as t limit &n&",
+	"mysql": "select * from (_efTableName_) as t limit &n&",
+	"sql server": "select top &n& t.* from (_efTableName_) as t",
+	"access": "select top 0 * from (_efTableName_) as &n&",
+	"oracle": "select * from (_efTableName_) t where rownum < &n&",
+	"hive": "select * from (_efTableName_) as t limit &n&",
+	"postgresql": "select * from (_efTableName_) as t limit &n&",
+	"db2": "select * from (_efTableName_) as t FETCH FIRST &n& ROWS ONLY",
+	"sybase": "SELECT TOP &n& * FROM (_efTableName_) as t",
+	"informix": "select first &n& * from (_efTableName_) as t",
+	"ignite": "select * from (_efTableName_) as t limit &n&",
+	"sap hana": "select * from (_efTableName_) as t limit &n&"
+}

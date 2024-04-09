@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="adress=no">
+    <link rel="stylesheet" type="text/css" href="../../js/css/plugin.css">
+    <link rel="stylesheet" type="text/css" href="../../js/css/spectrum.css">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <link rel="stylesheet" href="../../js/css/json-viewer.css">
+    <style type="text/css">
+        body {
+            /*display: flex;
+            justify-content: center;*/
+            background-color: white;
+        }
+
+        .plugin-container {
+            width: 800px;
+            height: 400px;
+            text-align: center;
+            display: flex;
+        }
+
+        .json-container {
+            width: 800px;
+            height: 390px;
+            text-align: center;
+            display: flex;
+            overflow-y: scroll;
+        }
+
+        .chart-panel {
+            width: 600px;
+            display: flex;
+        }
+
+        .property-panel .layui-tab-title .layui-this:after {
+            height: 70px;
+        }
+
+        .bg {
+            width: 560px;
+            height: 400px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div>
+    <div class="layui-tab" style="margin:0px;">
+        <ul class="layui-tab-title" id="mainTab">
+            <li class="layui-this">属性</li>
+        </ul>
+        <div class="layui-tab-content" style="height:400px;">
+            <div class="layui-tab-item layui-show">
+                <div class="plugin-container" style="height:400px;">
+                    <div class="container bg" id="plugin">
+
+
+                    </div>
+                    <div class="property-panel" style="height:400px;">
+                        <div class="layui-tab">
+                            <ul class="layui-tab-title" id="lay_expend" style="width: 20px;">
+                                <li class="layui-this">属<br>性</li>
+                            </ul>
+                            <div class="layui-tab-content" style="width: 100%;height:400px;padding:5px;">
+                                <div class="layui-tab-item layui-show" id="title"
+                                     style="overflow: auto;white-space: normal;height:390px;">
+                                    <div id="chart" class="chart">
+                                        <table style="width: 100%; display: table;">
+                                            <tbody>
+                                            <tr>
+                                                <td>左上文本</td>
+                                                <td><input type="text" autocomplete="off" id="ltText" value="数据资产1">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>左上链接</td>
+                                                <td><input type="text" autocomplete="off" id="ltUrl" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>右上文本</td>
+                                                <td><input type="text" autocomplete="off" id="rtText" value="数据资产2">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>右上链接</td>
+                                                <td><input type="text" autocomplete="off" id="rtUrl" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>左下文本</td>
+                                                <td><input type="text" autocomplete="off" id="lbText" value="数据资产3">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>左下链接</td>
+                                                <td><input type="text" autocomplete="off" id="lbUrl" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>右下文本</td>
+                                                <td><input type="text" autocomplete="off" id="rbText" value="数据资产4">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>右下链接</td>
+                                                <td><input type="text" autocomplete="off" id="rbUrl" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">是否动画</td>
+                                                <td style="width:114px;line-height:35px;">
+                                                    <input type="checkbox" id="isAni" class="position">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:88px;">动画间隔时间</td>
+                                                <td><input type="text" autocomplete="off" id="seconds" value="">
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<script src="../../js/echarts-4.1.0.min.js"></script>
+<script src="../../js/layui.js"></script>
+<script src="../../js/spectrum.js"></script>
+<script src="../../js/json-viewer.js"></script>
+
+
+<script type="text/javascript">
+    var layer;
+    var dsArray = [];//{"ds1":"a,b,c","ds2":"a,b,c,d"}
+    var dsMap = {};
+    var templateIndex;
+    var base;
+    var fonts = [];
+    var option;
+    var resourcePath;
+
+    function init(ip, dsA, index, font, dMap, opt , isFirst) {
+        base = ip;
+        dsArray = dsA;
+        templateIndex = index;
+        fonts = font;
+        dsMap = dMap;
+        option = opt;
+        resourcePath = base + '/plugin/DP/images'
+        $('#plugin').css("background-image", "url('../image/CircleTx.png')");
+        $('#plugin').css("background-size", "100% 100%");
+
+
+        $.each(dsArray, function (index, element) { //初始化所有DS
+            $('#ds').append('<option value="' + element + '">' + element + '</option>');
+        });
+
+        var ds1 = dsArray[0];
+        $('#ds').val(ds1).prop("selected", true); //选中第一个结果集
+        let key = templateIndex + '@#' + ds1;
+        var dsField = dsMap[key];
+        if (dsField != undefined) { //当前报表包含数据集时
+            var dsFields = dsField;
+            $('#categoryField').append('<option value=""></option>');
+            $('#seriesField').append('<option value=""></option>');
+            $.each(dsFields, function (index, element) { //初始化字段
+                $('#categoryField').append('<option value="' + element + '">' + element + '</option>');
+                $('#seriesField').append('<option value="' + element + '">' + element + '</option>');
+                $('#valueField').append('<option value="' + element + '">' + element + '</option>');
+            });
+        }
+
+
+        $('#titleFont').empty();
+        $('#legendFamily').empty();
+        $.each(fonts, function (index, element) {
+            $('#titleFont').append('<option value="' + element + '">' + element + '</option>');
+            $('#legendFamily').append('<option value="' + element + '">' + element + '</option>');
+        });
+        if(isFirst){
+            plugin.init();
+        }else{
+            plugin.initByJson(option);
+        }
+    }
+
+    var plugin = {
+        saveJson: {
+            ltText: '用户在线情况',
+            ltUrl: '',
+            rtText: '用户在线情况',
+            rtUrl: '',
+            lbText: '用户在线情况',
+            lbUrl: '',
+            rbText: '用户在线情况',
+            rbUrl: '',
+            isAni: 'Y',
+            seconds: 3
+        }, //保存到内核的json
+        colors: [
+            ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)", "rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(255, 255, 255)"],
+            ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)", "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"],
+            ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)", "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)", "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)",
+                "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)", "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)",
+                "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)", "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+                "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)", "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)", "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+        ],
+        colorOpt: {
+            allowEmpty: true,
+            showInput: true,
+            containerClassName: "full-spectrum",
+            showInitial: true,
+            showPalette: true,
+            showSelectionPalette: false,
+            showAlpha: true,
+            maxPaletteSize: 10,
+            preferredFormat: "hex",
+
+            change: function (color) { //修改title的背景颜色
+                var hexColor = "transparent";
+
+                if (color) {
+                    if (color.alpha == 1) {
+                        hexColor = color.toHexString();
+                    } else {
+                        hexColor = color.toHexString() + plugin.util.alphaToHex(color.alpha);
+                    }
+
+                    $(this).css("background-color", hexColor);
+                    $(this).prev().find('input').val(hexColor);
+                    if ($(this).attr('id') == 'titleBg') {
+                        plugin.title.changeBgColor(plugin.util.HexToRgba(hexColor)); //将Hex转为rgb数据
+                    } else if ($(this).attr('id') == 'titleColor') {
+                        plugin.title.changeTitleColor(plugin.util.HexToRgba(hexColor));
+                    } else if ($(this).attr('id') == 'legendBg') {
+                        plugin.legend.changeBgColor(plugin.util.HexToRgba(hexColor));
+                    } else if ($(this).attr('id') == 'legendColor') {
+                        plugin.legend.changeTitleColor(plugin.util.HexToRgba(hexColor));
+                    } else if ($(this).attr('id') == 'chartBg') {
+                        plugin.changeBgColor(plugin.util.HexToRgba(hexColor));
+                    } else if ($(this).attr('id') == 'xColor') {
+                        plugin.category.xColor(plugin.util.HexToRgba(hexColor));
+                    }
+                }
+            },
+            beforeShow: function () {
+
+            },
+            hide: function () {
+
+            },
+            palette: this.colors
+        },
+
+        initColorPlugin: function (id) {  //初始化颜色选择控件
+            $('#' + id).spectrum(this.colorOpt);
+        },
+        bind: function () {
+
+            $('#ltText').bind('change', function () {
+                plugin.saveJson.ltText = $(this).val();
+            });
+
+            $('#ltUrl').bind('change', function () {
+                plugin.saveJson.ltUrl = $(this).val();
+            });
+
+            $('#rtText').bind('change', function () {
+                plugin.saveJson.rtText = $(this).val();
+            });
+
+            $('#rtUrl').bind('change', function () {
+                plugin.saveJson.rtUrl = $(this).val();
+            });
+
+            $('#lbText').bind('change', function () {
+                plugin.saveJson.lbText = $(this).val();
+            });
+
+            $('#lbUrl').bind('change', function () {
+                plugin.saveJson.lbUrl = $(this).val();
+            });
+
+            $('#rbText').bind('change', function () {
+                plugin.saveJson.rbText = $(this).val();
+            });
+
+            $('#rbUrl').bind('change', function () {
+                plugin.saveJson.rbUrl = $(this).val();
+            });
+
+            $('#isAni').bind('change' , function(){
+                if($(this).prop('checked')){
+                    plugin.saveJson.isAni = 'Y';
+                    $('#seconds').prop('disabled' , false);
+                }else{
+                    plugin.saveJson.isAni = 'N';
+                    $('#seconds').prop('disabled' , true);
+                }
+            })
+
+            $('#seconds').bind('change' , function(){
+                plugin.saveJson.seconds = $(this).val();
+            })
+        },
+        init: function () {
+            $.ajax({
+                url: base + "/plugin/generateOption",
+                type: "post",
+                data: {"type": type},
+                dataType: "json",
+                success: function (res) {
+                    if (res.state == 'failed') {
+                        efalert(layer, res.message);
+                    } else {
+                        plugin.bind();
+                    }
+                },
+                error: function () {
+                    efalert(layer, "初始化Echart模板出错");
+                }
+
+            })
+        },
+        initByJson: function (json) {
+            var option = JSON.parse(json);
+            plugin.initStyle(option);
+            plugin.bind();
+        },
+        initByDefaultJson: function (json) {
+            var option = JSON.parse(json);
+            plugin.bind();
+        },
+        initStyle: function (json) {
+            plugin.saveJson.ltText = json.ltText;
+            plugin.saveJson.rtText = json.rtText;
+            plugin.saveJson.lbText = json.lbText;
+            plugin.saveJson.rbText = json.rbText;
+            plugin.saveJson.ltUrl = json.ltUrl;
+            plugin.saveJson.rtURl = json.rtURl;
+            plugin.saveJson.lbUrl = json.lbUrl;
+            plugin.saveJson.rbUrl = json.rbUrl;
+            plugin.saveJson.isAni = json.isAni;
+            plugin.saveJson.seconds = json.seconds;
+
+
+            $('#ltText').val(json.ltText);
+            $('#rtText').val(json.rtText);
+            $('#lbText').val(json.lbText);
+            $('#rbText').val(json.rbText);
+            $('#ltUrl').val(json.ltUrl);
+            $('#rtUrl').val(json.rtUrl);
+            $('#lbUrl').val(json.lbUrl);
+            $('#rbUrl').val(json.rbUrl);
+            if(plugin.saveJson.isAni == 'Y'){
+                $('#isAni').prop('checked' , true);
+                $('#seconds').prop('disabled' , false);
+            }else{
+                $('#isAni').prop('checked' , false);
+                $('#seconds').prop('disabled' , 'disabled');
+            }
+
+            $('#seconds').val(json.seconds);
+
+        }
+    }
+
+
+    function getOptions(){
+        plugin.reSetOption(); //判断并添加自定义属性
+        var baOption = plugin.baInstance.getOption(); //获取EChart基础属性
+        plugin.instance.setOption({ //将基础属性当做一个字段保存进option中
+            "backUpOption": baOption,
+            "hasInit":1
+        })
+        return plugin;
+    }
+</script>
+</html>

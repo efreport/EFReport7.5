@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.UserRoleRelMapper">
+    <!-- 新增 -->
+    <insert id="save" parameterType="com.efreport.entity.UserRoleRel">
+      INSERT INTO SYS_USER_ROLE_REL(user_id, role_id) VALUES(#{userId}, #{roleId})
+    </insert>
+
+    <!-- 删除 -->
+    <insert id="delete" parameterType="Integer">
+      DELETE FROM SYS_USER_ROLE_REL WHERE user_id = #{userId}
+    </insert>
+
+    <!-- 根据用户ID获取角色列表 -->
+    <select id="list" parameterType="Integer" resultType="com.efreport.entity.UserRoleRel">
+      SELECT
+        user_id as userId,
+        role_id as roleId
+      FROM
+        SYS_USER_ROLE_REL
+      WHERE
+        user_id = #{userId}
+    </select>
+
+    <!-- 根据角色ID获取用户列表 -->
+    <select id="listByRoleId" parameterType="Integer" resultType="com.efreport.entity.UserRoleRel">
+        SELECT
+        user_id as userId,
+        role_id as roleId
+        FROM
+        SYS_USER_ROLE_REL
+        WHERE
+        ROLE_ID = #{roleId}
+    </select>
+
+    <!-- 批量插入用户角色 -->
+    <insert id="insertBatchRole" parameterType="java.util.List">
+        INSERT INTO SYS_USER_ROLE_REL (USER_ID,ROLE_ID)
+        VALUES
+        <foreach collection="list" item="role" index="index" separator=",">
+            (
+            #{role.userId}, #{role.roleId}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 批量更新用户角色 -->
+    <update id="updateBatchRole" parameterType="java.util.List">
+        UPDATE SYS_USER_ROLE_REL
+        SET ROLE_ID =
+        <foreach collection="list" item="role" index="index"
+                 separator=" " open="case user_Id" close="end">
+            when #{role.userId} then #{role.roleId}
+        </foreach>
+        where USER_ID in
+        <foreach collection="list" index="index" item="role"
+                 separator="," open="(" close=")">
+            #{role.userId}
+        </foreach>
+    </update>
+</mapper>

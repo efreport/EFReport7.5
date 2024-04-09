@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="adress=no">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <link rel="stylesheet" href="../../js/css/json-viewer.css">
+
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            height: 100%
+        }
+
+        #container {
+            width: 85%;
+            height: 100%;
+            display: inline-block;
+        }
+
+        #props {
+            width: 14%;
+            height: 100%;
+            display: inline-block;
+        }
+
+        #screen {
+            width: 80%;
+            height: 100%;
+        }
+    </style>
+
+
+</head>
+<body>
+<div id="container">
+    <div id="screen"></div>
+</div>
+<div id="props">
+    <label for="showTool">显示工具栏</label>
+    <input type="checkbox" id="showTool">
+</div>
+</body>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<script src="../../js/richEditor/tinymce.min.js"></script>
+
+<script type="text/javascript">
+    function init(ip, dsA, index, font, dMap, opt , isFirst) {
+        tinymce.init({
+            selector: '#screen',
+            language:'zh_CN',
+            menubar:false,
+            branding: false,
+            toolbar: [ //数组写法
+                'undo redo | styleselect | bold italic | link image alignleft aligncenter alignright forecolor backcolor'
+            ]
+        });
+
+        let option = JSON.parse(opt);
+
+        if (option.content != undefined) { //有内容
+            setTimeout(function(){
+                tinyMCE.editors['screen'].setContent(option.content);
+            },500)
+        }
+
+        if(option.showTool != undefined){
+            $('#showTool').prop('checked' , option.showTool);
+        }
+    }
+
+    /**
+     * Created by whj on 2019/9/10.
+     */
+    let plugin = {
+        optionJson: {},
+        util: {
+            isPositiveNumber: function (num) { //判断是否是正整数
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                return g.test(num);
+            },
+            isNoNegativeNumber: function (num) {
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) {
+                    return true;
+                } else {
+                    if (num == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            isPercentNumber: function (num) { //是否是百分整数
+                var g = new RegExp(/^\d+%$/); //不包含小数
+                //new RegExp(/^\d+\.{0,1}\d+%$/); //包含小数
+                if (g.test(num)) {
+                    return true;
+                } else {
+                    if (num == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            isRotateNumber: function (num) {
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                var g1 = /^-[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) { //是正整数
+                    if (num <= 90) {
+                        return true;
+                    } else {
+                        layer.alert("请输入-90到90间整数!");
+                        return false;
+                    }
+                } else if (g1.test(num)) {
+                    if (num >= -90) {
+                        return true;
+                    } else {
+                        layer.alert("请输入-90到90间整数!");
+                        return false;
+                    }
+                } else if (num == 0) {
+                    return true;
+                }
+            },
+        },
+        bind: function () {
+
+        },
+        init: function () {
+
+        },
+        initTheme: function (theme) {
+
+        },
+        initByJson: function (json) {
+
+        },
+        initStyle: function (json) {
+
+        }
+    }
+
+    function getOptions() {
+        let option = {};
+        let content = tinyMCE.activeEditor.getContent(); //获取富文本内容
+        option.content = content;
+        option.showTool = $('#showTool').prop('checked');
+        return option;
+    }
+</script>
+</html>

@@ -1,0 +1,677 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="adress=no">
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <link rel="stylesheet" href="../../../js/zTree/css/zTreeStyle.css">
+    <style>
+        body {
+            background: #FCFCFC;
+        }
+
+        .div_cls {
+            display: none;
+            position: absolute;
+            width: 70%;
+            height: 400px;
+            top: 100px;
+            left: 15%;
+            z-index:1000;
+            border: 1px solid #d5d5d5;
+            border-radius: 5px;
+            background-color: white;
+            overflow: auto;
+        }
+
+
+        .div_cls .div_search {
+            width: 90%;height: 23px;line-height:40px;text-align:right;
+            margin: auto;
+            vertical-align: middle;
+            padding: 8.5px 0px;
+        }
+
+        .div_cls .div_search .searchDiv {
+            width: 50%;
+            height: 30px;
+            float:left;   
+        }
+
+        .div_cls .div_search .searchDiv .clsBtn {
+            border: 0px;
+            background-color: #ffffff;
+        }
+
+        .div_cls_checkbox {
+            position: relative;
+            width: 100%;
+            height: 360px;
+            overflow: auto;
+        }
+
+        .div_cls_checkbox .div_cls_ele {
+            width: 40%;height: 40px;line-height:40px;text-align:left;margin: auto;
+        }
+        .div_cls_checkbox .div_cls_ele span {
+            margin-left: 10px;
+        }
+
+        #div_params_ztree {
+            display: none;
+            position: absolute;
+            width: 70%;
+            height: 400px;
+            top: 100px;
+            left: 15%;
+            z-index: 1000;
+            border: 1px solid #d5d5d5;
+            border-radius: 5px;
+            background-color: white;
+            overflow: auto;
+        }
+
+        #div_params_ztree .div_search {
+            width: 90%;
+            height: 23px;
+            line-height: 40px;
+            text-align: right;
+            margin: auto;
+            vertical-align: middle;
+            padding: 8.5px 0px;
+        }
+
+        
+
+        #div_params_ztree_content {
+            position: relative;
+            width: 100%;
+            height: 360px;
+            overflow: auto;
+        }
+
+        .ztree li span.button {
+            width: 16px !important;
+            height: 16px !important;
+        }
+        .ztree li span.button.chk {
+            width: 13px !important;
+            height: 13px !important;
+        }
+
+        .tabpicker {
+            display: none;
+            position:fixed;
+            bottom:0;
+            left:0;
+            width:100%;
+            height:400px;
+            box-shadow:0 -1px 3px 0 rgba(0,0,0,.2);
+            background:#fff;
+            z-index:999;
+        }
+        .tabpicker .header {
+            position: relative;
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .tabpicker .header .one {
+            float: left;width: 20%;height: 30px;text-align: center;
+            color: #666;
+        }
+
+        .tabpicker .header .two {
+            float: left;width: 60%;height: 30px;text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .tabpicker .header .three {
+            float: left;width: 20%;height: 30px;text-align: center;
+            color: red;
+        }
+
+        .tabpicker .content {
+            position: relative;
+            width: 100%;
+            height: 370px;
+            overflow: auto;
+        }
+
+        .tabpicker .content .left {
+            position: relative;
+            width: 30%;
+            height: auto;
+            float: left;
+        }
+        .tabpicker .content .left .tabEle {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            border: 1px solid #DCE4EE;
+            text-align: center;
+        }
+
+        .tabpicker .content .left .tabSelect {
+            border-right: 1px solid #0094FF !important;
+            color: #0094FF;
+        }
+
+        .tabpicker .content .right {
+            width: 68%;
+            height: auto;
+            float: left;
+            
+        }
+
+        .tabpicker .content .right .bodyEle {
+            display: none;
+            width: 100%;
+            height: auto;
+            min-height: 360px;
+            background-color: #FCFCFC;
+            /* border-left: 1px solid #DCE4EE; */
+        }
+
+        .tabpicker .content .right .bodyEle .bodyEleContent {
+            width: 100%; height: 40px; line-height: 40px; text-align: center;
+        }
+
+        .tabpicker .content .right .bodySelect {
+            display: block;
+        }
+
+        #bgDiv {
+            position: absolute;
+            display: none;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.6);
+            opacity: 1;
+            z-index: 99;
+            left: 0px;
+            top: 0px;
+        }
+
+        .myinput {
+            width: 160px;
+            height: 32px;
+            line-height: 32px;
+            border: 1px solid #DCE4EE;
+            border-radius: 3px;
+            text-indent: 5px;
+            margin-left: 10px;
+            border:0px;
+            background-color:#DCE4EE;
+        }
+        .ztmc div {
+            text-align: center;
+            height: 32px;
+            line-height: 32px;
+            margin: 4px 0px;
+        }
+
+        .ztmc div span {
+            display: block;
+            width: 120px;
+            height: 32px;
+            line-height: 32px;
+            vertical-align: middle;
+            float: left;
+            text-align: right;
+        }
+
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 1px;
+        }
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+            background: #fcfcfc;
+        }
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+            border-radius: 10px;
+            background: #f2f3f5;
+        }
+
+        .picker .picker-panel .picker-choose .confirm {
+            color:#007bff !important;
+        }
+
+        .picker .picker-panel .picker-choose {
+            color: #666 !important;
+        }
+        .container {
+            padding: 0px !important;
+        }
+        
+
+    </style>
+</head>
+<body>
+<div class="wrap" style="height: 100%">
+    <div class="container" style="height: 100%;">
+        <div style="height: 40px;line-height: 40px; background-color: #ffffff;">
+            <div style="width: 95%;text-align:right;">
+                <span id="closePage" style="font-size: 30px;font-weight:bold;">◎</span>
+            </div>
+        </div>
+        <div class="ztmc">
+            <div>
+                <span>开始日期</span>
+                <span>
+                    <input class="myinput" type="text" id="add_time" name="add_time" placeholder="请选择日期" />
+                </span>
+                <div style="clear:both;"></div>
+            </div>
+            <div style="height: 20px;"></div>
+            <div>
+                <span>城市(省市区县)</span>
+                <span>
+                    <input class="myinput" type="text" id="picker" name="areaaddr" placeholder="省市区县"/>
+                </span>
+                <div style="clear:both;"></div>
+            </div>
+            <div style="height: 20px;"></div>
+            <div>
+                <span>城市(省市)</span>
+                <span>
+                    <input class="myinput" type="text" id="picker2" name="areaaddr2" placeholder="选择省市"/>
+                </span>
+                <div style="clear:both;"></div>
+            </div>
+            <div style="height: 20px;"></div>
+            <div>
+                <span>单列</span>
+                <span>
+                    <input class="myinput" type="text" id="onepicker" name="onepicker" placeholder="选择单列"/>
+                </span>
+                <div style="clear:both;"></div>
+            </div>
+            <div style="height: 20px;"></div>
+            <div>
+                <span>自定义</span>
+                <span>
+                    <input class="myinput" type="text" id="mypicker" name="mypicker" placeholder="自定义标题"/>
+                </span>
+                <div style="clear:both;"></div>
+            </div>
+            <div style="height: 20px;"></div>
+            <div>
+                <input type="button" id="btn_show_cls" name="btn_show_cls" value="显示列列表" />
+            </div>
+            <div style="height: 20px;"></div>
+            <div>
+                <span>多选树</span>
+                <span>
+                    <input class="myinput" type="text" id="mytabpicker" name="mytabpicker" placeholder="多选列表测试"/>
+                </span>
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="div_cls" class="div_cls">
+    <div class="div_search">
+        <div class="searchDiv" style="text-align:left;">
+            <input class="clsBtn" type="button" name="btn_cancel" value="取消" />
+        </div>
+        <div class="searchDiv">
+            <input class="clsBtn" style="color:#007bff;" type="button" name="btn_search" value="查询" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div id="div_cls_checkbox" class="div_cls_checkbox">
+        <div class="div_cls_ele">
+            <input type="checkbox" name="chkbox_val" value="1"><span>足球</span>
+        </div>
+    </div>
+</div>
+
+<div id="div_params_ztree">
+    <div class="div_search">
+        <input type="button" name="btn_search_ztree" value="查询" />
+    </div>
+    <div id="div_params_ztree_content">
+        <ul id="tree" class="ztree"></ul>
+    </div>
+</div>
+
+<div id="bgDiv"></div>
+
+<div id="tabpicker" class="tabpicker">
+    <div class="header">
+        <div class="one">取消</div>
+        <div class="two">标题</div>
+        <div class="three">确定</div>
+        <div style="clear:both;"></div>
+    </div>
+    <div style="height: 10px;"></div>
+    <div class="content">
+        <div class="left">
+            <div class="tabEle" data="1">
+                北京
+            </div>
+            <div class="tabEle" data="2">
+                湖北
+            </div>
+        </div>
+        <div class="right">
+            <div class="bodyEle" data="1">
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="朝阳区" /><span style="margin-left: 10px;">朝阳区</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="丰台区" /><span style="margin-left: 10px;">丰台区</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="大兴区" /><span style="margin-left: 10px;">大兴区</span>
+                </div>
+            </div>
+            <div class="bodyEle" data="2">
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="武汉市" /><span style="margin-left: 10px;">武汉市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="黄石市" /><span style="margin-left: 10px;">黄石市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="鄂州市" /><span style="margin-left: 10px;">鄂州市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="武穴市" /><span style="margin-left: 10px;">武穴市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="咸宁市" /><span style="margin-left: 10px;">咸宁市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="孝感市" /><span style="margin-left: 10px;">孝感市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="仙桃市" /><span style="margin-left: 10px;">仙桃市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="潜江市" /><span style="margin-left: 10px;">潜江市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="随州市" /><span style="margin-left: 10px;">随州市</span>
+                </div>
+
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="襄阳市" /><span style="margin-left: 10px;">襄阳市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="荆门市" /><span style="margin-left: 10px;">荆门市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="荆州市" /><span style="margin-left: 10px;">荆州市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="十堰市" /><span style="margin-left: 10px;">十堰市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="神龙架市" /><span style="margin-left: 10px;">神龙架市</span>
+                </div>
+                <div class="bodyEleContent">
+                    <input type="checkbox" name="chx_pickerval" value="恩施市" /><span style="margin-left: 10px;">恩施市</span>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</div>
+
+</body>
+<script src="js/jquery-1.7.js"></script>
+<script src="js/plg/jdate.min.js"></script>
+<script src="js/plg/scripts/picker.min.js"></script>
+<script src="js/plg/scripts/city.js"></script>
+<script src="js/plg/scripts/indexareaaddr.js"></script>
+<script src="js/plg/scripts/pickertest.js"></script>
+<script src="js/plg/scripts/mypicker.js"></script>
+<script src="js/plg/scripts/onepicker.js"></script>
+<script src="../../../js/zTree/js/jquery.ztree.core.min.js" charset="utf-8"></script>
+<script src="../../../js/zTree/js/jquery.ztree.excheck.min.js" charset="utf-8"></script>
+<script>
+    $(function(){
+        new Jdate({
+            el:'#add_time',
+            format: 'YYYY-MM-DD',
+            beginYear: 1980,
+            endYear: 2050
+        });
+
+        console.log("picker_mypicker--->", picker_mypicker);
+
+
+        initCls();
+        initTree();
+        
+    })
+
+    function initCls() {
+        let ary_cls = ['供应商','产品类型','产品名称','单位数量','订购量','单价', '总量','单位数量2','单位数量3','单位数量4','单位数量5','单位数量6','单位数量7','单位数量8','单位数量9','单位数量10','单位数量11','单位数量12','单位数量13','单位数量14','单位数量15','单位数量16','单位数量17','单位数量18','单位数量19','单位数量20','单位数量21','单位数量22','单位数量23','单位数量24','单位数量25','单位数量26','单位数量27','单位数量28','单位数量29','单位数量30','单位数量31'];
+        let cls_html_str = "";
+        for (let i = 0; i < ary_cls.length; i++) {
+            cls_html_str += "<div class='div_cls_ele'>";
+            cls_html_str += "<input type='checkbox' name='chkbox_val' value='"+ary_cls[i]+"'><span>"+ary_cls[i]+"</span>";
+            cls_html_str += "</div>";
+        }
+        $("#div_cls_checkbox").html(cls_html_str);
+
+        $("input[name='btn_cancel']").click(function(){
+            $("#div_cls").hide();
+        });
+
+        $("input[name='btn_search']").click(function(){
+            $("input:checkbox[name='chkbox_val']").each(function(idx, item){
+                // console.log($(this));
+                // console.log($(this).attr('checked'));
+                if ($(this).attr('checked')) {
+                    console.log("idx--->", idx);
+                    console.log("item-->", item);
+                    console.log("val--->", $(this).val());
+                }
+
+                $("#div_cls").hide();
+            });
+        });
+    }
+
+
+    function initTree(){
+        var setting = {
+            callback: {
+                beforeDrag: function() {return false;},
+                beforeDrop: function() {return false;},
+                onCheck: function(event, treeId, treeNode) {
+                    console.log(treeNode);
+                    // $("#tpl").val(treeNode.path);
+                    // $("#tplId").val(treeNode.id);
+                }
+            },
+            view: {
+                showLine: true,
+                showIcon: true,
+                selectedMulti: false
+            },
+            check: {
+                enable: true,
+                chkboxType: {"Y": "ps","N": "ps"},
+                chkStyke: "checkbox"
+                // chkStyle: "radio",
+                // radioType: "all"
+            }
+        };
+
+        var nodes = [
+            {
+                name: "父节点1",
+                children: [
+                    {name: "子节点1-1"},
+                    {name: "子节点1-2"},
+                    {name: "子节点1-3"}
+                ]
+            },
+            {
+                name: "父节点2",
+                children: [
+                    {
+                        name: "子节点2-1A"
+                    },
+                    {
+                        name: "子节点2-2B"
+                    },
+                    {name: "子节点2-3"}
+                ]
+            },
+        ];
+        $.fn.zTree.init($("#tree"), setting, nodes);
+    }
+</script>
+</html>
+<script>
+    $(function(){
+
+        $("#closePage").click(function(){
+            alert("点击了关闭页面按钮");
+        });
+
+        $("#btn_show_cls").click(function(){
+            $("#div_cls").show();
+        });
+    });
+</script>
+<script>
+
+    $(function(){
+
+        $("#bgDiv").click(function(){
+            $("#bgDiv").hide();
+            $(".tabpicker").hide();
+            $("#tabpicker").hide();
+        });
+
+        $("#mytabpicker").click(function(){
+            $(".tabEle").removeClass("tabSelect");
+            $(".bodyEle").removeClass("bodySelect");
+            $(".tabEle:eq(0)").addClass("tabSelect");
+            $(".bodyEle:eq(0)").addClass("bodySelect");
+
+            $("input:checkbox[name='chx_pickerval']").each(function(idx, item){
+                // 所有元素默认为不选中状态
+                $(this).attr('checked', false);
+            });
+
+            $("#bgDiv").show();
+
+            $("#tabpicker").show();
+        });
+
+
+        let tabAry = [
+            {name: "北京市",children: [{name: "朝阳区"}, {name: "东城区"}, {name: "西城区"}, {name: "崇文区"}, {name: "宣武区"}]},
+            {name: "湖北省",children: [{name: "武汉市"}, {name: "黄石市"}, {name: "黄冈市"}, {name: "武穴市"}, {name: "鄂州市"},
+             {name: "咸宁市"}, {name: "仙桃市"}, {name: "潜江市"}, {name: "荆州市"}, {name: "宜昌市"}, {name: "恩施市"}, {name: "神龙架"}, 
+             {name: "荆门市"}, {name: "孝感市"}, {name: "随州市"}, {name: "襄阳市"}, {name: "十堰市"}]},
+             {name:"天津",children:[{name:"和平区"},{name:"河东区"},{name:"河西区"},{name:"南开区"},{name:"河北区"},{name:"红桥区"},{name:"塘沽区"},{name:"汉沽区"},{name:"大港区"},{name:"东丽区"},{name:"西青区"},{name:"北辰区"},{name:"津南区"},{name:"武清区"},{name:"宝坻区"},{name:"静海县"},{name:"宁河县"},{name:"蓟县"},{name:"其他"}]},
+             {name:"重庆",children:[{name:"渝中区"},{name:"大渡口区"},{name:"江北区"},{name:"南岸区"},{name:"北碚区"},{name:"渝北区"},{name:"巴南区"},{name:"长寿区"},{name:"双桥区"},{name:"沙坪坝区"},{name:"万盛区"},{name:"万州区"},{name:"涪陵区"},{name:"黔江区"},{name:"永川区"},{name:"合川区"},{name:"江津区"},{name:"九龙坡区"},{name:"南川区"},{name:"綦江县"},{name:"潼南县"},{name:"荣昌县"},{name:"璧山县"},{name:"大足县"},{name:"铜梁县"},
+             {name:"梁平县"},{name:"开县"},{name:"忠县"},{name:"城口县"},{name:"垫江县"},{name:"武隆县"},{name:"丰都县"},{name:"奉节县"},{name:"云阳县"},
+             {name:"巫溪县"},{name:"巫山县"},{name:"石柱土家族自治县"},{name:"秀山土家族苗族自治县"},{name:"酉阳土家族苗族自治县"},{name:"彭水苗族土家族自治县"},{name:"其他"}]},
+             {name: "上海市",children: [{name: "黄浦区"}, {name: "静安区"}, {name: "徐汇区"}, {name: "长宁区"}, {name: "普陀区"}]},
+             {name: "北京市",children: [{name: "朝阳区"}, {name: "东城区"}, {name: "西城区"}, {name: "崇文区"}, {name: "宣武区"}]},
+             {name: "北京市",children: [{name: "朝阳区"}, {name: "东城区"}, {name: "西城区"}, {name: "崇文区"}, {name: "宣武区"}]},
+             {name: "北京市",children: [{name: "朝阳区"}, {name: "东城区"}, {name: "西城区"}, {name: "崇文区"}, {name: "宣武区"}]},
+             {name: "北京市",children: [{name: "朝阳区"}, {name: "东城区"}, {name: "西城区"}, {name: "崇文区"}, {name: "宣武区"}]},
+             {name: "北京市",children: [{name: "朝阳区"}, {name: "东城区"}, {name: "西城区"}, {name: "崇文区"}, {name: "宣武区"}]},
+             {name: "北京市",children: [{name: "朝阳区"}, {name: "东城区"}, {name: "西城区"}, {name: "崇文区"}, {name: "宣武区"}]},
+             {name: "北京市",children: [{name: "朝阳区"}, {name: "东城区"}, {name: "西城区"}, {name: "崇文区"}, {name: "宣武区"}]},
+             {name: "北京市",children: [{name: "朝阳区"}, {name: "东城区"}, {name: "西城区"}, {name: "崇文区"}, {name: "宣武区"}]},
+             {name: "北京市",children: [{name: "朝阳区"}, {name: "东城区"}, {name: "西城区"}, {name: "崇文区"}, {name: "宣武区"}]},
+             {name: "北京市",children: [{name: "朝阳区"}, {name: "东城区"}, {name: "西城区"}, {name: "崇文区"}, {name: "宣武区"}]}
+        ];
+
+        let leftHtmlStr = "";
+        let rightHtmlStr = "";
+
+        // 根据数组元素组装tabpicker元素
+        for(let i=0;i<tabAry.length;i++) {
+            leftHtmlStr +="<div class='tabEle' data='"+(i+1)+"'>";
+            leftHtmlStr += tabAry[i].name;
+            leftHtmlStr += "</div>";
+            if (tabAry[i].children !== undefined && tabAry[i].children.length>0) {
+                rightHtmlStr += "<div class='bodyEle' data='"+(i+1)+"'>";
+                for(let j=0; j < tabAry[i].children.length;j++) {
+                    rightHtmlStr+="<div class='bodyEleContent'>";
+                    rightHtmlStr+="<input type='checkbox' name='chx_pickerval' value='"+tabAry[i].children[j].name+"' /><span style='margin-left: 10px;'>"+tabAry[i].children[j].name+"</span>";    
+                    rightHtmlStr += "</div>";
+                }
+                rightHtmlStr += "</div>";
+            }else {
+                rightHtmlStr += "<div class='bodyEle' data='"+(i+1)+"'>";
+                rightHtmlStr += "</div>";
+            }
+        }
+
+        $(".left").html(leftHtmlStr);
+        $(".right").html(rightHtmlStr);
+
+
+        $(".one").click(function(){
+            // 点击了取消
+            $("#bgDiv").hide();
+            $("#tabpicker").hide();
+        });
+
+        $(".three").click(function(){
+            // 点击了确定
+            // 中间执行很多代码..............
+            let strVal = "";
+            $("input:checkbox[name='chx_pickerval']").each(function(idx, item){
+                if ($(this).attr('checked')) {
+                    // console.log("idx--->", idx);
+                    // console.log("item-->", item);
+                    console.log("val--->", $(this).val());
+                    strVal+=$(this).val() + ",";
+                }
+            });
+
+            $("#mytabpicker").val(strVal.substring(0, strVal.length-1));
+            $("#bgDiv").hide();
+            $("#tabpicker").hide();
+        });
+
+        $(".tabEle").click(function(){
+            $(".tabEle").each(function(idx, item){
+                $(this).removeClass("tabSelect");
+            });
+            $(this).addClass("tabSelect");
+
+            let d = $(this).attr("data");
+            console.log("d--->", d);
+
+
+            $(".bodyEle").removeClass("bodySelect");
+            $(".bodyEle").each(function(idx, item){
+                let body_data = $(this).attr("data");
+                if (d === body_data) {
+                    $(this).addClass("bodySelect");
+                }
+            });
+
+
+        });
+    })
+</script>

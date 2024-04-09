@@ -1,0 +1,73 @@
+.param{
+    display:none;
+    background-color: #F0F0F0;
+    width:100%;
+    position: absolute;
+    padding:0;
+
+}
+
+.param .layui-form-label{
+    margin-left: 0px;
+    padding: 8px 8px;
+    height: 38px;
+    line-height: 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px 0 0 2px;
+    text-align: center;
+    background-color: #0094FF;
+    color:white;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
+.param .layui-form-item{
+    display: flex;
+    margin-bottom:0px;
+}
+
+
+.param .layui-input-block{
+    display:flex;
+    margin-left:0px;
+
+}
+/**
+控制下拉树选项高度
+*/
+.xm-tree{
+    line-height:20px;
+}
+
+.param .hide{
+    display: none;
+}
+
+.layui-input-block>input:hover{
+    box-shadow: 0px 0px 1px #44B4FF;
+    background-color: #FFFFFF;
+    border-color: #44B4FF;
+}
+
+.layui-input-block>select:hover{
+    box-shadow: 0px 0px 1px #44B4FF;
+    background-color: #FFFFFF;
+    border-color: #44B4FF;
+}
+
+.xm-select-default:hover{
+    box-shadow: 0px 0px 1px #44B4FF;
+    background-color: #FFFFFF;
+    border-color: #44B4FF;
+}
+
+.layui-input-block ul:hover{
+    box-shadow: 0px 0px 1px #44B4FF;
+    background-color: #FFFFFF;
+    border-color: #44B4FF;
+}
+
+

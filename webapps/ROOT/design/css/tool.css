@@ -1,0 +1,267 @@
+/**
+设计器工具栏样式
+**/
+.sheet {
+    width: 100%;
+    height: 74px;
+    background: #FFFFFF;
+   /* min-height: 58px;*/
+    display: flex;
+    align-items: center;
+}
+
+.sheet .item{
+    height:100%;
+    width:4%;
+}
+
+.item .item-top{
+    height: 60%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.item-top img{
+    width: 20px;
+    height: 20px;
+}
+
+.item-top img:hover{
+    background-color: transparent;
+}
+
+.item .item-bottom{
+    height: 40%;
+    color:#4E5969;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    font-size:12px;
+}
+
+
+.item-special{
+    width:15%;
+    height:100%;
+}
+
+.item-special .item-top{
+    height: 55%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.item-special .item-bottom{
+    height: 45%;
+    color:#4E5969;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    font-size:12px;
+}
+
+.item-special .item-bottom .item-bottom-item{
+    height: 100%;
+    color:#4E5969;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size:12px;
+}
+
+.item-special .item-bottom .item-bottom-item img{
+    width: 18px;
+    height: 18px;
+}
+
+.item-special .item-top .fontFamily{
+    width: 80px;
+    margin-right:5px;
+    height:25px;
+    font-size:12px;
+}
+
+.item-special .item-top .fontSize{
+    width: 50px;
+    height:25px;
+    font-size:12px;
+}
+
+.item-special-1{
+    width:12%;
+    height:100%;
+}
+
+.item-special-1 .item-top{
+    height: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-special-1 .item-top .item-top-item{
+    width:24%;
+    height: 100%;
+    color:#4E5969;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size:12px;
+}
+
+
+.item-special-1 .item-top .item-top-item img{
+    border: 1px dashed lightgray;
+}
+
+
+.item-special-1 .item-bottom{
+    height: 45%;
+    color:#4E5969;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    font-size:12px;
+}
+
+.item-special-1 .item-bottom .item-bottom-item{
+    width:24%;
+    height: 100%;
+    color:#4E5969;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size:12px;
+}
+
+.item-special-1 .item-bottom .item-bottom-item img{
+    width: 20px;
+    height: 20px;
+}
+
+.item-special-2{
+    width:9%;
+    height:100%;
+}
+
+.item-special-2 .item-top{
+    height: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-special-2 .item-top .item-top-item{
+    width:33%;
+    height: 100%;
+    color:#4E5969;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size:12px;
+}
+
+.item-special-2 .item-bottom{
+    height: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-special-2 .item-bottom .item-bottom-item{
+    width:33%;
+    height: 100%;
+    color:#4E5969;
+    display: flex;
+    align-items:  center;
+    justify-content: center;
+    font-size:12px;
+}
+
+.item-special-2 .item-bottom-top .item-bottom-item img{
+    border: 1px dashed lightgray;
+}
+
+.item-special-2 .item-bottom .item-bottom-item img{
+    width: 20px;
+    height: 20px;
+}
+
+/**
+分割线
+*/
+.divideLine{
+    width:2%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divideLine div{
+    width:1px;
+    height:70%;
+    border-left: 1px solid lightgray;
+    background-color: lightgray;
+}
+
+
+.form {
+    width: 100%;
+    height:74px;
+    background: #FFFFFF;
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+}
+
+.form .item{
+    height:100%;
+    width:4%;
+}
+
+.form .item-1{
+    height:100%;
+    width:6%;
+    cursor: pointer;
+}
+
+.form .item-1:hover{
+    background-color: #B7E1FF;
+}
+
+.item-1:hover{
+    /*
+    background-color: #B7E1FF;
+    */
+}
+
+.form .item-1 .item-top{
+    height: 60%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.item-1 .item-top img{
+    width: 20px;
+    height: 20px;
+}
+
+
+.form .item-1 .item-bottom{
+    height: 40%;
+    color:#4E5969;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    font-size:12px;
+}
+
+
+
+
+
+

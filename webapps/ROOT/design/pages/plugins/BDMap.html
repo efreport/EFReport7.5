@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="adress=no">
+    <script src="../../js/jquery-1.11.3.min.js"></script>
+    <script src="../../js/echarts-4.1.0.min.js"></script>
+    <script src="../../js/layui.js"></script>
+    <script src="../../js/spectrum.js"></script>
+    <script src="../../js/json-viewer.js"></script>
+</head>
+<body>
+<div>
+    <div class="layui-tab" style="margin:0px;">
+        <ul class="layui-tab-title" id="mainTab">
+            <li class="layui-this">属性</li>
+            <li>json</li>
+        </ul>
+        <div class="layui-tab-content" style="height:400px;">
+
+            <div class="layui-tab-item layui-show">
+                <div class="plugin-container" style="height:400px;">
+                    <div class="chart-panel" id="plugin">
+                    </div>
+                    <div class="property-panel" style="height:400px;">
+                        <div class="layui-tab">
+                            <ul class="layui-tab-title" id="lay_expend" style="width: 20px;">
+                                <li class="layui-this">属<br>性
+                            </ul>
+                            <div class="layui-tab-content" style="width: 100%;height:400px;padding:5px;">
+                                <div class="layui-tab-item layui-show" id="title"
+                                     style="overflow: auto;white-space: normal;height:390px;">
+                                    <div id="chart" class="chart">
+
+                                        <table style="width: 100%; display: table;">
+                                            <tbody>
+                                            <tr>
+                                                <td style="width:100px;">显示标题</td>
+                                                <td style="width:130px;"><select id="titleShow">
+                                                    <option value="1">显示</option>
+                                                    <option value="0">不显示</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>标题文本</td>
+                                                <td><input type="text" id="titleText" autocomplete="off" value="销量图">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>背景颜色</td>
+                                                <td>
+                                                    <div style="width: 100px;margin-right:5px;display:table-cell"><input
+                                                            type="text"
+                                                            id="titleBgInput"
+                                                            style="margin-right:5px;" value="#00000000">
+                                                    </div>
+                                                    <div id="titleBg"
+                                                         style="width: 80px; display: table-cell; height: 29px; border: 1px solid rgb(213, 213, 213); background-color: rgb(255, 255, 255);"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>上边距</td>
+                                                <td><input type="text" id="title-top" autocomplete="off"
+                                                           class="position"
+                                                           placeholder="" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>下边距</td>
+                                                <td><input type="text" id="title-bottom" autocomplete="off"
+                                                           class="position"
+                                                           placeholder="" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>左边距</td>
+                                                <td><input type="text" id="title-left" autocomplete="off"
+                                                           class="position"
+                                                           placeholder="" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>右边距</td>
+                                                <td><input type="text" id="title-right" autocomplete="off"
+                                                           class="position"
+                                                           placeholder="" value="0"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>文本样式</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>颜色</td>
+                                                <td>
+                                                    <div style="width: 100px;margin-right:5px;display:table-cell"><input
+                                                            type="text"
+                                                            id="titleColorInput"
+                                                            style="margin-right:5px;"
+                                                            value="#333333">
+                                                    </div>
+                                                    <div id="titleColor"
+                                                         style="width: 80px; display: table-cell; height: 29px; border: 1px solid rgb(213, 213, 213); background-color: black;"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体风格</td>
+                                                <td><select id="titleStyle">
+                                                    <option value="normal">正常</option>
+                                                    <option value="italic">斜体</option>
+                                                    <option value="oblique">倾斜</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体粗细</td>
+                                                <td><select id="titleWeight">
+                                                    <option value="normal">正常</option>
+                                                    <option value="bold" selected>加粗</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体名称</td>
+                                                <td><select id="titleFont">
+                                                    <option value="sans-serif">sans-serif</option>
+                                                    <option value="serif">serif</option>
+                                                    <option value="monospace">monospace</option>
+                                                    <option value="Arial">Arial</option>
+                                                    <option value="Microsoft YaHei">Microsoft YaHei</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体大小</td>
+                                                <td><input type="text" autocomplete="off" id="titleSize" value="18">
+                                                </td>
+                                            </tr>
+
+
+                                           <tr>
+                                               <td>数据来源</td>
+                                               <td></td>
+                                           </tr>
+                                           <tr>
+                                               <td style="width:88px;">数据来源</td>
+                                               <td style="width:114px;">
+                                                   <select id="dataSource">
+                                                       <option value="cell" selected>单元格数据</option>
+                                                       <option value="ds">数据集数据</option>
+                                                   </select>
+                                               </td>
+                                           </tr>
+                                           <tr id="dsTr" style="display:none;">
+                                               <td style="width:88px;">数据集</td>
+                                               <td style="width:114px;">
+                                                   <select id="ds">
+
+                                                   </select>
+                                               </td>
+                                           </tr>
+                                           <tr>
+                                               <td>地名</td>
+                                               <td></td>
+                                           </tr>
+                                           <tr id="categoryTr">
+                                               <td style="width:88px;">数据</td>
+                                               <td style="width:114px;">
+                                                   <input type="text" autocomplete="off" id="category"
+                                                          class="position">
+                                               </td>
+                                           </tr>
+                                           <tr id="categoryFieldTr" style="display:none;">
+                                               <td style="width:88px;">数据列</td>
+                                               <td style="width:114px;">
+                                                   <select id="categoryField">
+                                                   </select>
+                                               </td>
+                                           </tr>
+                                           <tr>
+                                               <td>经度</td>
+                                               <td></td>
+                                           </tr>
+                                           <tr id="seriesTr">
+                                               <td style="width:88px;">数据</td>
+                                               <td style="width:114px;">
+                                                   <input type="text" autocomplete="off" id="series" class="position">
+                                               </td>
+                                           </tr>
+                                           <tr id="seriesFieldTr" style="display:none;">
+                                               <td style="width:88px;">数据列</td>
+                                               <td style="width:114px;">
+                                                   <select id="seriesField">
+                                                   </select>
+                                               </td>
+                                           </tr>
+                                            <tr>
+                                                <td>纬度</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr id="seriesTr1">
+                                                <td style="width:88px;">数据</td>
+                                                <td style="width:114px;">
+                                                    <input type="text" autocomplete="off" id="series1" class="position">
+                                                </td>
+                                            </tr>
+                                            <tr id="seriesFieldTr1" style="display:none;">
+                                                <td style="width:88px;">数据列</td>
+                                                <td style="width:114px;">
+                                                    <select id="seriesField1">
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                           <tr>
+                                               <td>值</td>
+                                               <td></td>
+                                           </tr>
+                                           <tr id="valueTr">
+                                               <td style="width:88px;">数据</td>
+                                               <td style="width:114px;">
+                                                   <input type="text" autocomplete="off" id="value" class="position">
+                                               </td>
+                                           </tr>
+                                           <tr id="valueFieldTr" style="display:none;">
+                                               <td style="width:88px;">数据列</td>
+                                               <td style="width:114px;">
+                                                   <select id="valueField">
+                                                   </select>
+                                               </td>
+                                           </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="layui-tab-item">
+                <div class="json-container">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+<script src='http://api.map.baidu.com/api?v=2.0&ak=NRKtpwSEc93WaYZ3ri7pTttH0ADfDiUu'></script>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<script src="../../js/echarts-4.1.0.min.js"></script>
+<script src="../../js/layui.js"></script>
+<script src="../../js/spectrum.js"></script>
+<script src="../../js/json-viewer.js"></script>
+
+<script type="text/javascript">
+    var layer;
+    var dsArray = [];//{"ds1":"a,b,c","ds2":"a,b,c,d"}
+    var dsMap = {};
+    var templateIndex;
+    var base;
+    var fonts = [];
+    var option;
+
+    function init(ip, dsA, index, font, dMap, opt , isFirst) {
+        base = ip;
+        dsArray = dsA;
+        templateIndex = index;
+        fonts = font;
+        dsMap = dMap;
+        option = opt;
+
+        $.each(dsArray, function (index, element) { //初始化所有DS
+            $('#ds').append('<option value="' + element + '">' + element + '</option>');
+        });
+
+        var ds1 = dsArray[0];
+        $('#ds').val(ds1).prop("selected", true); //选中第一个结果集
+        let key = templateIndex + '@#' + ds1;
+        var dsField = dsMap[key];
+        if (dsField != undefined) { //当前报表包含数据集时
+            var dsFields = dsField;
+            $('#categoryField').append('<option value=""></option>');
+            $('#seriesField').append('<option value=""></option>');
+            $.each(dsFields, function (index, element) { //初始化字段
+                $('#categoryField').append('<option value="' + element + '">' + element + '</option>');
+                $('#seriesField').append('<option value="' + element + '">' + element + '</option>');
+                $('#valueField').append('<option value="' + element + '">' + element + '</option>');
+            });
+        }
+        $('#titleFont').empty();
+        $('#legendFamily').empty();
+        $.each(fonts, function (index, element) {
+            $('#titleFont').append('<option value="' + element + '">' + element + '</option>');
+            $('#legendFamily').append('<option value="' + element + '">' + element + '</option>');
+        });
+        if(isFirst){
+            plugin.init();
+        }else{
+            plugin.initByJson(option);
+        }
+    }
+
+    layui.use('element', function () {
+        var element = layui.element;
+        $('#mainTab').on('click', function (title) {
+            if (title.target.id == "json") {//切换到json tab 页面时
+                $('.json-container').empty();
+                $('.json-container').jsonViewer(plugin.instance.getOption());
+            };
+            if (title.target.id == "props") {
+                plugin.reSetOption(); //添加自定义属性
+            }
+        });
+
+    });
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+    /**
+     * Created by whj on 2019/9/10.
+     */
+    var plugin = {
+        instance: {},  //Echart实例
+        optionJson: {},
+        backUpJson: {}, //备份JSON
+        defCode: {}, //扩展属性
+        saveJson: {
+            dataSource: 'cell',
+            dsName: '',
+            categoryData: '',
+            seriesData: '',
+            seriesData1: '',
+            valueData: '',
+            theme: '' //主题
+        }, //保存到内核的json
+        util: {
+            isPositiveNumber: function (num) { //判断是否是正整数
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                return g.test(num);
+            },
+            isLeft: function (val) {
+                if ($.inArray(val, ['left', 'center', 'right']) == -1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            isTop: function (val) {
+                if ($.inArray(val, ['top', 'middle', 'bottom']) == -1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            isAuto: function (val) {
+                if (val == 'auto') {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            isNoNegativeNumber: function (num) {
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) {
+                    return true;
+                } else {
+                    if (num == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            isPercentNumber: function (num) { //是否是百分整数
+                var g = new RegExp(/^\d+%$/); //不包含小数
+                //new RegExp(/^\d+\.{0,1}\d+%$/); //包含小数
+                if (g.test(num)) {
+                    return true;
+                } else {
+                    if (num == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            isRotateNumber: function (num) {
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                var g1 = /^-[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) { //是正整数
+                    if (num <= 90) {
+                        return true;
+                    } else {
+                        //layer.alert("请输入-90到90间整数!");
+                        efalert(layer , "请输入-90到90间整数!");
+                        return false;
+                    }
+                } else if (g1.test(num)) {
+                    if (num >= -90) {
+                        return true;
+                    } else {
+                        //layer.alert("请输入-90到90间整数!");
+                        efalert(layer , "请输入-90到90间整数!");
+                        return false;
+                    }
+                } else if(num == 0){
+                    return true;
+                }
+            },
+            HexToRgba: function (val) {
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{8})$/;
+                var sColor = val.toLowerCase();
+                if (sColor && reg.test(sColor)) {
+                    if (sColor.length === 4) {
+                        var sColorNew = "#";
+                        for (var i = 1; i < 4; i += 1) {
+                            sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
+                        }
+                        sColor = sColorNew;
+                    }
+                    //处理六位的颜色值
+                    var sColorChange = [];
+                    for (var i = 1; i < 9; i += 2) {
+                        if (i < 7) {
+                            sColorChange.push(parseInt("0x" + sColor.slice(i, i + 2)));
+                        } else {
+                            var number = parseInt("0x" + sColor.slice(i, i + 2));
+                            sColorChange.push(number / 255);
+                        }
+
+                    }
+                    return "RGBA(" + sColorChange.join(",") + ")";
+                } else {
+                    return sColor;
+                }
+            },
+            HexToRgb: function (val) {
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+                var sColor = val.toLowerCase();
+                if (sColor && reg.test(sColor)) {
+                    if (sColor.length === 4) {
+                        var sColorNew = "#";
+                        for (var i = 1; i < 4; i += 1) {
+                            sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
+                        }
+                        sColor = sColorNew;
+                    }
+                    //处理六位的颜色值
+                    var sColorChange = [];
+                    for (var i = 1; i < 7; i += 2) {
+                        sColorChange.push(parseInt("0x" + sColor.slice(i, i + 2)));
+                    }
+                    return "RGB(" + sColorChange.join(",") + ")";
+                } else {
+                    return sColor;
+                }
+            },
+
+            RgbToHex: function (val) {
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+                if (/^(rgb|RGB)/.test(val)) {
+                    var aColor = val.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+                    var strHex = "#";
+                    for (var i = 0; i < aColor.length; i++) {
+                        var hex = Number(aColor[i]).toString(16);
+                        if (hex === "0") {
+                            hex += hex;
+                        }
+                        strHex += hex;
+                    }
+                    if (strHex.length !== 7) {
+                        strHex = val;
+                    }
+                    return strHex;
+                } else if (reg.test(val)) {
+                    var aNum = val.replace(/#/, "").split("");
+                    if (aNum.length === 6) {
+                        return val;
+                    } else if (aNum.length === 3) {
+                        var numHex = "#";
+                        for (var i = 0; i < aNum.length; i += 1) {
+                            numHex += (aNum[i] + aNum[i]);
+                        }
+                        return numHex;
+                    }
+                } else {
+                    return val;
+                }
+            },
+            RgbaToHex: function (val) {
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{8})$/;
+                if (/^(rgba|RGBA)/.test(val)) {
+                    var aColor = val.replace(/(?:\(|\)|rgba|RGBA)*/g, "").split(",");
+                    var strHex = "#";
+                    for (var i = 0; i < aColor.length; i++) {
+                        if (i == 3) {
+                           /* var hex = (Number(aColor[i]) * 255).toString(16);
+                            if (hex === "0") {
+                                hex += hex;
+                            }*/
+                            var hex = plugin.util.alphaToHex(Number(aColor[i]));
+                            strHex += hex;
+                        } else {
+                            var hex = Number(aColor[i]).toString(16);
+                            if (hex === "0") {
+                                hex += hex;
+                            }
+                            strHex += hex;
+                        }
+
+                    }
+
+                    //if(strHex.length !== 9){
+                    //strHex = val;
+                    //}
+                    return strHex;
+                } else if (reg.test(val)) {
+                    var aNum = val.replace(/#/, "").split("");
+                    if (aNum.length === 6) {
+                        return val;
+                    } else if (aNum.length === 3) {
+                        var numHex = "#";
+                        for (var i = 0; i < aNum.length; i += 1) {
+                            numHex += (aNum[i] + aNum[i]);
+                        }
+                        return numHex;
+                    }
+                } else {
+                    return val;
+                }
+            },
+            CheckIsHex6: function (bgVal) {
+                var type = "^#[0-9a-fA-F]{6}$";
+                var re = new RegExp(type);
+                if (bgVal.match(re) == null) {
+                    type = "^[rR][gG][Bb][\(]([\\s]*(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?)[\\s]*,){2}[\\s]*(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)[\\s]*[\)]{1}$";
+                    re = new RegExp(type);
+                    if (bgVal.match(re) == null) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            },
+            CheckIsHex8: function (bgVal) {
+                var type = "^#[0-9a-fA-F]{8}$";
+                var re = new RegExp(type);
+                if (bgVal.match(re) == null) {
+                    type = "^[rR][gG][Bb][\(]([\\s]*(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?)[\\s]*,){2}[\\s]*(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)[\\s]*[\)]{1}$";
+                    re = new RegExp(type);
+                    if (bgVal.match(re) == null) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            },
+            alphaToHex: function (val) {
+                var num = val * 255;
+                if(num == 0){
+                    return '00';
+                }else{
+                    var value = (Math.round(num)).toString(16);
+                    if(value.length == 1){
+                        value = '0' + value;
+                    }
+                    return value;
+                }
+            }
+
+        },
+        colors: [
+            ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)", "rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(255, 255, 255)"],
+            ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)", "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"],
+            ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)", "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)", "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)",
+                "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)", "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)",
+                "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)", "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+                "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)", "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)", "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+        ],
+        colorOpt: {
+            allowEmpty: true,
+            showInput: true,
+            containerClassName: "full-spectrum",
+            showInitial: true,
+            showPalette: true,
+            showSelectionPalette: false,
+            showAlpha: true,
+            maxPaletteSize: 10,
+            preferredFormat: "hex",
+
+            change: function (color) { //修改title的背景颜色
+                var hexColor = "transparent";
+
+                if (color) {
+                    if (color.alpha == 1) {
+                        hexColor = color.toHexString();
+                    } else {
+                        hexColor = color.toHexString() + plugin.util.alphaToHex(color.alpha);
+                    }
+
+                    $(this).css("background-color", hexColor);
+                    $(this).prev().find('input').val(hexColor);
+                    if ($(this).attr('id') == 'titleBg') {
+                        plugin.title.changeBgColor(plugin.util.HexToRgba(hexColor)); //将Hex转为rgb数据
+                    } else if ($(this).attr('id') == 'titleColor') {
+                        plugin.title.changeTitleColor(plugin.util.HexToRgba(hexColor));
+                    }
+                }
+            },
+            beforeShow: function () {
+
+            },
+            hide: function () {
+
+            },
+            palette: this.colors
+        },
+
+        initColorPlugin: function (id) {  //初始化颜色选择控件
+            $('#' + id).spectrum(this.colorOpt);
+        },
+        bind: function () {
+
+            plugin.initColorPlugin('titleBg');
+            plugin.initColorPlugin('titleColor');
+
+            $('#titleShow').bind('change', function () {
+                if ($(this).val() == '0') {
+                    plugin.title.isVisible(false);
+                } else {
+                    plugin.title.isVisible(true);
+                }
+            });
+            $('#titleText').bind('change', function () {
+                plugin.title.changeText($(this).val());
+            });
+
+            $('#titleSize').bind('change', function () {
+                if (plugin.util.isPositiveNumber($(this).val())) {
+                    plugin.title.changeTitleSize($(this).val());
+                } else {
+                    //layer.alert("请输入正确的数字!");
+                    efalert(layer , "请输入正确的数字");
+                }
+            });
+
+            $('#titleBgInput').bind('change', function () {
+                if (plugin.util.CheckIsHex6($(this).val())) {
+                    plugin.title.changeBgColor(plugin.util.HexToRgb($(this).val()));
+                } else if (plugin.util.CheckIsHex8($(this).val())) {
+                    plugin.title.changeBgColor(plugin.util.HexToRgba($(this).val()));
+                }
+                else {
+                    //layer.alert("请输入正确的颜色!");
+                    efalert(layer , "请输入正确的颜色");
+                }
+
+            });
+
+            $('#labelColorInput').bind('change', function () {
+                if (plugin.util.CheckIsHex6($(this).val())) {
+                    plugin.series.labelColor(plugin.util.HexToRgb($(this).val()));
+                    plugin.instance.setOption({
+                        labelColor:plugin.util.HexToRgb($(this).val())
+                    })
+                } else if (plugin.util.CheckIsHex8($(this).val())) {
+                    plugin.series.labelColor(plugin.util.HexToRgba($(this).val()));
+                    plugin.instance.setOption({
+                        labelColor:plugin.util.HexToRgb(plugin.util.HexToRgba($(this).val()))
+                    })
+                }
+                else {
+                    //layer.alert("请输入正确的颜色!");
+                    efalert(layer , "请输入正确的颜色");
+                }
+
+            });
+
+            $('#labelSize').bind('change',function(){
+                if (plugin.util.isPositiveNumber($(this).val())) {
+                    plugin.series.labelSize($(this).val());
+                    plugin.instance.setOption({
+                        labelSize:$(this).val()
+                    })
+                } else {
+                    efalert(layer , "请输入正确的数字");
+                }
+            });
+
+            $('#title-top').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isTop($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.title.changeTop($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.title.changeTop($(this).val());
+                }
+            });
+            $('#title-bottom').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.title.changeBottom($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.title.changeBottom($(this).val());
+                }
+            });
+            $('#title-left').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isLeft($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.title.changeLeft($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.title.changeLeft($(this).val());
+                }
+            });
+            $('#title-right').bind('change', function () {
+                if (plugin.util.isNoNegativeNumber($(this).val()) || plugin.util.isPercentNumber($(this).val()) || plugin.util.isAuto($(this).val())) {
+                    plugin.title.changeRight($(this).val());
+                } else {
+                    $(this).val('auto');
+                    plugin.title.changeRight($(this).val());
+                }
+            });
+            $('#titleStyle').bind('change', function () {
+                plugin.title.changeFontStyle($(this).val());
+            });
+            $('#titleFont').bind('change', function () {
+                plugin.title.changeFont($(this).val());
+            })
+
+            $('#titleWeight').bind('change', function () {
+                plugin.title.changeFontWeight($(this).val());
+            });
+
+
+            $('#category').bind('change', function () { //分类
+                plugin.saveJson.categoryData = $(this).val();
+            })
+
+            $('#series').bind('change', function () { //系列
+                plugin.saveJson.seriesData = $(this).val();
+            })
+
+            $('#series1').bind('change', function () { //系列
+                plugin.saveJson.seriesData1 = $(this).val();
+            })
+
+            $('#value').bind('change', function () { //值
+                plugin.saveJson.valueData = $(this).val();
+            })
+
+            $('#categoryField').bind('change' , function(){//字段切换事件
+                plugin.saveJson.categoryData = $(this).val();
+            });
+
+            $('#seriesField').bind('change' , function(){//字段切换事件
+                plugin.saveJson.seriesData = $(this).val();
+            });
+
+            $('#seriesField1').bind('change' , function(){//字段切换事件
+                plugin.saveJson.seriesData1 = $(this).val();
+            });
+
+            $('#valueField').bind('change' , function(){//字段切换事件
+                plugin.saveJson.valueData = $(this).val();
+            });
+
+            $('#labelName').bind('change' , function(){
+                plugin.instance.setOption({
+                    labelText:$(this).val()
+                })
+            })
+
+            $('#dataSource').bind('change',function(){//绑定数据来源事件
+
+                var dataSource = $(this).val();
+                if(dataSource == 'cell'){ //如果来自于单元格
+
+                    plugin.saveJson.dataSource = 'cell'; //设置数据来源
+
+                    $('#dsTr').hide();
+                    $('#categoryFieldTr').hide();
+                    $('#seriesFieldTr').hide();
+                    $('#seriesFieldTr1').hide();
+                    $('#valueFieldTr').hide();
+                    $('#categoryTr').show();
+                    $('#seriesTr').show();
+                    $('#seriesTr1').show();
+                    $('#valueTr').show();
+
+                    plugin.saveJson.categoryData = $('#category').val(); //设置分类数据
+                    plugin.saveJson.seriesData = $('#series').val(); //设置系列数据
+                    plugin.saveJson.seriesData1 = $('#series1').val(); //设置系列数据
+                    plugin.saveJson.valueData = $('#value').val(); //设置结果数据
+                }else{
+                    plugin.saveJson.dataSource = 'ds'; //设置数据来源
+                    $('#dsTr').show();
+                    plugin.saveJson.dsName = $('#ds').val() //设置结果集
+                    $('#categoryFieldTr').show();
+                    plugin.saveJson.categoryData = $('#categoryField').val(); //设置分类数据
+                    $('#seriesFieldTr').show();
+                    plugin.saveJson.seriesData = $('#seriesField').val(); //设置系列数据
+                    $('#seriesFieldTr1').show();
+                    plugin.saveJson.seriesData1 = $('#seriesField1').val(); //设置系列数据
+                    $('#valueFieldTr').show();
+                    plugin.saveJson.valueData = $('#valueField').val(); //设置结果数据
+                    $('#categoryTr').hide();
+                    $('#seriesTr').hide();
+                    $('#seriesTr1').hide();
+                    $('#valueTr').hide();
+                }
+
+            });
+
+            $('#ds').bind('change',function(){ //绑定结果集修改事件
+                var dsName = $(this).val();
+                plugin.saveJson.dsName = dsName; //修改结果集的值
+                var field = dsMap["'" + dsName + "'"]; //获取结果集的字段
+                var fields = field.split(',');
+                $('#categoryField').empty();
+                $('#seriesField').empty();
+                $('#seriesField1').empty();
+                $('#valueField').empty();
+                $('#categoryField').append('<option value=""></option>'); //分类可以为空
+                $.each(fields , function(index , element){
+                    $('#categoryField').append('<option value="' + element + '">' + element +'</option>');
+                    $('#seriesField').append('<option value="' + element + '">' + element +'</option>');
+                    $('#seriesField1').append('<option value="' + element + '">' + element +'</option>');
+                    $('#valueField').append('<option value="' + element + '">' + element +'</option>');
+                    plugin.saveJson.categoryData = $('#categoryField').val(); //设置分类数据
+                    plugin.saveJson.seriesData = $('#seriesField').val(); //设置系列数据
+                    plugin.saveJson.seriesData1 = $('#seriesField1').val(); //设置系列数据
+                    plugin.saveJson.valueData = $('#valueField').val(); //设置结果数据
+                });
+            });
+
+
+        },
+        init: function () {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('plugin'));
+            plugin.instance = myChart;
+            plugin.instance.setOption(option);
+            plugin.instance.setOption({
+                animation: false
+            });
+            plugin.optionJson = option;
+            plugin.instance.setOption({ //设置默认属性
+                "theme": "default"
+            })
+            plugin.optionJson = option;
+            $('.json-container').jsonViewer(option);
+            plugin.bind();
+        },
+        initByJson: function (json) {
+            var option = JSON.parse(json);
+            var myChart = echarts.init(document.getElementById('plugin'));
+            plugin.instance = myChart;
+            plugin.instance.setOption(option);
+            plugin.instance.setOption({
+                animation: false
+            });
+
+            plugin.optionJson = plugin.instance.getOption();
+            $('.json-container').jsonViewer(plugin.optionJson);
+            plugin.initStyle(option);
+            plugin.bind();
+        },
+        initStyle: function (json) {
+
+            //加载数据
+            var dataSource = json.dataSource == undefined?'cell':json.dataSource;//数据来源
+            plugin.saveJson.dataSource = dataSource;
+
+            var dsName = json.dsName == undefined?'':json.dsName; //数据集
+            plugin.saveJson.dsName = dsName;
+
+            var seriesData = json.seriesData == undefined ? '' : json.seriesData;
+            plugin.saveJson.seriesData = seriesData;
+
+            var seriesData1 = json.seriesData1 == undefined ? '' : json.seriesData1;
+            plugin.saveJson.seriesData1 = seriesData1;
+
+            var categoryData = json.categoryData == undefined ? '' : json.categoryData;
+            plugin.saveJson.categoryData = categoryData;
+
+            var valueData = json.valueData == undefined ? '' : json.valueData;
+            plugin.saveJson.valueData = valueData;
+
+            var labelText = json.labelText; //显示文本
+            $('#labelName').val(labelText == undefined?"":labelText);
+
+            if(dataSource == 'cell'){
+                $('#dataSource').val(dataSource).prop('selected',true); //选中数据源
+                $('#dsTr').hide();
+                $('#categoryFieldTr').hide();
+                $('#seriesFieldTr').hide();
+                $('#seriesFieldTr1').hide();
+                $('#valueFieldTr').hide();
+                $('#categoryTr').show();
+                $('#seriesTr').show();
+                $('#seriesTr1').show();
+                $('#valueTr').show();
+
+                $('#category').val(categoryData);
+                $('#series').val(seriesData);
+                $('#series1').val(seriesData1);
+                $('#value').val(valueData);
+            }else{
+                $('#dataSource').val(dataSource).prop('selected',true);
+                $('#dsTr').show();
+                $('#ds').val(dsName).prop('selected' , true); //选中结果集
+                let key = templateIndex + '@#' + dsName;
+                //重新初始化下拉框
+                let fields = dsMap[key];
+                /*
+                 * 当在设计器上修改结果集名称后，根据option里面的DSName可能会找不到对应的Field，针对这种情况，将报表还原为单元格取数 whj
+                 * */
+                if(fields == undefined){
+
+                    $('#dataSource').val('cell').prop('selected',true); //选中数据源
+                    $('#dsTr').hide();
+                    $('#categoryFieldTr').hide();
+                    $('#seriesFieldTr').hide();
+                    $('#seriesFieldTr1').hide();
+                    $('#valueFieldTr').hide();
+                    $('#categoryTr').show();
+                    $('#seriesTr').show();
+                    $('#seriesTr1').show();
+                    $('#valueTr').show();
+
+                    $('#category').val('');
+                    $('#series').val('');
+                    $('#series1').val('');
+                    $('#value').val('');
+
+                }else{
+
+                    var dsFields = fields;
+
+                    $('#categoryField').empty();
+                    $('#seriesField').empty(); //清空下拉框
+                    $('#seriesField1').empty(); //清空下拉框
+                    $('#valueField').empty();
+                    $('#categoryField').append('<option value=""></option>');
+
+                    $.each(dsFields , function(index , element){ //初始化字段
+                        $('#categoryField').append('<option value="' + element + '">' + element +'</option>');
+                        $('#seriesField').append('<option value="' + element + '">' + element +'</option>');
+                        $('#seriesField1').append('<option value="' + element + '">' + element +'</option>');
+                        $('#valueField').append('<option value="' + element + '">' + element +'</option>');
+                    });
+
+                    $('#categoryFieldTr').show();
+
+                    $('#categoryField').val(categoryData).prop('selected' , true);
+
+                    $('#seriesFieldTr').show();
+
+                    $('#seriesField').val(seriesData).prop('selected' , true);
+
+                    $('#seriesFieldTr1').show();
+
+                    $('#seriesField1').val(seriesData1).prop('selected' , true);
+
+
+                    $('#valueFieldTr').show();
+
+                    $('#valueField').val(valueData).prop('selected' , true);
+
+                    $('#categoryTr').hide();
+                    $('#seriesTr').hide();
+                    $('#seriesTr1').hide();
+                    $('#valueTr').hide();
+                }
+
+            }
+
+            var title = json.title[0];
+            $('#titleText').val(title.text); //标题
+            //$('#titleBgInput').val(plugin.util.RgbToHex(title.backgroundColor));//标题背景颜色
+            //$('#titleBg').spectrum("set", plugin.util.RgbToHex(title.backgroundColor));
+            //$('#titleBg').css("background-color" , plugin.util.RgbToHex(title.backgroundColor));
+            if (title.backgroundColor.indexOf('RGBA') == -1) {
+                if (title.backgroundColor.indexOf('rgba') == -1) {
+                    $('#titleBgInput').val(plugin.util.RgbToHex(title.backgroundColor));//标题背景颜色
+                    $('#titleBg').css("background-color", plugin.util.RgbToHex(title.backgroundColor));
+                } else {
+                    $('#titleBgInput').val(plugin.util.RgbaToHex(title.backgroundColor));//标题背景颜色
+                    $('#titleBg').css("background-color", plugin.util.RgbaToHex(title.backgroundColor));
+                }
+            } else {
+                $('#titleBgInput').val(plugin.util.RgbaToHex(title.backgroundColor));//标题背景颜色
+                $('#titleBg').css("background-color", plugin.util.RgbaToHex(title.backgroundColor));
+            }
+
+            $('#title-top').val(title.top == undefined ? 0 : title.top);
+            $('#title-bottom').val(title.bottom == undefined ? 0 : title.bottom);
+            $('#title-left').val(title.left == undefined ? 0 : title.left);
+            $('#title-right').val(title.right == undefined ? 0 : title.right);
+
+
+            if (title.show == true) {
+                $('#titleShow').val("1").prop("selected", true); //是否显示标题
+            } else {
+                $('#titleShow').val("0").prop("selected", true); //是否显示标题
+            }
+            var textStyle = title.textStyle;
+            $('#titleSize').val(textStyle.fontSize);
+            var weight = textStyle.fontWeight;
+            if (weight == 'normal') {
+                $('#titleWeight').val('normal').prop("selected", true);
+            } else {
+                $('#titleWeight').val('bold').prop("selected", true);
+            }
+
+            if (textStyle.color.indexOf('RGBA') == -1) {
+                if (textStyle.color.indexOf('rgba') == -1) {
+                    $('#titleColorInput').val(plugin.util.RgbToHex(textStyle.color));
+                    $('#titleColor').css("background-color", plugin.util.RgbToHex(textStyle.color));
+                } else {
+                    $('#titleColorInput').val(plugin.util.RgbaToHex(textStyle.color));
+                    $('#titleColor').css("background-color", plugin.util.RgbaToHex(textStyle.color));
+                }
+            } else {
+                $('#titleColorInput').val(plugin.util.RgbaToHex(textStyle.color));
+                $('#titleColor').css("background-color", plugin.util.RgbaToHex(textStyle.color));
+            }
+
+            if (textStyle.fontStyle == undefined) {
+                $('#titleStyle option:first').prop("selected", true);
+            } else {
+                $('#titleStyle').val(textStyle.fontStyle).prop("selected", true);
+            }
+
+            if (textStyle.fontFamily == undefined) {
+                $('#titleFont option:first').prop("selected", true);
+            } else {
+                $('#titleFont').val(textStyle.fontFamily).prop("selected", true);
+            }
+
+        },
+        title: {
+            isVisible: function (flag) { //设置标题是否显示
+                if (plugin.instance) {
+                    plugin.instance.setOption({
+                        title: {
+                            show: flag
+                        }
+                    })
+                }
+            },
+            changeText: function (text) {  //修改标题文本
+                if (plugin.instance) {
+                    plugin.instance.setOption({
+                        title: {
+                            text: text
+                        }
+                    })
+                }
+                $('.json-container').jsonViewer(plugin.instance.getOption());
+
+            },
+            changeBgColor: function (color) { //修改标题背景颜色
+                plugin.instance.setOption({
+                    title: {
+                        backgroundColor: color
+                    }
+                })
+            },
+            changeTitleColor: function (color) { //修改标题文本颜色
+                plugin.instance.setOption({
+                    title: {
+                        textStyle: {
+                            color: color
+                        }
+                    }
+                })
+            },
+            changeTitleSize: function (size) { //设置标题大小
+                plugin.instance.setOption({
+                    title: {
+                        textStyle: {
+                            fontSize: size
+                        }
+                    }
+                })
+            },
+            changeLeft: function (px) {
+                plugin.instance.setOption({
+                    title: {
+                        left: px
+                    }
+                })
+            },
+            changeRight: function (px) {
+                plugin.instance.setOption({
+                    title: {
+                        right: px
+                    }
+                })
+            },
+            changeTop: function (px) {
+                plugin.instance.setOption({
+                    title: {
+                        top: px
+                    }
+                })
+            },
+            changeBottom: function (px) {
+                plugin.instance.setOption({
+                    title: {
+                        bottom: px
+                    }
+                })
+            },
+            changeFontStyle: function (style) {
+                plugin.instance.setOption({
+                    title: {
+                        textStyle: {
+                            fontStyle: style
+                        }
+                    }
+                })
+            },
+            changeFontWeight: function (weight) {
+                plugin.instance.setOption({
+                    title: {
+                        textStyle: {
+                            fontWeight: weight
+                        }
+                    }
+                })
+            },
+            changeFont: function (val) {
+                plugin.instance.setOption({
+                    title: {
+                        textStyle: {
+                            fontFamily: val
+                        }
+                    }
+                })
+            }
+        },
+        category: {},
+        series: {},
+        value: {},
+        toolTip: {}
+    }
+
+    function getOptions(){
+        plugin.reSetOption(); //判断并添加自定义属性
+        var baOption = plugin.baInstance.getOption(); //获取EChart基础属性
+        plugin.instance.setOption({ //将基础属性当做一个字段保存进option中
+            "backUpOption": baOption,
+            "hasInit":1
+        })
+        return plugin;
+    }
+
+</script>
+</html>

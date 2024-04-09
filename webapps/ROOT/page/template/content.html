@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8"/>
+    <link rel="stylesheet" href="../../lib/layui-v2.7.6/css/layui.css" media="all">
+    <style>
+        .redspan {
+            color: red;
+        }
+
+        .layui-form-checked[lay-skin=primary] i {
+            border-color: #0094FF !important;
+            background-color: #0094FF;
+        }
+
+        .layui-form-select dl dd.layui-this {
+            background-color: #0094FF !important;
+        }
+
+        .layui-form-select dl dd:hover {
+            background-color: #0094FF !important;
+        }
+
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 1px;
+        }
+
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+            background: #d5d5d5;
+        }
+
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+            border-radius: 10px;
+            background: #ffffff;
+        }
+
+        /* 修改radio选中状态的颜色信息 */
+        .layui-form-radio:hover *, .layui-form-radioed, .layui-form-radioed > i {
+            color: #0094FF !important;
+        }
+
+        .layui-form-checked span, .layui-form-checked:hover span {
+            background: #0094FF !important;
+        }
+
+    </style>
+</head>
+<body>
+<div class="x-body layui-anim layui-anim-up">
+    <div style="height: 30px;"></div>
+    <form id="main" class="layui-form">
+        <input type="hidden" name="id" value="0">
+
+        <div style="position: relative; width: 752px; height: auto; margin: auto;">
+            <div style="width: 250px; float: left;">
+                <div class="layui-form-item">
+                    <span class="redspan">*</span>名称
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 240px;">
+                        <input type="text" id="L_name" name="name" lay-verify="required" autocomplete="off"
+                               class="layui-input" disabled>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 250px; float: left;">
+                <div class="layui-form-item">
+                    <span class="redspan">*</span>路径
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 240px;">
+                        <input name="path1" readonly class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div style="width: 250px; float: left;">
+                <div class="layui-form-item">
+                    <span class="redspan">*</span>角色
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 240px;">
+
+                        <input type="hidden" name="roleId">
+                        <input type="text" name="role_name" lay-verify="required" class="layui-input"
+                               readonly="readonly">
+                        <div id="div_role_tree"
+                             style="position: absolute; display: none; z-index: 9999; background-color: #F5F7F8;">
+                            <div id="role_tree" class="demo-tree demo-tree-box"
+                                 style="width: 190px;height: 100px; overflow-y: auto;"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div style="position: relative; width: 752px; height: 10px; margin: auto;"></div>
+
+
+        <div id="upload_div_components" class="layui-form-item">
+            <div style="position: relative; width: 800px; height: auto; margin: auto;">
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
+                    <span style="font-size: 11px;color: #d5d5d5;">(支持多文件)</span>
+                    <div class="layui-upload-list" style="max-width: 800px;">
+                        <table class="layui-table">
+                            <colgroup>
+                                <col>
+                                <col width="150">
+                                <col width="260">
+                                <col width="150">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>文件名</th>
+                                <th>大小</th>
+                                <th>上传进度</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="demoList"></tbody>
+                        </table>
+                    </div>
+                    <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+                    <span style="font-size: 11px;color: #d5d5d5;">(选择文件上传后会自动显示在文件对应的模板名称和路径)</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="position: relative; width: 752px; height: 10px; margin: auto;"></div>
+
+        <div style="position: relative; width: 752px; height: auto; margin: auto;">
+
+            <!-- <div style="width: 250px; float: left;">
+                <div class="layui-form-item">
+                  <span class="redspan">*</span>缓存时间(小时)
+                </div>
+                <div class="layui-form-item">
+                  <div class="layui-input-inline" style="width: 240px;">
+                    <input type="text" name="cache_time"  class="layui-input" value="24" disabled >
+                  </div>
+                </div>
+            </div> -->
+
+            <div style="width: 250px; float: left; display:none;">
+                <div class="layui-form-item">
+                    <span class="redspan">*</span>分类
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 240px;">
+                        <input type="hidden" name="typeId">
+                        <input type="text" name="type_name" class="layui-input" readonly="readonly">
+
+                        <div id="div_type_tree"
+                             style="position: absolute; display: none; z-index: 9999; background-color: #F5F7F8;">
+                            <ul id="type_tree" class="demo-tree demo-tree-box"
+                                style="width: 190px;height: 160px; overflow-y: auto;"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="width: 250px; float: left;">
+
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div style="position: relative; width: 752px; height: 10px; margin: auto;"></div>
+        <div style="position: relative; width: 752px; height: auto; margin: auto;">
+            <div style="width: 250px; float: left;">
+                <div class="layui-form-item">
+                    <span class="redspan">*</span>状态
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 240px;">
+                        <input type="radio" name="status" value="0" title="禁用">
+                        <input type="radio" name="status" value="1" checked title="正常">
+                    </div>
+                </div>
+            </div>
+            <div style="width: 250px; float: left;">
+                <div class="layui-form-item">
+                    <span class="redspan">*</span>是否公开
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 240px;">
+                        <input type="radio" name="open" value="Y" title="是">
+                        <input type="radio" name="open" value="N" checked title="否">
+                    </div>
+                </div>
+            </div>
+            <div style="width: 250px; float: left;">
+                <div class="layui-form-item">
+                    <span class="redspan">*</span>是否缓存模板
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 240px;">
+                        <input type="radio" name="cache" value="Y" lay-filter="cache" title="是">
+                        <input type="radio" name="cache" value="N" lay-filter="cache" checked title="否">
+                    </div>
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div style="position: relative; width: 752px; height: 10px; margin: auto;"></div>
+
+        <div style="position: relative; width: 752px; height: auto; margin: auto;">
+
+            <div style="width: 250px; float: left;">
+                <div class="layui-form-item">
+                    <span class="redspan">*</span>缓存时间(小时)
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 240px;">
+                        <input type="text" name="cache_time" class="layui-input" value="24" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div style="width: 250px; float: left;">
+                <div class="layui-form-item">
+                    <span class="redspan">*</span>终端
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 240px;">
+                        <input type="checkbox" name="clientType" value="01" title="PC" checked>
+                        <input type="checkbox" name="clientType" value="10" title="Mobile">
+                    </div>
+                </div>
+            </div>
+            <div style="width: 250px; float: left;">
+                <div class="layui-form-item">
+                    <span class="redspan">*</span>是否发送邮件
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 200px;">
+                        <input type="radio" name="send" value="Y" lay-filter="send" title="是">
+                        <input type="radio" name="send" value="N" lay-filter="send" checked title="否">
+                    </div>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+
+        <div style="position: relative; width: 752px; height: 20px; margin: auto;"></div>
+
+        <div style="position: relative; width: 752px; height: auto; margin: auto; text-align: center;">
+            <button class="layui-btn layui-btn-normal" lay-filter="add" lay-submit="">
+                保存
+            </button>
+        </div>
+        <div style="position: relative; width: 752px; height: 20px; margin: auto;"></div>
+    </form>
+</div>
+</body>
+<script src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script src="../../js/common.js" charset="utf-8"></script>
+<script>
+    var paramid = 0;
+    var base = "";
+    var token = "";
+    var pageRoleAry = [];
+    var pageTypeAry = [];
+    var tempFileNames = [];
+    var tempFilePaths = [];
+
+    $(function () {
+        let id = GetQueryValue("id");
+        paramid = id;
+        $("input[name='id']").val(id);
+        let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+        base = server_base_url;
+        let tokn = window.sessionStorage.getItem("cur_token");
+        token = tokn;
+    });
+</script>
+
+<script type="text/javascript">
+    var form;
+    var tree;
+    layui.use(['tree', 'form', 'layer', 'upload', 'element'], function () {
+        $ = layui.jquery;
+        form = layui.form, layer = layui.layer;
+        tree = layui.tree;
+
+        var upload = layui.upload
+            , element = layui.element;
+
+
+        form.on('radio(cache)', function (data) {
+            if (data.value == 'Y') {
+                $('input[name="cache_time"]').attr('disabled', false);
+            } else {
+                $('input[name="cache_time"]').attr('disabled', true);
+            }
+        });
+
+        if (paramid > 0) {
+            $("#upload_div_components").hide();
+            $("#L_path").hide();
+            //$("#L_name").attr("readonly", true);
+            jQuery.get(base + "/template/get/" + paramid + "?token=" + token, {t: new Date().getTime()}, function (data) {
+                jQuery("input[name='id']").val(data.template.id);
+                jQuery("input[name='name']").val(data.template.name);
+                jQuery("input[name='path1']:eq(0)").val(data.template.path);
+                var status = data.template.status;
+                var statusval = status === true ? "1" : "0";
+                $("input:radio[name='status']").each(function () {
+                    if ($(this).val() == statusval) {
+                        $(this).attr("checked", true);
+                    }
+                });
+
+                var open = data.template.isOpen;
+                $("input:radio[name='open']").each(function () {
+                    if ($(this).val() == open) {
+                        $(this).attr("checked", true);
+                    }
+                });
+
+                var cache = data.template.isCache;
+                var cacheTime = data.template.cacheTime;
+                if (cache == 'Y') {
+                    $('input[name="cache_time"]').attr('disabled', false);
+                    $('input[name="cache_time"]').val(cacheTime);
+                }
+                $("input:radio[name='cache']").each(function () {
+                    if ($(this).val() == cache) {
+                        $(this).attr("checked", true);
+                    }
+                });
+
+                var send = data.template.isSend;
+                $("input:radio[name='send']").each(function () {
+                    if ($(this).val() == send) {
+                        $(this).attr("checked", true);
+                    }
+                });
+
+
+                if ("01" === data.template.clientType) {
+                    $("input[name='clientType'][value='01']").attr("checked", true).next().addClass("layui-form-checked");
+                    $("input[name='clientType'][value='10']").attr("checked", false).next().removeClass("layui-form-checked");
+                } else if ("10" === data.template.clientType) {
+                    $("input[name='clientType'][value='01']").attr("checked", false).next().removeClass("layui-form-checked");
+                    $("input[name='clientType'][value='10']").attr("checked", true).next().addClass("layui-form-checked");
+                    ;
+                } else if ("11" === data.template.clientType) {
+                    $("input[name='clientType'][value='01']").attr("checked", true).next().addClass("layui-form-checked");
+                    $("input[name='clientType'][value='10']").attr("checked", true).next().addClass("layui-form-checked");
+                }
+
+                if (data.template.typeId > 0) {
+                    jQuery("input[name='typeId']").val(data.template.typeId);
+                    if (pageTypeAry.length > 0) {
+                        initTypeNameValue(data.template.typeId, pageTypeAry);
+                    }
+                }
+
+                var _role_name = [];
+                if (data.roles.length > 0) {
+
+                    let idArys = data.roles;
+                    let new_id_ary = Array.from(new Set(idArys));
+                    data.roles = new_id_ary;
+
+                    jQuery("input[name='roleId']").val(data.roles.join(","));
+                    if (pageRoleAry.length > 0) {
+                        for (var i = 0; i < data.roles.length; i++) {
+                            for (let j = 0; j < pageRoleAry.length; j++) {
+                                if (pageRoleAry[j].id === data.roles[i]) {
+                                    _role_name.push(pageRoleAry[j].name);
+                                    pageRoleAry[j].checked = true;
+                                }
+                            }
+                        }
+                        initRoleTree(pageRoleAry);
+                    }
+                }
+                jQuery("input[name='role_name']").val(_role_name.join(","));
+                form.render();
+            });
+        }
+
+
+        form.on('submit(add)', function (data) {
+            if (data.field.name.length === 0) {
+                efalert(layer, '模板文件未上传！', 2);
+                return false;
+            }
+            if (data.field.path1.length === 0) {
+                efalert(layer, '模板文件未上传！', 2);
+                return false;
+            }
+            let cur_path1es = data.field.path1.split(",");
+            if (cur_path1es.length > 0) {
+                for (let k = 0; k < cur_path1es.length; k++) {
+                    if (cur_path1es[k].indexOf(".cel") < 0) {
+                        efalert(layer, '文件格式错误！', 2);
+                        return false;
+                    }
+                }
+            } else {
+                efalert(layer, '模板文件未上传！', 2);
+                return false;
+            }
+
+            var $clientType = $("input[name='clientType']:checked"), clientTypeVal = 0;
+            if (0 === $clientType.length) {
+                efalert(layer, '请至少选择一个终端！', 2);
+                return false;
+            } else {
+                $clientType.each(function () {
+                    clientTypeVal += parseInt($(this).val());
+                });
+                if (clientTypeVal === 1) {
+                    clientTypeVal = "01";
+                }
+                clientTypeVal = "" + clientTypeVal;
+            }
+
+            if (data.field.cache == 'Y') {
+                if (data.field.cache_time == '') {
+                    efalert(layer, '请输入缓存时间', 2);
+                }
+            }
+
+
+            var _formData = new FormData();
+            _formData.append("id", data.field.id);
+            _formData.append("name", data.field.name);
+            _formData.append("status", data.field.status);
+            _formData.append("isOpen", data.field.open);
+            _formData.append("isCache", data.field.cache);
+            _formData.append("isSend" , data.field.send);
+            _formData.append("cacheTime", data.field.cache_time);
+            _formData.append("typeId", data.field.typeId);
+            _formData.append("path", data.field.path1);
+            _formData.append("roleId", data.field.roleId);
+            _formData.append("clientType", clientTypeVal);
+            // _formData.append("modelId", data.field.modelId); //流程ID
+            // _formData.append("modelName", data.field.model_name); //流程名
+            // _formData.append("mf", document.getElementsByName("path")[0].files[0]);
+            if (data.field.id !== "" && parseInt(data.field.id) > 0) {
+                let param = {
+                    id: data.field.id,
+                    name: data.field.name,
+                    path: data.field.path1,
+                    status: data.field.status,
+                    isOpen: data.field.open,
+                    isCache: data.field.cache,
+                    cacheTime: data.field.cache_time,
+                    clientType: clientTypeVal,
+                    typeId: data.field.typeId,
+                    isSend:data.field.send
+                }
+                let news_ids_ary = [];
+                let id_arys = data.field.roleId.split(",");
+                if (id_arys.length > 0) {
+                    for (ik = 0; ik < id_arys.length; ik++) {
+                        news_ids_ary.push(id_arys[ik]);
+                    }
+                }
+                let nnew_ids_array = Array.from(new Set(news_ids_ary));
+                let param2 = {
+                    template: JSON.stringify(param),
+                    roleId: nnew_ids_array.join(",")
+                };
+                jQuery.ajax({
+                    url: base + "/template/update?token=" + token,
+                    type: "POST",
+                    data: param2,
+                    success: function (resp) {
+                        if (resp.state === "success") {
+                            efalert(layer, resp.message, 6);
+                            let cur_timer = window.setInterval(function () {
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
+                                parent.reloadTableW();
+                                window.clearInterval(cur_timer);
+                            }, 1500);
+                        } else {
+                            efalert(layer, resp.text, 2);
+                        }
+                    },
+                    error: function () {
+                        var url = '/home_index.html';
+                        window.location.href = url;
+                    }
+                });
+            } else {
+                //下面执行新增操作
+                let names = data.field.name.split(",");
+                let path1es = data.field.path1.split(",");
+                let ary = [];
+                for (let i = 0; i < names.length; i++) {
+                    let param = {
+                        id: 0,
+                        name: names[i],
+                        path: path1es[i],
+                        status: data.field.status,
+                        isOpen: data.field.open,
+                        isCache: data.field.cache,
+                        cacheTime: data.field.cache_time,
+                        clientType: clientTypeVal,
+                        typeId: data.field.typeId
+                    }
+                    ary.push(param);
+                }
+
+                let news_ids_ary = [];
+                let id_arys = data.field.roleId.split(",");
+                if (id_arys.length > 0) {
+                    for (ik = 0; ik < id_arys.length; ik++) {
+                        news_ids_ary.push(id_arys[ik]);
+                    }
+                }
+
+                if (news_ids_ary.length > 0) {
+                    for (jk = 0; jk < news_ids_ary.length; jk++) {
+                        news_ids_ary[jk] = parseInt(news_ids_ary[jk]);
+                    }
+                }
+                let nnew_ids_array = Array.from(new Set(news_ids_ary));
+
+                let param2 = {
+                    roleId: nnew_ids_array.join(","),
+                    template: JSON.stringify(ary)
+                };
+
+                jQuery.ajax({
+                    url: base + "/template/batchSave?token=" + token,
+                    type: "POST",
+                    data: param2,
+                    success: function (resp) {
+                        if (resp.state === "success") {
+                            efalert(layer, "保存成功", 6);
+                            let cur_timer = window.setInterval(function () {
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
+                                parent.reloadTableW();
+                                window.clearInterval(cur_timer);
+                            }, 1500);
+                        } else {
+                            efalert(layer, "保存失败", 2);
+                        }
+                    },
+                    error: function () {
+                        var url = '/home_index.html';
+                        window.location.href = url;
+                    }
+                });
+
+            }
+            return false;
+        });
+
+        //上传多文件列表
+        var uploadListIns = upload.render({
+            elem: '#testList'
+            , elemList: $('#demoList') //列表元素对象
+            , url: base + '/template/uploadTemplateCel?token=' + token //此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+            , accept: 'file'
+            , multiple: true
+            , number: 10
+            , auto: false
+            , bindAction: '#testListAction'
+            , choose: function (obj) {
+                var that = this;
+                var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                //读取本地文件
+                obj.preview(function (index, file, result) {
+                    var tr = $(['<tr id="upload-' + index + '">'
+                        , '<td>' + file.name + '</td>'
+                        , '<td>' + (file.size / 1024).toFixed(1) + 'kb</td>'
+                        , '<td><div class="layui-progress" lay-filter="progress-demo-' + index + '"><div class="layui-progress-bar" lay-percent=""></div></div></td>'
+                        , '<td>'
+                        , '<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
+                        , '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                        , '</td>'
+                        , '</tr>'].join(''));
+
+                    //单个重传
+                    tr.find('.demo-reload').on('click', function () {
+                        obj.upload(index, file);
+                    });
+
+                    //删除
+                    tr.find('.demo-delete').on('click', function () {
+                        delete files[index]; //删除对应的文件
+                        tr.remove();
+                        uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                    });
+
+                    that.elemList.append(tr);
+                    element.render('progress'); //渲染新加的进度条组件
+                });
+            }
+            , done: function (res, index, upload) { //成功的回调
+                var that = this;
+                if (res.state == "success") {
+                    //上传成功
+                    let fullFileName = res.fileName;
+                    tempFilePaths.push(res.fileName); // 将完整文件名作为路径进行保存，保存在tempFilePaths数组中
+                    tempFileNames.push(fullFileName.substr(0, fullFileName.length - 4)); // 将文件名保存为模板名
+
+                    var tr = that.elemList.find('tr#upload-' + index)
+                        , tds = tr.children();
+                    tds.eq(3).html(''); //清空操作
+                    delete this.files[index]; //删除文件队列已经上传成功的文件
+                    return;
+                }
+                this.error(index, upload);
+            }
+            , allDone: function (obj) { //多文件上传完毕后的状态回调
+                if (obj.total > 0 && obj.successful > 0 && obj.failed <= 0) {
+                    layer.msg("文件上传成功！");
+                }
+                $("#L_name").val(tempFileNames.join(","));
+                $("input[name='path1']").val(tempFilePaths.join(","));
+                $("#upload_div_components").hide();
+            }
+            , error: function (index, upload) { //错误回调
+                var that = this;
+                var tr = that.elemList.find('tr#upload-' + index)
+                    , tds = tr.children();
+                tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+            }
+            , progress: function (n, elem, e, index) { //注意：index 参数为 layui 2.6.6 新增
+                element.progress('progress-demo-' + index, n + '%'); //执行进度条。n 即为返回的进度百分比
+            }
+        });
+
+    });
+
+    function initTypeNameValue(typeid, typeary) {
+        for (let i = 0; i < typeary.length; i++) {
+
+            if (typeary[i].children !== undefined && typeary[i].children !== null) {
+                if (typeary[i].children.length > 0) {
+                    initTypeNameValue(typeid, typeary[i].children);
+                } else {
+                    if (typeid === typeary[i].id) {
+                        jQuery("input[name='type_name']").val(typeary[i].name);
+                    }
+                }
+            } else {
+                if (typeid === typeary[i].id) {
+                    jQuery("input[name='type_name']").val(typeary[i].name);
+                }
+            }
+        }
+    }
+
+
+
+
+    $(function () {
+
+        $("input[name='cache_time']").change(function () {
+            var val = $(this).val();
+            var g = /^[1-9]*[1-9][0-9]*$/;
+            if (g.test(val)) {
+                if (val < 1 || val > 24) {
+                    efalert(layer, '请输入1-24之间的数字', 2);
+                    $(this).val(24);
+                }
+            } else {
+                efalert(layer, '请输入1-24之间的数字', 2);
+                $(this).val(24);
+            }
+        });
+
+        $("input[name='path']").change(function () {
+            $("input[name='path1']:eq(0)").val($(this).val());
+        });
+        $("input[name='type_name']").click(function (e) {
+            if ($("#div_role_tree").is(":visible")) $("#div_role_tree").hide(); //隐藏角色树
+            if ($("#div_model_tree").is(":visible")) $("#div_model_tree").hide();//隐藏流程树
+            $("#div_type_tree").show();
+
+            e.stopPropagation();
+
+            $("body").click(function (e) {
+                var elem = e.target;
+                while (elem) {
+                    if (elem.tagName == 'DIV' && elem.id === "div_type_tree") {
+                        return;
+                    }
+                    elem = elem.parentNode;
+                }
+                $("#div_type_tree").hide();
+            });
+        });
+        $.ajaxSetup({
+            async: false
+        });
+        // 类别
+        $.get(base + "/templateType/list?token=" + token, function (res) {
+            let templateAry = res.data;
+            changeTempAry(templateAry);
+            pageTypeAry = templateAry;
+            initTypeTree(templateAry);
+            //#type_tree
+            // 之前是ztree现在不用了，所以要更换
+            if (jQuery("input[name='typeId']").val() !== "") {
+                initTypeNameValue(parseInt(jQuery("input[name='typeId']").val()), pageTypeAry);
+            }
+        });
+
+        // 角色
+        $("input[name='role_name']").click(function (e) {
+            if ($("#div_type_tree").is(":visible")) $("#div_type_tree").hide();
+            if ($("#div_model_tree").is(":visible")) $("#div_model_tree").hide();
+            $("#div_role_tree").show();
+
+            e.stopPropagation();
+
+            $("body").click(function (e) {
+                var elem = e.target;
+                while (elem) {
+                    if (elem.tagName == 'DIV' && elem.id === "div_role_tree") {
+                        return;
+                    }
+                    elem = elem.parentNode;
+                }
+                $("#div_role_tree").hide();
+            });
+        });
+        $.get(base + "/role/list?token=" + token, function (res) {
+            let ary = res.data;
+            for (let i = 0; i < ary.length; i++) {
+                ary[i].title = ary[i].name;
+            }
+            let roleStr = $("input[name='roleId']").val();
+            if (roleStr !== "") {
+                let idArys = roleStr.split(",");
+                let nameArys = [];
+                for (let i = 0; i < ary.length; i++) {
+                    for (let j = 0; j < idArys.length; j++) {
+                        if (ary[i].id === parseInt(idArys[j])) {
+                            ary[i].checked = true;
+                        }
+                    }
+                }
+            }
+            pageRoleAry = ary;
+            initRoleTree(ary);
+        });
+
+
+        $("#L_path").on("change", function (e) {
+            $("#L_name").val(e.target.value.replace(/^.+?\\([^\\]+?)(\.[^\.\\]*?)?$/gi, "$1"));
+        });
+    });
+
+    let initRoleTree = function (roledata) {
+        //常规用法
+        tree.render({
+            elem: '#role_tree' //默认是点击节点可进行收缩
+            , data: roledata
+            , showCheckbox: true
+            , accordion: true
+            , oncheck: function (obj) {
+                let roleidstr = $("input[name='roleId']").val();
+                let rolenamestr = $("input[name='role_name']").val();
+                if (obj.checked === true) {
+                    let id = obj.data.id;
+                    let name = obj.data.name;
+                    let idAry = [];
+                    if (roleidstr.length > 0) {
+                        idAry = roleidstr.split(",");
+                        idAry = Array.from(new Set(idAry));
+                        idAry.push(id);
+                        idAry = Array.from(new Set(idAry));
+                    } else {
+                        idAry.push(id);
+                    }
+                    let new_id_ary = Array.from(new Set(idAry));
+                    if (new_id_ary.length > 0) {
+                        for (jk = 0; jk < new_id_ary.length; jk++) {
+                            new_id_ary[jk] = parseInt(new_id_ary[jk]);
+                        }
+                    }
+
+                    new_id_ary = Array.from(new Set(new_id_ary));
+
+                    let newstr_roleidstr = new_id_ary.join(",");
+                    $("input[name='roleId']").val(newstr_roleidstr);
+
+                    let nameAry = [];
+                    if (rolenamestr.length > 0) {
+                        nameAry = rolenamestr.split(",");
+                        nameAry = Array.from(new Set(nameAry));
+                        nameAry.push(name);
+                        nameAry = Array.from(new Set(nameAry));
+                    } else {
+                        nameAry.push(name);
+                    }
+
+                    let new_name_ary = Array.from(new Set(nameAry));
+                    rolenamestr = new_name_ary.join(",");
+                    $("input[name='role_name']").val(rolenamestr);
+                } else {
+                    let id = obj.data.id;
+                    let name = obj.data.name;
+                    let idAry = [];
+                    if (roleidstr.length > 0) {
+                        idAry = roleidstr.split(",");
+                        let newIdAry = [];
+                        for (let i = 0; i < idAry.length; i++) {
+                            if (parseInt(idAry[i]) === parseInt(id)) {
+                                continue;
+                            }
+                            newIdAry.push(idAry[i]);
+                        }
+                        idAry = newIdAry;
+                        idAry = Array.from(new Set(idAry));
+                    }
+                    let new_id_ary = Array.from(new Set(idAry));
+
+                    if (new_id_ary.length > 0) {
+                        for (jk = 0; jk < new_id_ary.length; jk++) {
+                            new_id_ary[jk] = parseInt(new_id_ary[jk]);
+                        }
+                    }
+                    new_id_ary = Array.from(new Set(new_id_ary));
+                    roleidstr = new_id_ary.join(",");
+                    $("input[name='roleId']").val(roleidstr);
+                    let nameAry = [];
+                    if (rolenamestr.length > 0) {
+                        nameAry = rolenamestr.split(",");
+                        let newNameAry = [];
+                        for (let i = 0; i < nameAry.length; i++) {
+                            if (nameAry[i] === name) {
+                                continue;
+                            }
+                            newNameAry.push(nameAry[i]);
+                        }
+                        nameAry = newNameAry;
+                        nameAry = Array.from(new Set(nameAry));
+                    }
+                    let new_name_ary = Array.from(new Set(nameAry));
+                    rolenamestr = new_name_ary.join(",");
+                    $("input[name='role_name']").val(rolenamestr);
+                }
+            }
+        });
+    }
+
+    // 递归调用 更新数组结构（加title）
+    let changeTempAry = function (templateAry) {
+        for (let i = 0; i < templateAry.length; i++) {
+            if (typeof templateAry[i].id === 'string') {
+                templateAry[i].id = templateAry[i].id.replace("root_", "");
+                templateAry[i].id = parseInt(templateAry[i].id);
+            }
+            if (templateAry[i].title === undefined) {
+                templateAry[i].title = templateAry[i].name;
+            }
+            if (templateAry[i].name === undefined) {
+                templateAry[i].name = templateAry[i].title;
+            }
+            if (templateAry[i].children !== undefined && templateAry[i].children !== null) {
+                if (templateAry[i].children.length > 0) {
+                    changeTempAry(templateAry[i].children);
+                }
+            }
+        }
+    }
+    let initTypeTree = function (typedata) {
+        //常规用法
+        tree.render({
+            elem: '#type_tree' //默认是点击节点可进行收缩
+            , data: typedata
+            , accordion: true
+            , click: function (obj) {
+                if (obj.data.children === undefined || obj.data.children === "" || obj.data.children.length === 0) {
+                    // 没有子节点，则选择的就是当前节点了
+                    $("input[name='typeId']").val(obj.data.id);
+                    $("input[name='type_name']").val(obj.data.title);
+                    $("#div_type_tree").hide();
+                }
+            }
+        });
+    }
+</script>
+
+</html>

@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="keywords" content="盈帆数据报表">
+    <meta name="description" content="盈帆数据报表">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link id="iconLinkP" rel="icon" href="data:;base64,=">
+    <link rel="stylesheet" href="lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/layuimini.css?v=2.0.4.2" media="all">
+    <link rel="stylesheet" href="css/themes/default.css" media="all">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <style id="layuimini-bg-color">
+    </style>
+    <style>
+        .layui-input {
+            border: 0px !important;
+            border-color: #0094FF !important;
+        }
+        .search_a {
+            display: block;
+            position: relative;
+            border: 1px solid #eee;
+        }
+
+        .search_a:hover {
+            border-color: #0094FF !important;
+        }
+        
+        
+    </style>
+    <script src="../../../最后打包测试/webapps/webpack.config.js"></script>
+</head>
+<body class="layui-layout-body layuimini-all" style="margin:0px !important;padding: 0px !important; border: 0px !important;">
+<div class="layui-layout layui-layout-admin" style="margin:0px !important;padding: 0px !important; border: 0px !important;">
+
+    <div class="layui-header header">
+        <div class="layui-logo layuimini-logo"></div>
+
+        <div class="layuimini-header-content">
+            <a>
+                <div class="layuimini-tool"><i title="展开" class="fa fa-outdent" data-side-fold="1"></i></div>
+            </a>
+
+            <!--电脑端头部菜单-->
+            <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-menu-header-pc layuimini-pc-show">
+            </ul>
+
+            <!--手机端头部菜单-->
+            <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-mobile-show">
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="fa fa-list-ul"></i> 选择模块</a>
+                    <dl class="layui-nav-child layuimini-menu-header-mobile">
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-side" style="top: 0px !important; background-color: #F2F3F5;height: auto !important;">
+
+        <div id="div_left_menu_header" style='background-color: #F2F3F5; height: 40px; text-align: center; margin-top: 20px; margin-bottom: 20px;'>
+            <img id="company_logo_img" src='imgs/logo-1.png' style="max-width: 100px;max-height:40px;" />
+        </div>
+        <div id="foldDiv">
+            <img src="imgs/sj_icon.png" style="width: 18px; height: 18px; border: 0px;" />
+        </div>
+        <div id="div_search_temp">
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 200px;">
+                    <a class="search_a" href="javascript:void(0);">
+                        <input type="text" id="search_tempname" name="search_tempname" placeholder="模板名称" autocomplete="off" class="layui-input">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div style="display: none;">
+            <button class="layui-btn layui-btn-primary" style="width: 100%;" id="btn-dirmanager">目录管理</button>
+        </div>
+        <div class="layuimini-menu-left" style="position: relative;overflow-y: auto;">
+
+        </div>
+    </div>
+
+    <!--初始化加载层-->
+    <div class="layuimini-loader">
+        <div class="layuimini-loader-inner"></div>
+    </div>
+
+    <div id="div-layui-body" class="layui-body" style="top: 0px !important;background-color: #fcfcfc !important; height: 100%;">
+        <div id="div-layuimini-tab" class="layuimini-tab layui-tab-rollTool layui-tab" lay-filter="layuiminiTab" lay-allowclose="true">
+            <ul class="layui-tab-title" style="width: 95%; padding: 0px;">
+                <li class="layui-this" id="layuiminiHomeTabId" lay-id=""></li>
+            </ul>
+            <div style="position: absolute; width: 5%; min-width: 120px; height: 35px; line-height: 35px; top: 0px; right: 0px;">
+                <div id="div_cur_account">
+                    <ul class="layui-nav" style="height: 35px !important; line-height: 35px !important; color: #000000 !important;">
+                        <li class="layui-nav-item layuimini-setting" style="height: 35px !important; line-height: 35px !important;">
+                            <a id="a_cur_account" href="javascript:;"></a>
+                            <dl class="layui-nav-child" style="top: 40px !important;">
+                                <dd>
+                                    <a id="a_update_pwd" href="javascript:;" layuimini-content-href="page/sys/user/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
+                                </dd>
+                                <dd>
+                                    <a id="a_set_first_page" href="javascript:;" data-title="设置起始页" data-icon="fa fa-gears">设置起始页</a>
+                                </dd>
+                                <dd style="display:none;">
+                                    <a id="a_dirmanager" href="javascript:;" data-title="目录管理" data-icon="fa fa-gears">目录管理</a>
+                                </dd>
+                                <dd>
+                                    <a id="a_pc_dirmanager" href="javascript:;" data-title="PC目录管理" data-icon="fa fa-gears">PC目录管理</a>
+                                </dd>
+                                <dd>
+                                    <a id="a_mobile_dirmanager" href="javascript:;" data-title="手机目录管理" data-icon="fa fa-gears">手机目录管理</a>
+                                </dd>
+                                <dd style="display:none;">
+                                    <a id="a_temp_set_order" href="javascript:;" data-title="模板排序" data-icon="fa fa-gears">模板排序</a>
+                                </dd>
+                                <dd>
+                                    <a id="btn_page_cancel" href="javascript:;" data-title="退出登录" data-icon="fa fa-gears">退出登录</a>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div style="height: 35px; line-height: 35px; float: left; display: none;">
+                    <button>退出</button>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="layui-tab-control" style="display: none;">
+                <li class="layuimini-tab-roll-left layui-icon layui-icon-left"></li>
+                <li class="layuimini-tab-roll-right layui-icon layui-icon-right"></li>
+                <li class="layui-tab-tool layui-icon layui-icon-down">
+                    <ul class="layui-nav close-box">
+                        <li class="layui-nav-item">
+                            <a href="javascript:;"><span class="layui-nav-more"></span></a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;" layuimini-tab-close="current">关 闭 当 前</a></dd>
+                                <dd><a href="javascript:;" layuimini-tab-close="other">关 闭 其 他</a></dd>
+                                <dd><a href="javascript:;" layuimini-tab-close="all">关 闭 全 部</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+            <div class="layui-tab-content">
+                <div id="layuiminiHomeTabIframe" class="layui-tab-item layui-show"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+<script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+<script src="js/checklogin.js"></script>
+<script src="js/common.js"></script>
+
+<script>
+    let base;
+    $(function(){
+        base = window.sessionStorage.getItem("base");
+        $("#foldDiv").click(function(){
+            var isShow = $('.layuimini-tool [data-side-fold]').attr('data-side-fold');
+            if (isShow == 1) { // 缩放
+                $("#div_left_menu_header").hide();
+                $("#div_search_temp").hide();
+                let width = $(".layui-side").width();
+                $(".layui-side").width(60);
+                $("#foldDiv").css("left", "60px");
+                let zkImgStr = '<img src="imgs/zk_icon.png" style="width: 18px; height: 18px; border: 0px;" />';
+                $("#foldDiv").html(zkImgStr);
+                $('.layuimini-tool [data-side-fold]').attr('data-side-fold', 0);
+                $('.layuimini-tool [data-side-fold]').attr('class', 'fa fa-indent');
+                $('.layui-layout-body').removeClass('layuimini-all');
+                $('.layui-layout-body').addClass('layuimini-mini');
+            } else { // 正常
+                let isshowpcleftmenu =  window.sessionStorage.getItem("isshowpcleftmenu");
+                if(isshowpcleftmenu === "1") {
+                    $("#div_left_menu_header").show();
+                }
+
+                $("#div_search_temp").show();
+                $(".layui-side").width(200);
+                $("#foldDiv").css("left", "200px");
+                let sjImgStr = '<img src="imgs/sj_icon.png" style="width: 18px; height: 18px; border: 0px;" />';
+                $("#foldDiv").html(sjImgStr);
+                $('.layuimini-tool [data-side-fold]').attr('data-side-fold', 1);
+                $('.layuimini-tool [data-side-fold]').attr('class', 'fa fa-outdent');
+                $('.layui-layout-body').removeClass('layuimini-mini');
+                $('.layui-layout-body').addClass('layuimini-all');
+            }
+        });
+    });
+
+    /**
+     * 间隔1.5秒，清除掉右侧下来菜单的layui-this类样式
+     */
+    function runTimeClearLayuiThisCls() {
+        let cc_cur_timer = window.setInterval(function(){
+            $("#a_cur_account").next().children("dd").each(function(){
+                $(this).removeClass('layui-this');
+            });
+            window.clearInterval(cc_cur_timer);
+        }, 1000);
+    }
+
+
+    var miniAdmin;
+
+    layui.use(['jquery', 'layer', 'miniAdmin'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer;
+            miniAdmin = layui.miniAdmin;
+
+        let token = window.sessionStorage.getItem("cur_token");
+        let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+
+        $.ajax({ //先加载平台配置文件
+            url: server_base_url + '/designSys/getPlatform?token=' + token,
+            type: 'post',
+            contentType: "application/json;charset=UTF-8",
+            success: function (res) {
+                if (res.state == 'success') {
+                    var page = res.config;
+                    plateformProp = page;
+                    isAlert = page.alert;
+                } else {
+
+                }
+            },
+            error: function () {
+
+            }
+
+        })
+
+        let pageload = function () {
+            let caccount = window.sessionStorage.getItem("cur_accout");
+            $("#a_cur_account").html(caccount);
+            $.ajax({
+                url: server_base_url + '/designSys/getDesignInfo?token=' + token,
+                type: 'get',
+                success: function (res) {
+                    if (res.state === "success") {
+                        window.sessionStorage.setItem("cur_production", res.production);
+
+                        if(res.production === "false" || res.production === false) {
+                            $("#a_update_pwd").parent().hide();
+                            $("#a_set_first_page").parent().hide();
+                            $("#a_pc_dirmanager").parent().hide();
+                            $("#a_mobile_dirmanager").parent().hide();
+                        }
+
+                    }
+                },
+                error: function (res) {
+                }
+            })
+
+        }
+        pageload();
+
+
+
+        $("#a_update_pwd").click(function(){
+            let production = window.sessionStorage.getItem("cur_production");
+            if (production === "false" || production === false) {
+                layer.msg("演示环境不允许操作");
+                return;
+            }
+            runTimeClearLayuiThisCls();
+        });
+
+        // 模板排序(PC端)
+        $("#a_temp_set_order").click(function(){
+            let page_url = "page/template/tempOrder.html";
+            let title = "PC端模板排序";
+            var index = layer.open({
+                type: 2,
+                area: ['650px', '510px'],
+                fix: false, //不固定
+                maxmin: true,
+                shadeClose: true,
+                shade:0.4,
+                title: title,
+                content: page_url,
+                success: function(layero, index) {
+
+                }
+            });
+
+            runTimeClearLayuiThisCls();
+        });
+
+        let MobileTemplateManagerPage;
+
+        // 手机端目录管理
+        $("#a_mobile_dirmanager").click(function() {
+
+            let production = window.sessionStorage.getItem("cur_production");
+            if (production === "false" || production === false) {
+                layer.msg("演示环境不允许操作");
+                return;
+            }
+
+            let index = layer.open({
+                type: 2,
+                area: ['700px', '500px'],
+                closeBtn: 0,
+                title: ['修改手机模板目录', 'height:30px;line-height:30px'],
+                content: ['page/changeMobileMenu.html', 'no'],
+                btn: ['全选','确定','模板排序', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+                },
+                success: function (layero, index) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.init();
+                    MobileTemplateManagerPage=iframeWin;
+                },
+                yes: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let text = $('.layui-layer-btn0').text();
+                    if (text == '全选') {
+                        iframeWin.chooseAll(1);
+                        $('.layui-layer-btn0').text('全不选');
+                    } else {
+                        iframeWin.chooseAll(0);
+                        $('.layui-layer-btn0').text('全选');
+                    }
+                    return false;
+                },
+                btn2: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let res = iframeWin.getDeleteIds();
+                    let ids = res.checkedId;
+                    let menuId = res.menuId;
+                    let idParam = '';
+                    $.each(ids , function(i,e){
+                        if(i == ids.length - 1){
+                            idParam += e;
+                        }else{
+                            idParam += (e + ',');
+                        }
+                    })
+                    if (res.tabid === 11) {
+                        $.ajax({
+                            url: server_base_url + '/usertempdir/saveusertempdir?menuId=' + menuId + '&token=' + token + '&ids=' + idParam,
+                            type: 'post',
+                            success: function (data) {
+                                if (data.state == 'success') { //保存成功
+                                    layer.msg("修改成功", {time:1500}, function () {
+                                        options.loadTabFlag = true;
+                                        miniAdmin.render(options);
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.msg("保存失败");
+                                }
+                            },
+                            error: function () {
+
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            url: server_base_url + '/mobileusertempdir/saveusertempdir?menuId=' + menuId + '&token=' + token + '&ids=' + idParam,
+                            type: 'post',
+                            success: function (data) {
+                                if (data.state == 'success') { //保存成功
+                                    layer.msg("修改成功", {time:1500}, function () {
+                                        // miniAdmin.render(options);
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.msg("保存失败");
+                                }
+                            },
+                            error: function () {
+
+                            }
+                        });
+
+                    }
+
+                    return false;
+                },
+                btn3: function (index, layero) {
+                    let page_url = "page/template/mobileTempOrder.html";
+                    let title = "手机端模板排序";
+                    var index2 = layer.open({
+                        type: 2,
+                        area: ['450px', '410px'],
+                        fix: false, //不固定
+                        maxmin: true,
+                        resize: true,
+                        shadeClose: true,
+                        shade:0.4,
+                        title: title,
+                        content: page_url,
+                        btn: ['确定', '关闭'],
+                        btnAlign: 'c',
+                        success: function(layero, index) {
+                            let iframeWin = window[layero.find('iframe')[0]['name']];
+                            iframeWin.setPageIndex(index2);
+                            layer.full(index2);
+                        },
+                        yes: function (index, layero) {
+                            let iframeWin = window[layero.find('iframe')[0]['name']];
+                            let paramData = iframeWin.getPageData();
+
+                            $.ajax({
+                                url: server_base_url + "/mobiletemporder/savetemporder?token="+token,
+                                type:'post',
+                                contentType: "application/json;charset=UTF-8",
+                                data: JSON.stringify(paramData),
+                                success:function(res){
+                                    if(res.state == 'success'){
+                                        layer.msg('修改成功');
+                                        layer.close(index2);
+
+                                        // 获取现在打开的页面（父页面，调用init方法  ->changePCMenu.html）
+                                        MobileTemplateManagerPage.init();
+
+                                    }else{
+                                        layer.msg('修改顺序失败');
+                                    }
+                                },
+                                error:function(){}
+                            })
+
+                            return false;
+                        },
+                    });
+                    return false;
+                }
+            });
+
+            runTimeClearLayuiThisCls();
+        });
+
+
+        let pcTemplateManagerPage;
+
+        // pc端目录管理
+        $("#a_pc_dirmanager").click(function(){
+
+            let production = window.sessionStorage.getItem("cur_production");
+            if (production === "false" || production === false) {
+                layer.msg("演示环境不允许操作");
+                return;
+            }
+
+            let index = layer.open({
+                type: 2,
+                area: ['700px', '500px'],
+                closeBtn: 0,
+                title: ['修改PC模板目录', 'height:30px;line-height:30px'],
+                content: ['page/changePCMenu.html', 'no'],
+                btn: ['全选','确定','模板排序', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+
+                },
+                success: function (layero, index) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.init();
+                    pcTemplateManagerPage = iframeWin;
+                },
+                yes: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let text = $('.layui-layer-btn0').text();
+                    if (text == '全选') {
+                        iframeWin.chooseAll(1);
+                        $('.layui-layer-btn0').text('全不选');
+                    } else {
+                        iframeWin.chooseAll(0);
+                        $('.layui-layer-btn0').text('全选');
+                    }
+                    return false;
+                },
+                btn2: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let res = iframeWin.getDeleteIds();
+                    let ids = res.checkedId;
+                    let menuId = res.menuId;
+                    let idParam = '';
+                    $.each(ids , function(i,e){
+                        if(i == ids.length - 1){
+                            idParam += e;
+                        }else{
+                            idParam += (e + ',');
+                        }
+                    })
+                    if (res.tabid === 11) {
+                        $.ajax({
+                            url: server_base_url + '/usertempdir/saveusertempdir?menuId=' + menuId + '&token=' + token + '&ids=' + idParam,
+                            type: 'post',
+                            success: function (data) {
+                                if (data.state == 'success') { //保存成功
+                                    layer.msg("修改成功", {time:1500}, function () {
+                                        options.loadTabFlag = true;
+                                        miniAdmin.render(options);
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.msg("保存失败");
+                                }
+                            },
+                            error: function () {
+
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            url: server_base_url + '/mobileusertempdir/saveusertempdir?menuId=' + menuId + '&token=' + token + '&ids=' + idParam,
+                            type: 'post',
+                            success: function (data) {
+                                if (data.state == 'success') { //保存成功
+                                    layer.msg("修改成功", {time:1500}, function () {
+                                        // miniAdmin.render(options);
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.msg("保存失败");
+                                }
+                            },
+                            error: function () {
+
+                            }
+                        });
+
+                    }
+                    return false;
+                },
+                btn3: function (index, layero) {
+                    let page_url = "page/template/tempOrder.html";
+                    let title = "PC端模板排序";
+                    var index2 = layer.open({
+                        type: 2,
+                        area: ['450px', '410px'],
+                        fix: false, //不固定
+                        maxmin: true,
+                        shadeClose: true,
+                        resize: true,
+                        shade:0.4,
+                        title: title,
+                        content: page_url,
+                        btn: ['确定', '关闭'],
+                        btnAlign: 'c',
+                        end: function() {
+
+                        },
+                        success: function(layero, index) {
+                            let iframeWin = window[layero.find('iframe')[0]['name']];
+                            iframeWin.setPageIndex(index2);
+                            layer.full(index2);
+                        },
+                        yes: function (index, layero) {
+                            let iframeWin = window[layero.find('iframe')[0]['name']];
+                            let paramData = iframeWin.getPageData();
+
+                            $.ajax({
+                                url: server_base_url + "/pctemporder/savetemporder?token="+token,
+                                type:'post',
+                                contentType: "application/json;charset=UTF-8",
+                                data: JSON.stringify(paramData),
+                                success:function(res){
+                                    if(res.state == 'success'){
+                                        layer.msg('修改成功');
+                                        layer.close(index2);
+
+                                        // 获取现在打开的页面（父页面，调用init方法  ->changePCMenu.html）
+                                        pcTemplateManagerPage.init();
+
+                                        // 刷新模板
+                                        options.loadTabFlag = true;
+                                        options.menuChildOpen = true;
+                                        miniAdmin.render(options);
+
+                                    }else{
+                                        layer.msg('修改顺序失败');
+                                    }
+                                },
+                                error:function(){}
+                            })
+
+                            return false;
+                        },
+                    });
+                    return false;
+                }
+            });
+
+            runTimeClearLayuiThisCls();
+        })
+
+        $("#a_dirmanager").click(function(){
+
+            let index = layer.open({
+                type: 2,
+                area: ['700px', '580px'],
+                closeBtn: 0,
+                title: ['修改模板目录', 'height:30px;line-height:30px'],
+                content: ['page/changePCAndMobileMenu.html', 'no'],
+                btn: ['全选','确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+                },
+                success: function (layero, index) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.init();
+                },
+                yes: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let text = $('.layui-layer-btn0').text();
+                    if (text == '全选') {
+                        iframeWin.chooseAll(1);
+                        $('.layui-layer-btn0').text('全不选');
+                    } else {
+                        iframeWin.chooseAll(0);
+                        $('.layui-layer-btn0').text('全选');
+                    }
+                    return false;
+                },
+                btn2: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let res = iframeWin.getDeleteIds();
+                    let ids = res.checkedId;
+                    let menuId = res.menuId;
+                    let idParam = '';
+                    $.each(ids , function(i,e){
+                        if(i == ids.length - 1){
+                            idParam += e;
+                        }else{
+                            idParam += (e + ',');
+                        }
+                    })
+                    if (res.tabid === 11) {
+                        $.ajax({
+                            url: server_base_url + '/usertempdir/saveusertempdir?menuId=' + menuId + '&token=' + token + '&ids=' + idParam,
+                            type: 'post',
+                            success: function (data) {
+                                if (data.state == 'success') { //保存成功
+                                    layer.msg("修改成功", {time:1500}, function () {
+                                        options.loadTabFlag = true;
+                                        miniAdmin.render(options);
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.msg("保存失败");
+                                }
+                            },
+                            error: function () {
+
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            url: server_base_url + '/mobileusertempdir/saveusertempdir?menuId=' + menuId + '&token=' + token + '&ids=' + idParam,
+                            type: 'post',
+                            success: function (data) {
+                                if (data.state == 'success') { //保存成功
+                                    layer.msg("修改成功", {time:1500}, function () {
+                                        // miniAdmin.render(options);
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.msg("保存失败");
+                                }
+                            },
+                            error: function () {
+
+                            }
+                        });
+
+                    }
+                    return false;
+                }
+            });
+            runTimeClearLayuiThisCls();
+        });
+
+        $("#btn-dirmanager").click(function(){
+            // alert("点击了目录管理");
+
+            let index = layer.open({
+                type: 2,
+                area: ['700px', '580px'],
+                closeBtn: 0,
+                title: ['修改模板目录', 'height:30px;line-height:30px'],
+                content: ['page/changePCAndMobileMenu.html', 'no'],
+                btn: ['全选','确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+                },
+                success: function (layero, index) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.init();
+                },
+                yes: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let text = $('.layui-layer-btn0').text();
+                    if (text == '全选') {
+                        iframeWin.chooseAll(1);
+                        $('.layui-layer-btn0').text('全不选');
+                    } else {
+                        iframeWin.chooseAll(0);
+                        $('.layui-layer-btn0').text('全选');
+                    }
+                    return false;
+                },
+                btn2: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    let res = iframeWin.getDeleteIds();
+                    let ids = res.checkedId;
+                    let menuId = res.menuId;
+                    let idParam = '';
+                    $.each(ids , function(i,e){
+                        if(i == ids.length - 1){
+                            idParam += e;
+                        }else{
+                            idParam += (e + ',');
+                        }
+                    })
+                    if (res.tabid === 11) {
+                        $.ajax({
+                            url: server_base_url + '/usertempdir/saveusertempdir?menuId=' + menuId + '&token=' + token + '&ids=' + idParam,
+                            type: 'post',
+                            success: function (data) {
+                                if (data.state == 'success') { //保存成功
+                                    layer.msg("修改成功", {time:1500}, function () {
+                                        options.loadTabFlag = true;
+                                        miniAdmin.render(options);
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.msg("保存失败");
+                                }
+                            },
+                            error: function () {
+
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            url: server_base_url + '/mobileusertempdir/saveusertempdir?menuId=' + menuId + '&token=' + token + '&ids=' + idParam,
+                            type: 'post',
+                            success: function (data) {
+                                if (data.state == 'success') { //保存成功
+                                    layer.msg("修改成功", {time:1500}, function () {
+                                        // miniAdmin.render(options);
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.msg("保存失败");
+                                }
+                            },
+                            error: function () {
+
+                            }
+                        });
+                    }
+                    return false;
+                }
+            });
+
+            runTimeClearLayuiThisCls();
+        });
+        let companyid = window.sessionStorage.getItem("cur_companyid");
+        let efurl_oem = server_base_url + "/oem/get";
+        $.ajax({
+            url: efurl_oem,
+            type: 'get',
+            success: function (res) {
+                window.sessionStorage.setItem("isshowpcleftmenu", res.isshowpcleftmenu);
+                window.sessionStorage.setItem("isshowico", res.isshowico);
+                if (res.isshowpcleftmenu === 1) {
+                    $("#div_left_menu_header").show();
+                    $("#company_logo_img").attr("src", server_base_url+"/oem/company.jpg?tt=" + new Date().getTime());
+                } else {
+                    $("#div_left_menu_header").hide();
+                }
+
+                if (res.isshowico === 1) {
+                    $("#iconLinkP").attr("href", server_base_url+"/oem/favicon.ico?tt=" + new Date().getTime());
+                }else {
+                    $("#iconLinkP").attr("href", "data:;base64,=");
+                }
+
+            },
+            error: function () {
+            }
+        });
+
+
+        // $("#iconLink").attr("href", server_base_url+"/oem/favicon.ico?tt=" + new Date().getTime());
+        let sysname = window.sessionStorage.getItem("sys_name");
+        if (sysname !== "") {
+            $("title").html(sysname);
+        }
+        let efurl = server_base_url + "/template/getTemplateNewTreeByUser?token=" + token;
+        let efurl2 = server_base_url + "/user/validatePwdOutRemind?token=" + token;
+        let pwdValidateOutTime = function() {
+            $.ajax({
+                url: efurl2,
+                type: 'get',
+                success: function (res) {
+                    if (res.state === "failed") {
+                        window.alert(res.message);
+                    }
+                },
+                error: function () {
+                }
+            });
+        }
+
+        pwdValidateOutTime();
+
+
+        var options = {
+            iniUrl: efurl,    // 初始化接口
+            clearUrl: "api/clear.json", // 缓存清理接口
+            urlHashLocation: true,      // 是否打开hash定位
+            bgColorDefault: false,      // 主题默认配置
+            multiModule: true,          // 是否开启多模块
+            menuChildOpen: true,       // 是否默认展开菜单
+            loadingTime: 0,             // 初始化加载时间
+            pageAnim: true,             // iframe窗口动画
+            maxTabNum: 30,              // 最大的tab打开数量
+        };
+        miniAdmin.render(options);
+        // 因为在miniAdmin.js中，render方法中我们已经屏蔽掉了首页的执行，所以这里必须手动执行一下
+        miniAdmin.renderHome({href: "page/welcome-1.html?t=1", title: "首页" });
+
+        $("#search_tempname").keydown(function(event){
+            if (event.keyCode === 13) {
+                let vl = $("#search_tempname").val();
+                let newsearchurl = efurl;
+                if (vl.trim() !== "") {
+                    newsearchurl = efurl + "&searchname=" + vl;
+                }
+
+                var options = {
+                    iniUrl: newsearchurl,    // 初始化接口
+                    clearUrl: "api/clear.json", // 缓存清理接口
+                    renderPageVersion: true,    // 初始化页面是否加版本号
+                    bgColorDefault: false,      // 主题默认配置
+                    multiModule: true,          // 是否开启多模块
+                    menuChildOpen: true,       // 是否默认展开菜单
+                    loadingTime: 0,             // 初始化加载时间
+                    pageAnim: true,          // 切换菜单动画
+                    maxTabNum: 30,              // 最大的tab打开数量
+                };
+                miniAdmin.render(options);
+            }
+
+        });
+
+
+        $('.login-out').on("click", function () {
+            window.sessionStorage.setItem("cur_accout", "");
+            window.sessionStorage.setItem("cur_token", "");
+            window.sessionStorage.setItem("cur_userType", "");
+            logout();
+        });
+
+        $("#a_set_first_page").on("click",  function(){
+            let production = window.sessionStorage.getItem("cur_production");
+            if (production === "false" || production === false) {
+                layer.msg("演示环境不允许操作");
+                return;
+            }
+            let index = layer.open({
+                type: 2,
+                area: ['510px', '600px'],
+                closeBtn: 0,
+                resize: false,
+                title: ['设置起始页', 'height:30px;line-height:30px'],
+                content: ['page/sys/user/setStartPage.html', 'no'],
+                btn: ['确定', '关闭'],
+                btnAlign: 'c',
+                end: function () {
+                },
+                yes: function (index, layero) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    var jsonStr = iframeWin.getPage();
+                    var obj = JSON.parse(jsonStr);
+                    let execFlage = true;
+                    if (obj === "false") {
+                        execFlage = false;
+                    }
+                    if (obj === false) {
+                        execFlage = false;
+                    }
+
+                    if (obj === null || obj === "") {
+                        execFlage = false;
+                    }
+
+                    if (execFlage === true) {
+                        // 将jsonStr的值一起保存到home中
+                        let efurl_savehome = server_base_url + "/user/changeHome?token=" + token;
+
+                        $.ajax({
+                            url: efurl_savehome,
+                            type: 'post',
+                            data: { tpl: jsonStr },
+                            success: function (res) {
+                                if (res.code === 1) {
+                                    layer.msg("设置成功！");
+                                    window.sessionStorage.setItem("cur_user_home", jsonStr);
+                                    layer.close(index);
+                                } else {
+                                    layer.msg("设置失败，请重试！");
+                                }
+                            },
+                            error: function () {
+                            }
+                        });
+                    }
+
+                },
+                success: function (layero, index) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.setPageIndex(index);
+                }
+            });
+
+            runTimeClearLayuiThisCls();
+        });
+
+        $('#btn_page_cancel').on("click", function () {
+            let url = server_base_url + "/user/logout?token=" + token;
+            $.ajax({
+                url: url,
+                type: 'get',
+                success: function (res) {
+                    if (res.state === "success") {
+                        window.sessionStorage.setItem("cur_accout", "");
+                        // 将当前登录后token保存到sessionStorage
+                        window.sessionStorage.setItem("cur_token", "");
+                        // 将当前登录后用户类型保存到sessionStorage
+                        window.sessionStorage.setItem("cur_userType", "");
+                        logout();
+                    }
+                },
+                error: function () {
+                }
+            });
+        });
+    });
+
+</script>
+</body>
+</html>
+<script>
+    function PreviewLeftMenuReLoad() {
+        let token = window.sessionStorage.getItem("cur_token");
+        let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+
+        let efurl = server_base_url + "/template/getTemplateNewTreeByUser?token=" + token;
+
+        let options = {
+            iniUrl: efurl,    // 初始化接口
+            clearUrl: "api/clear.json", // 缓存清理接口
+            renderPageVersion: true,    // 初始化页面是否加版本号
+            bgColorDefault: false,      // 主题默认配置
+            multiModule: true,          // 是否开启多模块
+            menuChildOpen: true,       // 是否默认展开菜单
+            loadingTime: 0,             // 初始化加载时间
+            pageAnim: true,          // 切换菜单动画
+            maxTabNum: 30,              // 最大的tab打开数量
+        };
+        options.loadTabFlag = true;
+        miniAdmin.render(options);
+    }
+
+    $(function(){
+
+        function init_table_height() {
+            // 获取body的高度
+            let body_height = $("body").height();
+            let layui_side_height = $(".layui-side").height();
+            let left_menu_header_height = $("#div_left_menu_header").height();
+            let div_search_temp_height = $("#div_search_temp").height();
+            let left_menu_height = layui_side_height - left_menu_header_height - div_search_temp_height - 50;
+
+            let isshowpcleftmenu = window.sessionStorage.getItem("isshowpcleftmenu");
+            if (parseInt(isshowpcleftmenu) === 2) {
+                // 如果没有显示 左侧菜单栏 上面的logo图标
+                left_menu_height += 80;
+            }
+            $(".layuimini-menu-left").css("height", ""+left_menu_height+"px");
+            $("#foldDiv").css("top", layui_side_height/2 + "px");
+
+        }
+        init_table_height();
+
+        $(window).resize(function () {
+            // 获取body的高度
+            let body_height = $("body").height();
+            let layui_side_height = $(".layui-side").height();
+            let left_menu_header_height = $("#div_left_menu_header").height();
+            let div_search_temp_height = $("#div_search_temp").height();
+            let left_menu_height = layui_side_height - left_menu_header_height - div_search_temp_height - 50;
+
+            let isshowpcleftmenu = window.sessionStorage.getItem("isshowpcleftmenu");
+            if (parseInt(isshowpcleftmenu) === 2) {
+                // 如果没有显示 左侧菜单栏 上面的logo图标
+                left_menu_height += 80;
+            }
+
+            $(".layuimini-menu-left").css("height", ""+left_menu_height+"px");
+            $("#foldDiv").css("top", layui_side_height/2 + "px");
+        });
+    });
+
+    function logout(target) {
+        window.sessionStorage.removeItem("cur_token");
+        if(target == undefined){
+            window.location.assign(base);
+        }else{
+            window.location.assign(target + '/login.html');
+        }
+    }
+</script>
+<style>
+    /* 缩进样式 */
+    #foldDiv {
+        position: fixed; top: 490px; left: 200px; z-index: 100; width: 18px; height: 18px; line-height: 18px; background-color: #ffffff;
+        border-radius: 0px 20px 20px 0px;
+        border: 1px solid #F2F3F5;
+    }
+    #foldDiv:hover {
+        cursor: pointer;
+    }
+    #multi_module_0HeaderId {
+        width: 0px !important;
+        background-color: #ffffff !important;
+        text-indent: -1000px;
+    }
+    .header {
+        display: none;
+    }
+    .layui-nav {
+        background-color: #F2F3F5 !important;
+    }
+    .layui-nav-itemed>.layui-nav-child {
+        background-color: #F2F3F5 !important;
+    }
+    #div_cur_account {
+        height: 35px; line-height: 35px;
+    }
+    #a_cur_account {
+        color: #000000 !important;
+    }
+    a:hover {
+        color: #000000 !important;
+    }
+    #a_cur_account span {
+        display: none;
+    }
+    .layui-layout-admin .layui-body {
+        padding-bottom: 0px !important;
+    }
+
+    .layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this {
+        /* background-color: #0094FF !important;
+        color: #fff !important; */
+        color: #000000 !important;
+    }
+
+
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 1px;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+        background: #d5d5d5;
+    }
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+        border-radius: 10px;
+        background: #ffffff;
+    }
+</style>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.CompanyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.efreport.entity.Company">
+        <id column="id" property="id"/>
+        <result column="company_name" property="companyName"/>
+        <result column="pid" property="pId"/>
+    </resultMap>
+    <!-- 获取所有公司 -->
+    <select id="listCompanies" parameterType="string" resultType="com.efreport.entity.Company">
+        SELECT
+        id,
+        company_name as companyName,
+        pid
+        FROM ef_sys_company
+    </select>
+    <!-- 新建公司 -->
+    <insert id="save" parameterType="com.efreport.entity.Company" useGeneratedKeys="true" keyProperty="id">
+        insert into ef_sys_company (company_name, pid) values (#{companyName}, #{pId})
+    </insert>
+
+    <select id="getSonCompanyCount" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM EF_SYS_COMPANY WHERE PID=#{id}
+    </select>
+    <!-- 删除公司 -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM EF_SYS_COMPANY WHERE ID=#{id}
+    </delete>
+
+    <select id="countCompany" parameterType="map" resultType="int">
+        SELECT
+          COUNT(*)
+        FROM
+          EF_SYS_COMPANY
+        WHERE
+          company_name = #{companyName}
+          and pid = #{pId}
+          <if test="id != null">
+              and id != #{id}
+          </if>
+    </select>
+
+    <update id="modify" parameterType="map">
+        UPDATE EF_SYS_COMPANY SET company_name = #{companyName} where id=#{id}
+    </update>
+
+    <select id="getCompanyCount" resultType="int">
+        SELECT COUNT(*) FROM EF_SYS_COMPANY
+    </select>
+
+
+</mapper>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <link rel="stylesheet" href="../../css/scroll.css">
+
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            border: none;
+            overflow: hidden;
+        }
+
+        .layui-table thead tr {
+            text-align: center;
+            height: 20px;
+            line-height: 20px;
+        }
+
+        .layui-table tr {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .layui-table tbody {
+            width: 100%;
+            display: block;
+            height: 260px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .layui-table thead {
+            text-align: center;
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .layui-table tbody tr {
+            text-align: center;
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        td {
+            height: 35px;
+        }
+
+        input[type="text"] {
+            padding: 0;
+            height: 28px;
+            border-right: 1px solid #FFFFFF;
+            color: #333;
+            background-color: #f2f3f5;
+        }
+
+        select {
+            height: 30px;
+            border: 1px solid #ccc;
+            background-color: #F2F3F5;
+        }
+
+
+
+        button{
+            background-color: #0094FF;
+            color:#FFFFFF;
+        }
+
+        .btn{
+            background-color:#0094FF;
+            color:#FFFFFF;
+            display: block;
+            width: 60px;
+            height:40px;
+            margin-bottom: 10px;
+            border: 0px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+
+        .selecTr td {
+            background-color: #0094FF !important;
+        }
+
+        .selecTr td input {
+            color: #fff;
+            background-color: #0094FF !important;
+        }
+    </style>
+</head>
+<body>
+<div style="text-align: center;margin: 20px auto;width:80%;">
+    <table style="width: 95%;">
+        <tr>
+            <td>数据字典来源</td>
+            <td style="width: 80%;text-align: right">
+                <select id="dict" style="width: 95%;">
+                    <option value=""></option>
+                    <option value="1">数据表</option>
+                    <option value="2">自定义字符串</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="ds" style="text-align: center;width:80%;margin: 20px auto;display: none">
+    <table style="width: 95%;">
+        <tr>
+            <td style="text-align: right;">数据源</td>
+            <td style="width: 80%;text-align: right"><select id="dict_ds" style="width: 95%;"></select></td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">键字段</td>
+            <td style="width: 80%;text-align: right"><select id="dict_key" style="width: 95%;"></select></td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">显示字段</td>
+            <td style="width: 80%;text-align: right"><select id="dict_show" style="width: 95%;"></select></td>
+        </tr>
+    </table>
+</div>
+
+<div id="self" style="width:80%;height:90%;margin: 20px auto;overflow: hidden;display: none">
+    <div style="width: 80%; display: inline-block;height:300px;">
+        <table name="tb" class="layui-table" style="margin:0;width: 100%;border:1px solid #E5E6EB;">
+            <thead>
+            <tr>
+                <th>键字段</th>
+                <th>显示字段</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div style="width: 17%; display: inline-block;float:right;text-align: center">
+        <button class="btn" id="add">添加</button>
+        <button class="btn" id="del">删除</button>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    let base = window.sessionStorage.getItem("ef_server_base_url");
+    var token;
+    var templateIndex; //模板索引
+    var dsMap;
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form, layer = layui.layer;
+        $("#add").click(function () {
+            $("tr").each(function () {
+                $(this).removeClass("selecTr");
+            });
+            var tr = '<tr class="clsBodyTr selecTr"><td style="padding: 0 0;height:42px"><input type="hidden"><input type="text" onchange="setKey(this)"  style="width: 100%;height: 100%;border: none"></td>' +
+                    '<td style="padding: 0 0;height:42px"><input type="hidden"><input type="text" onchange="setKey(this)"  style="width: 100%;height: 100%;border: none"></tr>';
+            $("table[name='tb'] tbody").append(tr);
+            $(".clsBodyTr").bind('click', function () {
+                $("tr").each(function () {
+                    $(this).removeClass("selecTr");
+                });
+                $(this).addClass("selecTr");
+            });
+            form.render();
+        });
+        $("#del").click(function () {
+            $(".selecTr").remove();
+        });
+
+    });
+    function setKey(obj) {
+        var val = obj.value;
+        $(obj).prev().val(val);
+    }
+    function save() {
+        var type = $("#dict").val();
+        if (1 == type) {
+            var retStr = {
+                ComboDSType: 1,
+                DSName: $("#dict_ds").val(),
+                KeyFieldName: $("#dict_key").val(),
+                ShowFieldName: $("#dict_show").val()
+            };
+            return retStr;
+        } else if (2 == type) {
+            var arr = [];
+            $('.layui-table tbody tr').each(function () {
+                var tr = {};
+                $(this).children().each(function (i) {
+                    if (i == 0) {
+                        tr.Key = $(this).children(0).val();
+                    } else if (i == 1) {
+                        tr.Value = $(this).children(0).val();
+                    }
+                });
+                arr.push(tr);
+            });
+            var b = true;
+            for (var i = 0; i < arr.length; i++) {
+                for (var j = i + 1; j < arr.length; j++) {
+                    if (arr[i].Key == arr[j].Key) {
+                        layer.alert("此键字段已经存在:" + arr[i].Key, {icon: 2});
+                        b = false;
+                        return false;
+                    }
+                    if (arr[i].Value == arr[j].Value) {
+                        layer.alert("此显示字段已经存在:" + arr[i].Value, {icon: 2});
+                        b = false;
+                        return false;
+                    }
+                }
+                if (!b) {
+                    return '';
+                }
+            }
+            if (b) {
+                var retStr = {
+                    CustomComboTexts: arr,
+                    ComboDSType: 2
+                };
+                return retStr;
+            }
+        }
+    }
+    $(document).ready(function () {
+        $("#dict").change(function () {
+            if (1 == $(this).val()) {
+                $("#ds").show();
+                $("#self").hide();
+                let dsName =  $('#dict_ds').val();
+                let column = dsMap[templateIndex + '@#' + dsName];
+                $("#dict_key").empty();
+                $("#dict_show").empty();
+                $.each(column , function(i,e){
+                    let option = '<option value="'+ e +'">'+ e +'</option>';
+                    $("#dict_key").append(option);
+                    $("#dict_show").append(option);
+                })
+            } else if (2 == $(this).val()) {
+                $("#self").show();
+                $("#ds").hide();
+            } else {
+                $("#self").hide();
+                $("#ds").hide();
+            }
+        });
+        //修改数据集
+        $("#dict_ds").change(function () {
+            $("#dict_key").empty();
+            $("#dict_show").empty();
+            let dsName =  $('#dict_ds').val();
+            let column = dsMap[templateIndex + '@#' + dsName];
+            $("#dict_key").empty();
+            $("#dict_show").empty();
+            $.each(column , function(i,e){
+                let option = '<option value="'+ e +'">'+ e +'</option>';
+                $("#dict_key").append(option);
+                $("#dict_show").append(option);
+            })
+        });
+    });
+
+    function setDs(dsArray, index , controlInfo , map) {
+        templateIndex = index;
+        dsMap = map;
+        $.each(dsArray , function(i,e){
+            let opt = '<option value=' + e + '>' + e + '</option>';
+            $("#dict_ds").append(opt);
+        })
+        let type = controlInfo.ComboDSType;
+        if(type != undefined){
+            $('#dict').val(type).prop('selected' , true);
+            if(type == 1){ //数据集
+                $("#self").hide();
+                $("#ds").show();
+                let dsName = controlInfo.DSName;
+                let key = controlInfo.KeyFieldName;
+                let show = controlInfo.ShowFieldName;
+                $('#dict_ds').val(dsName).prop('selected' , true);
+                let columns = dsMap[templateIndex + '@#' + dsName];
+                $.each(columns , function(i,e){
+                    let option = '<option value="'+ e +'">'+ e +'</option>';
+                    $("#dict_key").append(option);
+                    $("#dict_show").append(option);
+                })
+                $("#dict_key").val(key).prop('selected' , true);
+                $("#dict_show").val(show).prop('selected' , true);
+            }else{//自定义字符串
+                $("#self").show();
+                $("#ds").hide();
+                let arr = controlInfo.CustomComboTexts;
+                for (var i = 0; i < arr.length; i++) {
+                    if(i == arr.length - 1){
+                        let tr = '<tr class="clsBodyTr selecTr"><td style="padding: 0 0;height:39px"><input type="hidden" value=' + arr[i].Key + '><input type="text" value="' + arr[i].Key + '" onchange="setKey(this)"  style="width: 100%;height: 100%;border: none"></td>' +
+                            '<td style="padding: 0 0;height:39px"><input type="hidden" value=' + arr[i].Value + '><input type="text" value="' + arr[i].Value + '" onchange="setKey(this)"  style="width: 100%;height: 100%;border: none"></tr>';
+                        $("table[name='tb'] tbody").append(tr);
+                    }else{
+                        let tr = '<tr class="clsBodyTr"><td style="padding: 0 0;height:39px"><input type="hidden" value=' + arr[i].Key + '><input type="text" value="' + arr[i].Key + '" onchange="setKey(this)"  style="width: 100%;height: 100%;border: none"></td>' +
+                            '<td style="padding: 0 0;height:39px"><input type="hidden" value=' + arr[i].Value + '><input type="text" value="' + arr[i].Value + '" onchange="setKey(this)"  style="width: 100%;height: 100%;border: none"></tr>';
+                        $("table[name='tb'] tbody").append(tr);
+                    }
+
+                }
+                $(".clsBodyTr").bind('click', function () {
+                    $("tr").each(function () {
+                        $(this).removeClass("selecTr");
+                    });
+                    $(this).addClass("selecTr");
+                });
+            }
+        }
+    }
+
+</script>
+</html>

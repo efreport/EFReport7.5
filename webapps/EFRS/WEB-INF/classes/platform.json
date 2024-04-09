@@ -1,0 +1,16 @@
+{
+	"rowNum": 9,
+	"colNum": 7,
+	"colWidth": 80,
+	"rowHeight": 27,
+	"isCenter":false,
+	"isAuto":false,
+	"isOne":false,
+	"dataType":10,
+	"dataSet":2,
+	"padTop":2,
+	"padBottom":2,
+	"padLeft":2,
+	"padRight":2,
+	"isAlert":false
+}

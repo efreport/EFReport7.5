@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <link href="../../css/spectrum.css" rel="stylesheet">
+    <link href="../../css/scroll.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../js/layui.js"></script>
+
+    <style type="text/css">
+
+        body{
+            color:#4E5969;
+        }
+
+        .layui-tab {
+            margin: 0px;
+        }
+
+        .layui-field-box {
+            display: flex;
+            align-content: center;
+        }
+
+        .layui-form-label {
+            width: auto;
+            text-align: left;
+        }
+
+        .layui-input-block {
+            margin-left: 0px;
+        }
+
+        .layui-form-onswitch {
+            border-color: #0094FF;
+            background-color: #0094FF;
+        }
+
+        .layui-btn {
+            background-color: #0094FF;
+            color: #fff;
+        }
+
+        .layui-form-select dl dd.layui-this {
+            background-color: #0094FF;
+            color: #fff;
+        }
+
+        #js{
+            color:#4E5969;
+            background-color: #F2F3F5;
+        }
+
+        xm-select > .xm-body .scroll-body{
+            height:200px;
+        }
+
+        #bkColorOfPluginFullScreenInput:hover{
+            border:1px solid #44B4FF;
+            background-color:#fff;
+        }
+
+    </style>
+</head>
+<body>
+<div class="layui-tab layui-tab-card">
+    <ul class="layui-tab-title">
+        <li class="layui-this">基本属性</li>
+        <li>表格插件属性</li>
+        <li>插件属性</li>
+        <li>尺寸适配</li>
+        <li>刷新设置</li>
+        <li>工具栏</li>
+        <li>页眉页脚</li>
+        <li>背景设置</li>
+        <li>水印设置</li>
+        <li>导出设置</li>
+    </ul>
+    <div class="layui-tab-content" style="height: 500px;">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否居中(web页面报表位置,默认居左)</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isShowCenterReport" lay-skin="switch" id="isShowCenterReport">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否自动查询(预览带有参数的报表时执行)</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isSearchByDefaultParam" lay-skin="switch" id="isSearchByDefaultParam">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">预警推送(定时任务时，触发预警条件时进行推送，没有触发不推送)</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="alertReport" lay-skin="switch" id="alertReport">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">JavaScript注入(web页面初始化完成后执行)</div>
+                    <input type="hidden" id="mJs">
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <button type="button" class="layui-btn" id="modelJS" onclick="openJS()"> 代码编辑</button>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">不计入页码的sheet页</div>
+                    <div style="display: inline-block;position: relative;">
+                        <div id="sheetNames" style="width:200px;height:30px;background-color: white;">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否一页显示</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isAutoPaperSize" lay-skin="switch" id="isAutoPaperSize">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否检查数据类型</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isCheckDataTypeFormat" lay-skin="switch" id="isCheckDataTypeFormat">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否压缩模板文件</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isCompressModelFile" lay-skin="switch" id="isCompressModelFile">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否多线程取数</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isMultiThreadOfDS" lay-skin="switch" id="isMultiThreadOfDS">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">使用表格插件显示</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="spreadRpt" lay-skin="switch" id="spreadRpt" lay-filter="sub">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">保留数学公式(表格插件计算公式或后台计算公式)</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isNotCalcExpr" lay-skin="switch" id="isNotCalcExpr">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">显示网格线</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="showGridLine" lay-skin="switch" id="showGridLine" checked>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">单元格是否可编辑</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="allowedEdit" lay-skin="switch" id="allowedEdit" checked>
+                    </div>
+                </div>
+              <!--  <div class="layui-form-item">
+                    <div class="layui-form-label">是否显示公式标签</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="showExprTag" lay-skin="switch" id="showExprTag" checked>
+                    </div>
+                </div>-->
+                <div class="layui-form-item">
+                    <div class="layui-form-label">允许离线填报</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="offlineUpload" lay-skin="switch" id="offlineUpload">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">离线填报是否加密</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isOfflineUploadEncryption" lay-skin="switch" id="isOfflineUploadEncryption">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否允许增加行</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isAllowAddRowInCellModel" lay-skin="switch" id="isAllowAddRowInCellModel">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否允许删除行</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isAllowDelRowInCellModel" lay-skin="switch" id="isAllowDelRowInCellModel">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">双击全屏显示</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isAllowPluginFullScreen" lay-skin="switch"
+                               id="isAllowPluginFullScreen">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">全屏显示时的背景颜色</div>
+                    <div class="layui-input-block" style="display: flex;">
+                        <input type="text" id="bkColorOfPluginFullScreenInput"
+                               placeholder="例：#FFFFFF"
+                               style="margin-right:5px;width: 100px;" name="bkColorOfPluginFullScreenInput" onchange="checkColor(this)" class="layui-input">
+                        <div id="bkColorOfPluginFullScreen"
+                             style="width:60px;height:36px;border:1px solid #D5D5D5;display:inline-block">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">自动拉伸(Web页面拉伸时，最大适配报表区域)</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="webCellPercent" lay-skin="switch" id="webCellPercent" lay-filter="wcp">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">保持横纵比</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="keepHVRatio" lay-skin="switch" id="keepHVRatio" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">文本是否自适应</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isAutoFontSize" lay-skin="switch" id="isAutoFontSize" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">全屏自动刷新</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="inter" lay-skin="switch" id="inter" lay-filter="inter">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">刷新时间(秒)</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <div class="layui-input-block">
+                            <input type="text" name="repaintInterval" id="repaintInterval" onchange="checkNumber(this)" placeholder="请输入时间"
+                                   autocomplete="off" class="layui-input" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">区域自动刷新</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <button type="button" class="layui-btn" id="fresh" onclick="setFresh()">设置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">基本工具栏</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="showToolBar" lay-skin="switch" id="showToolBar">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">参数工具栏</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="showParamToolBar" lay-skin="switch" id="showParamToolBar">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">日期格式</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <select id="pageDateFormat" name="pageDateFormat">
+                            <option value="0" selected>yyyy-MM-dd</option>
+                            <option value="1">yyyy/MM/dd</option>
+                            <option value="2">yyyy-M-d</option>
+                            <option value="3">yyyy/M/d</option>
+                            <option value="4">yyyy-MM</option>
+                            <option value="5">yyyy/MM</option>
+                            <option value="6">MM/dd/yyyy</option>
+                            <option value="7">MM/d/yy</option>
+                            <option value="8">dddd, MMMM dd, yyyy</option>
+                            <option value="9">MMMM d, yyyy</option>
+                            <option value="10">yyyy年M月d日</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">时间格式</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <select id="pageTimeFormat" name="pageTimeFormat">
+                            <option value="0" selected>HH:mm:ss</option>
+                            <option value="1">hh:mm:ss</option>
+                            <option value="2">HH:mm</option>
+                            <option value="3">hh:mm</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">背景图片</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" id="isSheetBKImage" name="isSheetBKImage" lay-skin="switch" lay-filter="sheetBk">
+                    </div>
+                    <div style="width:209px;height:200px;display: flex;align-items: center;justify-content: center;border: 1px solid #ccc;" id="sheetBkDiv">
+                        <img src="../../images/design/tool/image.png" style="width:40px;height:40px;"
+                             id="im">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">图片类型</div>
+                    <div class="layui-input-block" style="display:flex;">
+                        <select id="sheetBKImageStretchType" name="sheetBKImageStretchType">
+                            <option value="0" selected>拉伸</option>
+                            <option value="1">平铺</option>
+                            <option value="2">居中</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">背景颜色</div>
+                    <div class="layui-input-block" style="display:flex;">
+                        <input type="text" id="sheetBKColorInput" onchange="checkColor(this)" placeholder="例：#FFFFFF"
+                               style="margin-right:5px;width:102px;"  class="layui-input">
+                        <div id="sheetBKColor"
+                             style="width: 103px;height:36px;border:1px solid #D5D5D5;display:table-cell"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">背景图片百分比(1-100)</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="text" id="sheetBKImagePercent" style="margin-right:5px;width:126px;" onchange="checkNumber(this)"
+                               value="100" class="layui-input">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">水印文本</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="text" id="watermarkText" style="margin-right:5px;width:212px;" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">水印字体</div>
+                    <div class="layui-input-block" style="display:flex;">
+                        <select id="watermarkFontName" name="watermarkFontName">
+
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">字体大小</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="text" id="watermarkFontSize" style="margin-right:5px;width:212px;" class="layui-input" value="56">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">字体颜色</div>
+                    <div class="layui-input-block" style="display:flex;">
+                        <input type="text" id="watermarkFontColorInput" onchange="checkColor(this)" placeholder="例：#FFFFFF" value="#FA969696"
+                               style="margin-right:5px;width:102px;"  class="layui-input">
+                        <div id="watermarkFontColor"
+                             style="width: 103px;height:36px;border:1px solid #D5D5D5;display:table-cell"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否导出列宽或行高为0的单元格内容</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isExportNoSpaceCell" lay-skin="switch" id="isExportNoSpaceCell">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否使用真实值导出EXCEL</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isUseRealDataByExcel" lay-skin="switch" id="isUseRealDataByExcel">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../../js/spectrum.js"></script>
+<script type="text/javascript" src="../../js/xm-select.js"></script>
+<script type="text/javascript" src="../../js/ip.js"></script>
+
+<script type="text/javascript">
+    let form;
+    let sheetName;
+    let allShape;
+    let refreshInfo = '';
+    let token;
+    let proIndex;
+    $(document).ready(function(){
+
+        token = window.sessionStorage.getItem("cur_token");
+
+        layui.use('element', function () {
+            let element = layui.element;
+
+        });
+
+        layui.use('form', function(){
+            form = layui.form;
+            form.on('switch(sub)', function(data){
+                let checked = $('#spreadRpt').prop('checked');
+            });
+
+
+            form.on('switch(wcp)', function(data){
+                let checked = $('#webCellPercent').prop('checked');
+                if(checked){
+                    $('#keepHVRatio').attr('disabled' , false);
+                    $('#keepHVRatio').next().removeClass('layui-disabled');
+                    $('#keepHVRatio').next().removeClass('layui-switch-disabled');
+
+                    $('#isAutoFontSize').attr('disabled' , false);
+                    $('#isAutoFontSize').next().removeClass('layui-disabled');
+                    $('#isAutoFontSize').next().removeClass('layui-switch-disabled');
+                }else{
+                    $('#keepHVRatio').attr('disabled' , true);
+                    $('#keepHVRatio').next().addClass('layui-disabled');
+                    $('#keepHVRatio').next().addClass('layui-switch-disabled');
+
+                    $('#isAutoFontSize').attr('disabled' , true);
+                    $('#isAutoFontSize').next().addClass('layui-disabled');
+                    $('#isAutoFontSize').next().addClass('layui-switch-disabled');
+                }
+            });
+
+            form.on('switch(inter)', function(data){
+                let checked = $('#inter').prop('checked');
+                if(checked){
+                    $('#repaintInterval').attr('disabled' , false);
+
+                }else{
+                    $('#repaintInterval').attr('disabled' , true);
+                }
+            });
+            form.render()
+        });
+
+    })
+
+
+    //绑定颜色控件
+    let colors = [
+        ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)", "rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(255, 255, 255)"],
+        ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)", "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"],
+        ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)", "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)", "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)",
+            "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)", "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)",
+            "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)", "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+            "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)", "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)", "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+    ];
+    //颜色插件配置
+    let colorOpt = {
+        allowEmpty: true,
+        showInput: true,
+        containerClassName: "full-spectrum",
+        showInitial: true,
+        showPalette: true,
+        showSelectionPalette: true,
+        showAlpha: true,
+        maxPaletteSize: 10,
+        preferredFormat: "hex8",
+        change: function (color) {
+            let hexColor = "transparent";
+            if (color) {
+                hexColor = color.toString(); //argb
+                let id = $(this).attr("id");
+                let alpha = hexColor.substring(1,3);
+                let trueColor = hexColor.substring(3,9);
+                let col = '#' + trueColor + alpha; //rgba
+                $(this).css('background-color', col);
+                let inputId = id + "Input";
+                $('#' + inputId).val(hexColor); //argb
+            }
+        },
+        beforeShow: function () {
+            let co = ''; //rgba
+            let id = $(this).attr('id');
+            let argb = $(this).prev().val();
+            if(argb == undefined){
+                $(this).spectrum('set', '#ffffffff');
+            }else{
+                $(this).spectrum('set', argb);
+            }
+        },
+        hide: function () {
+            $("#mask").hide();
+        },
+        palette: colors
+    };
+
+    $("#bkColorOfPluginFullScreen").spectrum(colorOpt);
+    $("#sheetBKColor").spectrum(colorOpt);
+    $('#watermarkFontColor').spectrum(colorOpt);
+    //$("img[name='ftcolor']").spectrum(colorOpt);
+    function initProps(props , sheets ,shapes , propIndex , optionArray){
+        proIndex = propIndex;
+        let sheetJson = JSON.parse(sheets);
+        let sheetA = sheetJson['sheetName'];
+        let sheetArray = [];
+        allShape = shapes;
+
+        $.each(sheetA , function(i,e){
+            let sheetObj = {};
+            sheetObj['name'] = e;
+            sheetObj['value'] = e;
+            sheetArray.push(sheetObj);
+        })
+
+        //多选下拉框，渲染sheetNames
+        sheetName = xmSelect.render({
+            el: "#sheetNames",
+            clickClose: false,       //单选完关闭下拉框
+            filterable: true,       //搜索
+            direction: 'up',      // 展开方向 下
+            radio: false,            //单选
+            height: "auto",
+            theme: {
+                color: '#0094FF',
+            },
+            data: sheetArray,
+            model: {
+                label: {type: 'text'}
+                //, icon: 'hidden'
+            },  //文本显示模式
+            //处理方式
+            on: function (data) {
+
+            },
+        });
+
+
+        layui.use('upload', function () {//插入图片
+            var upload = layui.upload;
+            upload.render({ //允许上传的文件后缀
+                elem: '#sheetBkDiv'
+                , url: ip + '/designSys/getJsonData?token='+ token
+                , accept: 'images'
+                , done: function (res) {
+                }
+                , before: function (obj) {
+                    obj.preview(function (index, file, result) {
+                        $("#im").css('width', '200px');
+                        $("#im").css('height', '200px');
+                        $("#im").attr('src', result);
+                        $("#isSheetBKImage").prop('checked', true);
+                        form.render();
+                    });
+                }
+            });
+        });
+
+
+        let json = JSON.parse(props);
+        let watermarkFontName = json.watermarkFontName; //水印字体
+        let watermarkFontColor = json.watermarkFontColor;
+        let watermarkText = json.watermarkText;
+        let watermarkFontSize = json.watermarkFontSize;
+        if(watermarkFontName == undefined){
+            watermarkFontName = '宋体';
+        }
+        if(watermarkFontColor == undefined){
+            watermarkFontColor = '#FA969696';
+        }
+        if(watermarkFontSize == undefined){
+            watermarkFontSize = 56;
+        }
+        $('#watermarkText').val(watermarkText);
+        $('#watermarkFontSize').val(watermarkFontSize);
+
+        let alpha2 = watermarkFontColor.substring(7,9);
+        let trueColor2 = watermarkFontColor.substring(1,7);
+        let col2 = '#' + alpha2 + trueColor2;
+
+        $('#watermarkFontColorInput').val(col2);
+        $('#watermarkFontColor').css('background-color' , watermarkFontColor);
+        $('#watermarkFontColor').attr('argb' , col2); //argb
+
+        $.each(optionArray , function(i,e){
+            if(watermarkFontName == e){
+                $('#watermarkFontName').append('<option value="'+ e +'" selected>'+ e +'</option>');
+            }else{
+                $('#watermarkFontName').append('<option value="'+ e +'">'+ e +'</option>');
+            }
+        })
+
+        //基本属性
+        $('#isShowCenterReport').prop('checked', json.isShowCenterReport);
+        $('#isSearchByDefaultParam').prop('checked',json.isSearchByDefaultParam);
+        $('#alertReport').prop('checked' , json.alertReport);
+        $('#offlineUpload').prop('checked', json.offlineUpload);
+        $('#isOfflineUploadEncryption').prop('checked', json.isOfflineUploadEncryption);
+        $('#isAllowAddRowInCellModel').prop('checked', json.isAllowAddRowInCellModel);
+        $('#isAllowDelRowInCellModel').prop('checked', json.isAllowDelRowInCellModel);
+        let notInTotalPage = json.notInTotalPage;
+        let valueArr = [];
+        $.each(notInTotalPage , function(i,e){
+            valueArr.push(e);
+        })
+        sheetName.setValue(valueArr);
+        $('#isAutoPaperSize').prop('checked' , json.isAutoPaperSize);
+        $('#isExportNoSpaceCell').prop('checked' , json.isExportNoSpaceCell);
+        $('#isCheckDataTypeFormat').prop('checked' , json.isCheckDataTypeFormat);
+        $('#isCompressModelFile').prop('checked' , json.isCompressModelFile);
+        $('#isMultiThreadOfDS').prop('checked' , json.isMultiThreadOfDS);
+        $('#isUseRealDataByExcel').prop('checked' , json.isUseRealDataByExcel);
+
+        //表格插件属性
+        $('#spreadRpt').prop('checked' , json.spreadRpt);
+        $('#isNotCalcExpr').prop('checked' , json.isNotCalcExpr);
+        $('#showGridLine').prop('checked' , json.showGridLine);
+        $('#allowedEdit').prop('checked' , json.allowedEdit); //单元格是否允许编辑
+/*
+        $('#showExprTag').prop('checked' , json.showExprTag); //是否显示公式标签
+*/
+        $('#mJs').val(json.modelJS);
+        //Excel导出
+        $('#exportOrginPic').prop('checked' , json.exportOrginPic);
+        //插件属性
+        $('#isAllowPluginFullScreen').prop('checked', json.isAllowPluginFullScreen);
+        $('#bkColorOfPluginFullScreenInput').val(json.bkColorOfPluginFullScreen);
+        let bcpf = json.bkColorOfPluginFullScreen;
+        let alpha1 = bcpf.substring(7,9);
+        let trueColor1 = bcpf.substring(1,7);
+        let col1 = '#' + alpha1 + trueColor1;
+        $('#bkColorOfPluginFullScreenInput').val(col1);
+        $('#bkColorOfPluginFullScreen').css('background-color',bcpf);
+        $('#bkColorOfPluginFullScreen').attr('argb' , col1); //argb
+
+        //尺寸适配
+        $('#webCellPercent').prop('checked' , json.webCellPercent);
+        $('#keepHVRatio').prop('checked' , json.keepHVRatio);
+        $('#isAutoFontSize').prop('checked' , json.isAutoFontSize);
+        if( json.webCellPercent){
+            $('#keepHVRatio').attr('disabled' , false);
+            $('#keepHVRatio').next().removeClass('layui-disabled');
+            $('#keepHVRatio').next().removeClass('layui-switch-disabled');
+
+            $('#isAutoFontSize').attr('disabled' , false);
+            $('#isAutoFontSize').next().removeClass('layui-disabled');
+            $('#isAutoFontSize').next().removeClass('layui-switch-disabled');
+        }else{
+            $('#keepHVRatio').attr('disabled' , true);
+            $('#keepHVRatio').next().addClass('layui-disabled');
+            $('#keepHVRatio').next().addClass('layui-switch-disabled');
+
+            $('#isAutoFontSize').attr('disabled' , true);
+            $('#isAutoFontSize').next().addClass('layui-disabled');
+            $('#isAutoFontSize').next().addClass('layui-switch-disabled');
+        }
+
+        //刷新设置
+        let repaintInterval = json.repaintInterval;
+        if(repaintInterval == 0){
+            $('#inter').prop('checked' , false);
+            $('#repaintInterval').attr('disabled' , true);
+        }else{
+            $('#inter').prop('checked' , true);
+            $('#repaintInterval').val(repaintInterval);
+        }
+        //没有局部刷新属性
+
+        if(json.regionsRepaintInterval == ""){
+            refreshInfo = "";
+        }else{
+            refreshInfo = json.regionsRepaintInterval;
+        }
+
+        //工具栏设置
+        $('#showParamToolBar').prop('checked' , json.showParamToolBar);
+        $('#showToolBar').prop('checked' , json.showToolBar);
+        //页眉页脚设置
+
+        $('#pageDateFormat').val(json.pageDateFormat).prop('selected' , true);
+        $('#pageTimeFormat').val(json.pageTimeFormat).prop('selected' , true);
+
+        //背景设置
+        if ('' != json.sheetBKImage) {
+            $("#im").attr('src', 'data:image/png;base64,' + json.sheetBKImage);
+            $("#im").css('width', '200px');
+            $("#im").css('height', '200px');
+            $("#isSheetBKImage").prop('checked', true);
+        }
+
+        let sheetBk = json.sheetBKColor; //rgba #FF0000FF
+        let alpha = sheetBk.substring(7,9);
+        let trueColor = sheetBk.substring(1,7);
+        let col = '#' + alpha + trueColor;
+        $('#sheetBKColorInput').val(col); //argb
+        $('#sheetBKColor').css('background-color' , sheetBk); //rgba
+        $('#sheetBKColor').attr('argb' , col); //argb
+        $('#sheetBKImagePercent').val(json.sheetBKImagePercent);
+        $('#sheetBKImageStretchType').val(json.sheetBKImageStretchType).prop('selected' , true);
+        form.render()
+    }
+
+    function getProps(){
+        //基本属性
+        let isShowCenterReport = $('#isShowCenterReport').prop('checked'); //报表方向
+        let isSearchByDefaultParam = $('#isSearchByDefaultParam').prop('checked'); //自动查询
+        let alertReport = $('#alertReport').prop('checked'); //是否预警
+        let offlineUpload = $('#offlineUpload').prop('checked'); //离线填报
+        let isOfflineUploadEncryption = $('#isOfflineUploadEncryption').prop('checked');
+        let isAllowAddRowInCellModel = $('#isAllowAddRowInCellModel').prop('checked');
+        let isAllowDelRowInCellModel = $('#isAllowDelRowInCellModel').prop('checked');
+        //let isOfflineUploadEncryption = false;
+        let value = sheetName.getValue(); //不计入页码的sheet页
+        let notInTotalPage = [];
+        $.each(value , function(i,e){
+            notInTotalPage.push(e.name);
+        })
+        let isAutoPaperSize = $('#isAutoPaperSize').prop('checked');
+        let isExportNoSpaceCell = $('#isExportNoSpaceCell').prop('checked');
+        let isCheckDataTypeFormat = $('#isCheckDataTypeFormat').prop('checked'); //是否检查数据类型
+        let isCompressModelFile = $('#isCompressModelFile').prop('checked'); //是否压缩模板文件
+        let isMultiThreadOfDS = $('#isMultiThreadOfDS').prop('checked');
+        let isUseRealDataByExcel = $('#isUseRealDataByExcel').prop('checked');
+        //表格插件属性
+        let spreadRpt = $('#spreadRpt').prop('checked'); //是否表格插件
+        let isNotCalcExpr = $('#isNotCalcExpr').prop('checked'); //是否保留公式
+        let showGridLine = $('#showGridLine').prop('checked');
+        let allowedEdit = $('#allowedEdit').prop('checked'); //单元格是否允许编辑
+       /* let showExprTag = $('#showExprTag').prop('checked'); //是否显示公式标签*/
+        //EXCEL导出
+        let exportOrginPic = $('#exportOrginPic').prop('checked'); //是否导出原图
+        //插件属性
+        let isAllowPluginFullScreen = $('#isAllowPluginFullScreen').prop('checked');
+        let bkColorOfPluginFullScreen = $('#bkColorOfPluginFullScreenInput').val();
+        let alpha1 = bkColorOfPluginFullScreen.substring(1,3);
+        let trueColor1= bkColorOfPluginFullScreen.substring(3,9);
+        let col1 = '#' + trueColor1 + alpha1;
+
+        //尺寸适配
+        let webCellPercent = $('#webCellPercent').prop('checked');
+        let keepHVRatio = $('#keepHVRatio').prop('checked');
+        let isAutoFontSize = $('#isAutoFontSize').prop('checked');
+
+        //属性设置
+        let checked = $('#inter').prop('checked'); //是否全局刷新
+        let repaintInterval;
+        if(checked){
+            repaintInterval = $('#repaintInterval').val();
+            if(repaintInterval == ''){
+                layer.alert('请输入全屏自动刷新时间!');
+            }else{
+                repaintInterval = parseInt(repaintInterval);
+            }
+        }else{
+            repaintInterval = 0;
+        }
+
+        //工具栏设置
+        let showToolBar = $('#showToolBar').prop('checked');
+        let showParamToolBar = $('#showParamToolBar').prop('checked');
+
+
+        //页眉页脚设置
+        let pageDateFormat = $('#pageDateFormat').val();
+        let pageTimeFormat = $('#pageTimeFormat').val();
+
+        //背景设置
+        let isSheetBKImage = $("#isSheetBKImage").prop('checked');
+        let sheetBKImage = '';
+        if (isSheetBKImage) {
+            sheetBKImage = $("#im").attr('src').substr($("#im").attr('src').indexOf('base64,') + 7, $("#im").attr('src').length);
+        }
+
+        let sheetBKColor = $('#sheetBKColorInput').val();
+        let alpha = sheetBKColor.substring(1,3);
+        let trueColor = sheetBKColor.substring(3,9);
+        let col = '#' + trueColor + alpha;
+        let sheetBKImagePercent = parseInt($('#sheetBKImagePercent').val());
+
+        let sheetBKImageStretchType = parseInt($('#sheetBKImageStretchType').val());
+
+        let watermarkText = $('#watermarkText').val();
+        let watermarkFontName = $('#watermarkFontName').val();
+        let watermarkFontSize = parseInt($('#watermarkFontSize').val());
+        let watermarkFontColor = $('#watermarkFontColorInput').val();
+        let rgb = watermarkFontColor.substring(3,9);
+        let a = watermarkFontColor.substring(1,3);
+
+        watermarkFontColor = '#' + rgb + a;
+
+        let data =
+            {
+                //基本属性
+                "isShowCenterReport": isShowCenterReport,
+                "isSearchByDefaultParam": isSearchByDefaultParam,
+                "alertReport": alertReport,
+                "offlineUpload": offlineUpload,
+                "isOfflineUploadEncryption": isOfflineUploadEncryption,
+                "isAllowAddRowInCellModel": isAllowAddRowInCellModel,
+                "isAllowDelRowInCellModel":isAllowDelRowInCellModel,
+                "notInTotalPage":notInTotalPage,
+                "isAutoPaperSize": isAutoPaperSize,
+                "isExportNoSpaceCell":isExportNoSpaceCell,
+                "isCheckDataTypeFormat":isCheckDataTypeFormat,
+                "isCompressModelFile":isCompressModelFile,
+                "isMultiThreadOfDS":isMultiThreadOfDS,
+                "isUseRealDataByExcel":isUseRealDataByExcel,
+                "modelJS": $("#mJs").val(),
+                //表格插件属性
+
+                "spreadRpt": spreadRpt,
+                "isNotCalcExpr": isNotCalcExpr,
+                "showGridLine": showGridLine,
+                "allowedEdit": allowedEdit,
+               /* "showExprTag": showExprTag,*/
+                //excel导出
+                "exportOrginPic":exportOrginPic,
+                //插件属性
+                "isAllowPluginFullScreen": isAllowPluginFullScreen,
+                "bkColorOfPluginFullScreen": col1,
+
+                //尺寸适配
+                "webCellPercent": webCellPercent,
+                "keepHVRatio": keepHVRatio,
+                "isAutoFontSize": isAutoFontSize,
+
+                //刷新设置
+                "repaintInterval": repaintInterval,
+                "regionsRepaintInterval": (refreshInfo), //局域刷新表达式
+                //工具栏设置
+                "showParamToolBar": showParamToolBar,
+                "showToolBar": showToolBar,
+
+                //页眉页脚设置
+                "pageDateFormat": parseInt(pageDateFormat),
+                "pageTimeFormat": parseInt(pageTimeFormat),
+                //背景设置
+                "sheetBKImage": sheetBKImage,
+                "sheetBKImagePercent": sheetBKImagePercent,
+                "sheetBKColor": col,
+                "sheetBKImageStretchType":sheetBKImageStretchType,
+                //是否增加行
+                "watermarkText":watermarkText,
+                "watermarkFontName":watermarkFontName,
+                "watermarkFontSize":watermarkFontSize,
+                "watermarkFontColor":watermarkFontColor
+            }
+        return data;
+    }
+
+    function openJS(){
+        layer.open({
+            type: 1,
+            area: ['300px', '300px'],
+            closeBtn: 0,
+            resize: false,
+            title: "JavaScript代码编辑",
+            content: '<textarea id="js" style="border:0px;resize: none;width: 100%;height: 98%"></textarea>',
+            btn: ['确定', '关闭'],
+            btnAlign: 'c',
+            yes: function (index, layero) {
+                let tx = layero.find('#js');
+                $("#mJs").val(tx.val());
+                layer.close(index);
+            },
+            success: function (layero, index) {
+                let tx = layero.find('#js');
+                tx.val($("#mJs").val());
+            }
+        });
+        return false;
+    }
+
+    //设置刷新属性
+    function setFresh(){
+        let curIndex = layer.open({
+            type: 2,
+            area: ['750px', '630px'],
+            closeBtn: 0,
+            title: ['区域刷新', 'height:20px;line-height:20px'],
+            content:  'areafresh.html',
+            btn: ['确定', '关闭'],
+            btnAlign: 'c',
+            zIndex: layer.zIndex, //重点1
+            end: function () {
+
+            },
+            yes: function (index, layero) {
+                let iframeWin = window[layero.find('iframe')[0]['name']];
+                let page = iframeWin.getPage1(); //获取局域刷新值
+                if (page == 1) {
+                    layer.alert('表达式有空值!');
+                } else if (page == 2) {
+                    layer.alert('有错误的表达式!');
+                } else if (page == 3) {
+                    layer.alert('有重复的表达式!');
+                } else if (page == 4) {
+                    layer.alert('请设置刷新时间!');
+                } else {
+                    refreshInfo = page;
+                    layer.close(index);
+                }
+                top.layer.style(proIndex, {
+                    width: '800px',
+                    height: '700px'
+                });
+            },
+            success: function (layero, index) {
+                //top.layer.full(proIndex);
+                //重新给指定层设定width、top等
+                top.layer.style(proIndex, {
+                    width: '900px',
+                    height: '800px'
+                });
+                let iframeWin = window[layero.find('iframe')[0]['name']];
+                let json = refreshInfo; //区域刷新信息
+                //初始化刷新信息
+                iframeWin.init1(json, allShape);
+            },
+            btn2: function(){
+                top.layer.style(proIndex, {
+                    width: '800px',
+                    height: '700px'
+                });
+            }
+        });
+
+    }
+
+
+    function checkColor(obj){
+        let color = $(obj).val();
+        if(!CheckIsHex6(color)){
+            $(obj).val('#ffffff');
+        }
+    }
+
+    function checkNumber(obj){
+        let number = $(obj).val();
+        if(!isPositiveNumber(number)){
+            $(obj).val(1);
+        }
+    }
+
+    function CheckIsHex6(bgVal) {
+        let type = "^#[0-9a-fA-F]{6}$";
+        let re = new RegExp(type);
+        if (bgVal.match(re) == null) {
+            type = "^[rR][gG][Bb][\(]([\\s]*(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?)[\\s]*,){2}[\\s]*(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)[\\s]*[\)]{1}$";
+            re = new RegExp(type);
+            if (bgVal.match(re) == null) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    function isPositiveNumber(num) { //判断是否是正整数
+        var g = /^[1-9]*[1-9][0-9]*$/;
+        return g.test(num);
+    }
+
+    function rgbaToHex(r, g, b, a) {
+        r = Math.round(r);
+        g = Math.round(g);
+        b = Math.round(b);
+        a = Math.round(a * 255);
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1) + a.toString(16).toUpperCase().padStart(2, '0');
+    }
+
+
+
+</script>
+</html>

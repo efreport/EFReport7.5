@@ -1,0 +1,3162 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link id="iconLink" rel="icon" href="data:;base64,=">
+    <link href="js/css/layui.css" rel="stylesheet">
+    <link href="css/header.css" rel="stylesheet">
+    <link href="css/html.css" rel="stylesheet">
+    <link href="css/content.css" rel="stylesheet">
+    <link href="css/spectrum.css" rel="stylesheet">
+    <link href="css/ds.css" rel="stylesheet">
+    <link href="css/right.css" rel="stylesheet">
+    <link href="css/shape.css" rel="stylesheet">
+    <link href="css/tree.css" rel="stylesheet">
+    <link href="css/tool.css" rel="stylesheet">
+    <link href="js/css/third-nav.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="js/zTree/css/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="css/scroll.css" type="text/css">
+</head>
+<body oncontextmenu="return false;">
+<!--
+<input type="text" id="typeName" style="width:100px;height:20px;display: none;"></input>
+-->
+
+<div class="all">
+    <input type="text" id="cp" style="position: absolute;top: 0;left: 0;width: 1px;height: 1px;">
+    <textarea id="cpTa" style="position: absolute;top: 0;left: 0;width: 1px;height: 1px;"></textarea>
+
+    <!-- 导航栏 -->
+    <div class="header">
+        <ul class="layui-nav" lay-filter="">
+            <li class="layui-nav-item">
+                <a href="javascript:;">文件</a>
+                <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                    <dd onclick="newTemplate()"><img src="images/design/menu/file/new.png"><a>新建模板</a></dd>
+                    <dd onclick="saveC()"><img src="images/design/menu/file/save.png"><a>保存模板</a></dd>
+                    <dd onclick="saveAsTo()"><img src="images/design/menu/file/saveAs.png"><a>模板另存为</a></dd>
+                    <dd onclick="closeTemplate()"><img src="images/design/menu/file/close.png"><a>关闭模板</a></dd>
+                    <dd id="importTempl"><img src="images/design/menu/file/import.png"><a>导入模板</a></dd>
+                    <dd onclick="exportTemplate()"><img src="images/design/menu/file/export.png"><a>导出模板</a></dd>
+                    <dd id="importExcel"><img src="images/design/menu/file/excel.png"><a>导入Excel</a></dd>
+                    <dd onclick="recoverHistory()"><img src="images/design/menu/file/history.png"><a>历史文件恢复</a></dd>
+                    <dd onclick="viewTemplate()"><img src="images/design/menu/file/view.png"><a>预览</a></dd>
+                    <dd onclick="MenuEvent.tabBarRightMenu.rename()"><img src="images/design/menu/file/rename.png"><a>重命名</a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">模板</a>
+                <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                    <dd onclick="templateConfig();"><img src="images/design/menu/template/templateConfig.png"><a>模板管理</a></dd>
+                    <dd onclick="templateShare();"><img src="images/design/menu/template/templateShare.png"><a>模板共享</a></dd>
+                    <dd onclick="templateParams();"><img src="images/design/menu/template/param.png"><a>模板参数</a></dd>
+                    <dd onclick="templateProps();"><img src="images/design/menu/template/prop.png"><a>模板属性</a></dd>
+                    <dd onclick="pageProps();"><img src="images/design/menu/template/pageProp.png"><a>页面属性</a></dd>
+                    <dd onclick="dataSubmit();"><img src="images/design/menu/template/submit.png"><a>数据填报</a></dd>
+                    <dd onclick="selfDataSubmit();"><img src="images/design/menu/template/submitR.png"><a>自定义数据填报</a>
+                    </dd>
+                    <dd onclick="pageSetting();"><img src="images/design/menu/template/pageSetting.png"><a>页面设置</a></dd>
+                    <dd onclick="pageHeaderSetting();"><img src="images/design/menu/template/header.png"><a>页眉设置</a>
+                    </dd>
+                    <dd onclick="pageFooterSetting();"><img src="images/design/menu/template/footer.png"><a>页脚设置</a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">插入</a>
+                <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                    <dd onclick="insertFormula();"><img src="images/design/menu/insert/formula.png"><a>插入公式</a></dd>
+                    <dd onclick="insertPlugin();"><img src="images/design/menu/insert/plugin.png"><a>插入插件</a></dd>
+<!--
+                    <dd onclick="insertCustomPlugin();"><img src="images/design/menu/insert/plugin.png"><a>插入自定义插件</a></dd>
+-->
+                    <dd onclick="insertImage();"><img src="images/design/menu/insert/image.png"><a>插入图片</a></dd>
+                    <dd onclick="insertDiagonal();"><img src="images/design/menu/insert/oblic.png"><a>插入斜线</a></dd>
+                    <dd onclick="setTableRegion();"><img src="images/design/tool/setTable.png"><a>设置表格</a></dd>
+                    <dd onclick="removeTableRegion();"><img src="images/design/tool/cancelTable.png"><a>取消表格</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" id="cellLi">
+                <a href="javascript:;">单元格</a>
+                <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                    <dd onclick="conditionProps()"><img src="images/design/menu/cell/condition.png"><a>条件属性</a></dd>
+                    <dd onclick="hyperLink()"><img src="images/design/menu/cell/hyperlink.png"><a>超级链接</a></dd>
+                    <dd onclick="subSheet()"><img src="images/design/menu/cell/subsheet.png"><a>关联子表单</a></dd>
+                    <dd onclick="areaLink()"><img src="images/design/menu/cell/link.png"><a>区域联动</a></dd>
+                    <dd onclick="mergeCell()"><img src="images/design/menu/cell/merge.png"><a>合并单元格</a></dd>
+                    <dd onclick="splitCell()"><img src="images/design/menu/cell/split.png"><a>拆分单元格</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" id="shapeLi" style="display: none;">
+                <a href="javascript:;">悬浮元素</a>
+                <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                    <dd onclick="hyperLinkS()"><img src="images/design/menu/cell/hyperlink.png"><a>超级链接</a></dd>
+                    <dd onclick="areaLinkS()"><img src="images/design/menu/cell/link.png"><a>区域联动</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" id="settingLi">
+                <a href="javascript:;">设置</a>
+                <dl class="layui-nav-child">
+                    <!-- 二级菜单 -->
+                    <dd onclick="dataSource()"><img src="images/design/menu/setting/datasource.png"><a>数据链接</a></dd>
+<!--
+                    <dd><img src="images/design/menu/setting/js.png"><a onclick="globalJs()">全局JS函数</a></dd>
+-->
+                    <dd onclick="setPlatform()"><img src="images/design/menu/setting/plateform.png"><a>平台属性</a></dd>
+                    <dd onclick="sysDs()"><img src="images/design/menu/setting/datasource.png"><a>通用数据集</a></dd>
+
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">帮助</a>
+                <dl class="layui-nav-child">
+                    <!-- 二级菜单 -->
+                    <dd onclick="help()"><img src="images/design/menu/about/help.png"><a>帮助文档</a></dd>
+                    <dd onclick="about()"><img src="images/design/menu/about/about.png"><a>关于</a></dd>
+                    <dd onclick="sqlLog()"><img src="images/design/menu/template/templateConfig.png"><a>SQL日志</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" id="testTool">
+                <a href="javascript:;">测试</a>
+                <dl class="layui-nav-child second-nav">
+                    <!-- 二级菜单 -->
+                    <dd id="saveCell"><img src="images/design/menu/about/about.png"><a>设置文本</a></dd>
+                    <dd onclick="loadCellText()"><img src="images/design/menu/about/about.png"><a>保存</a></dd>
+                    <dd id="loadTemplate"><img src="images/design/menu/about/about.png"><a>读取模板</a></dd>
+                    <dd onclick="showExpr()"><img src="images/design/menu/about/about.png"><a>显示公式/值</a></dd>
+                    <dd class="nav-con">
+                        <img src="images/design/menu/about/about.png">
+                        <a>南水项目</a>
+                        <dl class="third-nav">
+                            <dd id="saveCellNS"><img src="images/design/menu/about/about.png"><a>设置数据</a></dd>
+                            <dd onclick="loadNsCellText()"><img src="images/design/menu/about/about.png"><a>保存数据</a></dd>
+                            <dd onclick="addNSRow(false)"><img src="images/design/menu/about/about.png"><a>增加行</a></dd>
+                            <dd onclick="addNSRow(true)"><img src="images/design/menu/about/about.png"><a>复制行</a></dd>
+                            <dd onclick="delNSRow()"><img src="images/design/menu/about/about.png"><a>删除行</a></dd>
+                            <dd onclick="recoverNSRow()"><img src="images/design/menu/about/about.png"><a>恢复删除行</a></dd>
+                        </dl>
+                    </dd>
+                    <dd class="nav-con">
+                        <img src="images/design/menu/about/about.png">
+                        <a>郑州投资</a>
+                        <dl class="third-nav">
+                            <dd id="saveCellZZTZ"><img src="images/design/menu/about/about.png"><a>设置数据</a></dd>
+                            <dd onclick="loadZZTZCellText()"><img src="images/design/menu/about/about.png"><a>保存数据</a></dd>
+                            <dd onclick="addZZTZRow(false)"><img src="images/design/menu/about/about.png"><a>增加行</a></dd>
+                            <dd onclick="addZZTZRow(true)"><img src="images/design/menu/about/about.png"><a>复制行</a></dd>
+                            <dd onclick="delZZTZRow()"><img src="images/design/menu/about/about.png"><a>删除行</a></dd>
+                            <dd onclick="recoverZZTZRow()"><img src="images/design/menu/about/about.png"><a>恢复删除行</a></dd>
+                        </dl>
+                    </dd>
+
+
+                </dl>
+            </li>
+        </ul>
+
+        <div class="download" style="margin-right: 80px;color:red;" id="download">
+            下载资源中....
+        </div>
+
+        <div class="info">
+            <div class="name" style="margin-right: 20px;cursor: pointer;" id="name"></div>
+           <!-- <div class="buttonDiv">
+                <Button class="logout" onclick="logout()">退出</Button>
+            </div>-->
+
+        </div>
+    </div>
+    <div class="content">
+        <div class="left">
+            <div class="search">
+                <input type="text" id="tempName" placeholder="模板名称" autocomplete="off" class="layui-input">
+                <!--<button type="button" id="search" class="layui-btn" data-type="reload"
+                        style="height: 25px;line-height:25px;width: 13%;;background-color: #3E99DD;"><i
+                        class="layui-icon" style="font-size: 12px">&#xe615;</i></button>-->
+                <img src="images/design/searchTemplate.png" class="searchImg">
+            </div>
+            <ul class="ztree treeArea" id="tree">
+
+            </ul>
+            <div class="layui-tab layui-tab-card" style="margin:0px;padding:0px;height:50%;">
+                <ul class="layui-tab-title" style="height:8%;">
+                    <li class="layui-this" style="margin:0px;padding:0px;width:50%;height:100%;">模板数据集</li>
+                    <li style="margin:0px;padding:0px;width:50%;height:100%;">通用数据集</li>
+                </ul>
+                <div class="layui-tab-content" style="height: 92%;padding:0px;">
+                    <div class="dsArea layui-tab-item layui-show">
+                        <div class="search">
+                            <input type="text" id="dsName" placeholder="数据集名称" autocomplete="off" class="layui-input">
+                            <!--<button type="button" id="search" class="layui-btn" data-type="reload"
+                                    style="height: 25px;line-height:25px;width: 13%;;background-color: #3E99DD;"><i
+                                    class="layui-icon" style="font-size: 12px">&#xe615;</i></button>-->
+                            <img src="images/design/searchTemplate.png" class="searchImg">
+                        </div>
+                        <div class="dstool">
+                            <div style="width:5%;">
+
+                            </div>
+                            <div class="toolDiv" attr="addDs" title="数据集新增">
+                                <img src="images/design/ds/addDs.png">
+                            </div>
+                            <div class="toolDiv" attr="removeDs" title="删除数据集">
+                                <img src="images/design/ds/deleteDs.png" >
+                            </div>
+                            <div class="toolDiv" attr="editDs" title="数据集编辑">
+                                <img src="images/design/ds/editDs.png" >
+                            </div>
+                            <div class="toolDiv" attr="refreshDs" title="数据集刷新">
+                                <img src="images/design/ds/refreshDs.png">
+                            </div>
+                            <div class="toolDiv" attr="refrence" title="中英文对照">
+                                <img src="images/design/ds/dsRefrence.png">
+                            </div>
+                            <div class="toolDiv" attr="hong" title="宏替换">
+                                <img src="images/design/ds/replace.png">
+                            </div>
+                            <div style="width:5%;">
+
+                            </div>
+                        </div>
+                        <div class="dsval">
+                            <ul>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="dsArea layui-tab-item">
+                        <div class="search">
+                            <input type="text" id="gdsName" placeholder="数据集名称" autocomplete="off" class="layui-input">
+                            <!--<button type="button" id="search" class="layui-btn" data-type="reload"
+                                    style="height: 25px;line-height:25px;width: 13%;;background-color: #3E99DD;"><i
+                                    class="layui-icon" style="font-size: 12px">&#xe615;</i></button>-->
+                            <img src="images/design/searchTemplate.png" class="searchImg">
+                        </div>
+                        <div class="dstool">
+                            <div style="width:5%;">
+
+                            </div>
+                            <div class="toolDiv" attr="addGDs" title="数据集新增">
+                                <img src="images/design/ds/addDs.png">
+                            </div>
+                            <div class="toolDiv" attr="removeGDs" title="删除数据集">
+                                <img src="images/design/ds/deleteDs.png" >
+                            </div>
+                            <div class="toolDiv" attr="refreshGDs" title="数据集刷新">
+                                <img src="images/design/ds/refreshDs.png">
+                            </div>
+                            <div style="width:5%;">
+
+                            </div>
+                        </div>
+                        <div class="gsval">
+                            <ul>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="middle">
+            <div class="sheet">
+                <div class="item" title="新建" onclick="newTemplate()">
+                    <div class="item-top" >
+                        <img src="images/design/tool/new.png" name="new"/>
+                    </div>
+                    <div class="item-bottom">
+                        新建
+                    </div>
+                </div>
+                <div class="item"  title="保存" onclick="saveC()">
+                    <div class="item-top">
+                        <img src="images/design/tool/save.png" name="save"/>
+                    </div>
+                    <div class="item-bottom">
+                        保存
+                    </div>
+                </div>
+                <div class="item" title="预览" onclick="viewTemplate()">
+                    <div class="item-top">
+                        <img src="images/design/tool/view.png" name="view"/>
+                    </div>
+                    <div class="item-bottom">
+                        预览
+                    </div>
+                </div>
+                <div class="item" title="撤销" onclick="undoC()">
+                    <div class="item-top">
+                        <img src="images/design/tool/undo.png" name="undo"/>
+                    </div>
+                    <div class="item-bottom">
+                        撤销
+                    </div>
+                </div>
+                <div class="item" title="恢复" onclick="recoverC()">
+                    <div class="item-top">
+                        <img src="images/design/tool/recover.png" name="recover"/>
+                    </div>
+                    <div class="item-bottom">
+                        恢复
+                    </div>
+                </div>
+                <div class="item" title="格式刷" onclick="formatC()">
+                    <div class="item-top">
+                        <img src="images/design/tool/format.png" name="format" />
+                    </div>
+                    <div class="item-bottom">
+                        格式刷
+                    </div>
+                </div>
+                <div class="item-special">
+                    <div class="item-top">
+                        <select name="fontfamily" class="fontFamily" title="字体"
+                                onchange="changeFontFamily(this)">
+                        </select>
+                        <select name="fontsize" class="fontSize" title="字号"
+                                onchange="changeFontSize(this)">
+                        </select>
+                    </div>
+                    <div class="item-bottom">
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/fontColor1.png" name="ftcolor" title="字体颜色"
+                                 style="border-bottom:4px solid #000000;"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/backColor1.png" name="bgcolor" title="背景颜色"
+                                 style="border-bottom:4px solid #FFFFFF;"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/bold.png" name="bold" title="加粗" onclick="boldC()"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/underline.png" name="underline" title="下划线"
+                                 onclick="underLineC()"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/italic.png" name="italic" title="斜体" onclick="italicC()"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/line.png" name="border" id="border" title="边框"/>
+                        </div>
+                        <div id="borderDiv"
+                             style="display: none;background: #F7F7F7;position: absolute;top:0;left: 0;border:1px solid lightgrey;padding:5px;"
+                             id="borderContent">
+                            <img src="images/design/border_1.png" style="width: 20px;height: 20px;" name="borders" attr="00"/>
+                            <img src="images/design/border_2.png" style="width: 20px;height: 20px;" name="borders" attr="6"/>
+                            <img src="images/design/border_3.png" style="width: 20px;height: 20px;" name="borders" attr="3"/>
+                            <img src="images/design/border_4.png" style="width: 20px;height: 20px;" name="borders" attr="0"/><br/>
+                            <img src="images/design/border_5.png" style="width: 20px;height: 20px;" name="borders" attr="5"/>
+                            <img src="images/design/border_6.png" style="width: 20px;height: 20px;" name="borders" attr="1"/>
+                            <img src="images/design/border_7.png" style="width: 20px;height: 20px;" name="borders" attr="2"/>
+                            <img src="images/design/border_8.png" style="width: 20px;height: 20px;" name="borders" attr="7"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="divideLine">
+                    <div></div>
+                </div>
+                <div class="item-special-1">
+                    <div style="height:10%;"></div>
+                    <div class="item-top">
+                        <div class="item-top-item">
+                            <img src="images/design/tool/left.png" name="left" title="左对齐" onclick="alignLeft()"/>
+                        </div>
+                        <div class="item-top-item">
+                            <img src="images/design/tool/center.png" name="center" title="居中" onclick="alignCenter()"/>
+                        </div>
+                        <div class="item-top-item">
+                            <img src="images/design/tool/right.png" name="right" title="右对齐" onclick="alignRight()"/>
+                        </div>
+                        <div class="item-top-item">
+                            <img src="images/design/tool/adapt.png" name="adapt" title="自适应行高"
+                                 onclick="adaptLineHeightC()"/>
+                        </div>
+                    </div>
+                    <div class="item-bottom">
+                        <div class="item1" title="合并单元格" onclick="mergeCell()">
+                            <div class="item-bottom-item" style="width: 50%;">
+                                <img src="images/design/tool/merge.png" name="merge" />
+                            </div>
+                            <div class="item-bottom-item" style="height:100%;width: 50%;display: flex;align-items: center;justify-content: center;">
+                                合并
+                            </div>
+                        </div>
+                        <div class="item1"  title="拆分单元格" onclick="splitCell()">
+                            <div class="item-bottom-item" style="width: 50%;">
+                                <img src="images/design/tool/split.png" name="split" />
+                            </div>
+                            <div class="item-bottom-item" style="height:100%;width: 50%;display: flex;align-items: center;justify-content: center;">
+                                拆分
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="divideLine">
+                    <div></div>
+                </div>
+                <div class="item-special-2">
+                    <div style="height:10%;"></div>
+                    <div class="item-top">
+                        <div class="item-top-item">
+                            <img src="images/design/tool/addCol.png" name="addCol" title="插入列"
+                                 onclick="insertColumn()"/>
+                        </div>
+                        <div class="item-top-item">
+                            <img src="images/design/tool/appendCol.png" name="appendCol" title="追加列"
+                                 onclick="appendColumn()"/>
+                        </div>
+                        <div class="item-top-item">
+                            <img src="images/design/tool/delCol.png" name="delCol" title="删除列"
+                                 onclick="deleteColumn()"/>
+                        </div>
+                    </div>
+                    <div class="item-bottom">
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/addRow.png" name="addRow" title="插入行" onclick="insertRow()"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/appendRow.png" name="delRow" title="追加行"
+                                 onclick="appendRow()"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/delRow.png" name="delRow" title="删除行" onclick="deleteRow()"/>
+                        </div>
+                    </div>
+                </div>
+                <div style="" class="divideLine">
+                    <div></div>
+                </div>
+                <div class="item-special-2">
+                    <div style="height:10%;"></div>
+                    <div class="item-top">
+                        <div class="item-top-item">
+                            <img src="images/design/tool/image.png" id="addImg" name="image" title="插入图片"/>
+                        </div>
+                        <div class="item-top-item">
+                            <img src="images/design/tool/chart.png" name="chart" onclick="addChart()" title="插入图表"/>
+                        </div>
+                        <div class="item-top-item">
+                            <img src="images/design/tool/oblique.png" name="oblique" title="插入斜线" onclick="addOblC()"/>
+                        </div>
+                    </div>
+                    <div class="item-bottom">
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/header.png" name="header" title="页眉"
+                                 onclick="pageHeaderSetting()"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/footer.png" name="footer" title="页脚"
+                                 onclick="pageFooterSetting()"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/frozen.png" name="frozen" title="固定行列" onclick="fixCell()"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="divideLine">
+                    <div></div>
+                </div>
+                <div class="item-special-2">
+                    <div style="height:10%;"></div>
+                    <div class="item-top">
+                        <div class="item-top-item">
+                            <img src="images/design/tool/setting.png" name="setting" title="页面设置"
+                                 onclick="pageSetting()"/>
+                        </div>
+                        <div class="item-top-item">
+                            <img src="images/design/tool/hide.png" name="hide" title="隐藏单元格" onclick="hideCell()"/>
+                        </div>
+                        <div class="item-top-item">
+                            <img src="images/design/tool/replace.png" name="replace" title="查找替换" onclick="replaceC()"/>
+                        </div>
+                    </div>
+                    <div class="item-bottom">
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/shape.png" name="shape" title="悬浮元素" onclick="addShape()"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/toTop.png" name="toTop" title="置于顶部" onclick="toTopS()"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/toBottom.png" name="toBottom" title="置于底部"
+                                 onclick="toBottomS()"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="divideLine">
+                    <div></div>
+                </div>
+                <div class="item paramItem" title="模板参数" onclick="showParams()" style="width:6%;">
+                    <div class="item-top">
+                        <img src="images/design/tool/format.png" name="format" />
+                    </div>
+                    <div class="item-bottom">
+                        模板参数
+                    </div>
+                </div>
+            </div>
+            <div class="form" style="display:none;">
+                <div class="item" title="新建" onclick="newTemplate()">
+                    <div class="item-top">
+                        <img src="images/design/tool/new.png" name="new" />
+                    </div>
+                    <div class="item-bottom">
+                        新建
+                    </div>
+                </div>
+                <div class="item" title="保存" onclick="saveC()">
+                    <div class="item-top">
+                        <img src="images/design/tool/save.png" name="save" />
+                    </div>
+                    <div class="item-bottom">
+                        保存
+                    </div>
+                </div>
+                <div class="item" title="预览" onclick="viewTemplate()">
+                    <div class="item-top">
+                        <img src="images/design/tool/view.png" name="view" />
+                    </div>
+                    <div class="item-bottom">
+                        预览
+                    </div>
+                </div>
+                <div class="item" title="撤销" onclick="undoC()">
+                    <div class="item-top">
+                        <img src="images/design/tool/undo.png" name="undo" />
+                    </div>
+                    <div class="item-bottom">
+                        撤销
+                    </div>
+                </div>
+                <div class="item" title="恢复" onclick="recoverC()">
+                    <div class="item-top">
+                        <img src="images/design/tool/recover.png" name="recover" />
+                    </div>
+                    <div class="item-bottom">
+                        恢复
+                    </div>
+                </div>
+                <div class="item" title="格式刷" onclick="formatC()">
+                    <div class="item-top">
+                        <img src="images/design/tool/format.png" name="format" />
+                    </div>
+                    <div class="item-bottom">
+                        格式刷
+                    </div>
+                </div>
+                <div class="item-special">
+                    <div class="item-top">
+                        <select name="fontfamilys" class="fontFamily" title="字体"
+                                onchange="changeFontFamily(this)">
+                        </select>
+                        <select name="fontsizes" class="fontSize" title="字号"
+                                onchange="changeFontSize(this)">
+                        </select>
+                    </div>
+                    <div class="item-bottom">
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/fontColor1.png" name="ftcolor" title="字体颜色"
+                                 style="border-bottom: 4px solid #000000;"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/backColor1.png" name="bgcolor" title="背景颜色"
+                                 style="border-bottom: 4px solid #FFFFFF;"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/bold.png" name="bolds" title="加粗" onclick="boldS()"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/underline.png" name="underlines" title="下划线"
+                                 onclick="underLineS()"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/italic.png" name="italics" title="斜体" onclick="italicS()"/>
+                        </div>
+                        <div class="item-bottom-item">
+                            <img src="images/design/tool/line.png" name="border" id="borders" title="边框"/>
+                        </div>
+                        <div id="borderDivs"
+                             style="display: none;background: #F7F7F7;position: absolute;top:0;left: 0;border:1px solid lightgrey">
+                            <img src="images/design/border_1.png" style="width: 20px;height: 20px;" name="borders" attr="00"/>
+                            <img src="images/design/border_5.png" style="width: 20px;height: 20px;" name="borders" attr="5"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="divideLine">
+                    <div></div>
+                </div>
+                <div class="item-1" title="插入图片" id="addShapeImage">
+                    <div class="item-top">
+                        <img src="images/design/tool/image.png" name="image"/>
+                    </div>
+                    <div class="item-bottom">
+                        插入图片
+                    </div>
+                </div>
+                <div class="item-1"  name="chart" title="插入插件" onclick="addFormChart()">
+                    <div class="item-top">
+                        <img src="images/design/tool/chart.png"/>
+                    </div>
+                    <div class="item-bottom">
+                        插入插件
+                    </div>
+                </div>
+                <div class="item-1" title="悬浮元素" onclick="addShape()">
+                    <div class="item-top">
+                        <img src="images/design/tool/shape.png" name="shape"/>
+                    </div>
+                    <div class="item-bottom">
+                        悬浮元素
+                    </div>
+                </div>
+                <div class="divideLine">
+                    <div></div>
+                </div>
+                <div class="item-1" title="是否吸附" onclick="adsorbS()">
+                    <div class="item-top">
+                        <img src="images/design/tool/adsorb.png" name="adsorb" />
+                    </div>
+                    <div class="item-bottom">
+                        是否吸附
+                    </div>
+                </div>
+                <div class="item-1" title="置于顶层" onclick="toTopS()">
+                    <div class="item-top">
+                        <img src="images/design/tool/toTop.png" name="toTop" />
+                    </div>
+                    <div class="item-bottom">
+                        置于顶层
+                    </div>
+                </div>
+                <div class="item-1" title="置于底层" onclick="toBottomS()">
+                    <div class="item-top">
+                        <img src="images/design/tool/toBottom.png" name="toBottom" />
+                    </div>
+                    <div class="item-bottom">
+                        置于底层
+                    </div>
+                </div>
+                <div class="divideLine">
+                    <div></div>
+                </div>
+                <div class="item-1" title="快速定位" onclick="searchShape()">
+                    <div class="item-top">
+                        <img src="images/design/tool/search.png" name="search" />
+                    </div>
+                    <div class="item-bottom">
+                        快速定位
+                    </div>
+                </div>
+            </div>
+            <div class='editArea' style="width: 100%;height: 40px;background: #F7F7F7;display: flex;align-items: center;justify-content: center;">
+                <div style="width:9%;height:40px;display: inline-block;">
+                    <input type="text" style="width:100%;height:38px;display: inline-block;text-align: center;"
+                           id="cellPos" value="A1" autocomplete="off"></div>
+                <div style="display: inline-block;width:1%;"></div>
+                <div style="width:88%;height: 40px;display: inline-block;">
+                    <input type="text" style="width:99%;height:38px;" id="editArea" autocomplete="off">
+                </div>
+                <div style="display: flex;justify-content:center;align-items:center;width:2%;height:40px;">
+                    <div onclick="viewData()" style="width:100%;height:40px;display: flex;align-items: center;justify-content: center;font-size:20px;cursor: pointer;">...</div>
+                </div>
+            </div>
+            <div class="canvas-container" style="height:88%;z-index:0;border: 0px;position: relative;">
+                <div id="EFTextInputDiv" style="display: none;position: absolute;width:0px;height:0px;border:0px;">
+                    <textarea id="EFTextInput" autocomplete="off" style="resize: none;overflow:hidden;border:none" wrap="hard"></textarea>
+                </div>
+                <!-- 设计器模板名称右键点击菜单 -->
+                <ul class="rightmenu" style="display: none;position: absolute;">
+                    <li onclick="MenuEvent.tabBarRightMenu.closeAll()">关闭所有</li>
+                    <li onclick="MenuEvent.tabBarRightMenu.closeOthers()">关闭其他</li>
+                    <li onclick="MenuEvent.tabBarRightMenu.rename()">重命名</li>
+                    <li onclick="MenuEvent.tabBarRightMenu.save()">保存</li>
+                    <li onclick="MenuEvent.tabBarRightMenu.saveAs()">另存为</li>
+                    <li onclick="MenuEvent.tabBarRightMenu.cancel()">取消</li>
+                </ul>
+                <!-- 设计器行Tab右键菜单-->
+                <ul id="rightRowClickMenu" class="rightRowClickMenu">
+                    <div class="gutterLine"></div>
+                    <li><a href="#"><img src="images/design/rename.png"
+                                         attr="cell"><span>单元格元素</span><span
+                            style="float:right;font-size: 12px">▶</span></a></li>
+                    <li><a href="#" onclick="MenuEvent.rightRowClickMenu.cut()"><img
+                            src="images/design/rightMenu/cut.png"
+                            attr="cut"><span>剪切</span></a>
+                    </li>
+                    <li><a href="#" onclick="MenuEvent.rightRowClickMenu.copy()"><img
+                            src="images/design/rightMenu/copy.png"
+                            attr="copy"><span>复制</span></a>
+                    </li>
+                    <li><a href="#" onclick="MenuEvent.rightRowClickMenu.paste()"><img
+                            src="images/design/rightMenu/paste.png"
+                            attr="paste"><span>粘贴</span></a>
+                    </li>
+                    <li><a href="#" onclick="MenuEvent.rightRowClickMenu.clear()"><img
+                            src="images/design/rightMenu/earse.png"
+                            attr="clear"><span>清除内容</span></a>
+                    </li>
+                    <li><a href="#" onclick="MenuEvent.rightRowClickMenu.clearAll()"><img
+                            src="images/design/rightMenu/earseAll.png"
+                            attr="clearAll"><span>清除内容和样式</span></a>
+                    </li>
+                    <li><a href="#" onclick="MenuEvent.rightRowClickMenu.copyTo()"><img
+                            src="images/design/rightMenu/copybord.png"
+                            attr="copyTo"><span>复制到剪切板</span></a>
+                    </li>
+                    <li class="divider"></li>
+                    <li id="cells"><a href="#"><img src="images/design/rightMenu/column.png"
+                                                    attr="cells"><span>列操作</span><span style="float:right">▶</span></a>
+                    </li>
+                    <li id="rows"><a href="#"><img src="images/design/rightMenu/row.png"
+                                                   attr="rows"><span>行操作</span><span
+                            style="float:right">▶</span></a>
+                    </li>
+                    <li id="rowHeight"><a href="#" onclick="MenuEvent.rightRowClickMenu.rowHeight()"><img
+                            src="images/design/rightMenu/rowHeight.png"
+                            attr="rowHeight"><span>修改行高</span><span style="float:right"></span></a>
+                    </li>
+                    <li id="lineWidth"><a href="#" onclick="MenuEvent.rightRowClickMenu.columnWidth()"><img
+                            src="images/design/rightMenu/columnWidth.png"
+                            attr="lineWidth"><span>修改列宽</span><span style="float:right"></span></a>
+                    </li>
+                    <li class="divider" id="repeatLine"></li>
+                    <li id="repeat"><a href="#"><img src="images/design/rightMenu/repeatRow.png"
+                                                     attr="repeat"><span>重复行操作</span><span style="float:right">▶</span></a>
+                    </li>
+                </ul>
+
+                <ul id="shapeMenu" class="contextMenuPlugin" style="display:none;position: absolute;">
+                    <div class="gutterLine"></div>
+                    <li><a href="#"><img src="images/design/tool/chart.png"
+                                         attr="plugin"><span>插件</span><span
+                            style="float:right;font-size: 12px">▶</span></a></li>
+                    <li><a href="#"><img src="images/design/tool/image.png"
+                                         attr="picture"><span>图片</span><span
+                            style="float:right;font-size: 12px">▶</span></a></li>
+                    <li><a href="#"><img src="images/design/menu/cell/subsheet.png"
+                                         attr="sheet"><span>子表单</span><span
+                            style="float:right;font-size: 12px">▶</span></a></li>
+                    <div class="gutterLine"></div>
+                    <li><a href="#"><img src="images/design/ds/deleteDs.png"
+                                         attr="deleteShape"><span>删除</span></a></li>
+                    <li><a href="#"><img src="images/design/rightMenu/copy.png"
+                                         attr="copyShape"><span>复制</span></a></li>
+                    <li><a href="#"><img src="images/design/tool/toTop.png"
+                                         attr="sToTop"><span>置于顶层</span></a></li>
+                    <li><a href="#"><img src="images/design/tool/toBottom.png"
+                                         attr="sToBottom"><span>置于底层</span></a></li>
+                </ul>
+                <ul id="contextMenu6" class="contextMenuPlugin">
+                    <li><a href="#"><img src="images/design/tool/chart.png"
+                                         attr="addPlugin"><span>插入插件</span></a></li>
+                    <li><a href="#"><img src="images/design/rightMenu/cancelRow.png"
+                                         attr="cancelPlugin"><span>取消插件</span></a></li>
+                </ul>
+                <ul id="contextMenu7" class="contextMenuPlugin">
+                    <li id="addPicture"><a href="#"><img src="images/design/tool/image.png"
+                                                         attr="addPicture" onclick="insertImage()"><span>插入图片</span></a>
+                    </li>
+                    <li><a href="#"><img src="images/design/rightMenu/cancelRow.png"
+                                         attr="cancelPicture"><span>取消图片</span></a></li>
+                </ul>
+                <ul id="contextMenu8" class="contextMenuPlugin">
+                    <li id="addSheet"><a href="#"><img src="images/design/menu/cell/subsheet.png"
+                                                       attr="addSheet"><span>插入子表单</span></a></li>
+                    <li><a href="#"><img src="images/design/rightMenu/cancelRow.png"
+                                         attr="cancelSheet"><span>取消子表单</span></a></li>
+                </ul>
+                <ul id="formMenu" class="contextMenuPlugin" style="display: none;position:absolute;">
+                    <li id="addShape"><a href="#"><img src="images/design/tool/shape.png"
+                                                       attr="addShape"><span>插入悬浮元素</span></a></li>
+                    <li><a href="#"><img src="images/design/rightMenu/paste.png"
+                                         attr="pasteShape"><span>粘贴</span></a></li>
+                </ul>
+                <div id="canvas" style="width:100%;height:100%;position: absolute;left: 0px;top:0px;z-index:-1;"
+                        class="canvas"></div>
+            </div>
+
+        </div>
+        <div class="right" style="width:20%;">
+            <div class="layui-tab layui-tab-brief" id="normal">
+                <ul class="layui-tab-title" id="lay_expend">
+                    <li class="layui-this">数据</li>
+                    <li class="">高级</li>
+                    <li class="">样式</li>
+                    <li class="">控件</li>
+                </ul>
+                <div class="layui-tab-content" style="width: 97%;height:95%;padding:10px;overflow-y:auto;">
+                    <div class="layui-tab-item layui-show" id="propCon"
+                         style="overflow-y:auto;white-space: normal;height:99%">
+                        <div id="dataProp" style="overflow: auto;white-space: normal;">
+                            <table border="0" style="width: 100%;">
+                                <tbody>
+                                <tr>
+                                    <td>数据集</td>
+                                    <td><select id="cellds"></select></td>
+                                </tr>
+                                <tr>
+                                    <td>数据列</td>
+                                    <td><input type="hidden" value=""><select id="dscol"></select></td>
+                                </tr>
+                                <tr>
+                                    <td>数据类型</td>
+                                    <td><select id="dstype">
+                                        <option value=""></option>
+                                        <option value="1">布尔</option>
+                                        <option value="2">整型</option>
+                                        <option value="6">浮点</option>
+                                        <option value="10">字符串</option>
+                                        <option value="14">日期</option>
+                                        <option value="16">日期时间</option>
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                    <td>数据设置</td>
+                                    <td><select id="attri">
+                                        <option value="1">分组</option>
+                                        <option value="2">列表</option>
+                                        <option value="3">汇总</option>
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                    <td>汇总方式</td>
+                                    <td><select id="statistics" disabled="disabled">
+                                        <option value="0"></option>
+                                        <option value="1">累加</option>
+                                        <option value="2">平均</option>
+                                        <option value="3">最大</option>
+                                        <option value="4">最小</option>
+                                        <option value="5">数量</option>
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                    <td>筛选</td>
+                                    <td>
+                                        <button id="filterExpr" class="layui-btn layui-btn-primary layui-btn-xs"
+                                                style="border-radius:4px;width:80px;height:26px;line-height:20px;background-color: #0094FF;color:#FFFFFF;" value="">过滤筛选
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>最小显示行数</td>
+                                    <td><input type="text" id="minr" autocomplete="off"></td>
+                                </tr>
+                                <tr>
+                                    <!--<td>数据字典</td>
+                                    <td><input type="checkbox" id="d_dict" lay-skin="primary"></td>-->
+                                    <td colspan="2">
+                                        <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                            <div style="width: 50%;display: flex;align-items: center;justify-content: flex-start;">
+                                                数据字典
+                                            </div>
+                                            <div style="width: 50%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" id="d_dict">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>字典源</td>
+                                    <td><select id="d_ds" disabled="disabled">
+                                        <option value=""></option>
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                    <td>映射列</td>
+                                    <td><input type="hidden" value=""><select id="d_af" disabled="disabled">
+                                        <option value=""></option>
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                    <td>显示列</td>
+                                    <td><input type="hidden" value=""><select id="d_sf" disabled="disabled">
+                                        <option value=""></option>
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="vertical-align: bottom;height: 20px">
+                                        <div class="link-top"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!--<td class="propText"><input type="checkbox" id="fg" lay-skin="primary">字段分页</td>
+                                    <td class="propText"><input type="checkbox" id="far" lay-skin="primary">行后分页</td>-->
+                                    <td colspan="2">
+                                        <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                            <div style="width: 49%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" id="fg">字段分页
+                                            </div>
+                                            <div style="width: 50%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" id="far">行后分页
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                   <!-- <td class="propText"><input type="checkbox" id="crfs" lay-skin="primary">每页补齐行</td>
+                                    <td class="propText"><input type="checkbox" id="crfl" lay-skin="primary">尾页补齐行</td>-->
+                                    <td colspan="2">
+                                        <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                            <div style="width: 49%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" id="crfs">每页补齐行
+                                            </div>
+                                            <div style="width: 50%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" id="crfl">尾页补齐行
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                <!--    <td class="propText" valign="middle">
+                                        <input type="checkbox" id="imageField" lay-skin="primary">图片字段
+                                    </td>
+                                    <td></td>-->
+                                    <td colspan="2">
+                                        <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                            <div style="width: 49%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" id="imageField">图片字段
+                                            </div>
+                                            <div style="width: 50%;display: flex;align-items: center;justify-content: flex-start;">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="propText">服务器图片路径前缀</td>
+                                    <td><input type="text" id="imagePathStr" placeholder="c:/image或@{serverImages}"
+                                               disabled="disabled">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <table style="width: 100%;" class="fieltable">
+                                            <tbody>
+                                            <tr>
+                                                <td colspan="2" style="vertical-align: bottom;height: 20px">
+                                                    <div class="link-top"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">分栏设置</td>
+                                            </tr>
+                                            <tr>
+                                              <!--  <td class="propText"><input type="checkbox" name="multi"
+                                                                            id="multi" lay-skin="primary"><span>开启分栏</span>
+                                                </td>
+                                                <td class="propText"><input type="checkbox" name="cf" id="cf"
+                                                                            disabled="disabled" lay-skin="primary"><span>先行后列</span>
+                                                </td>-->
+                                                <td colspan="2">
+                                                    <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                                        <div style="width: 49%;display: flex;align-items: center;justify-content: flex-start;">
+                                                            <input type="checkbox" name="multi"
+                                                                   id="multi"><span>开启分栏</span>
+                                                        </div>
+                                                        <div style="width: 50%;display: flex;align-items: center;justify-content: flex-start;">
+                                                            <input type="checkbox" name="cf" id="cf"
+                                                                   disabled="disabled"><span>先行后列</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="propText">分栏数量</td>
+                                                <td><input type="text" name="num"
+                                                           id="num" maxlength="4"
+                                                           style="width: 96%"
+                                                           onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                           onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                                                           disabled="disabled"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" height="20px"
+                                                    style="vertical-align: bottom;height: 20px">
+                                                    <div class="link-top"></div>
+                                                </td>
+                                            </tr>
+                                            <!-- 折叠隐藏 whj -->
+                                            <tr style="display: none">
+                                                <td colspan="2">单元格折叠设置</td>
+                                            </tr>
+                                            <tr>
+                                               <!-- <td class="propText"><input lay-skin="primary" type="checkbox" name="zd"
+                                                                            id="zd"><span>开启折叠</span></td>
+                                                <td class="propText"><input lay-skin="primary" type="checkbox" name="lasts"
+                                                                            id="lasts"><span>显示最后行(列)</span></td>-->
+                                                <td colspan="2">
+                                                    <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                                        <div style="width: 49%;display: flex;align-items: center;justify-content: flex-start;">
+                                                            <input type="checkbox" name="zd"
+                                                                   id="zd"><span>开启折叠</span>
+                                                        </div>
+                                                        <div style="width: 50%;display: flex;align-items: center;justify-content: flex-start;">
+                                                            <input type="checkbox" name="lasts"
+                                                                   id="lasts"><span>显示最后行(列)</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" height="20px"
+                                                    style="vertical-align: bottom;height: 20px">
+                                                    <div class="link-top"></div>
+                                                </td>
+                                            </tr>
+                                            <!-- 折叠隐藏 whj -->
+                                            <tr style="display: none">
+                                                <td colspan="2">单元格折叠设置</td>
+                                            </tr>
+                                            <tr>
+                                               <!-- <td class="propText"><input lay-skin="primary" type="checkbox" id="lockCell">强制允许编辑</td>
+                                                <td class="propText"><input lay-skin="primary" type="checkbox" id="demergeAndCopyCell">拆分并拷贝
+                                                </td>-->
+                                                <td colspan="2">
+                                                    <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                                        <div style="width: 49%;display: flex;align-items: center;justify-content: flex-start;">
+                                                            <input  type="checkbox" id="lockCell">强制允许编辑
+                                                        </div>
+                                                        <div style="width: 50%;display: flex;align-items: center;justify-content: flex-start;">
+                                                            <input  type="checkbox" id="demergeAndCopyCell">拆分并拷贝
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" height="20px"
+                                                    style="vertical-align: bottom;height: 20px">
+                                                    <div class="link-top"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+<!--
+                                                <td class="propText"><input lay-skin="primary" type="checkbox" id="listToGroup">强制分组</td>
+-->
+                                                <td colspan="2">
+                                                    <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                                        <div style="width: 49%;display: flex;align-items: center;justify-content: flex-start;">
+                                                            <input type="checkbox" id="listToGroup">强制分组
+                                                        </div>
+                                                        <div style="width: 50%;display: flex;align-items: center;justify-content: flex-start;">
+                                                            <input  type="checkbox" id="mergeExpandCellStr">合并索引列表
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item" id="superCon" style="">
+                        <div id="dataSuper" style="overflow: auto;white-space: normal;">
+                            <table border="0" style="width: 98%;">
+                                <tbody>
+                                <tr height="40px;">
+                                    <td colspan="2">
+                                        <button class="chooseBtn" name="fx" value="0"
+                                                class="layui-btn layui-btn-primary">
+                                            不扩展
+                                        </button>
+                                        <button class="noChooseBtn" name="fx" value="1"
+                                                class="layui-btn layui-btn-primary">
+                                            纵向
+                                        </button>
+                                        <button class="noChooseBtn" name="fx" value="2"
+                                                class="layui-btn layui-btn-primary">
+                                            横向
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr height="10px;"></tr>
+                                <tr>
+                                    <td colspan="2">左父格
+                                        <select id="zfg" style="display: inline-block;width:70%;margin-left: 14%;">
+                                            <option value="0">无</option>
+                                            <option value="1">默认</option>
+                                            <option value="2">自定义</option>
+                                        </select></td>
+                                </tr>
+                                <tr height="5px;"></tr>
+                                <tr id="zfgS" style="display: none">
+                                    <td colspan="2" style="text-align: right" class="propText">
+                                        <input type="text" id="zfgA" style="width: 30%"
+                                               onkeyup="value=value.replace(/[^a-zA-Z]/g,'').toUpperCase()"
+                                               maxlength="2">
+                                        <input type="text" id="zfg1" style="width: 25%" maxlength="4"
+                                               onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                               onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                        <img src="images/design/setparent.png" id="zfgBtn">
+                                    </td>
+                                </tr>
+                                <tr height="5px;"></tr>
+                                <tr>
+                                    <td colspan="2">上父格
+                                        <select id="sfg" style="display: inline-block;width:70%;margin-left: 14%;">
+                                            <option value="0">无</option>
+                                            <option value="1">默认</option>
+                                            <option value="2">自定义</option>
+                                        </select></td>
+                                </tr>
+                                <tr id="sfgS" style="display: none">
+                                    <td colspan="2" style="text-align: right">
+                                        <input type="text" id="sfgA" style="width: 30%"
+                                               onkeyup="value=value.replace(/[^a-zA-Z]/g,'').toUpperCase()"
+                                               maxlength="2">
+                                        <input type="text" id="sfg1" style="width: 25%" maxlength="4"
+                                               onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                               onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                        <img src="images/design/setparent.png" id="sfgBtn">
+                                    </td>
+                                </tr>
+                                <tr height="5px;"></tr>
+                                <tr height="40px;">
+                                    <td colspan="2">
+                                        <button class='chooseBtn' name="fxg" value="0"
+                                                class="layui-btn layui-btn-primary">
+                                            不排序
+                                        </button>
+                                        <button class='noChooseBtn' name="fxg" class="layui-btn layui-btn-primary"
+                                                value="1">
+                                            升序
+                                        </button>
+                                        <button class='noChooseBtn' name="fxg" value="2"
+                                                class="layui-btn layui-btn-primary">
+                                            降序
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>伸展设置</td>
+                                </tr>
+                                <tr>
+                                  <!--  <td class="propText"><input lay-skin="primary" type="checkbox" name="zxkz" id="zxkz"><span>纵向伸展</span>
+                                    </td>
+                                    <td class="propText"><input lay-skin="primary" type="checkbox" name="hxkz" id="hxkz"><span>横向伸展</span>
+                                    </td>-->
+
+                                    <td colspan="2">
+                                        <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                            <div style="width: 49%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" name="zxkz" id="zxkz"><span>纵向伸展</span>
+                                            </div>
+                                            <div style="width: 50%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" name="hxkz" id="hxkz"><span>横向伸展</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">特殊设置</td>
+                                </tr>
+                                <tr>
+                                   <!-- <td class="propText"><input lay-skin="primary" type="checkbox" name="showZero"
+                                                                id="showZero"><span>显示0值</span></td>
+                                    <td class="propText"><input  lay-skin="primary" type="checkbox" name="hidec"
+                                                                id="hidec"><span>隐藏单元格</span></td>-->
+                                    <td colspan="2">
+                                        <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                            <div style="width: 49%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" name="showZero"
+                                                       id="showZero"><span>显示0值</span>
+                                            </div>
+                                            <div style="width: 50%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" name="hidec"
+                                                        id="hidec"><span>隐藏单元格</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                               <!-- <tr>
+                                    <td class="propText" style="width:20%;"><span>空值显示值</span></td>
+                                    <td class="propText" style="width:80%;"><input type="text" name="nullConvertValue" id="nullConvertValue"
+                                                                style="width:180px;height:30px;" autocomplete="off"></td>
+                                </tr>-->
+                                <tr>
+                                    <td colspan="2">
+                                        <div style="width:27%;display: inline-block;">空值显示值</div>
+                                        <input type="text" name="nullConvertValue" id="nullConvertValue"
+                                               style="display: inline-block;width:69.5%;" autocomplete="off">
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item" id="styleCon" style="">
+                        <div class="layui-tab layui-tab-card"
+                             style="box-shadow: 0px 0px; border: none; margin: 0px;padding-top:5px; height: 676px;">
+                            <ul class="layui-tab-title" id="lay_expend1" style="background-color:#ffffff;">
+                                <li class="layui-this">格式</li>
+                                <li class="">对齐</li>
+                                <li class="">边框</li>
+                            </ul>
+                            <div class="layui-tab-content" style="padding:15px;">
+                                <div class="layui-tab-item  layui-show" style="">
+                                    <select name="fmt" style="width: 98%;height:30px">
+                                        <option value="1">常规</option>
+                                        <option value="2">数值</option>
+                                        <option value="4">日期</option>
+                                        <option value="5">时间</option>
+                                        <option value="6">货币</option>
+                                        <option value="8">百分比</option>
+                                        <option value="10">条形码</option>
+                                    </select>
+
+                                    <div class="fmt_div">
+                                        <ul id="fmt_val" style="background-color: #F2F3F5"></ul>
+                                    </div>
+                                </div>
+                                <div class="layui-tab-item" id="tz2_tb">
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="2">文本</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:50%;">水平对齐</td>
+                                            <td>
+                                                <img name="texthAlign" val="1" src="images/design/tool/left.png"
+                                                     class="horiImg">
+                                                <img name="texthAlign" val="4" src="images/design/tool/center.png"
+                                                     class="horiImg">
+                                                <img name="texthAlign" val="2" src="images/design/tool/right.png"
+                                                     class="horiImg">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>垂直对齐</td>
+                                            <td>
+                                                <img name="textvAlign" val="16" src="images/design/tool/top.png" class="horiImg">
+                                                <img name="textvAlign" val="64" src="images/design/tool/middle.png" class="horiImg">
+                                                <img name="textvAlign" val="32" src="images/design/tool/bottom.png" class="horiImg">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>自适应</td>
+                                            <td><img name="adapt1" src="images/design/tool/adapt.png" title="自适应"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>自适应列宽</td>
+                                            <td><img name="adaptColumn" src="images/design/tool/adaptColumn.png" title="自适应列宽"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>行间距</td>
+                                            <td><input type="text" id="lineSpacing"
+                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+                                        </tr>
+                                        <tr style="height:4px;"></tr>
+                                        <tr>
+                                            <td>字符间距</td>
+                                            <td><input type="text" id="letterSpacing"
+                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+                                        </tr>
+                                        <tr style="height:4px;"></tr>
+                                        <tr>
+                                            <td>段落空格数</td>
+                                            <td><input type="text" id="paragraphSpaceCount"
+                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+                                        </tr>
+                                        <tr style="height:4px;"></tr>
+                                        <tr>
+                                            <td>文本上边距</td>
+                                            <td><input type="text" value="0" id="topMargin"
+                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+                                        </tr>
+                                        <tr style="height:4px;"></tr>
+                                        <tr>
+                                            <td>文本下边距</td>
+                                            <td><input type="text" value="0" id="bottomMargin"
+                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+                                        </tr>
+                                        <tr style="height:4px;"></tr>
+                                        <tr>
+                                            <td>文本左边距</td>
+                                            <td><input type="text" value="0" id="leftMargin"
+                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+                                        </tr>
+                                        <tr style="height:4px;"></tr>
+                                        <tr>
+                                            <td>文本右边距</td>
+                                            <td><input type="text" value="0" id="rightMargin"
+                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div class="link-top"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">图片</td>
+                                        </tr>
+                                        <tr>
+                                            <td>水平对齐</td>
+                                            <td>
+                                                <img name="imghAlign" val="1" src="images/design/tool/left.png"
+                                                     class="horiImg">
+                                                <img name="imghAlign" val="4" src="images/design/tool/center.png"
+                                                     class="horiImg">
+                                                <img name="imghAlign" val="2" src="images/design/tool/right.png"
+                                                     class="horiImg">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>垂直对齐</td>
+                                            <td>
+                                                <img name="imgvAlign" val="16" src="images/design/tool/top.png" class="horiImg">
+                                                <img name="imgvAlign" val="64" src="images/design/tool/middle.png" class="horiImg">
+                                                <img name="imgvAlign" val="32" src="images/design/tool/bottom.png" class="horiImg">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                                    <div style="width: 10%;display: flex;align-items: center;justify-content: flex-start;">
+                                                        <input type="checkbox" id="imgsf">
+                                                    </div>
+                                                    <div style="width: 90%;display: flex;align-items: center;justify-content: flex-start;">
+                                                        图片缩放
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                                    <div style="width: 10%;display: flex;align-items: center;justify-content: flex-start;">
+                                                        <input type="checkbox" id="imgkeep" disabled="disabled">
+                                                    </div>
+                                                    <div style="width: 90%;display: flex;align-items: center;justify-content: flex-start;">
+                                                        保持原比例
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="layui-tab-item" id="tz2_xx">
+                                    <table border="0" width="100%">
+                                        <tbody>
+                                        <tr>
+                                            <td>样式</td>
+                                            <td style="width: 80%">
+                                                <div style="cursor: pointer;width: 97%" id="ckline">
+                                                    <div style="height:20px;width: 100%;text-align:center;background: white;border:1px solid #D5D5D5;">
+                                                        <img src="images/design/line/l1.png" style="width: 90%;height:20px;" val="1">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr height="5px;"></tr>
+                                        <tr>
+                                            <td>线宽</td>
+                                            <td style="width: 80%">
+                                                <input type="radio" name="xk" value="0"
+                                                       style="padding:5px;margin-right:10px;" checked><label
+                                                    style="font-size: 14px;">细</label>
+                                                <input type="radio" name="xk" value="1"
+                                                       style="padding:5px;margin-left: 30px;margin-right:10px;"><label>粗</label>
+                                                <!--<button name="xk" value="0" class="layui-btn layui-btn-primary xk"
+                                                        style="height: 25px; width: 48%; background: url(&quot;images/design/l1.png&quot;) center 50% no-repeat rgb(156, 235, 220);"></button>
+                                                <button name="xk" value="1" class="layui-btn layui-btn-primary xk1"
+                                                        style="width: 48%; height: 25px; margin-left: 0px; background-image: url(&quot;images/design/l2.png&quot;); background-position: center 50%; background-size: initial; background-repeat: no-repeat; background-attachment: initial; background-origin: initial; background-clip: initial;"></button>-->
+                                            </td>
+                                        </tr>
+                                        <tr height="5px;"></tr>
+                                        <tr style="height:35px;">
+                                            <td>颜色</td>
+                                            <td style="width: 80%">
+                                                <div style="cursor: pointer;width: 100%">
+                                                    <div id="linecolor"
+                                                         style="height:30px;width: 97%;background-color: #F2F3F5;border:1px solid #D5D5D5;display:flex;color:#4E5969;">
+                                                        <div style="width:40%;height:30px;display:flex;align-items: center;justify-content: flex-end;">
+                                                            <div id="lineColorDiv"
+                                                                 style="width:22px;height:22px;background-color: black;">
+
+                                                            </div>
+                                                        </div>
+                                                        <div id="lineColorText"
+                                                             style="width:50%;padding:5px;display:flex;align-items: center;">
+                                                            #000000
+                                                            <div/>
+                                                            <div style="width:10%;border:1px solid #D5D5D5;display: flex;align-items: center;justify-content: center;"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- <tr>
+                                             <td>颜色</td>
+                                             <td style="width: 80%">
+                                                 <div style="cursor: pointer;width: 100%">
+                                                     <div id="linecolor"
+                                                          style="height: 20px; width: 100%; background-color: rgb(0, 0, 0); border: 1px solid rgb(213, 213, 213); display: table-cell;">
+                                                         <input type="hidden" value="#000000"></div>
+                                                     <div style="border:1px solid #D5D5D5;display: table-cell;">▼</div>
+                                                     <div style="border:1px solid #D5D5D5;display: table-cell;">▼</div>
+                                                 </div>
+                                             </td>-->
+                                        </tr>
+                                        <!--  <tr style="text-align: center;">
+                                              <td colspan="2">
+                                                  <div name="borderAlign_d"
+                                                       style="display: table-cell;width:160px;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                      <img name="borderAlign" val="5" src="images/design/30.png">
+                                                  </div>
+                                                  <div name="borderAlign_d"
+                                                       style="display: table-cell;width:160px;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                      <img name="borderAlign" val="6" src="images/design/26.png">
+                                                  </div>
+                                              </td>
+                                          </tr>
+                                          <tr style="text-align: center;">
+                                              <td colspan="2">
+                                                  <div name="borderAlign_d"
+                                                       style="display: table-cell;width:80px;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                      <img name="borderAlign" val="0" src="images/design/28.png">
+                                                  </div>
+                                                  <div name="borderAlign_d"
+                                                       style="display: table-cell;width:80px;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                      <img name="borderAlign" val="2" src="images/design/32.png">
+                                                  </div>
+                                                  <div name="borderAlign_d"
+                                                       style="display: table-cell;width:80px;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                      <img name="borderAlign" val="1" src="images/design/31.png">
+                                                  </div>
+                                                  <div name="borderAlign_d"
+                                                       style="display: table-cell;width:80px;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                      <img name="borderAlign" val="3" src="images/design/27.png">
+                                                  </div>
+                                              </td>
+                                          </tr>-->
+                                        <tr height="10px;"></tr>
+                                        <tr style="text-align: center;height:35px;">
+                                            <td colspan="2">
+                                                <div style="width:100%;display: flex">
+                                                    <div name="borderAlign_d"
+                                                         style="display: flex;align-items:center;justify-content:center;width:47%;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                        <img name="borderAlign" val="5"
+                                                             src="images/design/outBorder.png" class="borderImage">
+                                                    </div>
+                                                    <div style="width: 3%;"></div>
+                                                    <div name="borderAlign_d"
+                                                         style="display: flex;align-items:center;justify-content:center;width:47%;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                        <img name="borderAlign" val="6" src="images/design/inBorder.png"
+                                                             class="borderImage">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr style="text-align: center;height:35px;">
+                                            <td colspan="2">
+                                                <div style="width: 100%;display: flex;">
+                                                    <div name="borderAlign_d"
+                                                         style="display: flex;align-items:center;justify-content:center;width:22%;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                        <img name="borderAlign" val="0"
+                                                             src="images/design/leftBorder.png" class="borderImage">
+                                                    </div>
+                                                    <div style="width: 2.5%;"></div>
+                                                    <div name="borderAlign_d"
+                                                         style="display: flex;align-items:center;justify-content:center;width:22%;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                        <img name="borderAlign" val="2"
+                                                             src="images/design/topBorder.png" class="borderImage">
+                                                    </div>
+                                                    <div style="width: 3%;"></div>
+                                                    <div name="borderAlign_d"
+                                                         style="display: flex;align-items:center;justify-content:center;width:22%;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                        <img name="borderAlign" val="1"
+                                                             src="images/design/rightBorder.png" class="borderImage">
+                                                    </div>
+                                                    <div style="width: 2.5%;"></div>
+                                                    <div name="borderAlign_d"
+                                                         style="display: flex;align-items:center;justify-content:center;width:22%;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                        <img name="borderAlign" val="3"
+                                                             src="images/design/bottomBorder.png" class="borderImage">
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item" id="tz4" style="">
+                        <select name="control" id="control">
+                            <option value="0">无</option>
+                            <option value="1">文本编辑框</option>
+                            <option value="2">下拉框</option>
+                            <option value="3">多选下拉框</option>
+                            <option value="6">日期编辑框</option>
+                            <option value="7">复选框</option>
+                            <option value="8">数字编辑框</option>
+                            <option value="9">按钮</option>
+                            <option value="10">单选框</option>
+                            <option value="11">文件</option>
+                        </select>
+
+                        <!-- 文本输入框属性 -->
+                        <table id="controlInfo1" style="width: 98%;display:none;">
+                            <tbody>
+                            <tr>
+                                <td colspan="2">基本属性</td>
+                            </tr>
+                            <tr>
+                                <td style="width:40%;">控件名称</td>
+                                <td><input type="text" id="controlName_1" name=""></td>
+                            </tr>
+                            <tr>
+                                <td>允许为空</td>
+                                <td class="checkbox-td"><input type="checkbox" id="allowNull_1"></td>
+                            </tr>
+                            <tr>
+                                <td>提示语</td>
+                                <td><input type="text" id="tip_1"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">动态显示</td>
+                                <td style="width: 60%"><input type="hidden" value="">
+                                    <button class="filterBtn"
+                                            id="expr_1">---
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>默认值</td>
+                                <td><input type="text" id="defaultValue_1"></td>
+                            </tr>
+                            <tr>
+                                <td>整行控件有效</td>
+                                <td class="checkbox-td"><input type="checkbox" id="affectRow_1"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height: 1px">
+                                    <div class="link-top"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">高级属性</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="1" class="hcon" style="display: table;">
+                                        <tbody>
+                                        <tr>
+                                            <td style="width:40%;">字符最大长度</td>
+                                            <td><input type="text" id="maxsize" maxlength="11"
+                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>字符最小长度</td>
+                                            <td><input type="text" id="minsize" maxlength="11"
+                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="1" class="hcon" style="display: table;">
+                                        <tbody>
+                                        <tr style="display:none;">
+                                            <td style="width: 40%"></td>
+                                            <td style="text-align: left">
+                                                <input type="text" id="eventType">
+                                                <textarea id="eventCode"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="height: 1px">
+                                                <div class="link-top"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">初始化事件</td>
+                                            <td style="text-align: left">
+                                                <button name="initEvent"
+                                                        class="filterBtn" id="init"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">编辑前事件</td>
+                                            <td style="text-align: left">
+                                                <button name="beforeEvent"
+                                                        class="filterBtn" id="before"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">编辑后事件</td>
+                                            <td style="text-align: left">
+                                                <button name="afterEvent"
+                                                        class="filterBtn"
+                                                        id="after"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">关联单元格</td>
+                                            <td style="text-align: left">
+                                                <button name="relateEvent"
+                                                        class="filterBtn" id="relateCell"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- 下拉框属性 -->
+                        <table id="controlInfo2" style="width: 98%;display:none;">
+                            <tbody>
+                            <tr>
+                                <td colspan="2">基本属性</td>
+                            </tr>
+                            <tr>
+                                <td style="width:40%;">控件名称</td>
+                                <td><input type="text" id="controlName_2"></td>
+                            </tr>
+                            <tr>
+                                <td>允许为空</td>
+                                <td class="checkbox-td"><input type="checkbox" id="allowNull_2"></td>
+                            </tr>
+                            <tr>
+                                <td>提示语</td>
+                                <td><input type="text" id="tip_2"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">动态显示</td>
+                                <td style="width: 60%"><input type="hidden" value="">
+                                    <button class="filterBtn"
+                                            id="expr_2"> ---
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>默认值</td>
+                                <td><input type="text" id="defaultValue_2"></td>
+                            </tr>
+                            <tr>
+                                <td>整行控件有效</td>
+                                <td class="checkbox-td"><input type="checkbox" id="affectRow_2"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height: 1px">
+                                    <div class="link-top"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">高级属性</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="2" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td style="width: 40%">数据字典</td>
+                                            <td style="text-align: left">
+                                                <button name="dictPage" class="filterBtn"
+                                                       > ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="2" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="2" style="height: 1px">
+                                                <div class="link-top"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">初始化事件</td>
+                                            <td style="text-align: left">
+                                                <button name="initEvent"
+                                                        class="filterBtn"
+                                                        id="init_2"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">改变后事件</td>
+                                            <td style="text-align: left">
+                                                <button name="afterEvent"
+                                                        class="filterBtn"
+                                                        id="after_2"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">关联单元格</td>
+                                            <td style="text-align: left">
+                                                <button name="relateEvent"
+                                                        class="filterBtn"
+                                                        id="relateCell_2"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- 多选下拉框属性 -->
+                        <table id="controlInfo3" style="width: 98%;display:none;">
+                            <tbody>
+                            <tr>
+                                <td colspan="2">基本属性</td>
+                            </tr>
+                            <tr>
+                                <td>控件名称</td>
+                                <td><input type="text" id="controlName_3"></td>
+                            </tr>
+                            <tr>
+                                <td>允许为空</td>
+                                <td class="checkbox-td"><input type="checkbox" id="allowNull_3"></td>
+                            </tr>
+                            <tr>
+                                <td>提示语</td>
+                                <td><input type="text" id="tip_3"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">动态显示</td>
+                                <td style="width: 60%"><input type="hidden" value="">
+                                    <button class="filterBtn"
+                                            id="expr_3"> ---
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>默认值</td>
+                                <td><input type="text" id="defaultValue_3"></td>
+                            </tr>
+                            <tr>
+                                <td>整行控件有效</td>
+                                <td class="checkbox-td"><input type="checkbox" id="affectRow_3"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height: 1px">
+                                    <div class="link-top"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">高级属性</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="2" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td style="width: 40%">数据字典</td>
+                                            <td style="text-align: left">
+                                                <button name="dictPage" class="filterBtn"
+                                                        id="dictPage_3"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="2" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="2" style="height: 1px">
+                                                <div class="link-top"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">初始化事件</td>
+                                            <td style="text-align: left">
+                                                <button name="initEvent"
+                                                        class="filterBtn"
+                                                        id="init_3"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">改变后事件</td>
+                                            <td style="text-align: left">
+                                                <button name="afterEvent"
+                                                        class="filterBtn"
+                                                        id="after_3"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">关联单元格</td>
+                                            <td style="text-align: left">
+                                                <button name="relateEvent"
+                                                        class="filterBtn"
+                                                        id="relateCell_3"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- 日期编辑框属性 -->
+                        <table id="controlInfo6" style="width: 98%;display:none;">
+                            <tbody>
+                            <tr>
+                                <td colspan="2">基本属性</td>
+                            </tr>
+                            <tr>
+                                <td>控件名称</td>
+                                <td><input type="text" id="controlName_6"></td>
+                            </tr>
+                            <tr>
+                                <td>允许为空</td>
+                                <td class="checkbox-td"><input type="checkbox" id="allowNull_6"></td>
+                            </tr>
+                            <tr>
+                                <td>提示语</td>
+                                <td><input type="text" id="tip_6"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">动态显示</td>
+                                <td style="width: 60%"><input type="hidden" value="">
+                                    <button class="filterBtn"
+                                            id="expr_6"> ---
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>默认值</td>
+                                <td><input type="text" id="defaultValue_6"></td>
+                            </tr>
+                            <tr>
+                                <td>整行控件有效</td>
+                                <td class="checkbox-td"><input type="checkbox" id="affectRow_6"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height: 1px">
+                                    <div class="link-top"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">高级属性</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="6" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                          <!--  <td>显示时间</td>
+                                            <td>
+                                                <input type="checkbox" id="showdate">
+                                            </td>-->
+                                            <td colspan="2">
+                                                <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                                    <div style="width: 40%;display: flex;align-items: center;justify-content: flex-start;">
+                                                        显示时间
+                                                    </div>
+                                                    <div style="width: 60%;display: flex;align-items: center;justify-content: flex-start;">
+                                                        <input type="checkbox" id="showdate">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:40%;">
+                                                日期格式
+                                            </td>
+                                            <td>
+                                                <select id="dateType" style="width:91%;">
+                                                    <option value="0">yyyy-MM-dd</option>
+                                                    <option value="1">yyyy/MM/dd</option>
+                                                    <option value="2">yyyyMMdd</option>
+                                                    <option value="3">yyyy-MM</option>
+                                                    <option value="4">yyyy/MM</option>
+                                                    <option value="5">yyyyMM</option>
+                                                </select>
+                                                <select id="dateTimeType" style="width:91%;display:none;">
+                                                    <option value="0">yyyy-MM-dd HH:mm:ss</option>
+                                                    <option value="1">yyyy/MM/dd HH:mm:ss</option>
+                                                    <option value="2">yyyyMMdd HH:mm:ss</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="2" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="2" style="height: 1px">
+                                                <div class="link-top"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">初始化事件</td>
+                                            <td style="text-align: left">
+                                                <button name="initEvent"
+                                                        class="filterBtn" id="init_6"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">改变后事件</td>
+                                            <td style="text-align: left">
+                                                <button name="afterEvent"
+                                                        class="filterBtn" id="after_6"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">关联单元格</td>
+                                            <td style="text-align: left">
+                                                <button name="relateEvent"
+                                                        class="filterBtn"
+                                                        id="relateCell_6"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- 复选框属性 -->
+                        <table id="controlInfo7" style="width: 98%;display:none;">
+                            <tbody>
+                            <tr>
+                                <td colspan="2">基本属性</td>
+                            </tr>
+                            <tr>
+                                <td>控件名称</td>
+                                <td><input type="text" id="controlName_7"></td>
+                            </tr>
+                            <tr>
+                                <td>允许为空</td>
+                                <td class="checkbox-td"><input type="checkbox" id="allowNull_7"></td>
+                            </tr>
+                            <tr>
+                                <td>提示语</td>
+                                <td><input type="text" id="tip_7"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">动态显示</td>
+                                <td style="width: 60%"><input type="hidden" value="">
+                                    <button  class="filterBtn"
+                                            id="expr_7"> ---
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>默认值</td>
+                                <td><input type="text" id="defaultValue_7"></td>
+                            </tr>
+                            <tr>
+                                <td>整行控件有效</td>
+                                <td class="checkbox-td"><input type="checkbox" id="affectRow_7"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height: 1px">
+                                    <div class="link-top"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">高级属性</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="7" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td style="width: 40%">数据字典</td>
+                                            <td style="text-align: left">
+                                                <button name="dictPage" class="filterBtn"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="2" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="2" style="height: 1px">
+                                                <div class="link-top"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">初始化事件</td>
+                                            <td style="text-align: left">
+                                                <button name="initEvent"
+                                                        class="filterBtn"
+                                                        id="init_7"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">改变后事件</td>
+                                            <td style="text-align: left">
+                                                <button name="afterEvent"
+                                                        class="filterBtn"
+                                                        id="after_7"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">关联单元格</td>
+                                            <td style="text-align: left">
+                                                <button name="relateEvent"
+                                                        class="filterBtn"
+                                                       id="relateCell_7"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- 数字编辑框属性 -->
+                        <table id="controlInfo8" style="width: 98%;display:none;">
+                            <tbody>
+                            <tr>
+                                <td colspan="2">基本属性</td>
+                            </tr>
+                            <tr>
+                                <td>控件名称</td>
+                                <td><input type="text" id="controlName_8"></td>
+                            </tr>
+                            <tr>
+                                <td>允许为空</td>
+                                <td class="checkbox-td"><input type="checkbox" id="allowNull_8"></td>
+                            </tr>
+                            <tr>
+                                <td>提示语</td>
+                                <td><input type="text" id="tip_8"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">动态显示</td>
+                                <td style="width: 60%"><input type="hidden" value="">
+                                    <button class="filterBtn"
+                                            id="expr_8"> ---
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>默认值</td>
+                                <td><input type="text" id="defaultValue_8"></td>
+                            </tr>
+                            <tr>
+                                <td>整行控件有效</td>
+                                <td class="checkbox-td"><input type="checkbox" id="affectRow_8"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height: 1px">
+                                    <div class="link-top"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">高级属性</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="8" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                        <!--    <td style="width:40%;">允许小数</td>
+                                            <td><input type="checkbox" id="allowDecimal"></td>-->
+                                            <td colspan="2">
+                                                <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                                    <div style="width: 40%;display: flex;align-items: center;justify-content: flex-start;">
+                                                        允许小数
+                                                    </div>
+                                                    <div style="width: 60%;display: flex;align-items: center;justify-content: flex-start;">
+                                                        <input type="checkbox" id="allowDecimal">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                           <!-- <td style="width:40%;">允许负数</td>
+                                            <td><input type="checkbox" id="allowNegative"></td>-->
+                                            <td colspan="2">
+                                                <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                                    <div style="width: 40%;display: flex;align-items: center;justify-content: flex-start;">
+                                                        允许负数
+                                                    </div>
+                                                    <div style="width: 60%;display: flex;align-items: center;justify-content: flex-start;">
+                                                        <input type="checkbox" id="allowNegative">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>允许的小数位数</td>
+                                            <td><input type="text" id="autonum" maxlength="2"
+                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>最大值</td>
+                                            <td><input type="text" id="maxnum"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>最小值</td>
+                                            <td><input type="text" id="minnum"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="8" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="2" style="height: 1px">
+                                                <div class="link-top"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">初始化事件</td>
+                                            <td style="text-align: left">
+                                                <button name="initEvent"
+                                                        class="filterBtn"
+                                                        id="init_8"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">编辑前事件</td>
+                                            <td style="text-align: left">
+                                                <button name="beforeEvent"
+                                                        class="filterBtn"
+                                                        id="before_8"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">编辑后事件</td>
+                                            <td style="text-align: left">
+                                                <button name="afterEvent"
+                                                        class="filterBtn"
+                                                        id="after_8"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">关联单元格</td>
+                                            <td style="text-align: left">
+                                                <button name="relateEvent"
+                                                        class="filterBtn"
+                                                        id="relateCell_8"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- 按钮属性 -->
+                        <table id="controlInfo9" style="width: 98%;display:none;">
+                            <tbody>
+                            <tr>
+                                <td colspan="2">基本属性</td>
+                            </tr>
+                            <tr>
+                                <td>控件名称</td>
+                                <td><input type="text" id="controlName_9"></td>
+                            </tr>
+                            <tr>
+                                <td>允许为空</td>
+                                <td class="checkbox-td"><input type="checkbox" id="allowNull_9"></td>
+                            </tr>
+                            <tr>
+                                <td>提示语</td>
+                                <td><input type="text" id="tip_9"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">动态显示</td>
+                                <td style="width: 60%"><input type="hidden" value="">
+                                    <button class="filterBtn"
+                                            id="expr_9"> ---
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>默认值</td>
+                                <td><input type="text" id="defaultValue_9"></td>
+                            </tr>
+                            <tr>
+                                <td>整行控件有效</td>
+                                <td class="checkbox-td"><input type="checkbox" id="affectRow_9"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height: 1px">
+                                    <div class="link-top"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">高级属性</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="9" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td style="width: 40%">按钮类型</td>
+                                            <td><select id="btntype">
+                                                <option value="0">添加行</option>
+                                                <option value="1">删除行</option>
+                                                <option value="2">普通</option>
+                                            </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">按钮文本</td>
+                                            <td><input type="text" id="btntext" style="width:92%;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">首单元格</td>
+                                            <td>
+                                                <input type="text" id="dyg1" style="width: 30%">
+                                                <input type="text" id="dyg2" style="width: 30%" maxlength="4"
+                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                                <img src="images/design/setparent.png" id="sdygBtn">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="9" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="2" style="height: 1px">
+                                                <div class="link-top"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">点击事件</td>
+                                            <td style="text-align: left">
+                                                <button name="clickEvent"
+                                                        class="filterBtn"
+                                                        id="click"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- 单选框属性 -->
+                        <table id="controlInfo10" style="width: 98%;display:none;">
+                            <tbody>
+                            <tr>
+                                <td colspan="2">基本属性</td>
+                            </tr>
+                            <tr>
+                                <td>控件名称</td>
+                                <td><input type="text" id="controlName_10"></td>
+                            </tr>
+                            <tr>
+                                <td>允许为空</td>
+                                <td class="checkbox-td"><input type="checkbox" id="allowNull_10"></td>
+                            </tr>
+                            <tr>
+                                <td>提示语</td>
+                                <td><input type="text" id="tip_10"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">动态显示</td>
+                                <td style="width: 60%"><input type="hidden" value="">
+                                    <button class="filterBtn"
+                                            id="expr_10"> ---
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>默认值</td>
+                                <td><input type="text" id="defaultValue_10"></td>
+                            </tr>
+                            <tr>
+                                <td>整行控件有效</td>
+                                <td class="checkbox-td"><input type="checkbox" id="affectRow_10"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height: 1px">
+                                    <div class="link-top"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">高级属性</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="10" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td style="width: 40%">数据字典</td>
+                                            <td style="text-align: left">
+                                                <button name="dictPage" class="filterBtn"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="10" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="2" style="height: 1px">
+                                                <div class="link-top"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">初始化事件</td>
+                                            <td style="text-align: left">
+                                                <button name="initEvent"
+                                                        class="filterBtn"
+                                                        id="init_10"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">改变后事件</td>
+                                            <td style="text-align: left">
+                                                <button name="afterEvent"
+                                                        class="filterBtn"
+                                                        id="after_10"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%">关联单元格</td>
+                                            <td style="text-align: left">
+                                                <button name="relateEvent"
+                                                        class="filterBtn"
+                                                        id="relateCell_10"> ---
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- 文件属性 -->
+                        <table id="controlInfo11" style="width: 98%;display:none;">
+                            <tbody>
+                            <tr>
+                                <td colspan="2">基本属性</td>
+                            </tr>
+                            <tr>
+                                <td>控件名称</td>
+                                <td><input type="text" id="controlName_11"></td>
+                            </tr>
+                            <tr>
+                                <td>允许为空</td>
+                                <td class="checkbox-td"><input type="checkbox" id="allowNull_11"></td>
+                            </tr>
+                            <tr>
+                                <td>提示语</td>
+                                <td><input type="text" id="tip_11"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">动态显示</td>
+                                <td style="width: 60%"><input type="hidden" value="">
+                                    <button class="filterBtn"
+                                            id="expr_11"> ---
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>默认值</td>
+                                <td><input type="text" id="defaultValue_11"></td>
+                            </tr>
+                            <tr>
+                                <td>整行控件有效</td>
+                                <td class="checkbox-td"><input type="checkbox" id="affectRow_11"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height: 1px">
+                                    <div class="link-top"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">高级属性</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table val="11" class="hcon">
+                                        <tbody>
+                                        <tr>
+                                            <td>文件大小限制(KB)</td>
+                                            <td>
+                                                <input type="text" id="filesize" maxlength="11" value="1"
+                                                       onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                       onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>文件类型</td>
+                                            <td>
+                                                <select id="filetype" style="width:91%;">
+                                                    <option value="jpg,jpeg,png,bmp">jpg,jpeg,png,bmp</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                           <!-- <td>显示图片</td>
+                                            <td><input type="checkbox" id="showPic" checked=""></td>-->
+                                            <td colspan="2">
+                                                <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                                    <div style="width: 40%;display: flex;align-items: center;justify-content: flex-start;">
+                                                        显示图片
+                                                    </div>
+                                                    <div style="width: 60%;display: flex;align-items: center;justify-content: flex-start;">
+                                                        <input type="checkbox" id="showPic" checked="">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab layui-tab-brief" style="display:none;" id="shape">
+                <ul class="layui-tab-title" id="lay_expend2">
+                    <li class="layui-this">悬浮元素</li>
+                    <li>边框</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show" id="shapePropDiv"
+                         style="overflow: auto;white-space: normal;height:100%">
+                        <div id="shapePro" style="overflow: auto;white-space: normal;">
+                            <table border="0" style="width: 100%;" id="posAttr">
+                                <tbody>
+                                <tr>
+                                    <td style="width:30%;">元素名</td>
+                                    <td><input type="text" id="shapeName"></td>
+                                </tr>
+                                <tr>
+                                    <td>x坐标</td>
+                                    <td><input type="text" id="xPost"></td>
+                                </tr>
+                                <tr>
+                                    <td>y坐标</td>
+                                    <td><input type="text" id="yPost"></td>
+                                </tr>
+                                <tr>
+                                    <td>宽度</td>
+                                    <td><input type="text" id="sWidth"></td>
+                                </tr>
+                                <tr>
+                                    <td>高度</td>
+                                    <td><input type="text" id="sHeight"></td>
+                                </tr>
+                                <tr>
+                                    <td>文本</td>
+                                    <td><input type="text" id="sText"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                            <div style="width: 30%;display: flex;align-items: center;justify-content: flex-start;">
+                                                是否可见
+                                            </div>
+                                            <div style="width: 70%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" id="isSelShapeVisible" autocomplete="off">
+                                                <button id="shapeExpr" class="layui-btn layui-btn-primary layui-btn-xs"
+                                                        style="border-radius:4px;width:80px;height:26px;line-height:20px;background-color: #0094FF;color:#FFFFFF;" value="">公式
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="vertical-align: bottom;height: 20px">
+                                        <div class="link-top"></div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table border="0" style="width: 100%;display: none;" id="sheetAttr">
+                                <tbody>
+                                <tr>
+                                    <td style="width:30%;">子表单名</td>
+                                    <td><input type="text" id="sName"></td>
+                                </tr>
+                                <tr>
+                                    <td>自动垂直滚动时间(毫秒)</td>
+                                    <td><input type="text" id="intervalScrollV"></td>
+                                </tr>
+                                <tr>
+                                    <td>垂直滚动步长(像素)</td>
+                                    <td><input type="text" id="stepScrollV"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                            <div style="width: 30%;display: flex;align-items: center;justify-content: flex-start;">
+                                                是否显示垂直滚动条
+                                            </div>
+                                            <div style="width: 70%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" id="isShowSubReportScrollBar" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                            <div style="width: 30%;display: flex;align-items: center;justify-content: flex-start;">
+                                                保持横纵比
+                                            </div>
+                                            <div style="width: 70%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" id="isSubReportKeepHVRatio" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item" id="tz6" style="">
+                        <div class="layui-tab layui-tab-card"
+                             style="box-shadow: 0px 0px; border: none; margin: 0px; height: 676px;">
+                            <div class="layui-tab-content" style="padding:0px;">
+                                <div class="layui-tab-item layui-show">
+                                    <table border="0" width="100%" class="borderTables">
+                                        <tbody>
+                                        <tr height="5px;"></tr>
+                                        <tr style="height:35px;">
+                                            <td>颜色</td>
+                                            <td style="width: 80%">
+                                                <div style="cursor: pointer;width: 100%">
+                                                    <div id="linecolor1"
+                                                         style="height:30px;width: 98%;background-color: #F2F3F5;border:1px solid #D5D5D5;display:flex;color:#4E5969;">
+                                                        <div style="width:40%;height:30px;display:flex;align-items: center;justify-content: flex-end;">
+                                                            <div id="lineColorDiv1"
+                                                                 style="width:22px;height:22px;background-color: black;">
+
+                                                            </div>
+                                                        </div>
+                                                        <div id="lineColorText1"
+                                                             style="width:50%;padding:5px;display:flex;align-items: center;">
+                                                            000000
+                                                            <div/>
+                                                            <div style="width:10%;border:1px solid #D5D5D5;display: flex;align-items: center;justify-content: center;"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr height="10px;"></tr>
+                                        <tr style="text-align: center;height:35px;">
+                                            <td colspan="2">
+                                                <div style="width:100%;display: flex">
+                                                    <div name="borderAlign_d1"
+                                                         style="display: flex;align-items:center;justify-content:center;width:47%;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                        <img name="borderAlign" val="5"
+                                                             src="images/design/outBorder.png" class="borderImage">
+                                                    </div>
+                                                    <div style="width: 4%;"></div>
+                                                    <div name="borderAlign_d1"
+                                                         style="display: flex;align-items:center;justify-content:center;width:47%;height:30px;vertical-align: middle;border:1px solid #D5D5D5">
+                                                        <img name="borderAlign" val="6" src="images/design/25.png"
+                                                             class="borderImage" style="width:22px;height:22px;">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab layui-tab-brief" style="display:none;" id="params">
+                <ul class="layui-tab-title" id="lay_expend2">
+                    <li class="layui-this">模板参数</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show" id="shapePropDiv"
+                         style="overflow: auto;white-space: normal;height:100%">
+                        <div id="shapePro" style="overflow: auto;white-space: normal;">
+                            <table border="0" style="width: 100%;" id="posAttr">
+                                <tbody>
+                                <tr>
+                                    <td style="width:30%;">x坐标</td>
+                                    <td><input type="text" id="paramX"></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%;">y坐标</td>
+                                    <td><input type="text" id="paramY"></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%;">宽度</td>
+                                    <td><input type="text" id="paramWidth"></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%;">高度</td>
+                                    <td><input type="text" id="paramHeight"></td>
+                                </tr>
+                                <tr id="paramLabel">
+                                    <td style="width:30%;">标签</td>
+                                    <td><input type="text" id="paramText"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                            <div style="width: 30%;display: flex;align-items: center;justify-content: flex-start;">
+                                                是否可见
+                                            </div>
+                                            <div style="width: 70%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" id="isSelParamVisible" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="vertical-align: bottom;height: 20px">
+                                        <div class="link-top"></div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table border="0" style="width: 100%;display: none;" id="sheetAttr">
+                                <tbody>
+                                <tr>
+                                    <td style="width:30%;">子表单名</td>
+                                    <td><input type="text" id="sName"></td>
+                                </tr>
+                                <tr>
+                                    <td>自动垂直滚动时间(毫秒)</td>
+                                    <td><input type="text" id="intervalScrollV"></td>
+                                </tr>
+                                <tr>
+                                    <td>垂直滚动步长(像素)</td>
+                                    <td><input type="text" id="stepScrollV"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                            <div style="width: 30%;display: flex;align-items: center;justify-content: flex-start;">
+                                                是否显示垂直滚动条
+                                            </div>
+                                            <div style="width: 70%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" id="isShowSubReportScrollBar" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div style="width: 100%;height:100%;display: flex;align-items: center;justify-content: center;">
+                                            <div style="width: 30%;display: flex;align-items: center;justify-content: flex-start;">
+                                                保持横纵比
+                                            </div>
+                                            <div style="width: 70%;display: flex;align-items: center;justify-content: flex-start;">
+                                                <input type="checkbox" id="isSubReportKeepHVRatio" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul id="insertMenu" class="rightRowClickMenu">
+        <li><a href="#"><img src="images/design/tool/formula.png"
+                             attr="addExp" onclick="addExp()"><span>插入公式</span></a></li>
+        <li><a href="#"><img src="images/design/tool/chart.png" attr="addChar"><span>插入插件</span></a>
+        </li>
+        <li><a href="#"><img src="images/design/tool/image.png"
+                             attr="addImg"><span>插入图片</span></a></li>
+        <li><a href="#"><img src="images/design/rightMenu/cancel.png"
+                             attr="cancelImg"><span>取消图片</span></a></li>
+        <li><a href="#"><img src="images/design/tool/oblique.png"
+                             attr="addObl"><span>插入斜线</span></a></li>
+        <li><a href="#"><img src="images/design/tool/setTable.png"
+                             attr="setTable"><span>设置表格</span></a></li>
+        <li><a href="#"><img src="images/design/tool/cancelTable.png"
+                             attr="cancelTable"><span>取消表格</span></a></li>
+        <li class="divider"></li>
+        <li><a href="#"><img src="images/design/menu/cell/condition.png"
+                             attr="condition"><span>条件属性</span></a></li>
+        <li><a href="#"><img src="images/design/menu/cell/hyperlink.png"
+                             attr="hyperlink"><span>超级链接</span></a></li>
+        <li><a href="#"><img src="images/design/menu/cell/link.png"
+                             attr="arealink"><span>区域联动</span></a></li>
+        <li><a href="#"><img src="images/design/menu/cell/subsheet.png"
+                             attr="subsheet"><span>关联子表单</span></a></li>
+        <li class="divider"></li>
+        <li><a href="#"><img src="images/design/tool/editComment.png"
+                             attr="editComment"><span>编辑注释</span></a></li>
+        <li><a href="#"><img src="images/design/tool/delComment.png"
+                             attr="delComment"><span>删除注释</span></a></li>
+        <li><a href="#"><img src="images/design/tool/autoHidden.png"
+                             attr="autoHidden"><span>显示/隐藏注释</span></a></li>
+
+    </ul>
+    <ul id="columnMenu" class="rightRowClickMenu">
+        <li><a href="#" onclick="MenuEvent.columnMenu.insertColumn()"><img src="images/design/tool/addCol.png"
+                                                                           attr="addcol"><span>插入列</span></a></li>
+        <li><a href="#" onclick="MenuEvent.columnMenu.appendColumn()"><img src="images/design/tool/appendCol.png"
+                                                                           attr="appendcol"><span>追加列</span></a>
+        </li>
+        <li><a href="#" onclick="MenuEvent.columnMenu.deleteColumn()"><img src="images/design/tool/delCol.png"
+                                                                           attr="delcol"><span>删除列</span></a></li>
+        <li><a href="#" onclick="MenuEvent.columnMenu.pasteColumn()"><img src="images/design/tool/addCol.png"
+                                                                          attr="addcp"><span>插入列并粘贴</span></a>
+        </li>
+        <li><a href="#" onclick="MenuEvent.columnMenu.colSetting()"><img src="images/design/tool/addCol.png"
+                                                                          attr="colSetting"><span>列宽设置</span></a>
+        </li>
+        <li><a href="#" onclick="MenuEvent.columnMenu.cancelSetting()"><img src="images/design/tool/addCol.png"
+                                                                         attr="cancelSetting"><span>取消列宽</span></a>
+        </li>
+    </ul>
+    <ul id="rowMenu" class="rightRowClickMenu">
+        <li><a href="#" onclick="MenuEvent.rowMenu.insertRow()"><img src="images/design/tool/addRow.png"
+                                                                     attr="addrow"><span>插入行</span></a></li>
+        <li><a href="#" onclick="MenuEvent.rowMenu.appendRow()"><img src="images/design/tool/appendRow.png"
+                                                                     attr="appendrow"><span>追加行</span></a>
+        </li>
+        <li><a href="#" onclick="MenuEvent.rowMenu.deleteRow()"><img src="images/design/tool/deleteRow.png"
+                                                                     attr="delrow"><span>删除行</span></a></li>
+        <li><a href="#" onclick="MenuEvent.rowMenu.pasteRow()"><img src="images/design/tool/addRow.png"
+                                                                    attr="addrp"><span>插入行并粘贴</span></a>
+        </li>
+    </ul>
+    <ul id="repeatMenu" class="rightRowClickMenu">
+        <li id="repeatedHeadRow"><a href="#" onclick="MenuEvent.repeatMenu.repeatedHeadRow()"><img
+                src="images/design/rightMenu/headRow.png"
+                attr="repeatedHeadRow"><span>重复头行</span><span style="float:right"></span></a>
+        </li>
+        <li id="repeatedRowRegion"><a href="#" onclick="MenuEvent.repeatMenu.repeatedRowRegion()"><img
+                src="images/design/rightMenu/data.png"
+                attr="repeatedRowRegion"><span>重复行数据</span><span style="float:right"></span></a>
+        </li>
+        <li id="repeatedFootRow"><a href="#" onclick="MenuEvent.repeatMenu.repeatedFootRow()"><img
+                src="images/design/rightMenu/footRow.png"
+                attr="repeatedFootRow"><span>重复尾行</span><span style="float:right"></span></a>
+        </li>
+        <li id="cancelRepeatedRow"><a href="#" onclick="MenuEvent.repeatMenu.cancelRepeatedRow()"><img
+                src="images/design/rightMenu/cancel.png"
+                attr="cancelRepeatedRow"><span>取消重复行</span><span style="float:right"></span></a>
+        </li>
+    </ul>
+    <ul id="sheetMenu" class="sheetMenu" style="display: none;position:absolute;">
+        <li><a href="#"><img src="images/design/tool/new.png" attr="addSh"><span>添加sheet页</span></a>
+        </li>
+        <li><a href="#"><img src="images/design/rightMenu/copy.png"
+                             attr="copySheet"><span>复制当前sheet页</span></a>
+        </li>
+        <li><a href="#"><img src="images/design/tool/setting.png" attr="setNameSh"><span>设置sheet页名称</span></a>
+        </li>
+        <li><a href="#"><img src="images/design/ds/deleteDs.png"
+                             attr="delSh"><span>移除当前sheet页</span></a></li>
+    </ul>
+    <!-- ds展开收缩菜单 -->
+    <ul id="dsMenu" class="contextMenuPlugin" style="display:none;background-color: #F2F3F5;">
+        <li><a onclick="uExpandAllDs()"><span>全部收缩</span></a>
+        </li>
+        <li><a onclick="expandAllDs()"><span>全部展开</span></a>
+        </li>
+        <li><a onclick="pasteDs()"><span>粘贴数据集</span></a>
+        </li>
+    </ul>
+
+    <ul id="dsCopyMenu" class="contextMenuPlugin" style="display:none;background-color: #F2F3F5;">
+        <li><a onclick="copyDs()"><span>复制数据集</span></a>
+        </li>
+    </ul>
+
+    <ul id="treeMenu" class="contextMenuPlugin" style="display:none;background-color: #F2F3F5;">
+        <li><a onclick="refreshTree()"><span>刷新列表</span></a>
+        </li>
+    </ul>
+
+    <!-- 拖拽数据集字段时显示区域 -->
+    <div id="moveF" style="display: none"></div>
+    <!-- 边框样式 -->
+    <div id="lines" tabindex="1"
+         style="display: none;text-align:center;background: #F7F7F7;position: absolute;width:13.8%;top:0;left: 0;border:1px solid #F2F3F5;">
+        <div name="lineval" val="1" style="margin:5px 0"><img
+                src="images/design/line/l1.png"></div>
+        <div name="lineval" val="2" style="margin:5px 0"><img
+                src="images/design/line/l2.png"></div>
+        <div name="lineval" val="3" style="margin:5px 0"><img
+                src="images/design/line/l3.png"></div>
+        <div name="lineval" val="4" style="margin:5px 0"><img
+                src="images/design/line/l4.png"></div>
+        <div name="lineval" val="5" style="margin:5px 0 5px 0"><img
+                src="images/design/line/l5.png"></div>
+    </div>
+</div>
+<div id="maskDiv"
+     style="display:none;width: 100%;height:100%;position: absolute;left: 0px;top:0px;display: flex;justify-content: center;align-items: center;background-color: #ffffff34;">
+    <img src="images/design/loading.gif">
+</div>
+
+<div id = "filter" style="width:830px;height:612px;display:none;position: absolute;top:0;left:0;z-index:100;background-color: white;border: 1px solid gray;">
+    <div style="width:100%;height:50px;display:flex;align-items: center;justify-content: center;border-bottom: 1px solid gray;">
+        <span style="font-size: 20px;font-weight: bold;">数据单元格定义</span>
+    </div>
+    <div>
+        <div style="display: flex;background-color: white;">
+            <div style="width:40%;height:500px;background-color:#F7F7F7;">
+                <div class="search" style="height:40px;">
+                    <input type="text" id="factory" placeholder="厂站定位" autocomplete="off" class="layui-input"
+                           style="height: 90%;width: 68%;display: inline-block;margin: 2px">
+                    <button type="button" id="searchFac" class="layui-btn" data-type="reload"
+                            style="height: 25px;line-height:25px;width: 25%;;background-color: #3E99DD;"><i
+                            class="layui-icon" style="font-size: 12px">&#xe615;</i></button>
+                </div>
+                <div style="height:460px;">
+                    <ul id="dzTree" class="ztree"
+                        style="height: 96%;overflow: auto;white-space: normal;touch-action: pan-x;background-color:#F7F7F7;"></ul>
+                </div>
+            </div>
+            <div style="width:60%;height:500px;display: flex;">
+                <div style="width:10%"></div>
+                <div style="width: 80%;">
+                    <fieldset class="layui-elem-field">
+                        <legend style="font-size:16px;">时间定位</legend>
+                        <div class="layui-field-box">
+                            <label style="margin-right: 5px">时间定位</label>
+                            <select id="dateType" style="width:100px;height:30px;">
+                                <option value="0" selected>开始时间</option>
+                                <option value="1">结束时间</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field" style="font:16px;">
+                        <legend style="font-size:16px;">类型</legend>
+                        <div class="layui-field-box">
+                            <label style="margin-right: 5px">取值类型</label>
+                            <select id="valueType" style="width:100px;height:30px;">
+                                <option value="0" selected>零点基值</option>
+                            </select>
+                            <label style="margin-right: 5px">电量类型</label>
+                            <select id="meterType" style="width:100px;height:30px;">
+                                <option value="0" selected>正向有功</option>
+                                <option value="1">反向有功</option>
+                                <option value="2">正向无功</option>
+                                <option value="3">反向无功</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field" style="font:16px;">
+                        <legend style="font-size:16px;">系数</legend>
+                        <div class="layui-field-box">
+                            <label style="margin-right: 5px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系数</label><input type="text" id="xs" style="width:100px;height:26px;">
+                            <label style="margin-right: 5px">&nbsp;&nbsp;&nbsp;&nbsp;小数位</label><input type="text" id="xsw" style="width:100px;height:26px;">
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field" style="font:16px;">
+                        <legend style="font-size:16px;">取数时间</legend>
+                        <div class="layui-field-box">
+                            <label style="margin-right: 5px">取值时间</label>
+                            <select id="ty" style="height:30px;margin-right: 5px;">
+                                <option value="0" selected>今年</option>
+                                <option value="1">去年</option>
+                            </select>
+                            <select id="tm" style="height:30px;margin-right: 5px;">
+                                <option value="00" selected>上月</option>
+                                <option value="01">本月</option>
+                                <option value="02">下月</option>
+                                <option value="1">1月</option>
+                                <option value="2">2月</option>
+                                <option value="3">3月</option>
+                                <option value="4">4月</option>
+                                <option value="5">5月</option>
+                                <option value="6">6月</option>
+                                <option value="7">7月</option>
+                                <option value="8">8月</option>
+                                <option value="9">9月</option>
+                                <option value="10">10月</option>
+                                <option value="11">11月</option>
+                                <option value="12">12月</option>
+                            </select>
+                            <select id="td" style="height:30px;margin-right: 5px;">
+                                <option value="00" selected>昨日</option>
+                                <option value="01">今日</option>
+                                <option value="02">明日</option>
+                                <option value="1">1日</option>
+                                <option value="2">2日</option>
+                                <option value="3">3日</option>
+                                <option value="4">4日</option>
+                                <option value="5">5日</option>
+                                <option value="6">6日</option>
+                                <option value="7">7日</option>
+                                <option value="8">8日</option>
+                                <option value="9">9日</option>
+                                <option value="10">10日</option>
+                                <option value="11">11日</option>
+                                <option value="12">12日</option>
+                                <option value="13">13日</option>
+                                <option value="14">14日</option>
+                                <option value="15">15日</option>
+                                <option value="16">16日</option>
+                                <option value="17">17日</option>
+                                <option value="18">18日</option>
+                                <option value="19">19日</option>
+                                <option value="20">20日</option>
+                                <option value="21">21日</option>
+                                <option value="22">22日</option>
+                                <option value="23">23日</option>
+                                <option value="24">24日</option>
+                                <option value="25">25日</option>
+                                <option value="26">26日</option>
+                                <option value="27">27日</option>
+                                <option value="28">28日</option>
+                                <option value="29">29日</option>
+                                <option value="30">30日</option>
+                                <option value="31">31日</option>
+                            </select>
+                            <select id="th" style="height:30px;margin-right: 5px;">
+                                <option value="00" selected>00</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                            </select>
+                            <select id="tmin" style="height:30px;margin-right: 5px;">
+                                <option value="00" selected>00</option>
+                                <option value="05">05</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                                <option value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width:100%;height:50px;display:flex;align-items: center;justify-content: center;border-top: 1px solid gray;">
+        <button class="layui-btn" id="confirmFilter">确定</button> <button class="layui-btn" id="cancelFilter">取消</button>
+    </div>
+</div>
+
+
+</body>
+
+</html>
+<script type="text/javascript">
+    var random = Date.parse(new Date());
+    document.write('<script type="text/javascript" src="js/jquery-1.11.3.min.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/layui.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/xm-select.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/spectrumHex8.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/jquery.base64.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/drag.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasCommon.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasInit.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasBaseEvent.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasApi.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasUtil.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasKMEvent.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasTool.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasMenuEvent.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasDs.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasGds.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/jsoncon.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/menuEvent.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/parentMethod.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/menuTree.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasCellProps.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasCellEvents.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasUpload.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/canvasShapeEvents.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/constants.js?v=' + random + '"><\/script>')
+    document.write('<script type="text/javascript" src="js/design/init.js?v=' + random + '"><\/script>')
+
+
+</script>
+<script type="text/javascript" src="js/zTree/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="js/zTree/js/jquery.ztree.exhide.min.js"></script>
+<script type="text/javascript" src="js/qtloader.js"></script>
+<script type="text/javascript" src="js/FileSaver.js"></script>
+
+<script type="text/javascript">
+
+    let copyContent; //拷贝的内容
+    var templateMap = []; //模板键值对，用来保存设计器打开模板的信息
+    let isProbation = true; //是否试用
+    let isColClick = false; //是否点击列
+    let isRowClick = false; //是否点击行
+    let dsArray = []; //数据集数组
+    let dsMap = {}; //数据集Map，键为模板索引，值为ds数组
+    let dsinfo = null; //当前选中的数据集,拖拽需要用到
+    let curTemplateIndex; //当前打开的模板所以
+    let treeObj;
+    let curNode; //当前选中的树节点
+    let curMenuName;
+    let templateId = null;
+    let isAlert = false; //平台属性,导出是否弹框,默认不弹框
+    var ip; //前端地址
+    var serverIp; //后台地址
+    var token;
+    let plateformProp;
+    let sysname;
+    let isProduction;
+    let isEV = false;
+    let gdsArray = [];
+    let base;
+    let designClipboard;
+
+
+    $(document).ready(function () {
+        processToken();
+        initSystem();
+
+        $('input').attr("autocomplete", "off");
+        $('.content').css("height", $('body').height() - $('.header').height());
+        layui.use('element', function () {
+            var element = layui.element;
+            element.render();
+        });
+
+        layui.use('layer', function () {
+            var layer = layui.layer;
+        });
+        initDropDown();
+        initUpload();
+        initTree();
+        $('#maskDiv').remove();
+        Design.init(ip + '/wasm/WebDesigner_7.5');
+        initEvent();
+        initTool();
+        initCellEvents();
+        initShapeEvents();
+        initDsEvents();
+        initGDsEvents();
+        MenuEvent.init();
+
+        $(window).resize(function () {
+            Design.resizeCanvas();
+        });
+
+    });
+
+    function logout(target) {
+        window.sessionStorage.removeItem("cur_token");
+        if(target == undefined){
+            window.location.assign(base);
+        }else{
+            window.location.assign(target + "/login.html");
+        }
+    }
+
+
+</script>

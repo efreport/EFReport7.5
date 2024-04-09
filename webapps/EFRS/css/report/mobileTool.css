@@ -1,0 +1,226 @@
+/**工具栏**/
+.tool {
+    border-bottom: 1px solid #e0e2e4;
+    height: 40px;
+    text-align: left;
+    background: #f5f6f7;
+    display: block;
+    width:100%;
+    position: absolute;
+    top:0px;
+    left:0px;
+    padding-left:20px;
+}
+
+/**工具栏按钮**/
+.tool .normal-btn{
+    padding: 11px 2px;
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;
+    width: 80px;
+}
+
+.tool .submit-btn{
+    padding: 11px 2px;
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;
+    width: 80px;
+}
+
+.normal-btn button {
+    border: 0 none;
+    background: transparent;
+    padding-right: 3px;
+    cursor: pointer;
+    margin: 0;
+    overflow: hidden !important;
+    width: auto;
+    *width: 100%;
+    -moz-outline: 0 none;
+    outline: 0 none;
+    line-height: 18px;
+    height: 18px;
+    background-repeat: no-repeat !important;
+}
+
+.submit-btn button {
+    border: 0 none;
+    background: transparent;
+    padding-right: 3px;
+    cursor: pointer;
+    margin: 0;
+    overflow: hidden !important;
+    width: auto;
+    *width: 100%;
+    -moz-outline: 0 none;
+    outline: 0 none;
+    line-height: 18px;
+    height: 18px;
+    background-repeat: no-repeat !important;
+}
+
+/** 分页数开始 **/
+.normal-input {
+    position: relative;
+    padding: 7px 6px 2px 6px;
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.normal-input .btn-input {
+    padding: 4px;
+    text-align: center;
+    display: inline-block;
+}
+
+.btn-input > input {
+    font-size: 12px;
+    width: 42px;
+    height: 16px;
+    text-align: center;
+    height: 18px;
+    line-height: 18px;
+    border: 1px solid #b5b8c8;
+    vertical-align: middle;
+    padding: 1px 3px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+.normal-input .btn-text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/** 分页数结束 **/
+
+
+.divider {
+    display: inline-block;
+    border-right: 1px solid #e0e2e4;
+    width: 0;
+    vertical-align: middle;
+    height: 18px;
+    margin: 12px 3px 0;
+}
+
+.normal-btn .first {
+    padding-left: 20px;
+    background-image: url(../../image/report/1.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.normal-btn .last {
+    padding-left: 16px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/report/2.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.normal-btn .next {
+    padding-left: 16px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/report/3.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.normal-btn .end {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/report/4.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.normal-btn .print {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/report/5.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.normal-btn .export {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/report/6.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.normal-btn .sub-export {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/report/6.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.normal-btn .search {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/report/7.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.submit-btn .validateP {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/report/8.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.submit-btn .submitP {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/report/9.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.submit-btn .print {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/report/5.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.submit-btn .export {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/report/6.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+
+.submit-btn .search {
+    padding-left: 20px;
+    height: 18px;
+    line-height: 18px;
+    background-image: url(../../image/report/7.png) !important;
+    background-size: 16px 16px;
+    color: #000000;
+}
+

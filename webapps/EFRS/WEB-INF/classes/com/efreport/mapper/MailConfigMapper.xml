@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.MailConfigMapper">
+  <!-- 查询所有 -->
+  <select id="queryAll" resultType="com.efreport.entity.MailConfig">
+    SELECT *
+      FROM SYS_MAIL_CONFIG
+  </select>
+
+  <!-- 查询公司下的所有 -->
+  <select id="queryAllByCompanyId" parameterType="Integer" resultType="com.efreport.entity.MailConfig">
+    SELECT *
+      FROM SYS_MAIL_CONFIG
+      WHERE COMPANYID = #{companyid}
+  </select>
+
+  <!-- 查询单条纪录 -->
+  <select id="load" parameterType="Integer" resultType="com.efreport.entity.MailConfig">
+    SELECT *
+      FROM SYS_MAIL_CONFIG
+     WHERE companyId = #{id}
+  </select>
+
+  <!-- 新增 -->
+  <insert id="create" parameterType="com.efreport.entity.MailConfig" >
+  <![CDATA[
+  INSERT INTO SYS_MAIL_CONFIG (account, password, gateway, port, memo , status,isssl, companyid)
+  VALUES (#{account}, #{password}, #{gateway}, #{port}, #{memo} , #{status},#{isssl}, #{companyid})
+  ]]>
+  </insert>
+
+  <!-- 修改 -->
+  <update id="modify" parameterType="com.efreport.entity.MailConfig">
+  <![CDATA[
+  UPDATE SYS_MAIL_CONFIG
+     SET account = #{account},
+         password = #{password},
+         gateway = #{gateway},
+         port = #{port},
+         memo = #{memo},
+         isssl=#{isssl}
+   WHERE id = #{id}
+  ]]>
+  </update>
+
+  <!-- 删除 -->
+  <delete id="remove" parameterType="Integer">
+  <![CDATA[
+  DELETE FROM SYS_MAIL_CONFIG WHERE id = #{id}
+  ]]>
+  </delete>
+</mapper>

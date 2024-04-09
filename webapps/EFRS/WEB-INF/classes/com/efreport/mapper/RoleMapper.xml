@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.RoleMapper">
+
+
+    <!-- 查询该公司下的所有角色 -->
+    <select id="queryAll" resultType="com.efreport.entity.Role">
+        SELECT
+        id,
+        name,
+        memo
+        FROM
+        SYS_ROLE
+        WHERE
+        company_id = #{companyId}
+    </select>
+
+    <!-- 根据公司ID查询所有角色个数 -->
+    <select id="countAll" resultType="Integer" parameterType="int">
+        SELECT
+        COUNT(id)
+        from
+        SYS_ROLE
+        WHERE
+        company_id = #{companyId}
+    </select>
+
+    <!-- 根据公司ID和角色名称模糊查询所有角色个数 -->
+    <select id="countByNameAll" resultType="Integer" parameterType="map">
+        SELECT
+        COUNT(id)
+        from
+        SYS_ROLE
+        WHERE
+        company_id = #{companyId}
+        <if test=" name != null ">
+            AND LOWER(name) like CONCAT('%' , LOWER(#{name}) , '%')
+        </if>
+    </select>
+
+    <!-- 分页查询角色数据 -->
+    <select id="queryByPage" parameterType="map" resultType="com.efreport.entity.Role">
+        SELECT
+          id,
+          name,
+          memo
+        FROM
+          SYS_ROLE
+        WHERE
+          company_id = #{companyId}
+        <if test=" name != null ">
+            AND LOWER(name) like CONCAT('%' , LOWER(#{name}) , '%')
+        </if>
+        ORDER BY
+          id DESC
+        limit #{start} , #{limit}
+    </select>
+
+
+    <!-- 判断是否有重名的角色 -->
+    <select id="query" resultType="Integer" parameterType="com.efreport.entity.Role">
+        SELECT
+          COUNT(1)
+        FROM
+          SYS_ROLE
+        WHERE
+          1 = 1
+        AND name = #{name}
+        AND company_id = #{companyId}
+        <if test="id != 0">
+            AND id != #{id}
+        </if>
+    </select>
+
+    <!-- 新增角色 -->
+    <insert id="save" parameterType="com.efreport.entity.Role">
+        INSERT INTO SYS_ROLE(name, memo , company_id) VALUES(#{name}, #{memo} , #{companyId})
+    </insert>
+
+    <!-- 修改角色 -->
+    <update id="modify" parameterType="com.efreport.entity.Role">
+        UPDATE SYS_ROLE SET name = #{name}, memo = #{memo} , company_id = #{companyId} WHERE id = #{id}
+    </update>
+
+    <!-- 删除角色 -->
+    <delete id="remove" parameterType="Integer">
+        DELETE FROM SYS_ROLE WHERE id = #{id}
+    </delete>
+
+    <!-- 判断角色是否在使用中 -->
+    <select id="countRelTotal" resultType="Integer" parameterType="Integer">
+        SELECT
+          SUM(c.total)
+        FROM (
+          SELECT COUNT(1) AS total
+          FROM SYS_USER_ROLE_REL AS a
+          WHERE a.role_id = #{id}
+          UNION ALL
+          SELECT COUNT(1) AS total
+          FROM SYS_ROLE_TEMPLATE_REL AS b
+          WHERE b.role_id = #{id}
+        ) AS c
+    </select>
+
+
+
+
+
+    <!-- 查询单条纪录 -->
+    <select id="load" parameterType="Integer" resultType="com.efreport.entity.Role">
+        SELECT
+          id,
+          name,
+          memo,
+          company_id as companyId
+        FROM
+          SYS_ROLE
+        WHERE
+          id = #{id}
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="listRole" resultType="map">
+        <![CDATA[
+
+
+            SELECT id,
+                   name,
+                   memo
+              FROM SYS_ROLE
+             WHERE id <> 1
+
+
+        ]]>
+    </select>
+
+    <select id="listRoleByUserId" parameterType="int" resultType="com.efreport.entity.UserRoleRel">
+        SELECT user_id as userId , role_id as roleId from SYS_USER_ROLE_REL  WHERE user_id = #{userId}
+    </select>
+
+
+
+
+
+
+
+</mapper>

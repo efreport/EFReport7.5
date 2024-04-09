@@ -1,0 +1,53 @@
+.ef-tb-textfield {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    font-size: medium;
+}
+
+.layui-input:hover, .layui-textarea:hover {
+    border-color: #44B4FF!important;
+}
+
+.x-table .layui-form{
+    position: relative;
+    top:0px;
+    left:0px;
+}
+
+.layui-form-select .layui-edge {
+    border-top-color: #5fb878;
+}
+
+.layui-form-radio{
+    margin:0px;
+}
+
+xm-select{
+    width:99%;
+}
+
+.layui-submit{
+    padding:0px;
+}
+
+.contextMenuPlugin {
+    z-index: 1000001;
+    -webkit-user-select: none;
+    display: none;
+    font-family: tahoma, arial, sans-serif;
+    font-size: 11px;
+    position: absolute;
+    min-width: 120px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f3f7;
+    border: 2px solid #f7f7f7;
+    outline: 1px solid #949694;
+}

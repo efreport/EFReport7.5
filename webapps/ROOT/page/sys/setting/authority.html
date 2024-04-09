@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>系统设置</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../css/public.css" media="all">
+    <style>
+        html, body {
+            border: 0px;
+            margin: 0px;
+            padding: 0px;
+            background-color: #fcfcfc !important;
+        }
+
+        /* 将背景颜色都改为#fcfcfc hk->20221223改 */
+        .layuimini-container {
+            background-color: #fcfcfc !important;
+            border: none;
+        }
+
+        #span_isonlylogin_title {
+            width: 120px;
+            height: 24px;
+            line-height: 24px;
+            vertical-align: bottom;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="layuimini-container layuimini-page-anim">
+    <div style="height: 15px;"></div>
+    <div class="layuimini-main" style="width: 600px;margin-left: 100px;">
+
+        <h3 style="padding: 10px;padding-left: 50px; font-weight: bold;">产品授权
+            <div id="deadLine" style="display: inline-block;font-size: 12px;color:red;padding-left: 10px;">
+
+            </div>
+        </h3>
+        <input type="hidden" name="id" value="0"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 100px;padding-top:0px;">机器码</label>
+            <div class="layui-input-inline">
+                    <textarea id="key" class="layui-textarea" style="width:700px;height:400px;"
+                              disabled="disabled"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item" pane="">
+            <label class="layui-form-label" style="width: 100px;"></label>
+            <div class="layui-input-inline" style="width: 127px;">
+                <button class="layui-btn" style="background-color: #1E9FFF;" id="generate">生成机器码</button>
+            </div>
+            <div class="layui-input-inline" style="width: 47px;">
+                <button class="layui-btn" style="background-color: #1E9FFF;" id="upload">上传授权文件</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script src="../../../js/lay-config.js" charset="utf-8"></script>
+<script src="../../../js/common.js" charset="utf-8"></script>
+
+
+<script>
+    let base = window.sessionStorage.getItem("ef_server_base_url");
+    let token = window.sessionStorage.getItem("cur_token");
+    let layer;
+
+    $(document).ready(function () {
+        layui.use('layer', function () {
+            layer = layui.layer;
+        });
+
+        layui.use('upload', function () {//插入图片
+            var upload = layui.upload;
+            upload.render({ //允许上传的文件后缀
+                elem: '#upload'
+                , url: base + '/designSys/uploadKey?token=' + token
+                , accept: 'file'
+                , done: function (res) {
+                    layer.msg(res.message);
+                    if(res.deadLine == 'noKey'){
+                        $('#deadLine').empty();
+                        $('#deadLine').html('(没有授权文件)');
+                    } else if(res.deadLine == '1970-01-01'){
+                        $('#deadLine').empty();
+                        $('#deadLine').html('(当前版本未授权)');
+                    }else{
+                        $('#deadLine').empty();
+                        $('#deadLine').html('(当前产品授权到期时间:'+ res.deadLine +')');
+                    }
+                }
+                , before: function (obj) {
+
+                }
+            });
+        });
+
+        $.ajax({
+            url: base + '/thirdSys/getKeyDate?token=' + token,
+            type: 'post',
+            success: function (res) {
+                console.log(res);
+                if(res == 'noKey'){
+                    $('#deadLine').empty();
+                    $('#deadLine').html('(没有授权文件)');
+                } else if(res == '1970-01-01'){
+                    $('#deadLine').empty();
+                    $('#deadLine').html('(当前版本未授权)');
+                }else{
+                    $('#deadLine').empty();
+                    $('#deadLine').html('(当前产品授权到期时间:'+ res +')');
+                }
+
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+
+        $('#generate').unbind().bind('click', function () {
+            layer.confirm('当前授权文件将会失效，确认要重新生成机器码吗？', {
+                btn: ['确定', '取消']
+            }, function (index, layero) { //确定
+                $.ajax({
+                    url: base + '/designSys/geneKey?token=' + token,
+                    type: 'get',
+                    success: function (res) {
+                        if (res.state == 'success') {
+                            $('#key').text(res.message);
+                            layer.closeAll();
+                        } else {
+                            layer.closeAll();
+                            layer.msg(res.message);
+                        }
+                    },
+                    error: function () {
+
+                    }
+                })
+            }, function (index) { //取消
+                layer.closeAll();
+            });
+
+        })
+
+
+    });
+</script>
+
+</body>
+</html>
+<style>
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 1px;
+    }
+
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+        background: #d5d5d5;
+    }
+
+    /* 设置滚动条样式 */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+        border-radius: 10px;
+        background: #f2f3f5;
+    }
+</style>

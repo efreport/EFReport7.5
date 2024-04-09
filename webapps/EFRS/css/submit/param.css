@@ -1,0 +1,43 @@
+.param{
+    display:none;
+    /* min-height:46px; 参数工具栏最低40px*/
+    /*padding:6px;*/
+    background-color: #F0F0F0;
+    width:100%;
+}
+
+.param .layui-form-label{
+    width: 140px;
+   /* margin-left:10px;*/
+    padding: 8px 8px;
+    height: 38px;
+    line-height: 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px 0 0 2px;
+    text-align: center;
+    background-color: #0094FF;
+    color:white;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
+.param .layui-form-item{
+    display: flex;
+    margin-bottom:0px;
+}
+
+
+.param .layui-input-block{
+    display:flex;
+    margin-left:0px;
+}
+/**
+控制下拉树选项高度
+*/
+.xm-tree{
+    line-height:20px;
+}
+

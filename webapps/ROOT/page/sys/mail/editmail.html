@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>盈帆数据报表-编辑邮路</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../../lib/layui-v2.7.6/css/layui.css" media="all">
+    <style>
+        .center {
+            position: relative;
+            width: 100%;
+            height: 80px;
+        }
+        .center .item {
+            width: 80%;
+            text-align: center;
+            margin: auto;
+            margin-top: 30px;
+        }
+        .redspan {
+            color: red;
+        }
+
+        /* 修改radio选中状态的颜色信息 */
+        .layui-form-radio:hover *, .layui-form-radioed, .layui-form-radioed > i {
+            color: #0094FF !important;
+        }
+
+        .icon {display:inline-block;width:33px;height:22px; margin-top: 5px;}
+        .icon-4 {background:url(../../../imgs/icon-login.png) no-repeat 0 -43px;position:absolute;right:-10px;cursor:pointer;}
+        .icon-5 {background:url(../../../imgs/icon-login.png) no-repeat -55px -43px;}
+
+        .layui-form-onswitch {
+            border-color: #1E9FFF !important;
+            background-color: #1E9FFF !important;
+        }
+    </style>
+</head>
+<body>
+    <div style="padding: 20px;">
+        <form class="layui-form login-bottom">
+            <input type="hidden" id="id" name="id" />
+            <div class="layuimini-main">
+                <div class="layui-form layuimini-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="redspan">*</span>登录用户</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="account" placeholder="请输入登录用户" value="" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form layuimini-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="redspan">*</span>授权密码</label>
+                        <div class="layui-input-block">
+                            <!-- <input type="text" name="password" placeholder="请输入授权密码" value="" class="layui-input"> -->
+
+                            <input type="password" name="password" autocomplete="off" placeholder="请输入授权密码" value="" class="layui-input" style="display:inline !important; max-width: 320px !important;">
+                            <span class="bind-password1 icon icon-4"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form layuimini-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="redspan">*</span>邮局网关</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="gateway" placeholder="请输入邮局网关" value="" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form layuimini-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="redspan">*</span>网关端口</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="port" placeholder="请输入网关端口" value="" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form layuimini-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">显示名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="memo" placeholder="请输入显示名称" value="" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form layuimini-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="redspan">*</span>是否开启SSL</label>
+                        <div class="layui-input-block">
+                            <!-- <input type="radio" name="ssl" value="0" title="停用" />
+                            <input type="radio" name="ssl" value="1" title="正常" /> -->
+
+                            <input type="hidden" name="ssl" value="1"/>
+                            <input type="checkbox" id="ssl" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+<script src="../../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script>
+    let form;
+    layui.use(['form'], function(){
+        form = layui.form;
+        //指定开关事件
+        form.on('switch(switchTest)', function(data){
+            if (this.checked) {
+                $("input[name='ssl']").val("1");
+            } else {
+                $("input[name='ssl']").val("0"); 
+            }
+        });
+
+    });
+
+    $(function(){
+        $('.bind-password1').on('click', function () {
+            if ($(this).hasClass('icon-5')) {
+                $(this).removeClass('icon-5');
+                $("input[name='password']").attr('type', 'password');
+            } else {
+                $(this).addClass('icon-5');
+                $("input[name='password']").attr('type', 'text');
+            }
+        });
+    });
+
+</script>
+<script>
+function getPage() {
+    let id = $("input[name='id']").val();
+    let account = $("input[name='account']").val();
+    let gateway = $("input[name='gateway']").val();
+    let password = $("input[name='password']").val();
+    let port = $("input[name='port']").val();
+    let ssl = "0";
+
+    ssl = $("input[name='ssl']").val();
+    let memo = $("input[name='memo']").val();
+    let obj = {
+        account: account,
+        gateway: gateway,
+        id: id,
+        memo: memo,
+        password: password,
+        port: port,
+        isssl: parseInt(ssl),
+        status: true
+    };
+    return JSON.stringify(obj);
+}
+function setForm(jsonstr) {
+    let objForm = JSON.parse(jsonstr);
+    $("input[name='account']").val(objForm.account);
+    $("input[name='gateway']").val(objForm.gateway);
+    $("input[name='id']").val(objForm.id);
+    $("input[name='password']").val(objForm.password);
+    $("input[name='port']").val(objForm.port);
+    $("input[name='memo']").val(objForm.memo);
+    $("input[name='ssl']").val(objForm.isssl);
+
+    if (objForm.isssl == 0) {
+        $("#ssl").removeAttr("checked");
+        $("#ssl").next().removeClass("layui-form-onswitch");
+    } else {
+        
+    }
+
+    let cur_timer = window.setInterval(function(){
+        window.clearInterval(cur_timer);
+        form.render();
+    }, 1000);
+
+    
+}
+</script>
+</body>
+</html>

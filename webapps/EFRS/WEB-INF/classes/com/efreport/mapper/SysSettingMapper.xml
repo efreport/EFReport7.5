@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysSettingMapper">
+
+    <resultMap id="sysLogMap" type="com.efreport.entity.SysSetting">
+        <id column="ID" property="id"></id>
+        <result column="ISONLYLOGIN" property="isonlylogin"></result>
+        <result column="LOGIN_OUT_TIME" property="loginOutTime"></result>
+        <result column="PWD_REGULAR_UPDATE" property="pwdRegularUpdate"></result>
+        <result column="UPDATE_CYCLE_DAY" property="updateCycleDay"></result>
+        <result column="BEFORE_DAY_REMIND" property="beforeDayRemind"></result>
+        <result column="IS_PWD_STRENGTH_CONFINE" property="isPwdStrengthConfine"></result>
+        <result column="IS_LENGTH_CONFINE" property="isLengthConfine"></result>
+        <result column="MIN_LENGTH" property="minLength"></result>
+        <result column="IS_HAVE_NUMBER" property="isHaveNumber"></result>
+        <result column="IS_HAVE_SMALL_LETTER" property="isHaveSmallLetter"></result>
+        <result column="IS_HAVE_BIG_LETTER" property="isHaveBigLetter"></result>
+        <result column="IS_HAVE_CHAR" property="isHaveChar"></result>
+        <result column="IS_OPEN_PWD_LOCK" property="isOpenPwdLock"></result>
+        <result column="PWD_ERROR_CNT" property="pwdErrorCnt"></result>
+        <result column="LAST_MODIFY_TIME" property="lastModifyTime"></result>
+        <result column="COMPANYID" property="companyid"></result>
+        <result column="VIEW_USER_ROOT_DIR_NAME" property="viewUserRootDirName"></result>
+    </resultMap>
+
+    <!-- 新增 -->
+    <insert id="saveSetting" parameterType="com.efreport.entity.SysSetting">
+      INSERT INTO SYS_SETTING(
+        ISONLYLOGIN,LOGIN_OUT_TIME,PWD_REGULAR_UPDATE,UPDATE_CYCLE_DAY,BEFORE_DAY_REMIND,IS_PWD_STRENGTH_CONFINE,IS_LENGTH_CONFINE,
+        MIN_LENGTH,IS_HAVE_NUMBER,IS_HAVE_SMALL_LETTER,IS_HAVE_BIG_LETTER,IS_HAVE_CHAR,IS_OPEN_PWD_LOCK,PWD_ERROR_CNT,LAST_MODIFY_TIME,COMPANYID,VIEW_USER_ROOT_DIR_NAME
+      )
+          VALUES(#{isonlylogin}, #{loginOutTime} ,#{pwdRegularUpdate},#{updateCycleDay},#{beforeDayRemind},#{isPwdStrengthConfine},#{isLengthConfine},
+          #{minLength},#{isHaveNumber},#{isHaveSmallLetter},#{isHaveBigLetter},#{isHaveChar},#{isOpenPwdLock},#{pwdErrorCnt},#{lastModifyTime},#{companyid},#{viewUserRootDirName})
+    </insert>
+
+    <!-- 修改 -->
+    <update id="updateSetting" parameterType="com.efreport.entity.SysSetting">
+        update SYS_SETTING
+        set
+        ISONLYLOGIN=#{isonlylogin},
+        LOGIN_OUT_TIME=#{loginOutTime},
+        PWD_REGULAR_UPDATE=#{pwdRegularUpdate},
+        UPDATE_CYCLE_DAY=#{updateCycleDay},
+        BEFORE_DAY_REMIND=#{beforeDayRemind},
+        IS_PWD_STRENGTH_CONFINE=#{isPwdStrengthConfine},
+        IS_LENGTH_CONFINE=#{isLengthConfine},
+        MIN_LENGTH=#{minLength},
+        IS_HAVE_NUMBER=#{isHaveNumber},
+        IS_HAVE_SMALL_LETTER=#{isHaveSmallLetter},
+        IS_HAVE_BIG_LETTER=#{isHaveBigLetter},
+        IS_HAVE_CHAR=#{isHaveChar},
+        IS_OPEN_PWD_LOCK=#{isOpenPwdLock},
+        PWD_ERROR_CNT=#{pwdErrorCnt},
+        LAST_MODIFY_TIME=#{lastModifyTime},
+        VIEW_USER_ROOT_DIR_NAME=#{viewUserRootDirName}
+        where ID=#{id}
+    </update>
+
+    <!-- 删除系统设置 根据公司ID -->
+    <delete id="deleteByCompanyId" parameterType="int">
+        DELETE FROM SYS_SETTING WHERE COMPANYID=#{companyid}
+    </delete>
+
+
+    <!-- 获取所有系统设置 根据公司ID -->
+    <select id="list" parameterType="int" resultType="com.efreport.entity.SysSetting">
+      SELECT
+          a.id as id,
+          a.ISONLYLOGIN as isonlylogin,
+          a.LOGIN_OUT_TIME as loginOutTime,
+          a.PWD_REGULAR_UPDATE as pwdRegularUpdate,
+          a.UPDATE_CYCLE_DAY as updateCycleDay,
+          a.BEFORE_DAY_REMIND as beforeDayRemind,
+          a.IS_PWD_STRENGTH_CONFINE as isPwdStrengthConfine,
+          a.IS_LENGTH_CONFINE as isLengthConfine,
+          a.MIN_LENGTH as minLength,
+          a.IS_HAVE_NUMBER as isHaveNumber,
+          a.IS_HAVE_SMALL_LETTER as isHaveSmallLetter,
+          a.IS_HAVE_BIG_LETTER as isHaveBigLetter,
+          a.IS_HAVE_CHAR as isHaveChar,
+          a.IS_OPEN_PWD_LOCK as isOpenPwdLock,
+          a.PWD_ERROR_CNT as pwdErrorCnt,
+          a.LAST_MODIFY_TIME as lastModifyTime,
+          a.VIEW_USER_ROOT_DIR_NAME as viewUserRootDirName
+      FROM
+          SYS_SETTING a
+      WHERE
+          COMPANYID=#{companyid}
+    </select>
+
+    <select id="getcount" parameterType="int" resultType="int">
+        SELECT count(*) FROM SYS_SETTING WHERE COMPANYID=#{companyid}
+    </select>
+
+
+
+</mapper>

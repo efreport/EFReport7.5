@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <link href="../../css/scroll.css" rel="stylesheet">
+
+    <style>
+        #un a {
+            display: block;
+            color: #333;
+            transition: all .3s;
+            margin: 5px 5px;
+            border-bottom: 1px solid #D5D5D5
+        }
+
+        #un a:hover {
+            background: #CCCCCC;
+        }
+
+        .cka {
+            background: #CCCCCC
+        }
+
+        #un2 a {
+            display: block;
+            color: #333;
+            transition: all .3s;
+            margin: 5px 5px;
+            border-bottom: 1px solid #D5D5D5
+        }
+
+        #un2 a:hover {
+            background: #CCCCCC;
+        }
+
+        .cka2 {
+            background: #CCCCCC
+        }
+
+        .trck {
+            background: #CCCCCC
+        }
+
+        .cktd {
+            background: #F7F7F7;
+        }
+
+        .layui-tab-title li {
+            line-height: 20px;
+            padding: 0 5px
+        }
+
+        .layui-tab-title .layui-this:after {
+            height: 20px;
+        }
+
+        .layui-table tbody td {
+            padding: 0;
+        }
+
+        .layui-table, .layui-table-view {
+            margin: auto;
+        }
+
+        img:hover {
+            background-color: #D5D5D5;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        select {
+            height: 30px;
+            border: 1px solid #ccc;
+        }
+
+        select:hover {
+            box-shadow: 0 0 1px #44B4FF;
+        }
+
+        input:hover {
+            box-shadow: 0 0 1px #44B4FF;
+        }
+
+        #btn_add {
+            width: 120px;
+            height: 32px;
+            background-image: url("../../images/new/btnadd.png");
+            background-repeat: no-repeat;
+            border: 0px !important;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #btn_del {
+            width: 120px;
+            height: 32px;
+            background-image: url("../../images/new/btndel.png");
+            background-repeat: no-repeat;
+            border: 0px !important;
+            margin-left: 10px
+        }
+
+        #btn_add:hover {
+            cursor: pointer;
+        }
+
+        #btn_del:hover {
+            cursor: pointer;
+        }
+
+        .clsBodyTr {
+           /* display: block;
+            width: 500px;
+            height: 42px;
+            line-height: 42px;
+            border: 1px solid #E5E6EB;
+            background-color: #f2f3f5;*/
+            display: block;width:100%;height:42px;border-bottom: 1px solid #77CEF8;
+        }
+
+        .clsBodyTr:hover {
+            cursor: pointer;
+        }
+
+        .clsBodyTr td {
+            height: 42px;
+           /* line-height: 42px;*/
+            background-color: #f2f3f5;
+        }
+
+        .clsBodyTr td input {
+            width: 233px;
+            height: 29px;
+            border: hidden;
+            background-color: #f2f3f5;
+        }
+
+        .clsBodyTr td textarea {
+            width: 233px;
+            height: 30px;
+            border: hidden;
+            background-color: #f2f3f5;
+        }
+
+        .selecTr td {
+            background-color: #0094FF !important;
+        }
+
+        .selecTr td input {
+            color: #fff;
+            background-color: #0094FF !important;
+        }
+
+        .selecTr td textarea {
+            color: #fff;
+            background-color: #0094FF !important;
+            height:30px;
+        }
+
+        .leftTd {
+            padding-left:5px;
+            width: 249px !important;
+            background-color: #f2f3f5;
+            border: 1px solid #E5E6EB;
+            height: 42px;
+            line-height: 42px;
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #333;
+        }
+
+        .rightTd {
+            width: 249px !important;
+            background-color: #f2f3f5;
+            border: 1px solid #E5E6EB;
+            height: 42px;
+            line-height: 42px;
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #333;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="un2" style="white-space: nowrap;overflow-x:hidden;overflow-y:auto;height:550px;">
+    <div style="height:10px;"></div>
+    <div style="position: relative;width: 500px;height: 40px; line-height: 40px;margin: auto;padding-left:10px;">
+        <button id="btn_add"></button>
+        <button id="btn_del"></button>
+    </div>
+    <div style="height:10px;"></div>
+    <table id="header" class="layui-table" style="border:0px;width: 500px;height:39px;text-align: center;margin: auto;">
+        <thead>
+        <tr style="display: block;width:500px;">
+            <td style="width:250px;border-right:0px;color:#333; ">键</td>
+            <td style="width:250px;border-left: 0px;color:#333; ">值</td>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div style="width: 500px;height:450px;overflow-y: auto;overflow-x:hidden;">
+        <table id="tb2" class="layui-table" style="width: 500px;text-align: center;">
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+
+</body>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    let hong;
+
+    $("#btn_del").bind('click', function () {
+        $(".selecTr").remove();
+    });
+
+    $('#btn_add').bind('click', function () {
+        $("tr").each(function () {
+            $(this).removeClass("selecTr");
+        });
+        $('#tb2').append("<tr class='clsBodyTr selecTr'><td width='250px' class='leftTd'><textarea style='resize: none;'></textarea></td><td width='250px' class='rightTd'><textarea style='resize: none;'></textarea></td></tr>");
+        $(".clsBodyTr").bind('click', function () {
+            $("tr").each(function () {
+                $(this).removeClass("selecTr");
+            });
+            $(this).addClass("selecTr");
+        });
+    });
+
+    function setHong(ho) { //设置参照
+        hong = ho;
+    }
+    function init() {
+        if (hong != undefined && hong != '' && hong !== "{}") {//有宏
+            let ho = JSON.parse(hong);
+
+            for (let i in ho) {
+                let val = ho[i];
+                if ($.isNumeric(val)) {
+                    let trStr = "";
+                    trStr += "<tr class='clsBodyTr'>";
+                    trStr += "<td width='250' class='leftTd'>";
+                    trStr += "<textarea style='resize:none;'>" + i + "</textarea>";
+                    trStr += "</td>";
+                    trStr += "<td width='250' class='rightTd'>";
+                    trStr += "<textarea style='resize:none;'>" + val + "</textarea>";
+                    trStr += "</td>";
+                    trStr += "</tr>";
+                    $(trStr).find("input:eq(0)").val(i);
+
+                    $('#tb2').append(trStr);
+
+                } else {
+                    if (val.indexOf('\'') != -1) {
+                        let reg = new RegExp("\'", "g");//g,表示全部替换。
+                        val = val.replace(reg, "");
+
+                        let trStr = "";
+                        trStr += "<tr class='clsBodyTr'>";
+                        trStr += "<td width='250' class='leftTd'>";
+                        trStr += "<textarea style='resize:none;'>" + i + "</textarea>";
+                        trStr += "</td>";
+                        trStr += "<td width='250' class='rightTd'>";
+
+                        trStr += "<textarea style='resize:none;'>" + val + "</textarea>";
+                        trStr += "</td>";
+                        trStr += "</tr>";
+                        let html = $(trStr);
+                        let td = html.find('td').eq(1);
+                        td.find('input').val("'" + td.find('input').val() + "'");
+                        $('#tb2').append(html);
+                    } else {
+
+                        let trStr = "";
+                        trStr += "<tr class='clsBodyTr'>";
+                        trStr += "<td width='250px' class='leftTd'>";
+                        trStr += "<textarea style='resize:none;'>" + i + "</textarea>";
+                        trStr += "</td>";
+                        trStr += "<td width='250px' class='rightTd'>";
+                        trStr += "<textarea style='resize:none;'>" + val + "</textarea>";
+                        trStr += "</td>";
+                        trStr += "</tr>";
+                        let html = $(trStr);
+                        $('#tb2').append(html);
+                    }
+
+                }
+            }
+
+            $("tr:last").addClass("selecTr");
+
+            $(".clsBodyTr").bind('click', function () {
+                $("tr").each(function () {
+                    $(this).removeClass("selecTr");
+                });
+                $(this).addClass("selecTr");
+            });
+        }
+    }
+
+    function getHong() { //获取宏
+        let table = $('#tb2');
+        let trs = table.find('tr'); //获取所有行
+        let val = 1;
+        let curHo = {};
+        $.each(trs, function (index, element) {
+
+            let key = $(this).find('td').eq(0).find('textarea').val();
+            let value = $(this).find('td').eq(1).find('textarea').val();
+
+            if (key == '' || value == '') {
+                val = 0;
+                return false;
+            }
+            curHo[key] = value;
+
+        });
+
+        if (val == 0) {
+            return '0';
+        } else {
+            return JSON.stringify(curHo);
+        }
+    }
+
+</script>
+</html>
+

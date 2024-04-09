@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.SysTemplateRecordMapper">
+
+    <!-- 记录rpt文件 -->
+    <insert id="saveSysRecord" parameterType="com.efreport.entity.SysTemplateRecord">
+        INSERT INTO SYS_TEMPLATE_RECORD(template_name,user_name,param_str,cache_time,ser_num,template_id,user_id,company_id) VALUES(#{templateName}, #{userName} ,#{paramStr},#{cacheTime},#{serNum},#{templateId},#{userId},#{companyId})
+    </insert>
+
+
+    <select id="listRecords" parameterType="java.util.Map" resultType="com.efreport.entity.SysTemplateRecord">
+        SELECT id,template_name as templateName,user_name as userName,param_str as paramStr,cache_time as cacheTime,ser_num as serNum,template_id as templateId,user_id as userId,param_str as paramStr
+        FROM SYS_TEMPLATE_RECORD
+        WHERE 1=1 AND COMPANY_ID = #{companyId}
+        <if test="userName != null">
+            and USER_NAME like concat('%' , #{userName} , '%')
+        </if>
+        <if test="start != null and start != ''">
+            AND CACHE_TIME <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND CACHE_TIME <![CDATA[ <= ]]> #{end}
+        </if>
+        <if test="userId != null and userId > 0">
+            AND USER_ID = #{userId}
+        </if>
+        <if test="templateId != null and templateId > 0">
+            AND TEMPLATE_ID = #{templateId}
+        </if>
+
+    </select>
+
+    <select id="count" parameterType="java.util.Map" resultType="int">
+        SELECT count(id)
+        FROM SYS_TEMPLATE_RECORD
+        WHERE 1=1 AND COMPANY_ID = #{companyId}
+        <if test="userName != null">
+            and USER_NAME like concat('%' , #{userName} , '%')
+        </if>
+        <if test="start != null and start != ''">
+            AND CACHE_TIME <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND CACHE_TIME <![CDATA[ <= ]]> #{end}
+        </if>
+        <if test="userId != null and userId > 0">
+            AND USER_ID = #{userId}
+        </if>
+        <if test="templateId != null and templateId > 0">
+            AND TEMPLATE_ID = #{templateId}
+        </if>
+    </select>
+
+    <select id="query" parameterType="int" resultType="com.efreport.entity.SysTemplateRecord">
+        SELECT id,template_name as templateName,user_name as userName,param_str as paramStr,cache_time as cacheTime,ser_num as serNum,template_id as templateId,user_id as userId,param_str as paramStr
+        FROM SYS_TEMPLATE_RECORD
+        WHERE id = #{id}
+    </select>
+
+    <delete id="del" parameterType="int">
+        DELETE FROM SYS_TEMPLATE_RECORD
+        WHERE id = #{id}
+    </delete>
+
+
+</mapper>

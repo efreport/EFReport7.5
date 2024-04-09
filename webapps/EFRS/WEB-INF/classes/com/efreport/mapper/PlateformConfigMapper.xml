@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efreport.mapper.PlateformConfigMapper">
+  <!-- 查询所有 -->
+  <select id="getConfig" resultType="com.efreport.entity.PlateformConfig" parameterType="int">
+    SELECT id, userid, rownums, colnums, colwidth,rowheight,iscenter , isauto , isone , datatype,dataset , padtop,padbottom,padleft,padright,isAlert,isPixel, is_show_col_index as isShowColIndex FROM ef_sys_design_config
+    where userid = #{id}
+  </select>
+
+  <insert id="saveConfig" parameterType="com.efreport.entity.PlateformConfig">
+     insert into ef_sys_design_config(userid, rownums, colnums, colwidth,rowheight,iscenter , isauto , isone , datatype,dataset , padtop,padbottom,padleft,padright,isAlert,isPixel , is_show_col_index)
+     values(#{userId} , #{rowNums} , #{colNums} , #{colWidth} , #{rowHeight} , #{isCenter} , #{isAuto} , #{isOne},#{dataType} , #{dataSet},#{padTop} , #{padBottom} , #{padLeft} , #{padRight},#{isAlert},#{isPixel} , #{isShowColIndex})
+  </insert>
+
+  <update id="updateConfig" parameterType="com.efreport.entity.PlateformConfig">
+    update ef_sys_design_config set rownums = #{rowNums} , colnums = #{colNums} , colwidth = #{colWidth} , rowheight = #{rowHeight},
+    iscenter = #{isCenter} , isauto = #{isAuto} , isone = #{isOne} , datatype = #{dataType} , dataset = #{dataSet},padtop = #{padTop} , padBottom = #{padBottom},
+    padLeft = #{padLeft} , padRight = #{padRight} , isalert = #{isAlert},isPixel= #{isPixel},is_show_col_index=#{isShowColIndex} where userid = #{userId};
+  </update>
+
+</mapper>

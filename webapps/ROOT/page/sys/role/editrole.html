@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>盈帆数据报表-编辑角色</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../../lib/layui-v2.7.6/css/layui.css" media="all">
+    <style>
+        .center {
+            position: relative;
+            width: 100%;
+            height: 80px;
+        }
+        .center .item {
+            width: 80%;
+            text-align: center;
+            margin: auto;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div style="padding: 20px;">
+        <input type="hidden" id="id" name="id" />
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="roleName" placeholder="请输入角色名" value="" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form layuimini-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">说明</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="memo" placeholder="请输入说明" value="" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="../../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script>
+function getPage() {
+    var rname = $("input[name='roleName']").val();
+    var rmemo = $("input[name='memo']").val();
+    var id = $("#id").val();
+    let obj = {
+        id: id,
+        roleName: rname,
+        memo: rmemo
+    };
+    return JSON.stringify(obj);
+}
+function setForm(jsonstr) {
+    let objForm = JSON.parse(jsonstr);
+    $("input[name='roleName']").val(objForm.roleName);
+    $("input[name='memo']").val(objForm.memo);
+    $("#id").val(objForm.id);
+}
+</script>
+</body>
+</html>

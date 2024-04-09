@@ -1,0 +1,124 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="adress=no">
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <style>
+      body {
+        background: #FCFCFC;
+      }
+      .div_index_list {
+        position: relative;
+        width: 85%;
+        height: auto;
+        margin: auto;
+        line-height: 60px;
+        border-bottom: 2px solid #F2F3F5;
+      }
+      .divlft {
+        width: 40px;height:40px; background: url('img/new/folder02.png') no-repeat;
+        float: left;
+        margin-top: 10px;
+      }
+      .divrht {
+        margin-top: 10px;
+        margin-left: 20px;
+        width: 200px;
+        height: 40px;
+        line-height: 40px;
+        float: left;
+        font-size: 16px;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #4E5969;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap"   style="height: 100%">
+      <div class="fixed_top">
+        <div class="top-l"><a href="javascript:window.history.back()"><i class="icons">&#xe626;</i></a></div>
+        <h1 id="param_key">${param.key}</h1>
+      </div>
+
+      <div class="container"   style="height: 100%;background-color: #FCFCFC;">
+        <div class="ztmc" style="height: 100%;background-color: #FCFCFC;">
+
+          <div class="div_index_list">
+          </div>
+
+          <ul class="index_list" style="display:none;"></ul>
+        </div>
+
+        <div class="footer">
+          <ul>
+            <li><a href="index.html"><p><i class="icons">&#xe65c;</i></p><h4>首页</h4></a></li>
+            <li><a href="history.html"><p><i class="icons">&#xe6d0;</i></p><h4>常用</h4></a></li>
+            <li><a href="my.html"><p><i class="icons">&#xe605;</i></p><h4>我的</h4></a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </body>
+  <script src="js/jquery-1.7.js"></script>
+  <script src="js/checklogin.js"></script>
+  <script>
+
+ /**
+  * [通过参数名获取url中的参数值]
+  * 示例URL:http://htmlJsTest/getrequest.html?uid=admin&rid=1&fid=2&name=小明
+  * @param  {[string]} queryName [参数名]
+  * @return {[string]}           [参数值]
+  */
+  function GetQueryValue(queryName) {
+    var query = decodeURI(window.location.search.substring(1));
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split("=");
+      if (pair[0] == queryName) { return pair[1]; }
+    }
+    return null;
+  }
+  var param_key;
+  $(function(){
+    param_key = GetQueryValue("key");
+    $("#param_key").html(param_key);
+  });
+
+  $(function() {
+    $(".footer ul li:eq(0)").addClass("active");
+
+    let baseurl = window.sessionStorage.getItem("ef_server_base_url");
+    let token = window.sessionStorage.getItem("cur_token");
+
+    $.get(baseurl + "/user/mainMenu?token=" + token, function(resp) {
+      // console.log("resp-->", resp);
+      var $ul = $("ul.index_list");
+      for (var key in resp[param_key]) {
+        $ul.append('<li><a href="report.html?pkey='+param_key+'&key=' + key + '"><div><img src="img/report.png" /></div><p>' + key + '</p></a></li>');
+      }
+
+      var divEle = $(".div_index_list");
+      for (var key in resp[param_key]) {
+        let htmlStr='';
+          htmlStr+='<div style="position: relative; width: 100%;height:60px;background: #FCFCFC;">';
+          htmlStr += '<a href="report.html?pkey='+param_key+'&key=' + key + '">';
+          htmlStr += '<div class="divlft"></div>';
+          htmlStr += '<div class="divrht">';
+          htmlStr += key;
+          htmlStr +='</div>';
+          htmlStr += '</a>';
+          htmlStr += '</div>';
+        divEle.append(htmlStr);
+      }
+
+    });
+  });
+  </script>
+</html>

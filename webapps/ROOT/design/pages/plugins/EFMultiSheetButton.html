@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="adress=no">
+    <link rel="stylesheet" type="text/css" href="../../js/css/plugin.css">
+    <link rel="stylesheet" type="text/css" href="../../js/css/spectrum.css">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <style type="text/css">
+        body {
+            /*display: flex;
+            justify-content: center;*/
+        }
+
+        .plugin-container {
+            width: 800px;
+            height: 400px;
+            text-align: center;
+            display: flex;
+        }
+
+        .json-container {
+            width: 800px;
+            height: 390px;
+            text-align: center;
+            display: flex;
+            overflow-y: scroll;
+        }
+
+        .chart-panel {
+            width: 600px;
+            display: flex;
+        }
+
+        .property-panel .layui-tab-title .layui-this:after {
+            height: 70px;
+        }
+
+        .json-document {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .layui-unselect {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <div class="layui-tab" style="margin:0px;">
+        <ul class="layui-tab-title" id="mainTab">
+            <li class="layui-this">属性</li>
+        </ul>
+        <div class="layui-tab-content" style="height:400px;">
+            <div class="layui-tab-item layui-show">
+                <div class="plugin-container" style="height:400px;">
+                    <div class="chart-panel" id="plugin"
+                         style="display: flex;justify-content: center;align-items: center;">
+                        <button style='width:200px;height:50px;background-color:#ffffff;font-size:12px;color:#000000;' id="example">
+                            按钮
+                        </button>
+                    </div>
+                    <div class="property-panel" style="height:400px;">
+                        <div class="layui-tab">
+                            <ul class="layui-tab-title" id="lay_expend" style="width: 20px;">
+                                <li class="layui-this">属<br>性</li>
+                            </ul>
+                            <div class="layui-tab-content" style="width: 100%;height:400px;padding:5px;">
+                                <div class="layui-tab-item layui-show" id="title"
+                                     style="overflow: auto;white-space: normal;height:390px;">
+                                    <div id="chart" class="chart">
+                                        <table style="width: 100%; display: table;">
+                                            <tbody>
+                                            <tr>
+                                                <td>按钮背景颜色</td>
+                                                <td>
+                                                    <div style="width: 100px;margin-right:5px;display:table-cell"><input
+                                                            type="text"
+                                                            id="buttonBgInput"
+                                                            style="margin-right:5px;" value="#ffffff">
+                                                    </div>
+                                                    <div id="buttonBg"
+                                                         style="width: 80px; display: table-cell; height: 29px; border: 1px solid rgb(213, 213, 213); background-color: rgb(255, 255, 255);"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>按钮文本</td>
+                                                <td><input type="text" id="text" autocomplete="off" value="按钮">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>按钮文本颜色</td>
+                                                <td>
+                                                    <div style="width: 100px;margin-right:5px;display:table-cell"><input
+                                                            type="text"
+                                                            id="textBgInput"
+                                                            style="margin-right:5px;" value="#000000">
+                                                    </div>
+                                                    <div id="textBg"
+                                                         style="width: 80px; display: table-cell; height: 29px; border: 1px solid rgb(213, 213, 213); background-color: rgb(255, 255, 255);"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体风格</td>
+                                                <td><select id="fontStyle">
+                                                    <option value="normal">正常</option>
+                                                    <option value="italic">斜体</option>
+                                                    <option value="oblique">倾斜</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体粗细</td>
+                                                <td><select id="fontWeight">
+                                                    <option value="normal">正常</option>
+                                                    <option value="bold" selected>加粗</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体名称</td>
+                                                <td><select id="fontFamily">
+                                                    <option value="sans-serif">sans-serif</option>
+                                                    <option value="serif">serif</option>
+                                                    <option value="monospace">monospace</option>
+                                                    <option value="Arial">Arial</option>
+                                                    <option value="Microsoft YaHei">Microsoft YaHei</option>
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>字体大小</td>
+                                                <td><input type="text" autocomplete="off" id="fontSize" value="12">
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>目标悬浮元素组</td>
+                                                <td><input type="text" autocomplete="off" id="targetShapes">
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>目标悬浮元素</td>
+                                                <td>
+                                                    <input type="text" autocomplete="off" id="targetShape">
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<script src="../../js/echarts-4.1.0.min.js"></script>
+<script src="../../js/layui.js"></script>
+<script src="../../js/spectrum.js"></script>
+<script type="text/javascript">
+    var layer;
+    var dsArray = [];//{"ds1":"a,b,c","ds2":"a,b,c,d"}
+    var dsMap = {};
+    var templateIndex;
+    var base;
+    var fonts = [];
+    var option;
+
+    function init(ip, dsA, index, font, dMap, opt , isFirst) {
+        option = opt;
+        $.each(fonts, function (index, element) {
+            $('#fontFamily').append('<option value="' + element + '">' + element + '</option>');
+        });
+
+        if(isFirst){
+            plugin.init();
+        }else{
+            plugin.initByJson(option);
+        }
+
+    }
+
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+    /**
+     * Created by whj on 2019/9/10.
+     */
+
+    var plugin = {
+        instance: {},  //Echart实例
+        optionJson: {},
+        saveJson: {
+            text: '',//按钮文本
+            backgroundColor: '', //按钮背景色
+            color: '', //按钮文本颜色
+            fontSize: '',//文本大小
+            fontStyle: '',//文本样式
+            fontWeight: '',//文本加粗
+            fontFamily: '',//字体
+            targetShapes:'',
+            targetShape:''
+
+        }, //保存到内核的json
+        util: {
+            isPositiveNumber: function (num) { //判断是否是正整数
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                return g.test(num);
+            },
+            isLeft: function (val) {
+                if ($.inArray(val, ['left', 'center', 'right']) == -1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            isTop: function (val) {
+                if ($.inArray(val, ['top', 'middle', 'bottom']) == -1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            isAuto: function (val) {
+                if (val == 'auto') {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            isNoNegativeNumber: function (num) {
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) {
+                    return true;
+                } else {
+                    if (num == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            isPercentNumber: function (num) { //是否是百分整数
+                var g = new RegExp(/^\d+%$/); //不包含小数
+                //new RegExp(/^\d+\.{0,1}\d+%$/); //包含小数
+                if (g.test(num)) {
+                    return true;
+                } else {
+                    if (num == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            isRotateNumber: function (num) {
+                var g = /^[1-9]*[1-9][0-9]*$/;
+                var g1 = /^-[1-9]*[1-9][0-9]*$/;
+                if (g.test(num)) { //是正整数
+                    if (num <= 90) {
+                        return true;
+                    } else {
+                        //layer.alert("请输入-90到90间整数!");
+                        efalert(layer, "请输入-90到90间整数!");
+                        return false;
+                    }
+                } else if (g1.test(num)) {
+                    if (num >= -90) {
+                        return true;
+                    } else {
+                        //layer.alert("请输入-90到90间整数!");
+                        efalert(layer, "请输入-90到90间整数!");
+                        return false;
+                    }
+                } else if (num == 0) {
+                    return true;
+                }
+            },
+            HexToRgba: function (val) {
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{8})$/;
+                var sColor = val.toLowerCase();
+                if (sColor && reg.test(sColor)) {
+                    if (sColor.length === 4) {
+                        var sColorNew = "#";
+                        for (var i = 1; i < 4; i += 1) {
+                            sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
+                        }
+                        sColor = sColorNew;
+                    }
+                    //处理六位的颜色值
+                    var sColorChange = [];
+                    for (var i = 1; i < 9; i += 2) {
+                        if (i < 7) {
+                            sColorChange.push(parseInt("0x" + sColor.slice(i, i + 2)));
+                        } else {
+                            var number = parseInt("0x" + sColor.slice(i, i + 2));
+                            sColorChange.push(number / 255);
+                        }
+
+                    }
+                    return "RGBA(" + sColorChange.join(",") + ")";
+                } else {
+                    return sColor;
+                }
+            },
+            HexToRgb: function (val) {
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+                var sColor = val.toLowerCase();
+                if (sColor && reg.test(sColor)) {
+                    if (sColor.length === 4) {
+                        var sColorNew = "#";
+                        for (var i = 1; i < 4; i += 1) {
+                            sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
+                        }
+                        sColor = sColorNew;
+                    }
+                    //处理六位的颜色值
+                    var sColorChange = [];
+                    for (var i = 1; i < 7; i += 2) {
+                        sColorChange.push(parseInt("0x" + sColor.slice(i, i + 2)));
+                    }
+                    return "RGB(" + sColorChange.join(",") + ")";
+                } else {
+                    return sColor;
+                }
+            },
+            RgbToHex: function (val) {
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+                if (/^(rgb|RGB)/.test(val)) {
+                    var aColor = val.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+                    var strHex = "#";
+                    for (var i = 0; i < aColor.length; i++) {
+                        var hex = Number(aColor[i]).toString(16);
+                        if (hex === "0") {
+                            hex += hex;
+                        }
+                        strHex += hex;
+                    }
+                    if (strHex.length !== 7) {
+                        strHex = val;
+                    }
+                    return strHex;
+                } else if (reg.test(val)) {
+                    var aNum = val.replace(/#/, "").split("");
+                    if (aNum.length === 6) {
+                        return val;
+                    } else if (aNum.length === 3) {
+                        var numHex = "#";
+                        for (var i = 0; i < aNum.length; i += 1) {
+                            numHex += (aNum[i] + aNum[i]);
+                        }
+                        return numHex;
+                    }
+                } else {
+                    return val;
+                }
+            },
+            RgbaToHex: function (val) {
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{8})$/;
+                if (/^(rgba|RGBA)/.test(val)) {
+                    var aColor = val.replace(/(?:\(|\)|rgba|RGBA)*/g, "").split(",");
+                    var strHex = "#";
+                    for (var i = 0; i < aColor.length; i++) {
+                        if (i == 3) {
+                            /* var hex = (Number(aColor[i]) * 255).toString(16);
+                             if (hex === "0") {
+                             hex += hex;
+                             }*/
+                            var hex = plugin.util.alphaToHex(Number(aColor[i]));
+                            strHex += hex;
+                        } else {
+                            var hex = Number(aColor[i]).toString(16);
+                            if (hex === "0") {
+                                hex += hex;
+                            }
+                            strHex += hex;
+                        }
+
+                    }
+
+                    //if(strHex.length !== 9){
+                    //strHex = val;
+                    //}
+                    return strHex;
+                } else if (reg.test(val)) {
+                    var aNum = val.replace(/#/, "").split("");
+                    if (aNum.length === 6) {
+                        return val;
+                    } else if (aNum.length === 3) {
+                        var numHex = "#";
+                        for (var i = 0; i < aNum.length; i += 1) {
+                            numHex += (aNum[i] + aNum[i]);
+                        }
+                        return numHex;
+                    }
+                } else {
+                    return val;
+                }
+            },
+            CheckIsHex6: function (bgVal) {
+                var type = "^#[0-9a-fA-F]{6}$";
+                var re = new RegExp(type);
+                if (bgVal.match(re) == null) {
+                    type = "^[rR][gG][Bb][\(]([\\s]*(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?)[\\s]*,){2}[\\s]*(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)[\\s]*[\)]{1}$";
+                    re = new RegExp(type);
+                    if (bgVal.match(re) == null) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            },
+            CheckIsHex8: function (bgVal) {
+                var type = "^#[0-9a-fA-F]{8}$";
+                var re = new RegExp(type);
+                if (bgVal.match(re) == null) {
+                    type = "^[rR][gG][Bb][\(]([\\s]*(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?)[\\s]*,){2}[\\s]*(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)[\\s]*[\)]{1}$";
+                    re = new RegExp(type);
+                    if (bgVal.match(re) == null) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            },
+            alphaToHex: function (val) {
+                var num = val * 255;
+                if (num == 0) {
+                    return '00';
+                } else {
+                    var value = (Math.round(num)).toString(16);
+                    if (value.length == 1) {
+                        value = '0' + value;
+                    }
+                    return value;
+                }
+            }
+        },
+        colors: [
+            ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)", "rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(255, 255, 255)"],
+            ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)", "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"],
+            ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)", "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)", "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)",
+                "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)", "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)",
+                "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)", "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+                "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)", "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)", "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+        ],
+        colorOpt: {
+            allowEmpty: true,
+            showInput: true,
+            containerClassName: "full-spectrum",
+            showInitial: true,
+            showPalette: true,
+            showSelectionPalette: false,
+            showAlpha: true,
+            maxPaletteSize: 10,
+            preferredFormat: "hex",
+            change: function (color) { //修改title的背景颜色
+                var hexColor = "transparent";
+
+                if (color) {
+                    if (color.alpha == 1) {
+                        hexColor = color.toHexString();
+                    } else {
+                        hexColor = color.toHexString() + plugin.util.alphaToHex(color.alpha);
+                    }
+                    $(this).css("background-color", hexColor);
+                    $(this).prev().find('input').val(hexColor);
+                    if ($(this).attr('id') == 'buttonBg') {
+                        plugin.saveJson.backgroundColor = hexColor;
+                        $('#example').css('background-color',hexColor);
+                    } else if ($(this).attr('id') == 'textBg') {
+                        plugin.saveJson.color = hexColor;
+                        $('#example').css('color',hexColor);
+                    }
+                }
+            },
+            beforeShow: function () {
+
+            },
+            hide: function () {
+
+            },
+            palette: this.colors
+        },
+        initColorPlugin: function (id) {  //初始化颜色选择控件
+            $('#' + id).spectrum(this.colorOpt);
+        },
+        bind: function () {
+            plugin.initColorPlugin('buttonBg');
+            plugin.initColorPlugin('textBg');
+            $('#text').bind('change', function () {
+                if($(this).val() != ''){
+                    plugin.saveJson.text = $(this).val();
+                    $('#example').text($(this).val());
+                }else{
+                    plugin.saveJson.text = '按钮';
+                }
+
+            });
+
+            $('#fontSize').bind('change', function () {
+                if (plugin.util.isPositiveNumber($(this).val())) {
+                    plugin.saveJson.fontSize = $(this).val();
+                    $('#example').css('font-size',$(this).val() + 'px');
+                } else {
+                    layer.alert("请输入正确的数字!");
+                }
+            });
+
+            $('#buttonBgInput').bind('change', function () {
+                if (plugin.util.CheckIsHex6($(this).val())) {
+                    plugin.saveJson.backgroundColor = $(this).val();
+                    $('#example').css('background-color',$(this).val());
+                } else if (plugin.util.CheckIsHex8($(this).val())) {
+                    plugin.saveJson.backgroundColor = $(this).val();
+                    $('#example').css('background-color',$(this).val());
+                }
+                else {
+                    layer.alert("请输入正确的颜色!");
+                }
+
+            });
+            $('#textBgInput').bind('change', function () {
+                if (plugin.util.CheckIsHex6($(this).val())) {
+                    plugin.saveJson.color = $(this).val();
+                    $('#example').css('color',$(this).val());
+                } else if (plugin.util.CheckIsHex8($(this).val())) {
+                    plugin.saveJson.color = $(this).val();
+                    $('#example').css('color',$(this).val());
+                }
+                else {
+                    layer.alert("请输入正确的颜色!");
+                }
+            });
+
+            $('#fontStyle').bind('change' , function(){
+                plugin.saveJson.fontStyle = $(this).val();
+                $('#example').css('font-style',$(this).val());
+            })
+
+            $('#fontWeight').bind('change' , function(){
+                plugin.saveJson.fontWeight = $(this).val();
+                $('#example').css('font-weight',$(this).val());
+            })
+
+            $('#fontFamily').bind('change' , function(){
+                plugin.saveJson.fontFamily = $(this).val();
+                $('#example').css('font-family',$(this).val());
+            })
+
+            $('#targetShapes').bind('change',function(){
+                plugin.saveJson.targetShapes = $(this).val();
+            })
+
+            $('#targetShape').bind('change' , function(){
+                plugin.saveJson.targetShape = $(this).val();
+            })
+
+        },
+        init: function () {
+            plugin.bind();
+        },
+        initByJson: function (json) {
+            var option = JSON.parse(json);
+            plugin.initStyle(option);
+            plugin.bind();
+        },
+        initStyle: function (json) {
+           $('#text').val(json.text); //按钮文本
+            plugin.saveJson.text = json.text;
+            $('#example').text(json.text);
+
+            var backgroundColor = json.backgroundColor;
+            $('#buttonBgInput').val(backgroundColor);//背景颜色
+            $('#buttonBg').css("background-color", backgroundColor);
+            $('#example').css("background-color", backgroundColor);
+            plugin.saveJson.backgroundColor = backgroundColor;
+
+            var color = json.color;
+            $('#textBgInput').val(color);//文本颜色
+            $('#textBg').css("color", color);
+            $('#example').css("color", color);
+            plugin.saveJson.color = color;
+
+            $('#fontSize').val(json.fontSize);
+            plugin.saveJson.fontSize = json.fontSize;
+            $('#example').css("font-size", json.fontSize + 'px');
+
+            $('#fontStyle').val(json.fontStyle);
+            plugin.saveJson.fontStyle = json.fontStyle;
+            $('#example').css("font-style", json.fontStyle);
+
+            $('#fontWeight').val(json.fontWeight);
+            plugin.saveJson.fontWeight = json.fontWeight;
+            $('#example').css("font-weight", json.fontWeight);
+
+            $('#fontFamily').val(json.fontFamily);
+            plugin.saveJson.fontFamily = json.fontFamily;
+            $('#example').css("font-family", json.fontFamily);
+
+            $('#targetShapes').val(json.targetShapes);
+            plugin.saveJson.targetShapes = json.targetShapes;
+
+            $('#targetShape').val(json.targetShape);
+            plugin.saveJson.targetShape = json.targetShape;
+        }
+    }
+
+    function getOptions(){
+        return plugin;
+    }
+
+</script>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <link href="../../css/spectrum.css" rel="stylesheet">
+    <link href="../../css/scroll.css" rel="stylesheet">
+
+
+    <script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../js/layui.js"></script>
+
+    <style type="text/css">
+
+        body{
+            color:#4E5969;
+        }
+
+        .layui-tab {
+            margin: 0px;
+        }
+
+        .layui-field-box {
+            display: flex;
+            align-content: center;
+        }
+
+        .layui-form-label {
+            width: auto;
+            text-align: left;
+        }
+
+        .layui-input-block {
+            margin-left: 0px;
+        }
+
+        .layui-form-onswitch {
+            border-color: #0094FF;
+            background-color: #0094FF;
+        }
+
+        .layui-btn {
+            background-color: #0094FF;
+            color: #fff;
+        }
+
+        .layui-form-select dl dd.layui-this {
+            background-color: #0094FF;
+            color: #fff;
+        }
+
+        #js{
+            color:#4E5969;
+            background-color: #F2F3F5;
+        }
+
+        xm-select > .xm-body .scroll-body{
+            height:200px;
+        }
+
+        #bkColorOfPluginFullScreenInput:hover{
+            border:1px solid #44B4FF;
+            background-color:#fff;
+        }
+
+    </style>
+</head>
+<body>
+<div class="layui-tab layui-tab-card">
+    <ul class="layui-tab-title">
+        <li class="layui-this">设计器控件</li>
+        <li>行高列宽</li>
+        <li>模板属性</li>
+        <li>数据类</li>
+        <li>样式类</li>
+        <li>画布属性</li>
+    </ul>
+    <div class="layui-tab-content" style="height: 500px;">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">默认行数(设计器初始行数)</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="text" id="rowNum" style="margin-right:5px;width:126px;"
+                               value="10" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">默认列数(设计器初始列数)</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="text" id="colNum" style="margin-right:5px;width:126px;"
+                               value="100" class="layui-input">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">默认行高px(设计器初始行高)</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="text" id="rowHeight" style="margin-right:5px;width:126px;"
+                               value="26" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">默认列宽px(设计器初始列宽)</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="text" id="colWidth" style="margin-right:5px;width:126px;"
+                               value="88" class="layui-input">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否居中</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isCenter" lay-skin="switch"
+                               id="isCenter">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否自动查询</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isAuto" lay-skin="switch"
+                               id="isAuto">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否一页显示</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isOne" lay-skin="switch"
+                               id="isOne">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">打印导出时是否弹框</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isAlert" lay-skin="switch"
+                               id="isAlert">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否显示列数字</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isShowColIndex" lay-skin="switch"
+                               id="isShowColIndex">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label"> 默认数据类型</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <select id="dataType" name="pageDateFormat">
+                            <option value="1">布尔</option>
+                            <option value="2">整型</option>
+                            <option value="6">浮点</option>
+                            <option value="10" selected>字符串</option>
+                            <option value="14">日期</option>
+                            <option value="16">日期时间</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label"> 默认数据设置</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <select id="dataSet" name="pageDateFormat">
+                            <option value="1" selected>分组</option>
+                            <option value="2">列表</option>
+                            <option value="3">汇总</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">上边距</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="text" id="padTop" style="margin-right:5px;width:126px;"
+                               value="0" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">下边距</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="text" id="padBottom" style="margin-right:5px;width:126px;"
+                               value="0" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">左边距</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="text" id="padLeft" style="margin-right:5px;width:126px;"
+                               value="0" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label">右边距</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="text" id="padRight" style="margin-right:5px;width:126px;"
+                               value="0" class="layui-input">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-label">是否使用像素标尺</div>
+                    <div class="layui-input-block" style="display: inline-block;">
+                        <input type="checkbox" name="isUsePixelUrler" lay-skin="switch"
+                               id="isUsePixelUrler">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    function isPositiveNumber(num) { //判断是否是正整数
+        let g = /^[1-9]*[1-9][0-9]*$/;
+        return g.test(num);
+    }
+
+    layui.use(['layer', 'element', 'form'], function () {
+        let layer = layui.layer, element = layui.element;
+        form = layui.form;
+    });
+
+    function init(json) {
+        console.log(json);
+        $('#colNum').val(json.colNums);
+        $('#rowNum').val(json.rowNums);
+        $('#rowHeight').val(json.rowHeight);
+        $('#colWidth').val(json.colWidth);
+        if(json.center){
+            $('#isCenter').prop('checked','checked');
+        }
+        if(json.auto){
+            $('#isAuto').prop('checked','checked');
+        }
+        if(json.one){
+            $('#isOne').prop('checked','checked');
+        }
+        if(json.alert){
+            $('#isAlert').prop('checked','checked');
+        }
+        if(json.showColIndex){
+            $('#isShowColIndex').prop('checked','checked');
+        }
+        $('#dataType').val(json.dataType).prop('selected' , 'selected');
+        $('#dataSet').val(json.dataSet).prop('selected' , 'selected');
+        $('#padTop').val(json.padTop);
+        $('#padBottom').val(json.padBottom);
+        $('#padLeft').val(json.padLeft);
+        $('#padRight').val(json.padRight);
+        if(json.pixel){
+            $('#isUsePixelUrler').prop('checked','checked');
+        }
+        form.render();
+    }
+
+    function getPage() {
+        let page = {
+            colNum:$('#colNum').val()
+            ,rowNum:$("#rowNum").val()
+            ,rowHeight:$("#rowHeight").val()
+            ,colWidth:$("#colWidth").val()
+            ,isCenter:$('#isCenter').prop('checked')
+            ,isAuto:$('#isAuto').prop('checked')
+            ,isOne:$('#isOne').prop('checked')
+            ,isAlert:$('#isAlert').prop('checked')
+            ,dataType:$('#dataType').val()
+            ,dataSet:$('#dataSet').val()
+            ,padTop:$('#padTop').val()
+            ,padBottom:$('#padBottom').val()
+            ,padLeft:$('#padLeft').val()
+            ,padRight:$('#padRight').val()
+            ,isPixel:$('#isUsePixelUrler').prop('checked')
+            ,isShowColIndex:$('#isShowColIndex').prop('checked')
+        };
+        return page;
+    }
+
+    $(document).ready(function(){
+
+        $('#rowNum').bind('change' , function(){
+            var val = $(this).val();
+            if(!isPositiveNumber(val)){
+                $(this).val(10);
+            }
+        })
+
+        $('#colNum').bind('change' , function(){
+            var val = $(this).val();
+            if(!isPositiveNumber(val)){
+                $(this).val(7);
+            }
+        })
+
+        $('#colWidth').bind('change' , function(){
+            var val = $(this).val();
+            if(!isPositiveNumber(val)){
+                $(this).val(80);
+            }
+        })
+
+        $('#rowHeight').bind('change' , function(){
+            var val = $(this).val();
+            if(!isPositiveNumber(val)){
+                $(this).val(26);
+            }
+        })
+
+        $('#padTop').bind('change' , function(){
+            var val = $(this).val();
+            if(!isPositiveNumber(val)){
+                $(this).val(0);
+            }
+        })
+
+        $('#padBottom').bind('change' , function(){
+            var val = $(this).val();
+            if(!isPositiveNumber(val)){
+                $(this).val(0);
+            }
+        })
+
+        $('#padLeft').bind('change' , function(){
+            var val = $(this).val();
+            if(!isPositiveNumber(val)){
+                $(this).val(0);
+            }
+        })
+
+        $('#padRight').bind('change' , function(){
+            var val = $(this).val();
+            if(!isPositiveNumber(val)){
+                $(this).val(0);
+            }
+        })
+
+    });
+
+</script>
+</html>

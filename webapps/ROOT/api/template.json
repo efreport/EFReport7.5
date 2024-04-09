@@ -1,0 +1,123 @@
+{
+    "homeInfo": {
+      "title": "首页",
+      "href": "page/welcome-1.html?t=2"
+    },
+    "logoInfo": {
+      "title": "盈帆数据",
+      "image": "images/logo.ico",
+      "href": ""
+    },
+    "menuInfo": [
+      {
+        "title": "",
+        "icon": "",
+        "href": "",
+        "target": "_self",
+        "child": [
+          {
+            "title": "管理驾驶舱",
+            "icon": "fa fa-address-book",
+            "href": "",
+            "target": "_self",
+            "child": [
+              {
+                "title": "模板展示",
+                "href": "",
+                "icon": "fa fa-gears",
+                "target": "_self",
+                "child": [
+                  {
+                    "title": "福利彩票展示",
+                    "href": "#",
+                    "icon": "fa fa-list-alt",
+                    "target": "_self"
+                  },
+                  {
+                    "title": "销售分析",
+                    "href": "#",
+                    "icon": "fa fa-list-alt",
+                    "target": "_self"
+                  },
+                  {
+                    "title": "空气质量",
+                    "href": "#",
+                    "icon": "fa fa-list-alt",
+                    "target": "_self"
+                  }
+                ]
+              },
+              {
+                "title": "模板管理",
+                "href": "",
+                "icon": "fa fa-windows",
+                "target": "_self",
+                "child": [
+                  {
+                    "title": "模板管理",
+                    "href": "page/template/template.html",
+                    "icon": "fa fa-list-alt",
+                    "target": "_self"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "title": "报表展示",
+            "icon": "fa fa-address-book",
+            "href": "",
+            "target": "_self",
+            "child": [
+              {
+                "title": "基础报表",
+                "href": "",
+                "icon": "fa fa-gears",
+                "target": "_self",
+                "child": [
+                  {
+                    "title": "编号",
+                    "href": "#",
+                    "icon": "fa fa-list-alt",
+                    "target": "_self"
+                  },
+                  {
+                    "title": "组内编号",
+                    "href": "#",
+                    "icon": "fa fa-list-alt",
+                    "target": "_self"
+                  },
+                  {
+                    "title": "行分栏",
+                    "href": "#",
+                    "icon": "fa fa-list-alt",
+                    "target": "_self"
+                  }
+                ]
+              },
+              {
+                "title": "图表报表",
+                "href": "",
+                "icon": "fa fa-windows",
+                "target": "_self",
+                "child": [
+                  {
+                    "title": "百度地图",
+                    "href": "#",
+                    "icon": "fa fa-list-alt",
+                    "target": "_self"
+                  },
+                  {
+                    "title": "飞行图",
+                    "href": "#",
+                    "icon": "fa fa-list-alt",
+                    "target": "_self"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

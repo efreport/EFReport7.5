@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../css/public.css" media="all">
+    <style>
+        html, body {
+            border: 0px;
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            background-color: #fcfcfc !important;
+        }
+        /* 将背景颜色都改为#fcfcfc hk->20221223改 */
+        .layuimini-container {
+            background-color: #fcfcfc !important;
+        }
+
+        .layui-laypage-em {
+            background-color: #1E9FFF !important;
+        }
+        .layui-form-onswitch {
+            border-color: #1E9FFF !important;
+            background-color: #1E9FFF !important;
+        }
+
+        
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 1px;
+        }
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
+            background: #d5d5d5;
+        }
+        /* 设置滚动条样式 */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
+            border-radius: 10px;
+            background: #ffffff;
+        }
+
+    </style>
+</head>
+<body>
+<div class="layuimini-container layuimini-page-anim" style="height: auto;">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">账号/用户名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="name" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 新增 </button>
+                <span style="padding-left: 5px;"></span>
+                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="refresh"><i class="layui-icon">&#xe666;</i></button>
+                <!-- <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button> -->
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
+
+    </div>
+</div>
+<script src="../../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+<script src="../../../js/lay-config.js" charset="utf-8"></script>
+<script src="../../../js/common.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table','element'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+        let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+        let token = window.sessionStorage.getItem("cur_token");
+        let efurl = server_base_url + "/user/list?token=" + token;
+
+        let isOpenPwdLock = window.sessionStorage.getItem("isOpenPwdLock");
+        let frozenFlag = true; // 是否隐藏冻结列，默认隐藏
+        if (isOpenPwdLock === "1") {
+            // 当密码锁定开启时，显示 冻结列
+            frozenFlag = false;
+        }
+
+
+        /**
+         * 删除掉具有模板的设计器用户
+         */
+        function deleteHaveTemplateUser(id) {
+            let delurl = "";
+            $.ajax({
+                url: delurl,
+                type: 'post',
+                data: { id: id },
+                success: function (res) {
+                    // console.log("删除用户数据的res的值为：-->", res);
+                    if (res.state === "success") {
+                        layer.msg("删除成功");
+                        //执行搜索重载
+                        table.reload('currentTableId', {
+                            page: {
+                                curr: 1
+                            }
+                        }, 'data');
+                        init_table_height();
+                    } else {
+                        layer.msg(res.message);
+                    }
+                },
+                error: function () {
+                }
+            });
+        }
+        table.render({
+            elem: '#currentTableId',
+            url: efurl,
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print'],
+            cols: [[
+                // {type: "checkbox", width: 40},
+                {field: 'id', width: 80, title: 'ID', sort: true},
+                {field: 'account', width: 120, title: '账号'},
+                {field: 'name', width: 120, title: '用户名'},
+                {field: 'departmentName', width: 130, title: '部门'},
+                {field: 'email', title: '电子邮件', minWidth: 150},
+                {field: 'wechat', width: 90, title: '微信'},
+                {field: 'talkding', width: 90, title: '钉钉'},
+                {
+                    field: 'locked', 
+                    width: 100, 
+                    title: '使用状态',
+                    event: 'lockedClick',
+                    templet: function (res) {
+                        if(res.locked){
+                            return '<input type="checkbox" name="close1" lay-skin="switch" lay-text="">';
+                        }else{
+                            return '<input type="checkbox" checked="" name="open1" lay-skin="switch" lay-text="">';
+                        }
+                    }
+                },
+                {
+                    field: 'frozen', 
+                    width: 100, 
+                    title: '冻结状态',
+                    event: 'frozenClick',
+                    hide: frozenFlag,
+                    templet: function (res) {
+                        if(res.frozen){
+                            //禁用 （这里要求反过来一下）
+                            return '<input type="checkbox" checked="" name="open" lay-skin="switch" lay-text="">';
+                        }else{
+                            //禁用 （这里要求反过来一下）
+                            return '<input type="checkbox" value="true" name="close" lay-skin="switch" disabled="true" lay-text="">';
+                        }
+                    }
+                },
+                {
+                    field: 'userType', 
+                    width: 120, 
+                    title: '用户类型', 
+                    templet: function (res) {
+                        if(res.userType === 1){
+                            //禁用
+                            return '管理员';
+                        }
+                        if(res.userType === 2){
+                            //禁用
+                            return '设计器管理员';
+                        }
+                        if(res.userType === 3){
+                            //禁用
+                            return '普通预览用户';
+                        }
+                        if(res.userType === 4){
+                            //禁用
+                            return '设计器用户';
+                        }
+                    } },
+                { title: '操作', minWidth: 110, toolbar: '#currentTableBar', align: "center" }
+            ]],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            page: true,
+            skin: 'line'
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            var result = JSON.stringify(data.field);
+            let obj = JSON.parse(result);
+            //执行搜索重载
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    name: obj.name
+                }
+            }, 'data');
+            init_table_height();
+
+            return false;
+        });
+
+        /**
+         * toolbar事件监听
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {
+                // 点击了新增按钮
+                let index = layer.open({
+                    type: 2,
+                    area: ['770px', '540px'],
+                    closeBtn: 0,
+                    resize: false,
+                    title: ['新增用户', 'height:30px;line-height:30px'],
+                    content: ['edituser.html', 'no'],
+                    btn: ['确定', '关闭'],
+                    btnAlign: 'c',
+                    end: function () {
+                    },
+                    yes: function (index, layero) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        var jsonStr = iframeWin.getPage();
+                        var obj = JSON.parse(jsonStr);
+                        if (obj.name.trim() === "") {
+                            layer.msg("请输入姓名");
+                            return false;
+                        }
+                        if (obj.account.trim() === "") {
+                            layer.msg("请输入账号");
+                            return false;
+                        }
+                        if (obj.id === '0') {
+                            // 只有当新增时才验证密码
+                            if (obj.password.trim() === "") {
+                                layer.msg("请输入密码");
+                                return false;
+                            }
+                        }
+                        
+                        if (obj.deptId.trim() === "") {
+                            layer.msg("请选择部门");
+                            return false;
+                        }
+
+                        if(parseInt(obj.isDesign) === 3) {
+                            if (obj.roleId.trim() === "") {
+                                layer.msg("请选择角色");
+                                return false;
+                            }
+                        }
+
+                        let paramData = {
+                            id: parseInt(obj.id),
+                            name: obj.name,
+                            account: obj.account,
+                            password: obj.password,
+                            isLocked: obj.locked === "0" ? false : true,
+                            departmentId: parseInt(obj.deptId),
+                            departmentName: obj.dept_name,
+                            email: obj.email,
+                            wechat: obj.wechat,
+                            talkding: obj.talkding,
+                            isFrozen: obj.isLimited,
+                            userType: parseInt(obj.isDesign),
+                            roleId: obj.roleId
+                        };
+                        let saveurl = server_base_url + "/user/save?token=" + token;
+                        $.ajax({
+                            url: saveurl,
+                            type: 'post',
+                            data: paramData,
+                            success: function (res) {
+                                // console.log("保存用户数据的res的值为：-->", res);
+                                if (res.state === "success") {
+                                    layer.msg("保存成功");
+                                    //执行搜索重载
+                                    table.reload('currentTableId', {
+                                        page: {
+                                            curr: 1
+                                        }
+                                    }, 'data');
+                                    init_table_height();
+                                    layer.close(index);
+                                } else {
+                                    layer.msg(res.message);
+                                }
+                            },
+                            error: function () {
+                            }
+                        });
+                    },
+                    success: function (layero, index) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        let paramData = {
+                            id: 0,
+                            name: "",
+                            account: "",
+                            password: "",
+                            isLocked: "0",
+                            departmentId: 0,
+                            departmentName: "",
+                            email: "",
+                            wechat: "",
+                            talkding: "",
+                            isFrozen: "0",
+                            userType: 1,
+                            roleId: ""
+                        };
+                        iframeWin.setForm(JSON.stringify(paramData));
+                    }
+                });
+            
+            } else if (obj.event === 'delete') {  // 监听删除操作
+                var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
+            } else if (obj.event === 'refresh') {
+                table.reload('currentTableId', {
+                    page: {
+                        curr: 1
+                    }
+                    , where: {
+                        name: obj.name
+                    }
+                }, 'data');
+                init_table_height();
+            }
+        });
+
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+        });
+        
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+
+                // 点击了新增按钮
+                let index = layer.open({
+                    type: 2,
+                    area: ['770px', '540px'],
+                    closeBtn: 0,
+                    resize: false,
+                    title: ['编辑用户', 'height:30px;line-height:30px'],
+                    content: ['edituser.html', 'no'],
+                    btn: ['确定', '关闭'],
+                    btnAlign: 'c',
+                    end: function () {
+                        $("tr").each(function(idx, ele){
+                            $(ele).removeClass("layui-table-click");
+                        });
+                    },
+                    yes: function (index, layero) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        var jsonStr = iframeWin.getPage();
+                        var obj = JSON.parse(jsonStr);
+                        if (obj.name.trim() === "") {
+                            layer.msg("请输入姓名");
+                            return;
+                        }
+                        if (obj.account.trim() === "") {
+                            layer.msg("请输入账号");
+                            return;
+                        }
+                        if (obj.deptId.trim() === "") {
+                            layer.msg("请选择部门");
+                            return;
+                        }
+
+                        if(parseInt(obj.isDesign) === 3) {
+                            if (obj.roleId.trim() === "") {
+                                layer.msg("请选择角色");
+                                return;
+                            }
+                        }
+
+                        let paramData = {
+                            id: parseInt(obj.id),
+                            name: obj.name,
+                            account: obj.account,
+                            password: obj.password,
+                            isLocked: obj.locked === "0" ? false : true,
+                            departmentId: parseInt(obj.deptId),
+                            departmentName: obj.dept_name,
+                            email: obj.email,
+                            wechat: obj.wechat,
+                            talkding: obj.talkding,
+                            isFrozen: obj.isLimited,
+                            userType: parseInt(obj.isDesign),
+                            roleId: obj.roleId
+                        };
+                        let saveurl = server_base_url + "/user/update?token=" + token;
+                        $.ajax({
+                            url: saveurl,
+                            type: 'post',
+                            data: paramData,
+                            success: function (res) {
+                                // console.log("保存用户数据的res的值为：-->", res);
+                                if (res.state === "success") {
+                                    layer.msg("保存成功");
+                                    //执行搜索重载
+                                    table.reload('currentTableId', {
+                                        page: {
+                                            curr: 1
+                                        }
+                                    }, 'data');
+                                    init_table_height();
+                                    layer.close(index);
+                                } else {
+                                    layer.msg(res.message);
+                                }
+                            },
+                            error: function () {
+                            }
+                        });
+                    },
+                    success: function (layero, index) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        let paramData = {
+                            id: data.id,
+                            name: data.name,
+                            account: data.account,
+                            password: data.password,
+                            isLocked: data.locked === true ? "1" : "0",
+                            departmentId: data.departmentId,
+                            departmentName: data.departmentName,
+                            email: data.email,
+                            wechat: data.wechat,
+                            talkding: data.talkding,
+                            isFrozen: data.frozen === true ? "1" : "0",
+                            userType: data.userType,
+                            roleId: data.roleIds
+                        };
+                        let c_cur_timer = window.setInterval(function() {
+                            iframeWin.setForm(JSON.stringify(paramData));
+                            window.clearInterval(c_cur_timer);
+                        }, 200);
+                        // iframeWin.setForm(JSON.stringify(paramData));
+                    }
+                });
+            
+                return false;
+            } else if (obj.event === 'delete') {
+                let tsMsg = "确认删除这行数据？";
+                if(data.userType === 4) {
+                    tsMsg = "此操作会删除当前用户下的所有模板,确认删除用户?";
+                }
+
+                layer.confirm(tsMsg, {
+                    btn: ["是", "否"]
+                }, function (index) {
+                    let paramData = {
+                        id: data.id,
+                    };
+                    let efdeleteurl = server_base_url + "/user/delete?token=" + token;
+                    $.ajax({
+                        url: efdeleteurl,
+                        type: 'post',
+                        data: paramData,
+                        success: function (res) {
+                            if (res.state === "success") {
+                                layer.msg(res.message)
+                                obj.del();
+                                layer.close(index);
+                            } else {
+                                layer.msg(res.message);
+                                layer.close(index);
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
+                },function(){
+                    // 当进行删除操作时，点击取消按钮，执行将所有tr的选中样式删除掉
+                    $("tr").each(function(idx, ele){
+                        $(ele).removeClass("layui-table-click");
+                    });
+                });
+            } else if (obj.event === 'lockedClick') {
+                // 点击了解锁或者锁定操作
+                let id = data.id;
+                let locked = data.locked;
+                let eflockedurl = server_base_url + "/user/changeLockStatus?token=" + token;
+                $.ajax({
+                    url: eflockedurl,
+                    type: 'post',
+                    data: { id: id, status: !locked === true ? 1 : 0 },
+                    success: function (res) {
+                        if (res.state === "success") {
+                            data.locked = !locked;
+                        } else {
+                            layer.msg(res.message)
+                        }
+                        // 刷新页面
+                        table.reload('currentTableId', {
+                            page: {
+                                curr: 1
+                            }
+                        }, 'data');
+                        init_table_height();
+                    },
+                    error: function () {
+                    }
+                });
+            } else if (obj.event === 'frozenClick') {
+                let id = data.id;
+                let frozen = data.frozen;
+                if (frozen === false) {
+                    layer.msg("不能对账户进行冻结操作");
+                    table.reload('currentTableId', {
+                        page: {
+                            curr: 1
+                        }
+                    }, 'data');
+                    init_table_height();
+                    return false;
+                }
+                let effrozenurl = server_base_url + "/user/changeFrozenStatus?token=" + token;
+                $.ajax({
+                    url: effrozenurl,
+                    type: 'post',
+                    data: { id: id, status: !frozen === true ? 1 : 0 },
+                    success: function (res) {
+                        // console.log("frozenClick通过post方式修改用户数据的res的值为：", res);
+                        if (res.state === "success") {
+                            data.frozen = !frozen;
+
+                            table.reload('currentTableId', {
+                                page: {
+                                    curr: 1
+                                }
+                            }, 'data');
+                            init_table_height();
+                        } else {
+                            layer.msg(res.message)
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
+<script>
+
+    function init_table_height() {
+        // 获取body的高度
+        let body_height = $("body").height();
+        let search_height = $(".table-search-fieldset").height();
+        let table_height = body_height - search_height - 51 - 41 - 90;
+        $(".layui-table-body").css("height", ""+table_height+"px");
+        $(".layui-table-main").css("height", ""+table_height+"px");
+    }
+
+    $(function(){
+
+        init_table_height();
+
+        $(window).resize(function () {
+            // 获取body的高度
+            let body_height = $("body").height();
+            let search_height = $(".table-search-fieldset").height();
+            let table_height = body_height - search_height - 51 - 41 - 90;
+            $(".layui-table-body").css("height", ""+table_height+"px");
+            $(".layui-table-main").css("height", ""+table_height+"px");
+        });
+    });
+</script>

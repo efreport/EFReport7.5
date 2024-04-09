@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link rel="stylesheet" href="../lib/layui-v2.7.6/css/layui.css">
+    <link rel="stylesheet" href="../js/zTree/css/zTreeStyle.css" type="text/css">
+    <style>
+        #un a {
+            display: block;
+            color: #333;
+            transition: all .3s;
+            margin: 5px 5px;
+            border-bottom: 1px solid #D5D5D5
+        }
+
+        #un a:hover {
+            background: #CCCCCC;
+        }
+
+        #hypertype p:hover {
+            background: #CCCCCC;
+            cursor: pointer;
+        }
+
+        .cka {
+            background: #CCCCCC
+        }
+
+        table td {
+            line-height: 25px;
+            padding-right: 5px;
+        }
+
+        #tempName p {
+            display: block;
+            color: #333;
+            transition: all .3s;
+            margin: 5px 5px;
+            border-bottom: 1px solid #D5D5D5
+        }
+
+        #tempName p:hover {
+            background: #CCCCCC;
+            cursor: pointer;
+        }
+
+        #mobileTempName p {
+            display: block;
+            color: #333;
+            transition: all .3s;
+            margin: 5px 5px;
+            border-bottom: 1px solid #D5D5D5
+        }
+
+        #mobileTempName p:hover {
+            background: #CCCCCC;
+            cursor: pointer;
+        }
+
+        img:hover {
+            background-color: #D5D5D5;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        table td {
+            height: 28px;
+            vertical-align: middle;
+        }
+
+        td input[type="text"] {
+            padding: 0;
+            height: 23px;
+            border: 1px solid #ccc;
+        }
+
+        td select {
+            height: 25px;
+            border: 1px solid #ccc;
+        }
+
+        td select:hover {
+            box-shadow: 0px 0px 1px #44B4FF;
+        }
+
+        td input:hover {
+            box-shadow: 0px 0px 1px #44B4FF;
+        }
+
+        textarea:hover {
+            box-shadow: 0px 0px 1px #44B4FF;
+        }
+
+        .search {
+            height: 30px;
+            border: 0px;
+            padding-left: 5%;
+            position: relative;
+        }
+
+        #templateName {
+            background-color: #F2F3F5;
+            border-radius: 4px 4px 4px 4px;
+            height: 90%;
+            width: 90%;
+            display: inline-block;
+            margin: 2px;
+        }
+
+        #mobileTemplateName {
+            background-color: #F2F3F5;
+            border-radius: 4px 4px 4px 4px;
+            height: 90%;
+            width: 90%;
+            display: inline-block;
+            margin: 2px;
+        }
+
+        #menuName {
+            background-color: #F2F3F5;
+            border-radius: 4px 4px 4px 4px;
+            height: 90%;
+            width: 90%;
+            display: inline-block;
+            margin: 2px;
+        }
+
+        #mobileMenuName {
+            background-color: #F2F3F5;
+            border-radius: 4px 4px 4px 4px;
+            height: 90%;
+            width: 90%;
+            display: inline-block;
+            margin: 2px;
+        }
+
+        .searchImg {
+            position: absolute;
+            right: 10%;
+            top: 30%;
+        }
+
+        #tempName::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        #tempName::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+            background: #d5d5d5;
+        }
+
+        #mobileTempName::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        #mobileTempName::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+            background: #d5d5d5;
+        }
+
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../js/zTree/js/jquery.ztree.all.min.js"></script>
+    <script type="text/javascript" src="../js/zTree/js/jquery.ztree.exhide.min.js"></script>
+    <script type="text/javascript" src="../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+    <script src="../js/common.js" charset="utf-8"></script>
+
+</head>
+<body style="padding: 5px;height: 450px">
+
+    <div class="layui-tab" lay-filter="test">
+        <ul class="layui-tab-title">
+          <li class="layui-this" lay-id="11">PC端设置</li>
+          <li lay-id="22">手机端设置</li>
+        </ul>
+        <div class="layui-tab-content">
+          <div class="layui-tab-item layui-show">
+            <!--选择 模板 名称-->
+            <div style="display: flex;">
+                <div id="tempdiv" style="width:50%;height:370px;">
+                    <div class="search">
+                        <input type="text" id="templateName" placeholder="模板名称" autocomplete="off" class="layui-input">
+                        <input type="text" id="templateId" style="display: none;">
+                        <img src="../images/design/searchTemplate.png" class="searchImg">
+                    </div>
+                    <ul id="tempName" class="ztree" style="width:95%;height:340px;white-space: nowrap;overflow: auto;">
+                    </ul>
+                </div>
+                <div id="menuDiv" style="width:50%;height:370px;">
+                    <div class="search">
+                        <input type="text" id="menuName" placeholder="模板名称" autocomplete="off" class="layui-input">
+                        <input type="text" id="menuId" style="display: none;">
+                        <img src="../images/design/searchTemplate.png" class="searchImg">
+                    </div>
+                    <ul id="tempType" class="ztree" style="width:95%;height:340px;white-space: nowrap;overflow: auto;">
+                    </ul>
+                </div>
+            </div>
+
+
+          </div>
+          <div class="layui-tab-item">
+
+
+            <!--选择 模板 名称-->
+            <div style="display: flex;">
+                <div id="tempdiv2" style="width:50%;height:370px;">
+                    <div class="search">
+                        <input type="text" id="mobileTemplateName" placeholder="模板名称" autocomplete="off" class="layui-input">
+                        <input type="text" id="mobileTemplateId" style="display: none;">
+                        <img src="../images/design/searchTemplate.png" class="searchImg">
+                    </div>
+                    <ul id="mobileTempName" class="ztree" style="width:95%;height:340px;white-space: nowrap;overflow: auto;">
+                    </ul>
+                </div>
+                <div id="menuDiv2" style="width:50%;height:370px;">
+                    <div class="search">
+                        <input type="text" id="mobileMenuName" placeholder="模板名称" autocomplete="off" class="layui-input">
+                        <input type="text" id="mobileMenuId" style="display: none;">
+                        <img src="../images/design/searchTemplate.png" class="searchImg">
+                    </div>
+                    <ul id="mobileTempType" class="ztree" style="width:95%;height:340px;white-space: nowrap;overflow: auto;">
+                    </ul>
+                </div>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+<div id="AddTempParentNodeDiv" style="text-align: center;display: none;">
+    <input type="text" style="margin-top: 10%; height: 28px;line-height: 28px;">
+</div>
+
+</body>
+<script type="text/javascript">
+    let server_base_url = window.sessionStorage.getItem("ef_server_base_url");
+    var token = window.sessionStorage.getItem("cur_token");
+    var ip = window.sessionStorage.getItem("ef_server_base_url");
+    // var url = ip + '/designSys/getCurUserTemplateZTree?token=' + token;
+    var url = ip + "/template/getTemplateNewTreeByUser?token=" + token;
+    var treeObj;
+    var checkedTemplate = [];
+    var checkedId = [];
+
+    let curNode;
+
+    var element;
+    var cur_lay_tab_id = 11;
+
+    var mobileTreeObj;  // 手机端的树
+    var mobileCheckedTemplate = [];
+    var mobileCheckedId = [];
+    let mobileCurNode;
+    var mobileUrl = ip + "/template/getMobileTemplateNewTreeByUser?clientType=10&token=" + token;
+
+
+    layui.use(['layer','element'], function () {
+        var layer = layui.layer;
+        element = layui.element;
+
+        //Hash地址的定位
+        cur_lay_tab_id = 11;
+        var layid = location.hash.replace(/^#test=/, '');
+        element.tabChange('test', layid);
+        
+        element.on('tab(test)', function(elem){
+            location.hash = 'test='+ $(this).attr('lay-id');
+            cur_lay_tab_id = parseInt($(this).attr('lay-id'));
+        });
+
+    });
+
+    function showParent(treeNode, nodes, showList) { //递归显示所有父节点
+        showList.push(treeNode.id);
+        var parentNode = treeNode.getParentNode();
+        if (parentNode == null) { //如果是根节点
+            return;
+        } else {
+            if ($.inArray(parentNode.id, showList) != -1) {  //如果父节点已经显示
+                treeObj.showNode(treeNode);//显示当前节点
+            } else {
+                showList.push(parentNode.id); //将父节点添加到显示结点列表
+                treeObj.showNode(parentNode); //显示父节点
+                treeObj.hideNodes(parentNode.children);//隐藏父节点的所有子节点
+                treeObj.showNode(treeNode);//显示当前节点
+                showParent(parentNode, null, showList); //遍历父亲结点
+            }
+
+        }
+    }
+
+    function initTemp(url, expand) {
+        $.ajax({
+            url: url,
+            type: 'get',
+            contentType: "application/json;charset=UTF-8",
+            success: function (data) {
+                data = data.menuInfo[0].child;
+                var setting = {
+                    view: {
+                        showLine: false,
+                        showIcon: false
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true,
+                            idKey: "id",
+                            pIdKey: "pid"
+                        }
+                        , key: {
+                            isParent: 'isParent'
+                        }
+                    },
+                    check: {
+                        checkType:'checkbox',
+                        enable: true
+                    },
+                    callback: {
+                        onClick: function (event, id, node) {
+
+                        },
+                        onCheck: function(event , id ,node){
+                            let checked = node.checked; //是否选中
+                            let templateId = node.id;
+                            let templateName = node.name;
+                            if(checked){ //选中
+                                checkedTemplate.push(templateName);
+                                checkedId.push(templateId);
+                                let str = ''
+                                $.each(checkedTemplate,function (i,e){
+                                    if(i == checkedTemplate.length - 1){
+                                        str += e;
+                                    }else{
+                                        str += (e + ',');
+                                    }
+                                })
+                                $('#templateName').val(str);
+                            }else{
+                                $.each(checkedTemplate , function(i,e){
+                                  if(e == templateName){
+                                      let index = $.inArray(templateName, checkedTemplate); //根据元素值查找下标，不存在返回-1
+                                      checkedTemplate.splice(index,1);//根据下标删除一个元素   1表示删除一个元素
+                                  }
+                                })
+                                let str = ''
+                                $.each(checkedTemplate,function (i,e){
+                                    if(i == checkedTemplate.length - 1){
+                                        str += e;
+                                    }else{
+                                        str += (e + ',');
+                                    }
+                                })
+                                $('#templateName').val(str);
+                                $.each(checkedId , function(i,e){
+                                    if(e == templateId){
+                                        let index = $.inArray(templateId, checkedId); //根据元素值查找下标，不存在返回-1
+                                        checkedId.splice(index,1);//根据下标删除一个元素   1表示删除一个元素
+                                    }
+                                })
+                            }
+                        }
+                    }
+                };
+                treeObj = $.fn.zTree.init($("#tempName"), setting, data);
+                treeObj.expandAll(true);
+
+            }
+        });
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////20230218//////////add
+    function showRemoveBtn(treeId, treeNode) {
+            if(treeNode.isRoot != undefined){ //根目录无法删除
+                if(treeNode.isRoot){
+                    return false;
+                }else{
+                    return true;
+                }
+            }else{
+                return treeNode.isParent;
+            }
+        }
+
+        function showRenameBtn(treeId, treeNode) {
+            if(treeNode.isRoot != undefined){ //根目录无法重命名
+                if(treeNode.isRoot){
+                    return false;
+                }else{
+                    return true;
+                }
+            }else{
+                return treeNode.isParent && !treeNode.isSubDesign;
+            }
+        }
+
+        function showIconForTree(treeId, treeNode) {
+            return !treeNode.isParent;
+        }
+
+        //禁止拖拽
+        function beforeDrag(id, node){
+            return false;
+        }
+
+        function addHoverDom(treeId, treeNode) {
+            if (treeNode.isParent && !treeNode.isSubDesign) {
+                var sObj = $("#" + treeNode.tId + "_span");
+                if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
+                var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+                    + "' title='新增目录' onfocus='this.blur();'></span>";
+                sObj.after(addStr);
+                var btn = $("#addBtn_" + treeNode.tId);
+                if (btn)
+                    btn.bind("click", function () {
+                        var index = layer.open({
+                            type: 1,
+                            area: ['250px', '150px'],
+                            title: ['新增目录', 'height:30px;line-height:30px'],
+                            closeBtn: 0,
+                            content: $('#AddTempParentNodeDiv')
+                            , btn: ['确定', '关闭']
+                            , btnAlign: 'c',
+                            yes: function (index, layero) {
+                                var v = $('#AddTempParentNodeDiv').children(0).val();
+                                if ('' != v.trim()) {
+                                    var b = true;
+                                    
+                                    let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+                                    if (!myReg.test(v)) {
+                                        efalert(layer, "名称只支持字母数字“_”和中文", 2);
+                                        b = false;
+                                        return false;
+                                    }
+                                    if (b) {
+                                        let tempdirurl = server_base_url + "/userdir/adduserdir?token=" + token;
+                                        $.ajax({
+                                            url: tempdirurl,
+                                            type: 'post',
+                                            data: { tempDirName: v.trim(), pid: treeNode.id },
+                                            success: function (res) {
+                                                if (res.state === "success") {
+                                                    layer.msg(res.message);
+                                                    layer.close(index);
+                                                    initMenu();
+                                                } else {
+                                                    layer.msg(res.message);
+                                                }
+                                                
+                                            },
+                                            error: function () {
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    efalert(layer, "名称不能为空", 2);
+                                }
+                            },
+                            success: function (layero, index) {
+                                $('#AddTempParentNodeDiv').children(0).val("");
+                            }
+                        });
+                        return false;
+
+                    });
+            } else {
+                return false;
+            }
+        };
+
+        function removeHoverDom(treeId, treeNode) {
+            $("#addBtn_" + treeNode.tId).unbind().remove();
+            $("#editBtn_" + treeNode.tId).unbind().remove();
+        };
+
+        /////////////////////////////////////////////////////////////////////////////////////20230218//////////add
+
+    function initMenu() {
+        let url1 =  ip + '/userdir/getuserdirTree?token=' + token;
+        $.ajax({
+            url: url1,
+            type: 'get',
+            contentType: "application/json;charset=UTF-8",
+            success: function (data) {
+                let setting = {
+                    view: {
+                        addHoverDom: addHoverDom,
+                        removeHoverDom: removeHoverDom,
+                        showIcon: showIconForTree,
+                        showLine: false
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true,
+                            idKey: "id",
+                            pIdKey: "pId",
+                            rootPId: 0
+                        }
+                    },
+                    edit: {
+                        enable: true,
+                        removeTitle: "删除目录",
+                        renameTitle: "重命名目录",
+                        showRemoveBtn: showRemoveBtn,
+                        showRenameBtn: showRenameBtn
+                    },
+                    callback: {
+                        onClick: function (event, id, node) { // 点击左侧模板菜单时，加载模板
+                            if (node.isParent == false) { //模板结点
+                                let id = node.id;
+                                let name = node.name;
+                                curNode = node;
+                            } else {
+                                curNode = node;
+                            }
+                            $('#menuName').val(node.name);
+                            $('#menuId').val(node.id);
+                        },
+                        beforeRemove: function (treeId, treeNode) { //删除结点前触发事件
+                            let children = treeNode.children;
+                            if (children != undefined && children.length > 0) {
+                                layer.msg('无法删除,该模板目录下有内容');
+                                return false;
+                            } else {
+                                let id = treeNode.id;
+                                if(treeNode.isParent){ //删除目录
+                                    layer.confirm('确定删除模板目录?', {icon: 3, title:'提示'}, function(index){
+                                        let deleteurl = server_base_url+"/userdir/delbyid?token="+token;
+                                        $.ajax({
+                                            url: deleteurl,
+                                            type: 'post',
+                                            data: { id: id },
+                                            success: function (res) {
+                                                if (res.state = 'success') {
+                                                    
+                                                    layer.msg(res.message);
+                                                    layer.closeAll();
+                                                    // 重新刷新页面tree  ↓
+                                                    initMenu();
+                                                    return true;
+                                                } else {
+                                                    layer.msg(res.message);
+                                                    return false;
+                                                }
+                                            }
+                                        })
+                                    });
+                                }
+                            }
+
+                        },
+                        beforeRename: function (event, id, node) { //重命名前触发事件
+                            curNode = node;
+                            return true;
+                        },
+                        onRemove: function (event, treeId, treeNode) { //删除结点事件
+
+                        },
+                        onRename: function (event, treeId, treeNode) { //重命名事件
+                            //未修改名称
+                            if(curNode.name == treeNode.name){
+                                return;
+                            }
+
+                            let id = treeNode.id;
+
+                            let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+                            if (!myReg.test(treeNode.name)) {
+                                layer.alert("命名不符合规范!");
+                                initMenu();
+                                return false;
+                            } else {
+                                let renameurl=server_base_url+"/userdir/updateuserdir?token="+token;
+                                $.ajax({
+                                    url: renameurl,
+                                    type: 'post',
+                                    data: { id: id, tempDirName: treeNode.name,pid: treeNode.pId },
+                                    success: function (res) {
+                                        if (res.state = 'success') {
+                                            layer.msg(res.message);
+                                        } else {
+                                            layer.msg(res.message);
+                                        }
+                                        // 重新刷新页面tree  ↓
+                                        initMenu();
+                                    }
+                                })
+
+                            }
+                        },
+                        beforeDrag: beforeDrag
+                    }
+                };
+                ///////////////////////////-------------------
+                
+                let treeObj2 = $.fn.zTree.init($("#tempType"), setting, data.data);
+                treeObj2.expandAll(true);
+
+            }
+        });
+    }
+
+    function init() {
+        initTemp(url);
+        initMenu();
+        initMobileTemp(mobileUrl);
+        initMenu_mobile();
+    }
+
+    function getDeleteIds() {
+        if (cur_lay_tab_id === 11) {
+            if(checkedId.length == 0){
+                layer.msg('请选择模板');
+                return;
+            }
+            if($('#menuId').val() == ''){
+                layer.msg('请选择目录');
+                return;
+            }
+            let result = {}
+            result.tabid = 11;
+            result.checkedId = checkedId;
+            result.menuId = $('#menuId').val();
+            return result;
+        } else {
+            if(mobileCheckedId.length == 0){
+                layer.msg('请选择模板');
+                return;
+            }
+            if($('#mobileMenuId').val() == ''){
+                layer.msg('请选择目录');
+                return;
+            }
+            let result = {}
+            result.tabid = 22;
+            result.checkedId = mobileCheckedId;
+            result.menuId = $('#mobileMenuId').val();
+            return result;
+        }
+    }
+
+    function chooseAll(flag){
+
+        if (cur_lay_tab_id == 11) {
+            if(flag == 1){
+                treeObj.checkAllNodes(true);
+                let nodes = treeObj.getCheckedNodes(true); //获取所有选中的结点
+                checkedId = [];
+                $.each(nodes , function (i,e){
+                    checkedId.push(e.id);
+                })
+            }else{
+                treeObj.checkAllNodes(false);
+                checkedId = [];
+            }
+        } else {
+            if(flag == 1){
+                mobileTreeObj.checkAllNodes(true);
+                let nodes = mobileTreeObj.getCheckedNodes(true); //获取所有选中的结点
+                mobileCheckedId = [];
+                $.each(nodes , function (i,e){
+                    mobileCheckedId.push(e.id);
+                })
+            }else{
+                mobileTreeObj.checkAllNodes(false);
+                mobileCheckedId = [];
+            }
+            
+
+        }
+
+        
+    }
+
+    $(document).ready(function () {
+        init();
+        treeObj = $.fn.zTree.getZTreeObj("tree");
+
+        $("#templateName").keyup(function (e) {
+            var code = e.keyCode;
+            if (code == 13) {
+                var tempName = $("#templateName").val();
+                if (treeObj) {
+                    if (tempName == "") { //清空搜索框时
+                        var allNode = treeObj.getNodes();
+                        var nodes = treeObj.getNodesByParam("isHidden", true);
+                        treeObj.showNodes(nodes);
+                        //treeObj.showNodes(allNode);
+                        treeObj.expandAll(true);
+                    } else {
+                        var nodes = treeObj.getNodesByParamFuzzy("name", tempName, null); //在树中模糊查询
+                        if (nodes.length == 0) {
+                            $("#tempName").blur();
+                            layer.msg('目录不存在!', {
+                                time: 1000, //1s后自动关闭
+                                icon: 2
+                            });
+                        } else {
+                            var allNode = treeObj.getNodes();
+                            treeObj.hideNodes(allNode);
+                            var showList = new Array();
+                            var nodeList = new Array(); //当所有搜索的结点都不是末级结点时，需要重新显示所有数结点
+                            $.each(nodes, function (index, element) {
+                                treeObj.showNode(element);
+                                showParent(element, nodes, showList);
+                            });
+                            if (nodeList.length == nodes.length) {
+                                layer.alert('模板不存在');
+                                var allNode = treeObj.getNodes();
+                                treeObj.showNodes(allNode);
+                                treeObj.expandAll(false);
+                            } else {
+                                treeObj.expandAll(true);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+// -------------------------------------------下面我们来写 手机端的树结构代码-------------------------------
+
+function showMobileParent(treeNode, nodes, showList) { //递归显示所有父节点
+    showList.push(treeNode.id);
+    var parentNode = treeNode.getParentNode();
+    if (parentNode == null) { //如果是根节点
+        return;
+    } else {
+        if ($.inArray(parentNode.id, showList) != -1) {  //如果父节点已经显示
+            mobileTreeObj.showNode(treeNode);//显示当前节点
+        } else {
+            showList.push(parentNode.id); //将父节点添加到显示结点列表
+            mobileTreeObj.showNode(parentNode); //显示父节点
+            mobileTreeObj.hideNodes(parentNode.children);//隐藏父节点的所有子节点
+            mobileTreeObj.showNode(treeNode);//显示当前节点
+            showMobileParent(parentNode, null, showList); //遍历父亲结点
+        }
+
+    }
+}
+
+function initMobileTemp(url, expand) {
+    $.ajax({
+        url: url,
+        type: 'get',
+        contentType: "application/json;charset=UTF-8",
+        success: function (data) {
+            data = data.menuInfo[0].child;
+            var setting = {
+                view: {
+                    showLine: false,
+                    showIcon: false
+                },
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pid"
+                    }
+                    , key: {
+                        isParent: 'isParent'
+                    }
+                },
+                check: {
+                    checkType:'checkbox',
+                    enable: true
+                },
+                callback: {
+                    onClick: function (event, id, node) {
+
+                    },
+                    onCheck: function(event , id ,node){
+                        let checked = node.checked; //是否选中
+                        let templateId = node.id;
+                        let templateName = node.name;
+                        if(checked){ //选中
+                            mobileCheckedTemplate.push(templateName);
+                            mobileCheckedId.push(templateId);
+                            let str = ''
+                            $.each(mobileCheckedTemplate,function (i,e){
+                                if(i == mobileCheckedTemplate.length - 1){
+                                    str += e;
+                                }else{
+                                    str += (e + ',');
+                                }
+                            })
+                            $('#mobileTemplateName').val(str);
+                        }else{
+                            $.each(mobileCheckedTemplate , function(i,e){
+                                if(e == templateName){
+                                    let index = $.inArray(templateName, mobileCheckedTemplate); //根据元素值查找下标，不存在返回-1
+                                    mobileCheckedTemplate.splice(index,1);//根据下标删除一个元素   1表示删除一个元素
+                                }
+                            })
+                            let str = ''
+                            $.each(mobileCheckedTemplate,function (i,e){
+                                if(i == mobileCheckedTemplate.length - 1){
+                                    str += e;
+                                }else{
+                                    str += (e + ',');
+                                }
+                            })
+                            $('#mobileTemplateName').val(str);
+                            $.each(mobileCheckedId , function(i,e){
+                                if(e == templateId){
+                                    let index = $.inArray(templateId, checkedId); //根据元素值查找下标，不存在返回-1
+                                    mobileCheckedId.splice(index,1);//根据下标删除一个元素   1表示删除一个元素
+                                }
+                            })
+                        }
+                    }
+                }
+            };
+            mobileTreeObj = $.fn.zTree.init($("#mobileTempName"), setting, data);
+            mobileTreeObj.expandAll(true);
+
+        }
+    });
+}
+
+
+ /////////////////////////////////////////////////////////////////////////////////////20230218//////////add
+ function showRemoveBtn_mobile(treeId, treeNode) {
+    if(treeNode.isRoot != undefined){ //根目录无法删除
+        if(treeNode.isRoot){
+            return false;
+        }else{
+            return true;
+        }
+    }else{
+        return treeNode.isParent;
+    }
+}
+
+function showRenameBtn_mobile(treeId, treeNode) {
+    if(treeNode.isRoot != undefined){ //根目录无法重命名
+        if(treeNode.isRoot){
+            return false;
+        }else{
+            return true;
+        }
+    }else{
+        return treeNode.isParent && !treeNode.isSubDesign;
+    }
+}
+
+function showIconForTree_mobile(treeId, treeNode) {
+    return !treeNode.isParent;
+}
+
+//禁止拖拽
+function beforeDrag_mobile(id, node){
+    return false;
+}
+
+function addHoverDom_mobile(treeId, treeNode) {
+    if (treeNode.isParent && !treeNode.isSubDesign) {
+        var sObj = $("#" + treeNode.tId + "_span");
+        if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
+        var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+            + "' title='新增目录' onfocus='this.blur();'></span>";
+        sObj.after(addStr);
+        var btn = $("#addBtn_" + treeNode.tId);
+        if (btn)
+            btn.bind("click", function () {
+                var index = layer.open({
+                    type: 1,
+                    area: ['250px', '150px'],
+                    title: ['新增目录', 'height:30px;line-height:30px'],
+                    closeBtn: 0,
+                    content: $('#AddTempParentNodeDiv')
+                    , btn: ['确定', '关闭']
+                    , btnAlign: 'c',
+                    yes: function (index, layero) {
+                        var v = $('#AddTempParentNodeDiv').children(0).val();
+                        if ('' != v.trim()) {
+                            var b = true;
+                            
+                            let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+                            if (!myReg.test(v)) {
+                                efalert(layer, "名称只支持字母数字“_”和中文", 2);
+                                b = false;
+                                return false;
+                            }
+                            if (b) {
+                                let tempdirurl = server_base_url + "/mobileuserdir/adduserdir?token=" + token;
+                                $.ajax({
+                                    url: tempdirurl,
+                                    type: 'post',
+                                    data: { tempDirName: v.trim(), pid: treeNode.id },
+                                    success: function (res) {
+                                        if (res.state === "success") {
+                                            layer.msg(res.message);
+                                            layer.close(index);
+                                            // 然后刷新左边菜单栏...先省略...
+                                            // 重新刷新页面tree  ↓
+                                            initMenu_mobile();
+
+                                        } else {
+                                            layer.msg(res.message);
+                                        }
+                                        
+                                    },
+                                    error: function () {
+                                    }
+                                });
+                            }
+                        } else {
+                            efalert(layer, "名称不能为空", 2);
+                        }
+                    },
+                    success: function (layero, index) {
+                        $('#AddTempParentNodeDiv').children(0).val("");
+                    }
+                });
+                return false;
+
+            });
+    } else {
+        return false;
+    }
+};
+
+function removeHoverDom_mobile(treeId, treeNode) {
+    $("#addBtn_" + treeNode.tId).unbind().remove();
+    $("#editBtn_" + treeNode.tId).unbind().remove();
+};
+
+        /////////////////////////////////////////////////////////////////////////////////////20230218//////////add
+
+    function initMenu_mobile() {
+        let url1 =  ip + '/mobileuserdir/getuserdirTree?token=' + token;
+        $.ajax({
+            url: url1,
+            type: 'get',
+            contentType: "application/json;charset=UTF-8",
+            success: function (data) {
+                let setting = {
+                    view: {
+                        addHoverDom: addHoverDom_mobile,
+                        removeHoverDom: removeHoverDom_mobile,
+                        showIcon: showIconForTree_mobile,
+                        showLine: false
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true,
+                            idKey: "id",
+                            pIdKey: "pId",
+                            rootPId: 0
+                        }
+                    },
+                    edit: {
+                        enable: true,
+                        removeTitle: "删除目录",
+                        renameTitle: "重命名目录",
+                        showRemoveBtn: showRemoveBtn_mobile,
+                        showRenameBtn: showRenameBtn_mobile
+                    },
+                    callback: {
+                        onClick: function (event, id, node) { // 点击左侧模板菜单时，加载模板
+                            if (node.isParent == false) { //模板结点
+                                let id = node.id;
+                                let name = node.name;
+                                mobileCurNode = node;
+                            } else {
+                                mobileCurNode = node;
+                            }
+
+                            $('#mobileMenuName').val(node.name);
+                            $('#mobileMenuId').val(node.id);
+                        },
+                        beforeRemove: function (treeId, treeNode) { //删除结点前触发事件
+                            let children = treeNode.children;
+                            if (children != undefined && children.length > 0) {
+                                layer.msg('无法删除,该模板目录下有内容');
+                                return false;
+                            } else {
+                                let id = treeNode.id;
+                                if(treeNode.isParent){ //删除目录
+                                    layer.confirm('确定删除模板目录?', {icon: 3, title:'提示'}, function(index){
+                                        let deleteurl = server_base_url+"/mobileuserdir/delbyid?token="+token;
+                                        $.ajax({
+                                            url: deleteurl,
+                                            type: 'post',
+                                            data: { id: id },
+                                            success: function (res) {
+                                                if (res.state = 'success') {
+                                                    
+                                                    layer.msg(res.message);
+                                                    layer.closeAll();
+                                                    // 重新刷新页面tree  ↓
+                                                    initMenu_mobile();
+                                                    return true;
+                                                } else {
+                                                    layer.msg(res.message);
+                                                    return false;
+                                                }
+                                            }
+                                        })
+                                    });
+                                }
+                            }
+
+                        },
+                        beforeRename: function (event, id, node) { //重命名前触发事件
+                            mobileCurNode = node;
+                            return true;
+                        },
+                        onRemove: function (event, treeId, treeNode) { //删除结点事件
+
+                        },
+                        onRename: function (event, treeId, treeNode) { //重命名事件
+                            //未修改名称
+                            if(mobileCurNode.name == treeNode.name){
+                                return;
+                            }
+
+                            let id = treeNode.id;
+
+                            let myReg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+                            if (!myReg.test(treeNode.name)) {
+                                layer.alert("命名不符合规范!");
+                                initMenu_mobile();
+                                return false;
+                            } else {
+                                let renameurl=server_base_url+"/mobileuserdir/updateuserdir?token="+token;
+                                $.ajax({
+                                    url: renameurl,
+                                    type: 'post',
+                                    data: { id: id, tempDirName: treeNode.name,pid: treeNode.pId },
+                                    success: function (res) {
+                                        if (res.state = 'success') {
+                                            layer.msg(res.message);
+                                        } else {
+                                            layer.msg(res.message);
+                                        }
+                                        
+                                        // 重新刷新页面tree  ↓
+                                        initMenu_mobile();
+                                    }
+                                })
+
+                            }
+                        },
+                        beforeDrag: beforeDrag
+                    }
+                };
+                let treeObj2_mobile = $.fn.zTree.init($("#mobileTempType"), setting, data.data);
+                treeObj2_mobile.expandAll(true);
+
+            }
+        });
+    }
+
+
+
+
+</script>
+</html>
+<style>
+    /**
+    自定义模板图标
+    */
+    #tempType li span.button.template_ico_docu {
+        margin-right: 2px;
+        background: url(/images/design/tree/template.png) no-repeat scroll 0 0 transparent;
+        vertical-align: top;
+        background-size: 100% 100%;
+    }
+
+    #tempType li a.curSelectedNode {
+        height: 21px;
+    }
+
+    #tempType li span.button.add {
+        width:18px;
+        height:18px;
+        background-image: url("../images/design/ds/addDs.png");
+        background-size:100% 100%;
+        vertical-align: middle;
+        *vertical-align: middle
+    }
+
+    #tempType li span.button.edit {
+        width:18px;
+        height:18px;
+        background-image: url("../images/design/ds/editDs.png");
+        background-size:100% 100%;
+        vertical-align: middle;
+        *vertical-align: middle
+    }
+
+    #tempType li span.button.remove {
+        width:18px;
+        height:18px;
+        background-image: url("../images/design/ds/deleteDs.png");
+        background-size:100% 100%;
+        vertical-align: middle;
+        *vertical-align: middle
+    }
+
+    /**ztree字体**/
+    #tempType li a {
+        padding: 1px 3px 0 0;
+        margin: 0;
+        cursor: pointer;
+        height: 17px;
+        color: #4E5969;
+        background-color: transparent;
+        text-decoration: none;
+        vertical-align: top;
+        display: inline-block;
+    }
+    #tempType li span{
+        vertical-align: top;
+    }
+
+    #tempType li span.button {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+
+    /**
+    自定义模板图标
+    */
+    #mobileTempType li span.button.template_ico_docu {
+        margin-right: 2px;
+        background: url(/images/design/tree/template.png) no-repeat scroll 0 0 transparent;
+        vertical-align: top;
+        background-size: 100% 100%;
+    }
+
+    #mobileTempType li a.curSelectedNode {
+        height: 21px;
+    }
+
+    #mobileTempType li span.button.add {
+        width:18px;
+        height:18px;
+        background-image: url("../images/design/ds/addDs.png");
+        background-size:100% 100%;
+        vertical-align: middle;
+        *vertical-align: middle
+    }
+
+    #mobileTempType li span.button.edit {
+        width:18px;
+        height:18px;
+        background-image: url("../images/design/ds/editDs.png");
+        background-size:100% 100%;
+        vertical-align: middle;
+        *vertical-align: middle
+    }
+
+    #mobileTempType li span.button.remove {
+        width:18px;
+        height:18px;
+        background-image: url("../images/design/ds/deleteDs.png");
+        background-size:100% 100%;
+        vertical-align: middle;
+        *vertical-align: middle
+    }
+
+    /**ztree字体**/
+    #mobileTempType li a {
+        padding: 1px 3px 0 0;
+        margin: 0;
+        cursor: pointer;
+        height: 17px;
+        color: #4E5969;
+        background-color: transparent;
+        text-decoration: none;
+        vertical-align: top;
+        display: inline-block;
+    }
+    #mobileTempType li span{
+        vertical-align: top;
+    }
+
+    #mobileTempType li span.button {
+        width: 16px !important;
+        height: 16px !important;
+    }
+</style>

@@ -1,0 +1,78 @@
+server:
+  port: 8099
+
+spring:
+  datasource:
+    url: jdbc:h2:D:/EFReport7.5/db/activiti;AUTO_SERVER=TRUE
+    username: activiti
+    password: acti
+    driver-class-name: org.h2.Driver
+  thymeleaf:
+    cache: false
+      #文件大小 MB必须大写
+      #maxFileSize 是单个文件大小
+      #maxRequestSize是设置总上传的数据大小
+  servlet:
+      multipart:
+        enabled: true
+        max-file-size: 100MB
+        max-request-size: 100MB
+  jpa:
+      hibernate:
+        ddl-auto: update
+
+
+mybatis-plus:
+  mapper-locations: classpath:/com/efreport/mapper/*.xml
+
+#内核配置
+engine-config:
+  #导出进程超时时间（分钟）
+  exportProcessTimeout: 5
+  #报表引擎所在路径
+  enginePath: WEB-INF/classes
+  #导出文件所在路径
+  exportPath: /export
+  #插件JS所在路径
+  jsResourcePath: /plugin
+  #conn.json文件所在路径
+  connPath: WEB-INF/classes/conn
+  #plateform.json所在路径
+  plateformPath: WEB-INF/classes
+  #是否显示测试选项
+  showTestTool: false
+
+#系统配置
+System:
+  #模板文件所在路径
+  celPath: WEB-INF/classes/cel
+  #自定义插件所在目录
+  jarPath: WEB-INF/classes/lib/plugin
+  #自定义数据库插件存放目录
+  dbPath: WEB-INF/classes/extradbengines
+  #缓存文件所在目录
+  cachePath: /cache
+
+logging:
+  level:
+    com:
+      efreport:
+        mapper: debug
+
+third:
+  #第三方token超时时间（秒）
+  timeOut: 2000000
+
+config:
+    # localId = 1时，默认为主机
+    localId: 1
+    servers:
+           - id: 1
+             ip: http://127.0.0.1:8099/EFRS
+             outerIp: http://127.0.0.1:8099/EFRS
+       # - id: 2
+        #  ip: http://127.0.0.1:8099/EFRS
+
+
+#是否生产环境
+production: true

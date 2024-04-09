@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../js/css/layui.css" rel="stylesheet">
+    <style>
+
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #un a {
+            display: block;
+            padding-left: 2px;
+            line-height: 30px;
+            max-height: 30px;
+            transition: all .3s;
+        }
+
+        #us a {
+            display: block;
+            padding-left: 2px;
+            line-height: 30px;
+            max-height: 30px;
+            transition: all .3s;
+        }
+
+        #un a:hover {
+            background: #CCCCCC
+        }
+
+        #us a:hover {
+            background: #CCCCCC
+        }
+
+        .cka {
+            background: #0094FF;
+            color: white;
+        }
+
+        input {
+            padding: 0;
+            height: 23px;
+            border: 1px solid #ccc;
+        }
+
+        input:hover {
+            box-shadow: 0px 0px 1px #44B4FF;
+        }
+
+        .label {
+            color: #1D2129;
+            height: 100%;
+            width: 45%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        .label1 {
+            color: #1D2129;
+            height: 100%;
+            width: 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        .eInput {
+
+        }
+
+    </style>
+</head>
+<body>
+
+<div style="display: flex;height:70%;align-items: center; justify-content:center;position: relative;">
+    <div style="width: 45%;height: 100%;">
+        <div style="color:#1D2129;display: flex;height:10%;align-items: center;justify-content: center;font-size: 16px;">
+            可用子表单
+        </div>
+        <div style="width: 100%;height: 90%;position: relative;">
+            <img src="../../images/design/pages/toLeft.png"
+                 style="cursor:pointer;width:23px;height:36px;position: absolute;right:0;top:45%;" id="plus">
+            <div id="un"
+                 style="background-color:#F2F3F5 ;white-space: nowrap;overflow: auto;height: 99%;border: 1px solid #D5D5D5"></div>
+        </div>
+    </div>
+    <div style="width: 45%;height: 100%">
+        <div style="color:#1D2129;display: flex;height:10%;align-items: center;justify-content: center;font-size: 16px;">
+            链接子表单
+        </div>
+        <div style="width: 100%;height: 90%;position: relative;">
+            <img src="../../images/design/pages/toRight.png"
+                 style="cursor:pointer;width:24px;height:36px;position: absolute;left:0;top:45%;" id="add">
+            <div id="us"
+                 style="background-color:#F2F3F5 ;white-space: nowrap;overflow: auto;height: 99%;border: 1px solid #D5D5D5"></div>
+        </div>
+    </div>
+</div>
+
+<div style="height:4%;width: 99%;display: flex;"></div>
+<div style="height:5%;width: 100%;display: flex;align-items: center;justify-content: center;">
+    <div class="label1"></div>
+    <div class="label">
+        自动垂直滚动时间(毫秒)
+    </div>
+    <div class="label">
+        垂直滚动步长(像素)
+    </div>
+    <div class="label1"></div>
+</div>
+<div style="height:10%;width: 100%;display: flex;align-items: center;justify-content: center;">
+    <div class="label1"></div>
+    <div class="label">
+        <input type="text" id="intervalScrollV" maxlength="10" style="width: 80%;height:30px;background-color: #F2F3F5;"
+               onkeyup="checkInteger(this)">
+    </div>
+    <div class="label">
+        <input type="text" id="stepScrollV" maxlength="10" style="width: 80%;height:30px;background-color: #F2F3F5;"
+               onkeyup="checkInteger(this)">
+    </div>
+    <div class="label1"></div>
+</div>
+
+<div style="height:10%;width: 100%;display: flex;align-items: center;justify-content: center;">
+    <div class="label1"></div>
+    <div style="width:45%;display: flex;align-items: center;justify-content: center;">
+        <input type="checkbox" id="isShowSubReportScrollBar"
+               style="height:13px;margin-right: 10px;background-color: #3686FF;">
+        <div style="color:#1D2129;font-size:15px;display: flex;align-items: center;justify-content: center;">是否显示滚动条
+        </div>
+    </div>
+    <div style="width:45%;display: flex;align-items: center;justify-content: center;">
+        <input type="checkbox" id="isSubReportKeepHVRatio"
+               style="height:13px;margin-right: 10px;background-color: #3686FF;">
+        <div style="color:#1D2129;font-size:15px;display: flex;align-items: center;justify-content: center;">保持横纵比</div>
+    </div>
+    <div class="label1"></div>
+</div>
+
+</body>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/layui.js"></script>
+<script type="text/javascript">
+    //控制只能输入小数点后3位
+    function clearNoNum(obj) {
+        obj.value = obj.value.replace(/[^\d.]/g, "");  //清除除了“数字”和“.”以外的字符
+        obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
+        obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+        obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d).*$/, '$1$2.$3');//只能输入3个小数
+        if (obj.value.indexOf(".") < 0 && obj.value != "") {
+            //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+            obj.value = parseFloat(obj.value);
+        }
+    }
+
+    //控制只能输入整数
+    function checkInteger(obj) {
+        //如果输入的不是整数，自动归0
+        if (!(/^(\+|-)?\d+$/.test(obj.value)) || obj.value < 0) {
+            obj.value = '';
+        }
+
+        if (obj.value.indexOf(".") < 0 && obj.value != "") {
+            //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+            obj.value = parseInt(obj.value);
+        }
+    }
+
+    function boundEvent() {
+        $("#add").click(function () {
+
+            $("#un a").each(function () {
+                if ($(this).hasClass('cka')) {
+                    if ($('#us').children().length > 0) {
+                        layer.msg('只能链接一个子表单');
+                    } else {
+                        $("#us").append("<a href='javascript:;'>" + $(this).text() + "</a>");
+                        $(this).remove();
+                        boundCk();
+                        return;
+                    }
+                }
+            });
+
+            $("#us a").each(function () {
+                if ($(this).hasClass('cka')) {
+
+                    $("#un").append("<a href='javascript:;'>" + $(this).text() + "</a>");
+                    $(this).remove();
+                    boundCk();
+                    return;
+
+                }
+            });
+
+        });
+        $("#plus").click(function () {
+
+            $("#un a").each(function () {
+                if ($(this).hasClass('cka')) {
+                    if ($('#us').children().length > 0) {
+                        layer.msg('只能链接一个子表单');
+                    } else {
+                        $("#us").append("<a href='javascript:;'>" + $(this).text() + "</a>");
+                        $(this).remove();
+                        boundCk();
+                        return;
+                    }
+
+                }
+            });
+
+            $("#us a").each(function () {
+                if ($(this).hasClass('cka')) {
+
+                    $("#un").append("<a href='javascript:;'>" + $(this).text() + "</a>");
+                    $(this).remove();
+                    boundCk();
+                    return;
+
+                }
+            });
+        });
+
+    }
+
+    function getPage() {
+        var usarr;
+        var a = $("#us").find('a').eq(0);
+        if (a != undefined) {
+            usarr = a.text();
+        }
+        var data = {
+            subReportSheetNames: usarr
+            , intervalScrollV: parseInt($("#intervalScrollV").val())
+            , stepScrollV: parseInt($("#stepScrollV").val())
+            , isShowSubReportScrollBar: $('#isShowSubReportScrollBar').prop('checked') //是否显示垂直滚动条
+            , isSubReportKeepHVRatio: $('#isSubReportKeepHVRatio').prop('checked') //是否居中
+        };
+        return data;
+    }
+
+    function init(json) {
+        if (json != '' && json != undefined) {
+            var obj = JSON.parse(json);
+            var unarr = obj.unusedSheetNames;
+            var subarr = obj.subReportSheetNames;
+            $("#intervalScrollV").val(obj.intervalScrollV);
+            $("#stepScrollV").val(obj.stepScrollV);
+            $('#isShowSubReportScrollBar').prop('checked', obj.isShowSubReportScrollBar);
+            $('#isSubReportKeepHVRatio').prop('checked', obj.isSubReportKeepHVRatio);
+            for (var i = 0; i < unarr.length; i++) {
+                $("#un").append("<a href='javascript:;'>" + unarr[i] + "</a>");
+            }
+            if (subarr != "") {
+                $("#us").append("<a href='javascript:;'>" + subarr + "</a>");
+            }
+            boundCk();
+            boundEvent();
+        }
+    }
+
+    function boundCk() {
+        $("a").click(function () {
+            $("a").each(function () {
+                $(this).removeClass("cka");
+            });
+            $(this).addClass("cka");
+        });
+    }
+</script>
+</html>

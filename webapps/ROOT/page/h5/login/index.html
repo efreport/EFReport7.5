@@ -1,0 +1,537 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=640px, maximum-scale=1.0, user-scalable=no, target-densitydpi=320" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link id="iconLink" rel="icon" href="images/favicon.ico">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <style>
+      body {
+        background-color: #ffffff !important;
+      }
+      .clsCompanyName {
+        width: 486px;
+        height: 58px;
+        line-height: 58px;
+        font-size: 24px;
+      }
+      .clsAccount {
+        display: block;
+        margin-top: 10px;
+        width: 486px;
+        height: 58px;
+        line-height: 58px;
+        font-size: 24px;
+        /* border: 1px solid #d4d4d4; */
+        padding: 0px !important;
+        padding-left: 70px !important;
+      }
+      .clsLabel {
+        font-size: 24px !important;
+      }
+
+      .layui-tree-icon {
+        height: 24px !important;
+        line-height: 24px !important;
+        width: 24px !important;
+      }
+
+      .layui-tree-icon .layui-icon {
+        font-size: 24px !important;
+      }
+
+      .layui-tree-iconClick .layui-icon {
+          font-size: 24px;
+      }
+
+      .layui-tree-entry {
+        height: 44px !important
+      }
+
+      .layui-tree {
+        line-height: 40px !important;
+      }
+
+      #companyTableTree {
+        position:absolute;
+        display: none;
+        width: 80%;
+        height: 500px;
+        left: 10%;
+        top: 300px;
+        border: 1px solid #d4d4d4;
+        background-color: #ffffff;
+        z-index: 9999;
+        border-radius: 5px;
+
+      }
+
+      .laytable-cell-1-0-1 {
+          width: 340px !important;
+      }
+
+      .layui-table-cell {
+        height: 48px !important;
+        line-height: 48px !important;
+      }
+
+      .layui-table td, .layui-table th {
+        line-height: 48px !important;
+        font-size: 24px !important;
+      }
+
+      .layui-icon {
+        font-size: 24px !important;
+      }
+
+      .layui-btn-xs {
+        height: 40px !important;
+        line-height: 40px !important;
+        font-size: 24px !important;
+      }
+
+      .layui-form-checkbox[lay-skin=primary] {
+        min-width: 40px !important;
+        min-height: 40px !important;
+      }
+
+      .layui-form-checkbox[lay-skin=primary] span {
+        line-height: 24px !important;
+      }
+
+      .layui-form-checkbox[lay-skin=primary] i {
+        width: 24px !important;
+        height: 24px !important;
+        line-height: 24px !important;
+      }
+
+      .layui-form-checkbox span {
+        font-size: 24px !important;
+      }
+
+      .layui-form-checkbox[lay-skin=primary] span {
+        padding-left: 10px !important;
+      }
+
+      .layui-form-checked[lay-skin=primary] i {
+        border-color: #0094FF !important;
+        background-color: #0094FF !important;
+      }
+
+      .newItem {
+        height: 60px;
+        border-bottom: 1px solid #E5E6EB;
+        margin-bottom: 35px !important;
+      }
+
+      #div_company_select input {
+        background:url(images/newcompany.png) 20px center no-repeat !important;
+      }
+
+      .layui-btn-normal {
+        background-color: #0094FF !important;
+      }
+
+      #bgDiv {
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        margin: 0px;
+        padding: 0px;
+        background-color: #86909C;
+        z-index: 999;
+        /* border: 1px solid red; */
+        opacity: 0.6;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="login_box">
+      <div style="text-align: center;margin-top:160px; margin-bottom: 100px;">
+        <img id="logo_img" src="images/logo-1.png" style="width: 240px;height: 80px;"/>
+      </div>
+      
+      <div class="content">
+        <form class="layui-form">
+          <input type="hidden" id="companyid" name="companyid" />
+          <div id="div_company_select" class="newItem item" style="position: relative;">
+            <label class="clsLabel"></label>
+            <input type="text" class="btn clsCompanyName" id="companyName" name="companyName" lay-verify="required" readonly="true" placeholder="请选择公司"/>
+            <div id="div_company_tree" style="position: absolute; top: 80px; left: 70px; display: none; z-index: 9999; background-color: #F5F7F8;">
+              <div id="company_tree" class="demo-tree demo-tree-box" style="width: 400px; height: 300px; overflow-y: auto; font-size: 24px;"></div>
+            </div>
+          </div>
+          <div class="newItem item user_id">
+            <label class="clsLabel"></label>
+            <input type="text" class="btn clsAccount" id="account" name="account" autocomplete="off" placeholder="请输入登录账号" />
+          </div>
+          <div class="newItem item password">
+            <label class="clsLabel"></label>
+            <input type="password" class="btn clsAccount" id="password" name="password" autocomplete="off" placeholder="请输入密码" />
+          </div>
+          <div style="height: 10px;"></div>
+          <div class="item" style="font-size: 24px !important; height: 40px !important; line-height: 40px !important;">
+            <input id="remember_password" name="remember_password" lay-skin="primary" style="width: 24px;height: 24px;" type="checkbox" title=" 记住密码" />
+          </div>
+        </form>
+          <div id="div_error_msg" style="width: 100%; height: 50px; line-height: 50px;font-size: 24px;color:red;"></div>
+          <button class="btn login_btn" id="btn_submit">登录</button>
+          <div style="height: 80px;"></div>
+      </div>
+
+      
+
+    </div>
+    
+    <div id="bgDiv"></div>
+
+    <div id="companyTableTree">
+      <div style="height:40px; text-align:right; padding-right: 10px;padding-top: 5px;">
+        <button class="layui-btn layui-btn-normal" id="btn-close">关闭</button>
+      </div>
+      <div class="layuimini-main">
+        <table id="munu-table" class="layui-table" lay-filter="munu-table"></table>
+      </div>
+      
+    </div>
+    <!-- 操作列 -->
+    <script type="text/html" id="auth-state">
+      <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="selected">选中</a>
+    </script>
+  </body>
+  <script type="text/javascript" src="js/zepto.min.js"></script>
+  <script type="text/javascript" src="js/touch.js"></script>
+  <script type="text/javascript" src="js/detect.js"></script>
+  <script type="text/javascript" src="js/fx.js"></script>
+  <script type="text/javascript" src="js/fx_methods.js"></script>
+  <script type="text/javascript" src="js/selector.js"></script>
+  <script type="text/javascript" src="js/fastclick.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+  <script type="text/javascript"    src="../../../js/remeber.js"></script>
+  <script type="text/javascript" src="../../../js/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="../../../lib/layui-v2.7.6/layui.js" charset="utf-8"></script>
+  <script src="../../../design/js/def/global.js"></script>
+  <script>
+
+    var layer;
+    var form;
+    layui.use(['tree','form','jquery','table', 'treetable'], function () {
+      var $ = layui.jquery,
+          tree = layui.tree;
+          layer = layui.layer;
+          form = layui.form;
+      var table = layui.table;
+      var treetable = layui.treetable;
+
+      let initPageAccount = function() {
+        let accout = window.sessionStorage.getItem("ef_accout");
+        let pwd = window.sessionStorage.getItem("ef_password");
+        // 是否勾选记住密码
+        let efcheck = window.sessionStorage.getItem("ef_checked");
+
+        let companyid = window.sessionStorage.getItem("ef_companyid");
+        let companyName = window.sessionStorage.getItem("ef_companyName");
+
+        if (companyid!==null && companyid.trim() !== "") {
+            $("input[name='companyid']").val(companyid);
+        }
+
+        if (companyName!==null && companyName.trim() !== "") {
+            $("input[name='companyName']").val(companyName);
+        }
+
+        if (accout!==null && accout.trim() !== "") {
+            $("input[name='account']").val(accout);
+        }
+        if (pwd!==null && pwd.trim() !== "") {
+            $("input[name='password']").val(pwd);
+        }
+        if (efcheck!==null && efcheck === "1") {
+            document.getElementById('remember_password').checked = true;
+        }
+        if (efcheck!==null && efcheck === "0") {}
+        form.render();
+      }
+
+      initPageAccount();
+            // 登录过期的时候，跳出ifram框架
+        if (top.location != self.location) top.location = self.location;
+        $("input[name='companyName']").click(function(e){
+            $("#bgDiv").show();
+            $("#companyTableTree").show();
+        });
+
+        $("#btn-close").click(function(){
+          $("#companyTableTree").hide();
+          $("#bgDiv").hide();
+        });
+
+        // 通过ajax方式读取服务器端地址信息
+        $.ajax({
+            url: '/api/config.json',
+            type: 'get',
+            success: function (res) {
+                let server_base_url = res.server_base_url;
+                let client_base_url = res.client_base_url;
+                if (server_base_url !== "") {
+                    window.sessionStorage.setItem("ef_server_base_url", server_base_url);
+                    $("#iconLink").attr("href", server_base_url+"/oem/favicon.ico?tt=" + new Date().getTime());
+                    
+                    initpage();
+                }
+            },
+            error: function () {
+            }
+        });
+
+
+
+        let initpage = function() {
+          let server_base_url = window.sessionStorage.getItem("ef_server_base_url"); 
+          let efurl = server_base_url + "/company/alllist";
+          // 加载公司列表
+          $.ajax({
+              url: efurl,
+              type: 'post',
+              success: function (res) {
+                  if (res.state === "success") {
+                      let data = res.data;
+                      if (data.length > 0) {
+                          initcompanyTree(data);
+                      }
+
+                      if (data.length > 0) {
+                          if (data.length === 1) {
+                              if (data[0].children === undefined || data[0].children === null || data[0].children === "" || data[0].children.length === 0) {
+                                  // 表示只有一个公司，则将选择公司框隐藏
+                                  $("#companyid").val(data[0].id);
+                                  $("input[name='companyName']").val(data[0].title);
+                                  $("#div_company_select").hide();
+                              }
+                          }
+                      }
+                  }
+              },
+              error: function () {
+              }
+          });
+          let efurl_oem = server_base_url + "/oem/get";
+          $.ajax({
+              url: efurl_oem,
+              type: 'get',
+              success: function (res) {
+                  let sysname = res.name;
+                  window.sessionStorage.setItem("sys_name", sysname);
+
+                  $("#logo_img").attr("src", server_base_url+"/oem/company.jpg?tt=" + new Date().getTime());
+
+              },
+              error: function () {
+              }
+          });
+
+
+
+          let efurl2 = server_base_url + "/company/alllist2";
+          initTreeTable(efurl2);
+        }
+
+        var initTreeTable = function (efurl) {
+            $.ajax({
+                url: efurl,
+                type: 'post',
+                success: function (res) {
+                  loadingTreeTable(res);
+
+                  let data = res.data;
+
+                  if (data.length > 0) {
+                    if (data.length === 1) {
+                        if (data[0].children === undefined || data[0].children === null || data[0].children === "" || data[0].children.length === 0) {
+                            // 表示只有一个公司，则将选择公司框隐藏
+                            $("#companyid").val(data[0].id);
+                            $("input[name='companyName']").val(data[0].title);
+                            $("#div_company_select").hide();
+                        }
+                    }
+                  }
+
+                },
+                error: function () {
+                }
+            });
+        }
+
+        var loadingTreeTable = function (tableData) {
+
+          let companyid = tableData.data[0].id;
+
+          let cur_start_pid = -1;
+          for (let i = 0; i < tableData.data2.length; i++) {
+              if (tableData.data2[i].id === parseInt(companyid)) {
+                  cur_start_pid = tableData.data2[i].pId;
+              }
+          }
+          // 渲染表格
+          layer.load(2);
+          treetable.render({
+              data: tableData.data2,
+              treeColIndex: 1,
+              treeSpid: cur_start_pid,
+              treeIdName: 'id',
+              treePidName: 'pId',
+              elem: '#munu-table',
+              page: false,
+              cols: [[
+                    {type: 'numbers'},
+                    {field: 'companyName', minWidth: 200, title: '公司名称'},
+                    {templet: '#auth-state', width: 100, align: 'center', title: '操作'}
+              ]],
+              done: function () {
+                  layer.closeAll('loading');
+              }
+          });
+        }
+
+
+
+        let initcompanyTree = function(data1) {
+            //常规用法
+            tree.render({
+                elem: '#company_tree' //默认是点击节点可进行收缩
+                ,data: data1
+                ,accordion: true
+                ,click: function(obj){
+                    $("input[name='companyid']").val(obj.data.id);
+                    $("input[name='companyName']").val(obj.data.title);
+                    $("#div_company_tree").hide();
+                }
+            });
+        }
+
+
+        //监听工具条
+        table.on('tool(munu-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'selected') {
+              let id = data.id;
+              let companyName = data.companyName;
+              $("input[name='companyid']").val(id);
+              $("input[name='companyName']").val(companyName);
+              $("#companyTableTree").hide();
+              $("#bgDiv").hide();
+            }
+        });
+
+
+        $("#btn_submit").click(function(){
+          login();
+        });
+
+
+    });
+
+    
+
+  </script>
+  <script>
+  $(function(){
+    var mobile = Zepto.os.phone || Zepto.os.tablet;
+    var screen_h = $(window).height();
+    $(".login").css("min-height",screen_h);
+    getCookie();
+
+    $(".content .item input").each(function(){
+      var placeValue = $(this).attr("placeholder");
+      $(this).on("focus",function(){
+        $(this).parents(".item").removeClass("error");
+        $(this).attr("placeholder","");
+      }).on("blur",function(){
+        $(this).attr("placeholder",placeValue);
+      });
+    });
+  });
+    function login(){
+      var _account  = Zepto("#account").val(),
+              _password = Zepto("#password").val();
+
+      var _companyid = Zepto("#companyid").val();
+      if ("" == _companyid) {
+        Zepto("#companyName").attr("placeholder", "必须选择所要登录的公司").parent().addClass('error');
+        
+        return false;
+      }
+
+      if ("" == _account) {
+        Zepto("#account").attr("placeholder", "账号不可为空").parent().addClass('error');
+        return false;
+      }
+      if ("" == _password) {
+        Zepto("#password").attr("placeholder", "密码不可为空").parent().addClass('error');
+        return false;
+      }
+
+      
+
+      var _companyName = Zepto("#companyName").val();
+      // debugger;
+
+      let baseurl = window.sessionStorage.getItem("ef_server_base_url");
+
+      $.ajax({
+        url: baseurl + '/user/login',
+        type: 'post',
+        data: { account: _account, password: _password, companyId: _companyid },
+        success: function (res) {
+            if (res.state === "success") {
+                window.sessionStorage.setItem("cur_companyid", _companyid);
+                window.sessionStorage.setItem("cur_accout", _account);
+                window.sessionStorage.setItem("cur_token", res.token);
+                window.sessionStorage.setItem("cur_userType", res.userType);
+
+                var isSave = document.getElementById('remember_password').checked;
+                if (isSave) {
+                    window.sessionStorage.setItem("ef_companyid", _companyid);
+                    window.sessionStorage.setItem("ef_companyName", _companyName);
+                    window.sessionStorage.setItem("ef_accout", _account);
+                    window.sessionStorage.setItem("ef_password", _password);
+                    window.sessionStorage.setItem("ef_checked", "1");
+                } else {
+                    window.sessionStorage.setItem("ef_companyid", "");
+                    window.sessionStorage.setItem("ef_companyName", "");
+                    window.sessionStorage.setItem("ef_accout", "");
+                    window.sessionStorage.setItem("ef_password", "");
+                    window.sessionStorage.setItem("ef_checked", "0");
+                }
+                if(res.userType === 1) {
+                    $("#div_error_msg").html("只有预览用户才可以访问手机端");
+                } else if (res.userType === 2 || res.userType === 4) {
+                    $("#div_error_msg").html("只有预览用户才可以访问手机端");
+                } else if (res.userType === 3) {
+                       window.location.href = "../index.html";
+                } else {
+                  $("#div_error_msg").html("只有预览用户才可以访问手机端");
+                }
+                
+            }else {
+                layer.msg(res.message);
+            }
+        },
+        error: function () {
+        }
+      });
+
+    }
+  </script>
+</html>

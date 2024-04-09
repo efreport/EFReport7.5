@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store">
+    <meta http-equiv="expires" content="0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../js/css/layui.css">
+    <link href="../../css/scroll.css" rel="stylesheet">
+
+    <style>
+        #un a {
+            display: block;
+            color: #333;
+            transition: all .3s;
+            margin: 5px 5px;
+            border-bottom: 1px solid #D5D5D5
+        }
+
+        #un a:hover {
+            background: #CCCCCC;
+        }
+
+        .cka {
+            background: #CCCCCC
+        }
+
+        #un2 a {
+            display: block;
+            color: #333;
+            transition: all .3s;
+            margin: 5px 5px;
+            border-bottom: 1px solid #D5D5D5
+        }
+
+        #un2 a:hover {
+            background: #CCCCCC;
+        }
+
+        .cka2 {
+            background: #CCCCCC
+        }
+
+        .trck {
+            background: #CCCCCC
+        }
+
+        .cktd {
+            background: #F7F7F7;
+        }
+
+        .layui-tab-title li {
+            line-height: 20px;
+            padding: 0 5px
+        }
+
+        .layui-tab-title .layui-this:after {
+            height: 20px;
+        }
+
+        .layui-table tbody td {
+            padding: 0;
+        }
+
+        .layui-table, .layui-table-view {
+            margin: auto;
+        }
+
+        img:hover {
+            background-color: #D5D5D5;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        select {
+            height: 30px;
+            border: 1px solid #ccc;
+        }
+
+        select:hover {
+            box-shadow: 0 0 1px #44B4FF;
+        }
+
+        input:hover {
+            box-shadow: 0 0 1px #44B4FF;
+        }
+
+        .headTd {
+            width: 250px;
+            background-color: #fcfcfc;
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #333;
+        }
+
+        .leftTd {
+            padding-left:5px;
+            width: 249px !important;
+            background-color: #f2f3f5;
+            border: 1px solid #E5E6EB;
+            height: 42px;
+            line-height: 42px;
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #333;
+        }
+
+        .rightTd {
+            width: 249px !important;
+            background-color: #f2f3f5;
+            border: 1px solid #E5E6EB;
+            height: 42px;
+            line-height: 42px;
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #333;
+        }
+
+        .rightTd input {
+            background-color: #f2f3f5;
+            font-size: 14px;
+            font-family: PingFang SC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #333;
+            text-indent: 10px;
+            width:100%;
+            height:100%;
+            border: hidden;
+        }
+
+        .selecTr td {
+            background-color: #0094FF !important;
+            color:#fff;
+        }
+
+        .selecTr td input {
+            color: #fff;
+            background-color: #0094FF !important;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div id="un2" style="white-space: nowrap;overflow: hidden;height:550px;">
+    <table id="header" style="width:500px;">
+        <thead>
+        <tr style="display: block; height: 39px; line-height: 39px; background-color: #fcfcfc;">
+            <td class="headTd" style="text-align: center;">列名</td>
+            <td class="headTd" style="text-align: center;">中文对照名</td>
+        </tr>
+        </thead>
+    </table>
+    <div style="width: 100%;height:510px;text-align: left;text-indent: 10px;overflow-y: auto;">
+        <table id="tb2" style="width: 100%;text-align: left;">
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+
+</body>
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../js/layui.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+    var connName;
+    var columns = [];
+    var refrence;
+    ;
+    var dsName; //ds名
+    function setConnName(name, ds) {
+        connName = name;
+        dsName = ds;
+    }
+
+    function setColumns(column) { //设置列名
+        columns = column;
+    }
+
+    function setRefrence(ref) { //设置参照
+        refrence = ref;
+    }
+
+    function init() {
+        if (refrence != "") {//有参照
+            var refer = JSON.parse(refrence);
+            var curRef = refer[dsName];
+            $.each(columns, function (index, element) {
+
+                if (curRef != undefined) {
+                    var val = curRef[element];
+                    if (val != undefined) {
+                        if ($.isNumeric(val)) {
+                            $('#tb2').append("<tr class='clsBodyTr' style='display: block;width:100%;height:42px;border-bottom: 1px solid #77CEF8;'><td class='leftTd'>" + element + "</td><td class='rightTd'><input type='text' value='" + (curRef[element] == undefined ? "" : curRef[element]) + "'></td></tr>")
+                        } else {
+                            var reg = new RegExp("\'", "g");//g,表示全部替换。
+                            if (val.indexOf('\'') != -1) {
+                                val = val.replace(reg, "");
+                                var html = $("<tr style='display: block;width:100%;height:42px;border-bottom: 1px solid #77CEF8;'><td class='leftTd'>" + element + "</td><td class='rightTd'><input type='text' value='" + val + "'></td></tr>");
+                                var td = html.find('td').eq(1);
+                                td.find('input').val("'" + td.find('input').val() + "'");
+                                $('#tb2').append(html);
+                            } else {
+                                val = val.replace(reg, "");
+                                var html = $("<tr style='display: block;width:100%;height:42px;border-bottom: 1px solid #77CEF8;'><td class='leftTd'>" + element + "</td><td class='rightTd'><input type='text' value='" + val + "'></td></tr>");
+                                $('#tb2').append(html);
+                            }
+
+                        }
+                    } else {
+                        var html = $("<tr style='display: block;width:100%;height:42px;border-bottom: 1px solid #77CEF8;'><td class='leftTd'>" + element + "</td><td class='rightTd'><input type='text' value=''></td></tr>");
+                        $('#tb2').append(html);
+                    }
+                } else {
+                    $('#tb2').append("<tr style='display: block;width:100%;height:42px;border-bottom: 1px solid #77CEF8;'><td class='leftTd'>" + element + "</td><td class='rightTd'><input type='text'></td></tr>")
+                }
+            });
+        } else {
+            $.each(columns, function (index, element) {
+                $('#tb2').append("<tr class='clsBodyTr' style='display: block;width:100%;height:42px;border-bottom: 1px solid #77CEF8;'><td class='leftTd'>" + element + "</td><td class='rightTd'><input type='text'></td></tr>")
+            });
+        }
+        $(".clsBodyTr").bind('click', function () {
+            $("tr").each(function () {
+                $(this).removeClass("selecTr");
+            });
+            $(this).addClass("selecTr");
+        });
+    }
+
+    function getRefrence() { //获取参照
+        var table = $('#tb2');
+        var trs = table.find('tr'); //获取所有行
+        var curRef = {};
+        $.each(trs, function (index, element) {
+            var key = $(this).find('td').eq(0).text();
+            console.log(key);
+            console.log(value);
+            var value = $(this).find('td').eq(1).find('input').val();
+            curRef[key] = value;
+        });
+        if (refrence != "") {//有参照
+            var ref = JSON.parse(refrence);
+            ref[dsName] = curRef;
+            return ref;
+        } else {
+            refrence = {};
+            refrence[dsName] = curRef;
+            return refrence;
+        }
+
+
+    }
+
+</script>
+</html>
