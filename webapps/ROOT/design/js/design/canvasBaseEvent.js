@@ -933,7 +933,7 @@ let SpreadsheetEvent = {
                         //获取编辑焦点
                         setTimeout(function () {
 
-                            $('#EFTextInput').val('').focus();
+                            $('#EFTextInput').focus();
                         }, 100)
                     } else { //点击的是悬浮元素
                         //获取文本输入框焦点,用来处理键盘事件
